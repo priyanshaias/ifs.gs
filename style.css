@@ -104,6 +104,26 @@ p { text-wrap: pretty; }
   line-height: 1.15;
   margin: 0 0 18px;
 }
+.about-label {
+  margin: -8px 0 14px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.li {
+  display: inline-grid; place-items: center;
+  width: 17px; height: 17px;
+  margin: 0 1px 0 3px;
+  vertical-align: -1px;
+  border-radius: 3px;
+  background: var(--muted);
+  color: #fff;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  padding-bottom: 1px;
+  transition: background .18s ease;
+}
+.li:hover { background: #0A66C2; color: #fff; }
 .path {
   list-style: none; margin: 0 0 36px; padding: 0;
   display: flex; flex-wrap: wrap; align-items: baseline;
@@ -200,21 +220,6 @@ a.chip:hover { background: #E5E5E5; }
 .chip-v { color: var(--muted); }
 .chip-note { color: var(--accent-ink); font-size: 11.5px; }
 
-.projects { list-style: none; margin: 0; padding: 0; display: grid; }
-.projects li { border-top: 1px solid var(--rule-soft); }
-.projects li:last-child { border-bottom: 1px solid var(--rule-soft); }
-.projects a {
-  display: grid;
-  grid-template-columns: 32px minmax(0, 1fr) auto;
-  align-items: baseline;
-  gap: 12px;
-  padding: 14px 0;
-  font-size: 15px; font-weight: 500;
-  transition: color .18s;
-}
-.projects .n { font-size: 12px; color: var(--muted-2); font-variant-numeric: tabular-nums; }
-.projects .go { color: var(--muted-2); font-size: 13px; transition: color .18s, transform .18s; }
-.projects a:hover .go { color: var(--ink); transform: translate(2px, -2px); }
 
 /* ================= NOTE ================= */
 .note { background: var(--bg); padding: 64px 32px; }
