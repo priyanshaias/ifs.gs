@@ -1,0 +1,1522 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<script src="../gate.js" data-sec="utt"></script>
+<title>Unified Tax and Tasks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #191918; --text-strong: #37352f; --text-body: #55534e; --text-subtle: #6b6a66; --text-faint: #8f8d88;
+  --surface: #ffffff; --surface-inset: #fbfbfa; --surface-muted: #f6f5f4; --surface-hover: #f3f2f0; --surface-sunken: #f1f0ee;
+  --track: #efeeec; --line: #ecebe8; --border: #e3e2df; --border-strong: #c9c7c2; --border-hover: #9d9b96;
+  --primary: #0b66c3; --primary-hover: #0a579f; --primary-soft: #e8f1fc; --link: #0b5cad;
+  --good: #2f9e44; --good-ink: #1d6b31; --good-soft: #dff3e2;
+  --blue: #2f6fdb; --blue-ink: #1f4f9e; --blue-soft: #dfeafb;
+  --warn: #d9731a; --warn-ink: #8a4510; --warn-soft: #fcebd9; --warn-edge: #f3d2b3;
+  --violet: #7c4ddb; --violet-ink: #51308f; --violet-soft: #efe6fb;
+  --teal: #1f8a70; --teal-soft: #dcefea;
+  --bad: #c4320a; --bad-ink: #9a2a0a; --bad-soft: #fde4dc;
+  --heat: #0b66c3; --heat-bad: #c4320a;
+  --s1: #b9c4d3; --s2: #7f9fc8; --s3: #3f7fd0; --s4: #2f63b0; --s5: #d9731a; --s6: #c25a10; --s7: #9a3412; --s8: #2f9e44; --s9: #a8a6a1; --s10: #7c4ddb;
+  --radius: 14px; --shadow-offset: 2px 2px 0 #191918;
+  --shadow-card: 0 0 0 1px rgba(25,25,24,0.03), 0 12px 30px -18px rgba(25,25,24,0.14);
+  --header-h: 58px; --container: 1320px;
+  --sans: "Schibsted Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #f2f1ee; --text-strong: #e4e2dd; --text-body: #c9c7c2; --text-subtle: #a3a19c; --text-faint: #85837e;
+    --surface: #1d1d1b; --surface-inset: #212120; --surface-muted: #141413; --surface-hover: #2a2a28; --surface-sunken: #262624;
+    --track: #2e2e2b; --line: #2b2b29; --border: #353532; --border-strong: #4a4a46; --border-hover: #6b6a66;
+    --primary: #4d94e8; --primary-hover: #6aa6ee; --primary-soft: #1b2b40; --link: #7fb2f0;
+    --good: #4cc463; --good-ink: #7fd68f; --good-soft: #1c3322;
+    --blue: #6a9cf0; --blue-ink: #9fc0f5; --blue-soft: #1c2a42;
+    --warn: #ef9443; --warn-ink: #f3b377; --warn-soft: #3a2918; --warn-edge: #5a3d21;
+    --violet: #a283f0; --violet-ink: #c4b0f6; --violet-soft: #2c2340;
+    --bad: #ef6a45; --bad-ink: #f59b80; --bad-soft: #3d2019;
+    --heat: #4d94e8; --heat-bad: #ef6a45;
+    --s1: #4a5463; --s2: #5d7aa3; --s3: #4d8be0; --s4: #6a9cf0; --s5: #ef9443; --s6: #e07a2c; --s7: #c9542a; --s8: #4cc463; --s9: #6b6a66; --s10: #a283f0;
+    --shadow-offset: 2px 2px 0 #000; --shadow-card: 0 0 0 1px rgba(0,0,0,.2), 0 12px 30px -18px rgba(0,0,0,.6);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ink: #f2f1ee; --text-strong: #e4e2dd; --text-body: #c9c7c2; --text-subtle: #a3a19c; --text-faint: #85837e;
+  --surface: #1d1d1b; --surface-inset: #212120; --surface-muted: #141413; --surface-hover: #2a2a28; --surface-sunken: #262624;
+  --track: #2e2e2b; --line: #2b2b29; --border: #353532; --border-strong: #4a4a46; --border-hover: #6b6a66;
+  --primary: #4d94e8; --primary-hover: #6aa6ee; --primary-soft: #1b2b40; --link: #7fb2f0;
+  --good: #4cc463; --good-ink: #7fd68f; --good-soft: #1c3322;
+  --blue: #6a9cf0; --blue-ink: #9fc0f5; --blue-soft: #1c2a42;
+  --warn: #ef9443; --warn-ink: #f3b377; --warn-soft: #3a2918; --warn-edge: #5a3d21;
+  --violet: #a283f0; --violet-ink: #c4b0f6; --violet-soft: #2c2340;
+  --bad: #ef6a45; --bad-ink: #f59b80; --bad-soft: #3d2019;
+  --heat: #4d94e8; --heat-bad: #ef6a45;
+  --s1: #4a5463; --s2: #5d7aa3; --s3: #4d8be0; --s4: #6a9cf0; --s5: #ef9443; --s6: #e07a2c; --s7: #c9542a; --s8: #4cc463; --s9: #6b6a66; --s10: #a283f0;
+  --shadow-offset: 2px 2px 0 #000; --shadow-card: 0 0 0 1px rgba(0,0,0,.2), 0 12px 30px -18px rgba(0,0,0,.6);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; font-family: var(--sans); font-size: 14.5px; line-height: 1.5; color: var(--text-body); background: var(--surface-muted); }
+button, input, select { font: inherit; color: inherit; }
+h1, h2, h3 { color: var(--ink); margin: 0; letter-spacing: -0.02em; }
+.num { font-variant-numeric: tabular-nums; }
+.faint { color: var(--text-faint); font-size: 12.5px; }
+.muted { color: var(--text-subtle); }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+/* top bar */
+.topbar { position: sticky; top: 0; z-index: 30; height: var(--header-h); background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--line); }
+.topbar .in { max-width: var(--container); margin: 0 auto; height: 100%; padding: 0 20px; display: flex; align-items: center; gap: 12px; }
+.mark { width: 34px; height: 34px; border-radius: 9px; border: 1.5px solid var(--ink); box-shadow: var(--shadow-offset); background: var(--surface); display: grid; place-items: center; font-weight: 900; color: var(--ink); font-size: 13px; letter-spacing: -0.04em; flex: none; }
+.brand { font-weight: 900; color: var(--ink); letter-spacing: -0.03em; font-size: 17px; line-height: 1.15; }
+.brand small { display: block; font-weight: 500; font-size: 11.5px; color: var(--text-subtle); letter-spacing: 0; }
+.sp { flex: 1; }
+.demo-flag { font-size: 12px; font-weight: 700; color: var(--warn-ink); background: var(--warn-soft); border: 1px solid var(--warn-edge); padding: 3px 9px; border-radius: 99px; white-space: nowrap; }
+.who { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); background: var(--surface); border-radius: 99px; padding: 3px 12px 3px 3px; font-weight: 600; color: var(--text-strong); font-size: 13px; white-space: nowrap; }
+.av { width: 30px; height: 30px; border-radius: 50%; background: var(--ink); color: var(--surface); display: grid; place-items: center; font-weight: 800; font-size: 11.5px; flex: none; }
+.icon-btn { width: 36px; height: 36px; border-radius: 9px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; display: grid; place-items: center; color: var(--text-strong); }
+.icon-btn:hover { border-color: var(--border-hover); }
+.icon-btn svg, .btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+main { max-width: var(--container); margin: 0 auto; padding: 26px 20px 100px; }
+.crumbs { font-size: 13px; color: var(--text-subtle); margin-bottom: 6px; }
+.crumbs b { color: var(--text-strong); }
+.head { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+.page-title { font-size: clamp(28px, 4vw, 40px); font-weight: 900; letter-spacing: -0.04em; line-height: 1.08; }
+.page-sub { margin: 8px 0 0; color: var(--text-subtle); font-size: 14px; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn { min-height: 38px; padding: 0 14px; border-radius: 9px; border: 1px solid var(--border); background: var(--surface); color: var(--ink); font-weight: 600; font-size: 13.5px; display: inline-flex; align-items: center; gap: 7px; cursor: pointer; white-space: nowrap; transition: border-color .15s, background .15s; }
+.btn:hover { border-color: var(--border-hover); }
+.btn.soft { background: var(--primary-soft); border-color: transparent; color: var(--link); }
+.btn.sm { min-height: 32px; padding: 0 11px; font-size: 13px; }
+.btn.ghost { border-color: transparent; background: transparent; }
+
+/* filter bar */
+.fbar { position: sticky; top: var(--header-h); z-index: 20; background: color-mix(in srgb, var(--surface) 96%, transparent); backdrop-filter: blur(8px); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 12px; margin-bottom: 16px; box-shadow: var(--shadow-card); }
+.frow { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
+.fs { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.fs > span { font-size: 11.5px; font-weight: 700; color: var(--text-subtle); text-transform: uppercase; letter-spacing: .04em; }
+.fs select, .fs input { height: 36px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); padding: 0 8px; min-width: 112px; font-size: 13.5px; color: var(--text-strong); }
+.fs select:hover, .fs input:hover { border-color: var(--border-hover); }
+.fs.grow { flex: 1 1 160px; }
+#fmethod, #flevel { min-width: 0; max-width: 150px; } .fs.grow input { width: 100%; }
+.seg { display: inline-flex; border: 1px solid var(--border); border-radius: 9px; padding: 2px; background: var(--surface-sunken); gap: 2px; }
+.seg button { border: 0; background: transparent; padding: 0 10px; height: 30px; border-radius: 7px; font-size: 13px; font-weight: 600; color: var(--text-subtle); cursor: pointer; white-space: nowrap; }
+.seg button.on { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 0 0 1px var(--border); }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.chips:empty { display: none; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; padding: 3px 4px 3px 10px; border-radius: 99px; background: var(--primary-soft); color: var(--link); border: 0; cursor: pointer; }
+.chip i { font-style: normal; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--link) 15%, transparent); }
+.chip.clear { background: transparent; color: var(--text-subtle); padding-right: 10px; }
+
+/* tabs */
+.tabs { display: flex; gap: 4px; margin: 0 0 14px; border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; }
+.tabs button { border: 0; background: none; padding: 8px 16px 11px 2px; margin-right: 14px; cursor: pointer; text-align: left; border-bottom: 2.5px solid transparent; margin-bottom: -1px; white-space: nowrap; }
+.tabs button b { display: block; font-size: 15.5px; font-weight: 800; color: var(--text-subtle); letter-spacing: -0.02em; }
+.tabs button small { display: block; font-size: 12px; color: var(--text-faint); }
+.tabs button:hover b { color: var(--ink); }
+.tabs button.on { border-bottom-color: var(--ink); } .tabs button.on b { color: var(--ink); }
+.tab { display: none; } .tab.on { display: block; }
+.tabhead { display: none; }
+body.all-mode .tabhead { display: block; font-size: 22px; font-weight: 900; letter-spacing: -0.03em; margin: 26px 0 12px; padding-top: 16px; border-top: 2px solid var(--ink); }
+body.all-mode .tab[data-tab="ov"] .tabhead, body.all-mode #ovPanels { display: none; }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
+.grid3 > .card { margin-bottom: 0; display: flex; flex-direction: column; }
+.ovp h2 { font-size: 17px; font-weight: 800; }
+.ovp .mini-kpis { grid-template-columns: 1fr 1fr; margin: 12px 0; }
+.ovp .lst { flex: 1; }
+.ovp .li { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: center; padding: 6px 0; border-top: 1px solid var(--line); font-size: 13px; }
+.ovp .li .stack { grid-column: 1 / -1; height: 5px; }
+.ovp h4 { margin: 4px 0 4px; font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--text-subtle); font-weight: 800; }
+.ovp .go { margin-top: 12px; align-self: flex-start; }
+/* task type tiles */
+.ttiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: 10px; }
+.ttile { border: 1px solid var(--border); background: var(--surface-inset); border-radius: 12px; padding: 12px 14px; text-align: left; cursor: pointer; display: flex; flex-direction: column; gap: 2px; transition: border-color .15s, transform .15s; min-width: 0; font: inherit; color: inherit; }
+.ttile:hover { border-color: var(--border-hover); transform: translateY(-1px); }
+.ttile.on { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); background: var(--surface); }
+.ttile .tt-h { font-weight: 800; color: var(--ink); font-size: 14px; }
+.ttile .tt-s { font-size: 11.5px; color: var(--text-subtle); }
+.ttile > b { font-size: 24px; font-weight: 900; letter-spacing: -0.04em; color: var(--good-ink); margin-top: 6px; line-height: 1.1; }
+.ttile > small { font-size: 11.5px; color: var(--text-subtle); }
+.tt-f { display: grid; grid-template-columns: 62px 1fr 58px; gap: 3px 6px; align-items: center; font-size: 11px; color: var(--text-subtle); margin: 8px 0 6px; }
+.tt-f span.bar { height: 7px; border-radius: 99px; background: var(--track); overflow: hidden; display: block; }
+.tt-f span.bar i { display: block; height: 100%; border-radius: inherit; }
+.tt-f em { font-style: normal; text-align: right; color: var(--text-strong); font-weight: 700; font-variant-numeric: tabular-nums; }
+.tt-g { display: flex; gap: 12px; font-size: 11.5px; color: var(--text-subtle); border-top: 1px solid var(--line); padding-top: 6px; flex-wrap: wrap; }
+.tt-g b { color: var(--text-strong); font-weight: 700; }
+.ttile.all > b { color: var(--ink); }
+
+/* KPI cards */
+.kpis { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; margin-bottom: 16px; }
+.kpi { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px 12px; text-align: left; cursor: pointer; display: flex; flex-direction: column; gap: 1px; transition: border-color .2s, transform .15s, box-shadow .2s; position: relative; min-width: 0; }
+.kpi:hover { border-color: var(--border-hover); transform: translateY(-1px); }
+.kpi.on { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.kpi span { font-size: 12px; font-weight: 600; color: var(--text-subtle); }
+.kpi b { font-size: 26px; font-weight: 900; letter-spacing: -0.04em; color: var(--ink); line-height: 1.15; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.kpi small { font-size: 11.5px; color: var(--text-subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kpi .kbar { display: block; height: 4px; background: var(--track); border-radius: 99px; margin-top: 8px; overflow: hidden; }
+.kpi .kbar em { display: block; height: 100%; border-radius: inherit; background: var(--ink); transition: width .5s; }
+.kpi.good b { color: var(--good-ink); } .kpi.good .kbar em { background: var(--good); }
+.kpi.blue b { color: var(--blue-ink); } .kpi.blue .kbar em { background: var(--blue); }
+.kpi.hot b { color: var(--bad); } .kpi.hot .kbar em { background: var(--bad); }
+.kpi.warn b { color: var(--warn-ink); } .kpi.warn .kbar em { background: var(--warn); }
+.kpi.violet b { color: var(--violet-ink); } .kpi.violet .kbar em { background: var(--violet); }
+
+/* cards */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 16px; min-width: 0; }
+.card-h { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.card-h h2 { font-size: 17px; font-weight: 800; }
+.card-h .sub { font-size: 12.5px; color: var(--text-subtle); flex-basis: 100%; margin-top: -6px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid2 > .card { margin-bottom: 16px; }
+.legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--text-subtle); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+
+/* pipeline */
+.pipe { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)) 14px repeat(3, minmax(0, 0.85fr)); gap: 0; align-items: stretch; }
+.ptile { position: relative; border: 1px solid var(--border); background: var(--surface-inset); border-radius: 12px; padding: 10px 10px 10px 12px; cursor: pointer; text-align: left; margin-right: 18px; transition: border-color .15s, transform .15s; display: flex; flex-direction: column; min-width: 0; }
+.ptile:hover { border-color: var(--border-hover); transform: translateY(-1px); }
+.ptile.on { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.ptile.closed { margin-right: 8px; }
+.ptile .sn { font-size: 11px; font-weight: 800; color: var(--text-subtle); text-transform: uppercase; letter-spacing: .03em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 6px; }
+.ptile .sn i { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.ptile .pc { font-size: 26px; font-weight: 900; color: var(--ink); letter-spacing: -0.04em; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.ptile .pm { font-size: 11.5px; color: var(--text-subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.35; }
+.ptile .od { white-space: normal !important; }
+.ptile .od { margin-top: 6px; display: flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; color: var(--bad); white-space: nowrap; }
+.ptile .od.zero { color: var(--good-ink); }
+.ptile .obar { height: 4px; border-radius: 99px; background: var(--track); overflow: hidden; margin-top: 4px; }
+.ptile .obar em { display: block; height: 100%; background: var(--bad); }
+.ptile .arrow { position: absolute; right: -19px; top: 50%; transform: translateY(-50%); width: 20px; text-align: center; font-size: 10px; font-weight: 800; color: var(--text-faint); line-height: 1.1; pointer-events: none; }
+.ptile .arrow::before { content: "›"; display: block; font-size: 18px; color: var(--border-strong); }
+.pipe .gap { border-left: 2px dashed var(--border); margin: 6px 6px 6px 0; }
+.pipe-foot { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 12px; font-size: 12.5px; color: var(--text-subtle); }
+.pipe-foot b { color: var(--ink); }
+
+/* matrix */
+.tablewrap { overflow-x: auto; margin: 0 -18px; padding: 0 18px; }
+table { border-collapse: separate; border-spacing: 0; width: 100%; font-size: 13px; }
+th { position: sticky; top: 0; background: var(--surface); text-align: right; font-size: 11px; text-transform: uppercase; letter-spacing: .03em; color: var(--text-subtle); font-weight: 800; padding: 8px 6px; border-bottom: 1px solid var(--border); white-space: nowrap; cursor: pointer; user-select: none; }
+th:hover { color: var(--ink); }
+th.l, td.l { text-align: left; }
+th.sorted { color: var(--ink); }
+th.sorted::after { content: attr(data-dir); margin-left: 3px; }
+th.stg { text-align: center; }
+td { padding: 6px 4px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--text-strong); }
+tbody tr { cursor: pointer; }
+tbody tr:hover td { background: var(--surface-hover); }
+tbody tr:hover td.h { filter: brightness(0.96); }
+td.h { text-align: center; font-weight: 700; min-width: 38px; border-left: 2px solid var(--surface); }
+td.h.zero { color: var(--text-faint); font-weight: 500; }
+td.h.on, th.on { box-shadow: inset 0 0 0 1.5px var(--ink); }
+.oname { display: flex; align-items: center; gap: 8px; min-width: 165px; }
+.oname .av { width: 28px; height: 28px; font-size: 10.5px; background: var(--surface-sunken); color: var(--ink); border: 1px solid var(--border); }
+.oname b { display: block; color: var(--ink); font-weight: 700; font-size: 13.5px; }
+.oname small { display: block; color: var(--text-subtle); font-size: 11.5px; }
+.rank { color: var(--text-faint); font-size: 12px; width: 22px; text-align: right; }
+.lv { display: inline-block; font-size: 10.5px; font-weight: 800; padding: 1px 6px; border-radius: 5px; background: var(--surface-sunken); color: var(--text-strong); border: 1px solid var(--border); margin-left: 4px; vertical-align: 1px; }
+.score { display: inline-flex; align-items: center; gap: 7px; justify-content: flex-end; }
+.score i { width: 28px; height: 6px; border-radius: 99px; background: var(--track); overflow: hidden; display: inline-block; }
+.score i em { display: block; height: 100%; border-radius: inherit; }
+.score b { min-width: 24px; display: inline-block; font-weight: 800; }
+.dstack { display: inline-flex; width: 24px; height: 6px; border-radius: 99px; overflow: hidden; background: var(--track); margin-left: 6px; vertical-align: 1px; }
+.dstack i { display: block; height: 100%; }
+.bad-t { color: var(--bad); font-weight: 700; }
+.good-t { color: var(--good-ink); font-weight: 700; }
+.tfoot { display: flex; align-items: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+.tfoot .sp { flex: 1; }
+
+/* bars */
+.hrow { display: grid; grid-template-columns: 150px 1fr 92px; gap: 10px; align-items: center; padding: 5px 6px; border-radius: 8px; cursor: pointer; border: 0; background: none; width: 100%; text-align: left; }
+.hrow:hover { background: var(--surface-hover); }
+.hrow.on { background: var(--primary-soft); }
+.hrow .hl { font-size: 13px; font-weight: 600; color: var(--text-strong); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hrow .hl small { display: block; font-weight: 500; color: var(--text-faint); font-size: 11px; }
+.stack { display: flex; height: 14px; border-radius: 4px; overflow: hidden; background: var(--track); }
+.stack i { display: block; height: 100%; min-width: 0; }
+.stack i + i { box-shadow: inset 1px 0 0 var(--surface); }
+.hrow .hn { font-size: 12.5px; text-align: right; color: var(--text-strong); font-weight: 700; font-variant-numeric: tabular-nums; }
+.hrow .hn small { color: var(--text-faint); font-weight: 500; }
+
+/* leaders */
+.lead { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.lead h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--text-subtle); font-weight: 800; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.lrow { display: flex; align-items: center; gap: 9px; padding: 7px 6px; border-radius: 8px; cursor: pointer; }
+.lrow:hover { background: var(--surface-hover); }
+.lrow .av { width: 28px; height: 28px; font-size: 10.5px; }
+.lrow .who2 { flex: 1; min-width: 0; }
+.lrow .who2 b { display: block; font-size: 13px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lrow .who2 small { display: block; font-size: 11.5px; color: var(--text-subtle); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lrow .sc { font-weight: 900; font-size: 17px; letter-spacing: -0.03em; }
+
+/* trend */
+.trend svg { width: 100%; height: auto; display: block; overflow: visible; }
+.trend text { font-family: var(--sans); fill: var(--text-subtle); font-size: 11px; }
+
+/* allotment */
+.mini-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+.mini { background: var(--surface-inset); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+.mini span { display: block; font-size: 11.5px; color: var(--text-subtle); font-weight: 600; }
+.mini b { font-size: 19px; font-weight: 900; color: var(--ink); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.hist { display: flex; align-items: flex-end; gap: 3px; height: 70px; margin-top: 6px; }
+.hist i { flex: 1; background: var(--blue); border-radius: 3px 3px 0 0; min-height: 2px; opacity: .85; }
+.hist-x { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-faint); margin-top: 4px; }
+
+/* stage pill */
+.pill { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 700; padding: 2px 8px; border-radius: 99px; background: var(--surface-sunken); color: var(--text-strong); white-space: nowrap; }
+.pill i { width: 7px; height: 7px; border-radius: 50%; }
+.method { font-size: 11px; font-weight: 800; padding: 2px 7px; border-radius: 6px; white-space: nowrap; }
+.method.rr { background: var(--violet-soft); color: var(--violet-ink); }
+.method.m { background: var(--teal-soft); color: var(--teal); }
+td .gst { font-family: ui-monospace, Menlo, monospace; font-size: 11.5px; color: var(--text-subtle); display: block; }
+td .tn { font-weight: 600; color: var(--ink); max-width: 210px; overflow: hidden; text-overflow: ellipsis; display: block; }
+
+/* drawer */
+.scrim { position: fixed; inset: 0; background: rgba(15,15,14,.45); backdrop-filter: blur(2px); opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 40; }
+.scrim.on { opacity: 1; pointer-events: auto; }
+.drawer { position: fixed; top: 50%; left: 50%; width: min(1040px, calc(100vw - 32px)); max-height: calc(100vh - 48px); background: var(--surface); z-index: 41; transform: translate(-50%, -48%) scale(.97); opacity: 0; pointer-events: none; transition: transform .2s cubic-bezier(.2,.8,.2,1), opacity .18s; border-radius: 18px; border: 1px solid var(--border); box-shadow: 0 30px 80px -20px rgba(0,0,0,.4); display: flex; flex-direction: column; overflow: hidden; }
+.drawer.on { transform: translate(-50%, -50%); opacity: 1; pointer-events: auto; }
+.drawer.narrow { width: min(720px, calc(100vw - 32px)); }
+.back-x { flex: none; align-self: flex-start; }
+.crumb { font-size: 12px; color: var(--text-faint); padding: 8px 20px 0; display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
+.crumb button { border: 0; background: none; padding: 0; color: var(--link); cursor: pointer; font-size: 12px; font-weight: 600; }
+.crumb button:hover { text-decoration: underline; }
+.crumb b { color: var(--text-strong); font-weight: 600; }
+.dtabs { padding: 0 20px; border-bottom: 1px solid var(--line); display: flex; gap: 4px; }
+.dtabs button { border: 0; background: none; padding: 10px 12px; font-weight: 700; font-size: 13.5px; color: var(--text-subtle); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.dtabs button.on { color: var(--ink); border-bottom-color: var(--ink); }
+.dtabs button small { font-weight: 600; color: var(--text-faint); margin-left: 4px; }
+.dcols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px 24px; }
+.dk.six { grid-template-columns: repeat(6, 1fr); }
+button.mini { text-align: left; cursor: pointer; font: inherit; color: inherit; transition: border-color .15s; }
+button.mini:hover { border-color: var(--border-hover); }
+button.mini.on { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.lnk { border: 0; background: none; padding: 0; font: inherit; color: var(--link); font-weight: 700; cursor: pointer; text-align: left; }
+.lnk:hover { text-decoration: underline; }
+.path { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; font-size: 12.5px; }
+.path .arr { color: var(--text-faint); }
+.route { display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; align-items: center; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-inset); margin-bottom: 6px; }
+.route.on { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.tfilter { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 4px 0 8px; font-size: 12.5px; color: var(--text-subtle); }
+.dbody .tablewrap, .dbody .tw { margin: 0; padding: 0; overflow-x: auto; }
+.dtable td, .dtable th { font-size: 12.5px; }
+.dtable th { cursor: default; position: static; }
+.dtable tr.on td { background: var(--primary-soft); }
+.share { display: inline-flex; width: 70px; height: 7px; border-radius: 99px; overflow: hidden; background: var(--track); vertical-align: 1px; margin-right: 6px; }
+.share i { display: block; height: 100%; }
+.mbars { display: flex; align-items: flex-end; gap: 8px; height: 90px; margin-top: 6px; }
+.mbars > div { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; gap: 1px; }
+.mbars i { display: block; border-radius: 3px 3px 0 0; }
+.mbars i + i { border-radius: 0; }
+.mini-kpis.four { grid-template-columns: repeat(4, 1fr); }
+.mbx { display: flex; gap: 8px; font-size: 11px; color: var(--text-faint); margin-top: 4px; } .mbx span { flex: 1; text-align: center; }
+.dhead { padding: 18px 20px 14px; border-bottom: 1px solid var(--line); display: flex; gap: 14px; align-items: center; }
+.dhead .av { width: 46px; height: 46px; font-size: 15px; }
+.dhead h2 { font-size: 21px; font-weight: 900; letter-spacing: -0.03em; }
+.dhead p { margin: 2px 0 0; font-size: 13px; color: var(--text-subtle); }
+.dbody { overflow-y: auto; padding: 16px 20px 40px; flex: 1; }
+.dbody h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--text-subtle); font-weight: 800; margin: 18px 0 8px; }
+.ring { --p: 0; --c: var(--good); width: 62px; height: 62px; border-radius: 50%; background: conic-gradient(var(--c) calc(var(--p) * 1%), var(--track) 0); display: grid; place-items: center; flex: none; }
+.ring b { width: 48px; height: 48px; border-radius: 50%; background: var(--surface); display: grid; place-items: center; font-weight: 900; font-size: 17px; color: var(--ink); }
+.dk { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.cmp { display: grid; grid-template-columns: 130px 1fr 60px; gap: 10px; align-items: center; font-size: 12.5px; padding: 4px 0; }
+.cmp .track { position: relative; height: 8px; background: var(--track); border-radius: 99px; }
+.cmp .track em { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: var(--blue); }
+.cmp .track u { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--ink); }
+.cmp b { text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; }
+.tl { list-style: none; margin: 0; padding: 0; position: relative; }
+.tl li { position: relative; padding: 0 0 12px 22px; font-size: 13px; }
+.tl li::before { content: ""; position: absolute; left: 5px; top: 6px; bottom: -6px; width: 2px; background: var(--line); }
+.tl li:last-child::before { display: none; }
+.tl li i { position: absolute; left: 0; top: 4px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--border); }
+.tl li b { color: var(--ink); }
+.tl li small { display: block; color: var(--text-subtle); font-size: 12px; }
+.olist { display: grid; gap: 6px; }
+.oitem { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; cursor: pointer; background: var(--surface-inset); }
+.oitem:hover { border-color: var(--border-hover); }
+.oitem b { color: var(--ink); font-size: 13px; }
+.oitem small { color: var(--text-subtle); font-size: 12px; }
+.close-x { margin-left: auto; align-self: flex-start; }
+.kv { display: grid; grid-template-columns: minmax(140px, 1fr) auto; gap: 6px 12px; font-size: 13px; }
+.kv span { color: var(--text-subtle); }
+.kv b { color: var(--ink); font-weight: 600; }
+
+.toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--ink); color: var(--surface); padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 13.5px; opacity: 0; transition: .25s; pointer-events: none; z-index: 60; }
+.toast.on { opacity: 1; transform: translateX(-50%); }
+.note { font-size: 12.5px; color: var(--text-subtle); border-top: 1px solid var(--line); margin-top: 12px; padding-top: 10px; }
+.note b { color: var(--text-strong); }
+
+@media (max-width: 1100px), (max-height: 820px) { .fbar { position: static; } }
+@media (max-width: 1240px) { .kpis { grid-template-columns: repeat(4, 1fr); } .pipe { grid-template-columns: repeat(4, minmax(0,1fr)); row-gap: 10px; } .pipe .gap { display: none; } .ptile, .ptile.closed { margin-right: 10px; } .ptile .arrow { display: none; } }
+@media (max-width: 1100px) { .grid3 { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } .lead { grid-template-columns: 1fr; } .dcols { grid-template-columns: minmax(0, 1fr); } .dk.six { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 720px) {
+  .topbar .in { padding: 0 16px; gap: 8px; } .brand small, .hide-sm { display: none; }
+  main { padding: 18px 16px 80px; }
+  .kpis { grid-template-columns: 1fr 1fr; } .ttiles { grid-template-columns: 1fr; } .tabs button { padding-right: 6px; margin-right: 8px; } .tabs button small { display: none; } .pipe { grid-template-columns: 1fr 1fr; }
+  .fbar { position: static; } .fs select, .fs input { min-width: 0; width: 100%; } .fs { flex: 1 1 140px; }
+  .hrow { grid-template-columns: 96px 1fr 70px; }
+  .tablewrap { margin: 0 -18px; }
+  .mini-kpis, .mini-kpis.four, .dk, .dk.six { grid-template-columns: 1fr 1fr; }
+  .drawer { width: calc(100vw - 16px); max-height: calc(100vh - 16px); border-radius: 14px; } .dhead, .dbody { padding-left: 14px; padding-right: 14px; } .dhead .av { display: none; } .dhead h2 { font-size: 18px; } .dtabs { padding: 0 8px; overflow-x: auto; }
+  .cmp { grid-template-columns: 100px 1fr 50px; }
+}
+@media print { .topbar, .fbar, .actions, .tfoot button { display: none !important; } body { background: #fff; } .card, .kpi { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<header class="topbar"><div class="in">
+  <div class="mark">UT</div>
+  <div class="brand">Unified Tax and Tasks<small>Directorate of Commercial Taxes · West Bengal</small></div>
+  <span class="demo-flag">Demo data</span>
+  <span class="sp"></span>
+  <button class="icon-btn" id="themeBtn" title="Light or dark" aria-label="Switch light or dark"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+  <div class="who"><span class="av">L0</span><span class="hide-sm">Commissioner</span></div>
+</div></header>
+
+<main>
+  <div class="head">
+    <div>
+      <div class="crumbs">Unified Tax and Tasks · <b>Commissioner (L0)</b></div>
+      <h1 class="page-title" id="pageTitle">Overview.</h1>
+      <p class="page-sub" id="asof"></p>
+    </div>
+    <span class="sp"></span>
+    <div class="actions">
+      <button class="btn" id="bCsv"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>Officer table (CSV)</button>
+      <button class="btn" id="bPrint"><svg viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M8 14h8v7H8z"/></svg>Print</button>
+    </div>
+  </div>
+
+  <nav class="tabs" id="tabs" aria-label="Dashboards">
+    <button data-tab="ov" class="on"><b>Overview</b><small>Key figures at a glance</small></button>
+    <button data-tab="tax"><b>Tax Track</b><small>Revenue mobilised through tasks</small></button>
+    <button data-tab="task"><b>Task Track</b><small>Officer and circle performance</small></button>
+    <button data-tab="allot"><b>Task Allocation</b><small>Who allots, how and how fast</small></button>
+    <button data-tab="all"><b>Master Dashboard</b><small>Everything on one page</small></button>
+  </nav>
+
+  <section class="fbar">
+    <div class="frow">
+      <label class="fs grow"><span>Search</span><input id="fq" placeholder="Officer, GSTIN or trade name"></label>
+      <label class="fs"><span>Task type</span><select id="ftype"></select></label>
+      <label class="fs"><span>Circle</span><select id="fcircle"></select></label>
+      <label class="fs"><span>Charge</span><select id="fcharge"></select></label>
+      <label class="fs"><span>Officer level</span><select id="flevel"><option value="">L3 and L4</option><option value="3">L3 Dy./Asst. Commissioner</option><option value="4">L4 CTO / ACTO</option></select></label>
+      <label class="fs"><span>Allotment</span><select id="fmethod"><option value="">Manual and round robin</option><option value="M">Manual</option><option value="RR">Round robin</option></select></label>
+      <div class="fs"><span>Allotted in</span><div class="seg" id="fperiod"><button data-v="fy" class="on">FY 2026-27</button><button data-v="q3">Since Oct</button><button data-v="d30">Last 30 days</button></div></div>
+    </div>
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <div class="tab" data-tab="ov">
+  <h2 class="tabhead">Overview</h2>
+  <section class="kpis" id="kpis"></section>
+  <div class="grid3" id="ovPanels"></div>
+  <div class="grid2">
+  <section class="card">
+    <div class="card-h"><h2>Circles at a glance</h2><div class="sub">Ranked by amount realised. Click a circle to filter all tabs.</div></div>
+    <div class="tablewrap"><table id="ovCirc"></table></div>
+  </section>
+      <section class="card trend">
+      <div class="card-h"><h2>Month-wise flow</h2><span class="sp"></span>
+        <div class="sub legend"><span><i style="background:var(--s2)"></i>Allotted</span><span><i style="background:var(--good)"></i>Disposed</span><span><i style="background:var(--violet);height:3px;border-radius:2px"></i>Realised (₹ crore, right scale)</span></div></div>
+      <div id="trend"></div>
+    </section>
+  </div>
+  </div>
+
+  <div class="tab" data-tab="tax">
+  <h2 class="tabhead">Tax Track · revenue mobilised through tasks</h2>
+  <section class="card">
+    <div class="card-h"><h2>Task type performance</h2><span class="sp"></span><span class="legend"><span><i style="background:var(--s2)"></i>Amount involved</span><span><i style="background:var(--warn)"></i>Demand raised (DRC-07)</span><span><i style="background:var(--good)"></i>Realised</span></span>
+      <div class="sub">Pick a task type to see the whole page for that type only. Ranked by amount realised.</div></div>
+    <div class="ttiles" id="ttiles"></div>
+  </section>
+  <section class="kpis" id="taxK"></section>
+  <div class="grid2">
+    <section class="card">
+      <div class="card-h"><h2>Where the amount stands</h2><span class="sp"></span><span class="legend"><span><i style="background:var(--s3)"></i>Within SLA</span><span><i style="background:var(--bad)"></i>Overdue</span></span>
+        <div class="sub">Amount involved in pending tasks at each stage, then the outcome of disposed tasks. Click a stage to filter.</div></div>
+      <div id="amtStage"></div>
+      <div class="note" id="amtNote"></div>
+    </section>
+    <section class="card trend">
+      <div class="card-h"><h2>Month-wise demand and realisation</h2><span class="sp"></span>
+        <div class="sub legend"><span><i style="background:var(--warn)"></i>Demand raised (DRC-07)</span><span><i style="background:var(--good)"></i>Realised</span><span>₹ crore</span></div></div>
+      <div id="revTrend"></div>
+    </section>
+  </div>
+  <section class="card">
+    <div class="card-h"><h2 id="revTitle">Circle-wise revenue from tasks</h2><span class="sp"></span><span class="faint" id="revHint"></span>
+      <div class="sub">Amounts in the tasks of each circle and how much has been realised. Click a column to sort, a circle to see its charges.</div></div>
+    <div class="tablewrap"><table id="rev"></table></div>
+  </section>
+  </div>
+
+  <div class="tab" data-tab="task">
+  <h2 class="tabhead">Task Track · officer and circle performance</h2>
+  <section class="card">
+    <div class="card-h"><h2>Stage pipeline</h2><span class="sp"></span><span class="legend"><span><i style="background:var(--bad)"></i>Overdue (past the SLA of the stage)</span></span>
+      <div class="sub">Tasks now at each stage. The figure between two stages is the share of tasks that moved on. Click a stage to filter.</div></div>
+    <div class="pipe" id="pipe"></div>
+    <div class="pipe-foot" id="pipeFoot"></div>
+  </section>
+
+  <section class="card">
+    <div class="card-h"><h2 id="matTitle">Officer-wise, stage-wise</h2><span class="sp"></span>
+      <div class="seg" id="cellBy" title="What the stage cells show"><button data-v="n" class="on">Tasks</button><button data-v="amt">₹ Amount</button></div>
+      <div class="seg" id="groupBy"><button data-v="officer" class="on">Officer</button><button data-v="charge">Charge</button><button data-v="circle">Circle</button></div>
+      <div class="sub" id="matSub">Open tasks at each stage, then outcomes. Switch to ₹ Amount to see the amount involved at each stage. Darker cells hold more. Click a row for the full profile.</div></div>
+    <div class="tablewrap"><table id="mat"></table></div>
+    <div class="tfoot"><span class="faint" id="matCount"></span><span class="sp"></span><button class="btn sm" id="matMore">Show 25 more</button><button class="btn sm ghost" id="matAll">Show all</button></div>
+    <div class="note"><b>Score (0 to 100)</b> = 35% disposal rate + 25% timeliness (share of tasks not overdue) + 25% realisation (amount realised ÷ dues established) + 15% speed (State median days to dispose ÷ the officer's). Shown for officers with at least 8 tasks.</div>
+  </section>
+
+  <div class="grid2">
+    <section class="card">
+      <div class="card-h"><h2 id="circTitle">Circle-wise stage mix</h2><span class="sp"></span><span class="faint" id="circHint">Click a circle to see its charges</span>
+        <div class="sub legend" id="mixLegend"></div></div>
+      <div id="circ"></div>
+    </section>
+    <section class="card">
+      <div class="card-h"><h2>Ageing of open tasks</h2>
+        <div class="sub legend"><span><i style="background:var(--good)"></i>Within SLA</span><span><i style="background:#e8a24a"></i>Overdue ≤ 30 days</span><span><i style="background:var(--warn)"></i>31–90 days</span><span><i style="background:var(--bad)"></i>Over 90 days</span></div></div>
+      <div id="age"></div>
+      <div class="note" id="ageNote"></div>
+    </section>
+  </div>
+
+  <section class="card">
+      <div class="card-h"><h2>Best and weakest officers</h2><div class="sub">By score, in the present selection (at least 8 tasks).</div></div>
+      <div class="lead" id="lead"></div>
+    </section>
+
+  <section class="card">
+    <div class="card-h"><h2>Task register</h2><span class="sp"></span>
+      <label class="fs" style="flex-direction:row;align-items:center;gap:6px;font-size:13px;font-weight:600"><input type="checkbox" id="fod" style="width:16px;height:16px;min-width:0"> Overdue only</label>
+      <button class="btn sm" id="bTaskCsv"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>CSV</button>
+      <div class="sub">Every task in the selection, with who allotted it and by which method. Click a row for its history.</div></div>
+    <div class="tablewrap"><table id="reg"></table></div>
+    <div class="tfoot"><span class="faint" id="regCount"></span><span class="sp"></span><button class="btn sm" id="regPrev">‹ Previous</button><button class="btn sm" id="regNext">Next ›</button></div>
+  </section>
+  </div>
+
+  <div class="tab" data-tab="allot">
+  <h2 class="tabhead">Task Allocation · who allots, how and how fast</h2>
+  <div class="grid2">
+    <section class="card">
+      <div class="card-h"><h2>How tasks were allotted</h2><div class="sub">By the level of the officer who made the last allotment.</div></div>
+      <div class="mini-kpis" id="allotK"></div>
+      <div id="allotBars"></div>
+      <h3 style="font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-subtle);margin:16px 0 0">Open tasks per L4 officer</h3>
+      <div class="hist" id="hist"></div><div class="hist-x" id="histX"></div>
+    </section>
+    <section class="card">
+      <div class="card-h"><h2>Routes tasks take</h2><div class="sub">The chain of allotments from upload to the officer who works the task, by level and method. Days: median from upload to reaching that officer.</div></div>
+      <div class="tablewrap"><table id="routes"></table></div>
+    </section>
+  </div>
+
+  <section class="card" id="allotCard">
+    <div class="card-h"><h2>Who allots and how</h2><span class="sp"></span>
+      <div class="seg" id="alvSeg"><button data-v="" class="on">All levels</button><button data-v="0">L0</button><button data-v="1">L1</button><button data-v="2">L2</button><button data-v="3">L3</button></div>
+      <div class="seg" id="ahSeg"><button data-v="" class="on">All</button><button data-v="rr">Mostly round robin</button><button data-v="mix">Both</button><button data-v="m">Mostly manual</button></div>
+      <div class="sub">Every officer who allotted tasks in the selection and the method used. Click a row to see that officer's allotments: to whom, how and with what result.</div></div>
+    <div class="mini-kpis four" id="alK"></div>
+    <div class="tablewrap"><table id="allotters"></table></div>
+    <div class="tfoot"><span class="faint" id="alCount"></span><span class="sp"></span><button class="btn sm" id="alMore">Show 20 more</button></div>
+  </section>
+
+  <section class="card">
+    <div class="card-h"><h2>Round robin batches</h2><span class="sp"></span><span class="faint" id="batchCount"></span>
+      <div class="sub">Latest first. Each batch is one round robin run by one officer. Click a batch to see its tasks in that officer's profile.</div></div>
+    <div class="tablewrap"><table id="batches"></table></div>
+    <div class="tfoot"><span class="sp"></span><button class="btn sm" id="batchMore">Show 15 more</button></div>
+  </section>
+  </div>
+  <p class="faint">Demo built on made-up officers, GSTINs and amounts. Circle and charge names as in the DCT GSTR-3B summary. Amounts in ₹ lakh (L) or ₹ crore (cr).</p>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true"></aside>
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+'use strict';
+/* ============ constants ============ */
+const CIRCLES = {"24 PARGANAS":[["BARASAT",39638],["BARRACKPORE",32584],["BELGACHHIA",2625],["COSSIPUR",6700],["SALT LAKE",37212],["ULTADANGA",4755]],"ASANSOL":[["ASANSOL",15722],["PURULIA",11509]],"BAHARAMPUR":[["BAHARAMPUR",44276],["KRISHNANAGAR",31139]],"BALLY":[["BALLY",9596],["SALKIA",5371],["SRIRAMPUR",39650]],"BEHALA":[["ALIPORE",9528],["BARUIPUR",26345],["BEHALA",24717],["BUDGE BUDGE",18853],["DIAMOND HARBOUR",13280]],"BURRABAZAR":[["CHINABAZAR",1175],["MONOHARKATRA",1636],["N.S.ROAD",1967],["RAJAKATRA",2337],["STRAND ROAD",2906]],"CHOWRANGHEE":[["ESPLANADE",3657],["FAIRLEY PLACE",1495],["LALBAZAR",2548],["LYONS RANGE",1176],["N.D.SARANI",792],["RADHABAZAR",1123]],"DHARMATALA":[["AMRATALA",2088],["ARMENIAN STREET",2911],["BOWBAZAR",5502],["CHANDNI CHAWK",2818],["COLLEGE STREET",1657],["COLOOTOLA",3074],["EZRA STREET",2413],["PRINCEP STREET",1213],["SEALDAH",3196]],"DURGAPORE":[["BANKURA",15264],["BARDHAMAN",24978],["DURGAPORE",15433],["SURI",21942]],"HOWRAH":[["HOWRAH",19103],["KADAMTALA",5294],["SHIBPUR",35815]],"JALPAIGURI":[["COOCH BEHAR",20854],["JALPAIGURI",12904]],"KOLKATA NORTH":[["BEADON STREET",3245],["BURTOLA",2471],["JORABAGAN",2791],["JORASANKO",3633],["MANICKTOLA",3411],["POSTABAZAR",3450],["SHYAMBAZAR",4234]],"KOLKATA SOUTH":[["BALLYGUNGE",27840],["BELIAGHATA",6803],["BHABANIPUR",7852],["NEW MARKET",2070],["PARK STREET",9836],["TALTALA",3808]],"LARGE TAXPAYER UNIT":[["LARGE TAXPAYER UNIT",1308]],"MEDINIPUR":[["MIDNAPORE",30590],["TAMLUK",34351]],"RAIGANJ":[["BALURGHAT",7682],["MALDAH",24621],["RAIGANJ",13202]],"SILIGURI":[["DARJEELING",4044],["SILIGURI",28186]]};
+const TYPES = [
+  { k: 'SCR', name: 'Return scrutiny', w: .24, amt: 1 },
+  { k: 'AUD', name: 'Departmental audit', w: .06, amt: 2.4 },
+  { k: 'R7',  name: 'GSTR-7 vs GSTR-3B', w: .12, amt: .8 },
+  { k: 'UPI', name: 'UPI receipts vs turnover', w: .12, amt: .6 },
+  { k: 'IGR', name: 'IGST credit reversal', w: .10, amt: 1.5 },
+  { k: 'INT', name: 'Interest on late GSTR-3B', w: .14, amt: .35 },
+  { k: 'R13', name: 'GSTR-1 vs GSTR-3B gap', w: .11, amt: 1.1 },
+  { k: 'ITC', name: 'Excess ITC (3B vs 2B)', w: .11, amt: 1.3 },
+];
+const TYPE = Object.fromEntries(TYPES.map(t => [t.k, t]));
+const STAGES = [null,
+  { name: 'Allotted', short: 'Allotted', sla: 7, c: 'var(--s1)' },
+  { name: 'Under examination', short: 'Exam.', sla: 30, c: 'var(--s2)' },
+  { name: 'ASMT-10 issued', short: 'ASMT-10', sla: 30, c: 'var(--s3)' },
+  { name: 'Reply received', short: 'Reply', sla: 15, c: 'var(--s4)' },
+  { name: 'DRC-01A issued', short: 'DRC-01A', sla: 30, c: 'var(--s5)' },
+  { name: 'DRC-01 issued', short: 'DRC-01', sla: 90, c: 'var(--s6)' },
+  { name: 'DRC-07 issued', short: 'DRC-07', sla: 90, c: 'var(--s7)' },
+  { name: 'Amount realised', short: 'Realised', closed: true, c: 'var(--s8)' },
+  { name: 'Closed, no dues', short: 'Closed', closed: true, c: 'var(--s9)' },
+  { name: 'Moved to appeal', short: 'Appeal', closed: true, c: 'var(--s10)' },
+];
+const OPEN = [1, 2, 3, 4, 5, 6, 7], SHUT = [8, 9, 10];
+const MIX = [ // stage groups for the circle chart
+  { k: 'ns', name: 'Not started', st: [1], c: 'var(--s1)' },
+  { k: 'ex', name: 'Examination', st: [2], c: 'var(--s2)' },
+  { k: 'no', name: 'ASMT-10 / reply', st: [3, 4], c: 'var(--s3)' },
+  { k: 'sc', name: 'DRC-01A / DRC-01', st: [5, 6], c: 'var(--s5)' },
+  { k: 'de', name: 'DRC-07', st: [7], c: 'var(--s7)' },
+  { k: 'ds', name: 'Disposed', st: [8, 9, 10], c: 'var(--s8)' },
+];
+const FY0 = Date.UTC(2026, 3, 1), DAY = 864e5, TN = Math.round((Date.UTC(2026, 10, 20) - FY0) / DAY);
+const MONTHS = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'];
+
+/* ============ seeded random ============ */
+let seed = 20261120;
+const R = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+const ri = (a, b) => a + Math.floor(R() * (b - a + 1));
+const pick = a => a[Math.floor(R() * a.length)];
+const gauss = () => { let u = 0, v = 0; while (!u) u = R(); while (!v) v = R(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const wpick = (arr, wf) => { const tot = arr.reduce((s, x) => s + wf(x), 0); let r = R() * tot; for (const x of arr) { r -= wf(x); if (r <= 0) return x; } return arr[arr.length - 1]; };
+
+/* ============ officers ============ */
+const FIRST = ['Ananya','Sayan','Rituparna','Arindam','Debjani','Sourav','Moumita','Kaushik','Paromita','Subhajit','Tanushree','Abhishek','Sudeshna','Rajarshi','Payel','Sandip','Mithu','Aniruddha','Sreyashi','Partha','Indrani','Tapas','Shampa','Soumya','Rupsha','Biswajit','Nandini','Amitava','Chandrima','Dipankar','Koel','Prosenjit','Madhurima','Saikat','Ishita','Jayanta','Sharmistha','Arnab','Poulami','Ranjan','Swati','Suman','Lopamudra','Debashis','Tanmoy','Sohini','Animesh','Rimjhim','Pritam','Atanu','Bidisha','Kunal','Esha','Shubhankar','Arpita','Niladri','Mousumi','Gautam','Sanchita','Avik'];
+const LAST = ['Mukherjee','Banerjee','Chatterjee','Ghosh','Bose','Dutta','Sen','Das','Roy','Sarkar','Bhattacharya','Ganguly','Chakraborty','Majumdar','Saha','Mitra','Pal','Mondal','Biswas','Nandi','Haldar','Dey','Kundu','Sinha','Basu','Guha','Lahiri','Sanyal','Bhowmick','Adhikari'];
+const usedNames = new Set();
+function newName() { let n; do { n = pick(FIRST) + ' ' + pick(LAST); } while (usedNames.has(n)); usedNames.add(n); return n; }
+const OFF = []; let oid = 0;
+function addOfficer(lv, desig, circle, charge) {
+  const o = { id: ++oid, lv, desig, circle, charge, name: newName(), skill: clamp(1 + gauss() * 0.24, 0.5, 1.5) };
+  OFF.push(o); return o;
+}
+const L0 = addOfficer(0, 'Commissioner', 'Directorate', 'Directorate'); L0.name = 'Commissioner, CT';
+const L1s = [addOfficer(1, 'Special Commissioner', 'Directorate', 'Directorate'), addOfficer(1, 'Addl. Commissioner', 'Directorate', 'Directorate'), addOfficer(1, 'Addl. Commissioner', 'Directorate', 'Directorate')];
+const byCircle = {}, byCharge = {};
+Object.entries(CIRCLES).forEach(([c, chs]) => {
+  const tpSum = chs.reduce((s, x) => s + x[1], 0);
+  byCircle[c] = { L2: addOfficer(2, tpSum > 60000 ? 'Sr. Jt. Commissioner' : 'Jt. Commissioner', c, '') };
+  chs.forEach(([ch, tp]) => {
+    const L3 = addOfficer(3, R() < .55 ? 'Dy. Commissioner' : 'Asst. Commissioner', c, ch);
+    const k = c === 'LARGE TAXPAYER UNIT' ? 4 : clamp(1 + Math.round(tp / 14000), 1, 4);
+    const L4 = []; for (let i = 0; i < k; i++) L4.push(addOfficer(4, R() < .7 ? 'CTO' : 'ACTO', c, ch));
+    byCharge[c + '|' + ch] = { c, ch, tp, L3, L4 };
+  });
+});
+const OBY = Object.fromEntries(OFF.map(o => [o.id, o]));
+// allotting habits: a separate random stream so officer names stay the same
+let seed2 = 7051; const R2 = () => { seed2 = (seed2 * 1664525 + 1013904223) >>> 0; return seed2 / 4294967296; };
+OFF.forEach(o => { const r = R2(); o.rrPref = r < .3 ? .25 + R2() * .3 : r < .75 ? .8 + R2() * .4 : 1.35 + R2() * .3; o.lag = .35 + Math.pow(R2(), 1.6) * 2.6; });
+L0.rrPref = 1.1; L0.lag = .6;
+// same officer, same day received → same day passed on (so a batch is allotted together)
+const hr = (a, b) => { const x = Math.sin(a * 12.9898 + b * 78.233) * 43758.5453; return x - Math.floor(x); };
+const rrP = (o, base) => clamp(base * o.rrPref, .03, .96);
+
+/* ============ tasks ============ */
+const TN1 = ['Sri Durga','Maa Tara','Ganapati','Bengal','Eastern','Hooghly','Gangasagar','Annapurna','Shyam','Laxmi','Rupali','Sonar Bangla','Tirupati','Kalinga','Sunrise','Royal','Bharat','Mahamaya','Joy Guru','Basundhara','Shree Balaji','Tribeni','Nabadiganta','Rishra','Anandamoyee','Brahmaputra','Teesta','Damodar','Uttarayan','Swastik'];
+const TN2 = ['Traders','Enterprises','Steel','Agro Foods','Textiles','Logistics','Hardware','Pharma','Infra Projects','Electricals','Builders','Cold Storage','Tea Co.','Jute Mills','Plastics','Ispat','Motors','Paper Mills','Chemicals','Rice Mill','Sweets','Ceramics','Polymers','Exports'];
+const TN3 = ['', '', '', ' Pvt Ltd', ' Pvt Ltd', ' LLP', ' & Co.', ' Ltd'];
+const AL = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+const gstin = () => '19' + Array.from({ length: 5 }, () => pick(AL)).join('') + String(ri(1000, 9999)) + pick(AL) + ri(1, 3) + 'Z' + pick('0123456789ABCDEF');
+const refNo = d => 'ZD19' + fmtD(d).replace(/-/g, '').slice(0, 4) + fmtD(d).slice(-2) + String(ri(0, 999999)).padStart(7, '0');
+// upload batches: tasks arrive in waves
+const BATCH_DAYS = []; for (let d = 2; d < TN - 3; d += ri(4, 11)) BATCH_DAYS.push(d);
+const TASKS = []; let tid = 0, rrSeq = 0; const rrMap = {};
+function rrBatch(by, d, lv) { const k = by.id + '|' + d + '|' + lv; if (!rrMap[k]) { rrSeq++; const m = new Date(FY0 + d * DAY).getUTCMonth() + 1; rrMap[k] = 'RR-2026-' + String(m).padStart(2, '0') + '-' + String(rrSeq).padStart(4, '0'); } return rrMap[k]; }
+
+Object.values(byCharge).forEach(ch => {
+  const ltu = ch.c === 'LARGE TAXPAYER UNIT';
+  const n = ltu ? 150 : Math.round(26 + Math.sqrt(ch.tp) * 0.42);
+  for (let i = 0; i < n; i++) {
+    const type = wpick(TYPES, t => t.w).k;
+    // later batches are a bit bigger (the system is new)
+    const created = wpick(BATCH_DAYS, d => 0.6 + d / TN);
+    const hold = R() < .16 ? ch.L3 : pick(ch.L4);
+    // allotment chain
+    const creatorLv = R() < .6 ? 0 : R() < .5 ? 1 : 2;
+    const creator = creatorLv === 0 ? L0 : creatorLv === 1 ? pick(L1s) : byCircle[ch.c].L2;
+    const chain = []; let d = created;
+    const step = (from, to, method) => { R(); d += Math.floor(hr(from.id, d) * 5 * from.lag); if (d > TN) d = TN; chain.push({ from: from.id, to: to.id, method, d, rr: method === 'RR' ? rrBatch(from, d, to.lv) : null }); };
+    if (hold.lv === 3) {
+      if (creatorLv < 2 && R() < .5) step(creator, hold, R() < rrP(creator, .7) ? 'RR' : 'M');
+      else { if (creatorLv < 2) step(creator, byCircle[ch.c].L2, 'M'); step(byCircle[ch.c].L2, hold, R() < rrP(byCircle[ch.c].L2, .7) ? 'RR' : 'M'); }
+    } else {
+      const r = R();
+      if (creatorLv === 0 && r < .28) step(L0, hold, 'RR');                                   // L0 straight to CTOs by round robin
+      else if (r < .55) { if (creatorLv < 2) step(creator, byCircle[ch.c].L2, 'M'); step(byCircle[ch.c].L2, hold, R() < rrP(byCircle[ch.c].L2, .7) ? 'RR' : 'M'); }
+      else { if (creatorLv < 2) step(creator, byCircle[ch.c].L2, R() < rrP(creator, .5) ? 'RR' : 'M'); step(byCircle[ch.c].L2, ch.L3, 'M'); step(ch.L3, hold, R() < rrP(ch.L3, .6) ? 'RR' : 'M'); }
+    }
+    const last = chain[chain.length - 1];
+    const amt = Math.round(Math.exp(1.25 + gauss() * 1.05) * TYPE[type].amt * (ltu ? 6 : 1) * 100) / 100;
+    const t = { id: 'T26-' + String(++tid).padStart(5, '0'), gstin: gstin(), trade: pick(TN1) + ' ' + pick(TN2) + pick(TN3), type, c: ch.c, ch: ch.ch, off: hold.id, created, chain,
+      by: last.from, method: last.method, rr: last.rr, allot: last.d, amt, period: pick(['Apr–Jun 2024', 'Jul–Sep 2024', 'Oct–Dec 2024', 'Jan–Mar 2025', 'FY 2023-24', 'FY 2024-25']) };
+    simulate(t, hold);
+    TASKS.push(t);
+  }
+});
+
+function simulate(t, o) {
+  const s = o.skill, lazy = Math.pow(s, -2.4);
+  let d = t.allot, st = 1; const ev = []; t.paid = 0; t.demand = 0;
+  // some files sit idle, more so with slower officers
+  const stall = () => R() < 0.2 * (1.6 - s) ? 2.5 + R() * 3 : 1;
+  const go = (ns, days, x) => { const nd = d + Math.max(1, Math.round(days * stall())); if (nd > TN) return false; d = nd; st = ns; ev.push(Object.assign({ st: ns, d: nd }, x || {})); if (x && x.amt && !x.demand) t.paid += x.amt; return true; };
+  const pay = (base, f0, f1) => ({ amt: Math.round(base * (f0 + R() * (f1 - f0)) * 100) / 100 });   // counted only once the step happens
+  const fin = () => {
+    t.stage = st; t.since = ev.length ? ev[ev.length - 1].d : t.allot; t.ev = ev;
+    t.closed = !!STAGES[st].closed; t.closedOn = t.closed ? d : null;
+    t.inStage = TN - t.since; t.overdue = !t.closed && t.inStage > STAGES[st].sla; t.over = t.overdue ? t.inStage - STAGES[st].sla : 0;
+    t.est = t.demand ? Math.max(t.demand, t.paid) : t.paid;   // dues established
+  };
+  if (!go(2, (1 + R() * 9) * lazy)) return fin();
+  if (t.type === 'INT') {
+    if (R() < .12) { go(9, (5 + R() * 20) / s, { note: 'Interest already paid' }); return fin(); }
+    if (!go(5, (4 + R() * 18) * lazy, { ref: 1 })) return fin();
+  } else {
+    if (R() < .2) { go(9, (8 + R() * 30) / s, { note: 'Dropped after examination' }); return fin(); }
+    if (!go(3, (8 + R() * 34) * lazy, { ref: 1 })) return fin();
+    const r = R();
+    if (r < .15 * s) { go(8, 12 + R() * 25, Object.assign(pay(t.amt, .6, 1), { note: 'Paid by DRC-03 after ASMT-10' })); return fin(); }
+    if (r < .7) {
+      if (!go(4, 10 + R() * 25)) return fin();
+      const r2 = R();
+      if (r2 < .42) { go(9, (4 + R() * 20) * lazy, { note: 'Reply accepted, ASMT-12 issued' }); return fin(); }
+      if (r2 < .55) { go(8, 5 + R() * 20, Object.assign(pay(t.amt, .5, 1), { note: 'Paid by DRC-03 after reply' })); return fin(); }
+      if (!go(R() < .55 ? 5 : 6, (5 + R() * 25) * lazy, { ref: 1 })) return fin();
+    } else if (!go(R() < .6 ? 5 : 6, (32 + R() * 25) * lazy, { ref: 1, note: 'No reply to ASMT-10' })) return fin();
+  }
+  if (st === 5) {
+    if (R() < .3 * s) { go(8, 8 + R() * 30, Object.assign(pay(t.amt, .7, 1.05), { note: 'Paid in full after DRC-01A' })); return fin(); }
+    if (!go(6, (15 + R() * 30) * lazy, { ref: 1 })) return fin();
+  }
+  const r3 = R();
+  if (r3 < .1) { go(9, (30 + R() * 60) / s, { note: 'Dropped after hearing' }); return fin(); }
+  if (r3 < .2) { go(8, 20 + R() * 40, Object.assign(pay(t.amt, .8, 1.1), { note: 'Paid before order' })); return fin(); }
+  const dem = Math.round(t.amt * (0.8 + R() * 0.45) * 100) / 100;
+  if (!go(7, (30 + R() * 80) * lazy, { ref: 1, amt: dem, demand: true })) return fin();
+  t.demand = dem;
+  const r4 = R();
+  if (r4 < .42 * s) go(8, 15 + R() * 90, Object.assign(pay(dem, .55, 1), { note: 'Realised against DRC-07' }));
+  else if (r4 < .42 * s + .28) go(10, 25 + R() * 60, { note: 'APL-01 filed by the taxpayer' });
+  else if (R() < .4) { const pd = d + Math.round(10 + R() * 50); const pp = pay(dem, .15, .45); if (pd <= TN) { t.paid += pp.amt; ev.push(Object.assign({ st: 7, d: pd, part: true, note: 'Part payment' }, pp)); } }
+  return fin();
+}
+// form references, made after the dates are known
+TASKS.forEach(t => t.ev.forEach(e => { if (e.ref) e.ref = refNo(e.d); }));
+// every allotment step, with the days the allotter held the task before passing it on
+const STEPS = [], STEPS_BY = {};
+TASKS.forEach(t => { t.steps = t.chain.map((c, i) => { const got = i ? t.chain[i - 1].d : t.created; const s = { t, from: c.from, to: c.to, method: c.method, d: c.d, rr: c.rr, hold: c.d - got }; STEPS.push(s); (STEPS_BY[c.from] = STEPS_BY[c.from] || []).push(s); return s; }); });
+
+/* ============ helpers ============ */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function fmtD(d) { const x = new Date(FY0 + d * DAY); return String(x.getUTCDate()).padStart(2, '0') + '-' + String(x.getUTCMonth() + 1).padStart(2, '0') + '-' + x.getUTCFullYear(); }
+const n0 = x => Math.round(x).toLocaleString('en-IN');
+const pct = (a, b) => b ? Math.round(a * 100 / b) : 0;
+const money = l => l >= 100 ? '₹' + (l / 100).toLocaleString('en-IN', { maximumFractionDigits: l >= 10000 ? 0 : 1, minimumFractionDigits: l >= 10000 ? 0 : 1 }) + ' cr' : '₹' + l.toFixed(1) + ' L';
+const med = a => { if (!a.length) return null; const s = a.slice().sort((x, y) => x - y), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
+const initials = n => n.split(' ').filter(Boolean).map(w => w[0]).slice(0, 2).join('').toUpperCase();
+const title = s => s.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()).replace(/\bLtu\b/, 'LTU').replace(/N\.s\./i, 'N.S.').replace(/N\.d\./i, 'N.D.');
+const oLabel = o => o.lv <= 1 ? o.desig : o.desig + ' ' + o.name;
+const offShort = o => o.lv === 0 ? 'Commissioner' : o.lv === 1 ? o.desig + ' ' + o.name.split(' ')[1] : o.name;
+const scoreColor = s => s >= 70 ? 'var(--good)' : s >= 50 ? 'var(--warn)' : 'var(--bad)';
+function toast(m) { const t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toast.h); toast.h = setTimeout(() => t.classList.remove('on'), 2400); }
+
+/* ============ state ============ */
+const F = { q: '', type: '', circle: '', charge: '', level: '', method: '', period: 'fy', stage: 0, od: false, kpi: '' };
+const V = { tab: 'ov', revSort: { k: 'paid', dir: -1 }, bShown: 15, alv: '', ah: '', alShown: 20, alSort: { k: 'n', dir: -1 }, cell: 'n', group: 'officer', sort: { k: 'score', dir: -1 }, shown: 25, regPage: 0, regSort: { k: 'over', dir: -1 } };
+const PSTART = { fy: 0, q3: Math.round((Date.UTC(2026, 9, 1) - FY0) / DAY), d30: TN - 30 };
+function pass(t, skip) {
+  if (t.allot < PSTART[F.period]) return false;
+  if (skip !== 'type' && F.type && t.type !== F.type) return false;
+  if (skip !== 'circle' && F.circle && t.c !== F.circle) return false;
+  if (skip !== 'circle' && F.charge && t.ch !== F.charge) return false;
+  if (F.level && String(OBY[t.off].lv) !== F.level) return false;
+  if (F.method && t.method !== F.method) return false;
+  if (F.q) { const q = F.q.toLowerCase(), o = OBY[t.off]; if (!(o.name.toLowerCase().includes(q) || t.gstin.toLowerCase().includes(q) || t.trade.toLowerCase().includes(q) || t.id.toLowerCase().includes(q))) return false; }
+  if (skip !== 'stage' && F.stage && t.stage !== F.stage) return false;
+  if (skip !== 'kpi' && F.kpi === 'overdue' && !t.overdue) return false;
+  if (skip !== 'kpi' && F.kpi === 'pending' && t.closed) return false;
+  if (skip !== 'kpi' && F.kpi === 'disposed' && !t.closed) return false;
+  if (skip !== 'kpi' && F.kpi === 'demand' && !t.demand) return false;
+  if (skip !== 'kpi' && F.kpi === 'realised' && !t.paid) return false;
+  return true;
+}
+const view = skip => TASKS.filter(t => pass(t, skip));
+
+/* ============ aggregation ============ */
+function agg(list) {
+  const a = { n: list.length, st: new Array(11).fill(0), amtSt: new Array(11).fill(0), od: 0, odSt: new Array(11).fill(0), odAmt: 0, disp: 0, dispAmt: 0, dd: [], demand: 0, paid: 0, est: 0, amt: 0, open: 0, openAmt: 0 };
+  list.forEach(t => {
+    a.st[t.stage]++; a.amtSt[t.stage] += t.amt; a.amt += t.amt; a.demand += t.demand; a.paid += t.paid; a.est += t.est;
+    if (t.closed) { a.disp++; a.dispAmt += t.amt; a.dd.push(t.closedOn - t.allot); } else { a.open++; a.openAmt += t.amt; }
+    if (t.overdue) { a.od++; a.odSt[t.stage]++; a.odAmt += t.amt; }
+  });
+  a.dispP = a.n ? a.disp / a.n : 0; a.odP = a.n ? a.od / a.n : 0; a.realP = a.est ? a.paid / a.est : 0; a.medD = med(a.dd);
+  return a;
+}
+function score(a, stateMed) {
+  if (a.n < 8) return null;
+  const speed = a.medD ? clamp((stateMed || a.medD) / a.medD, 0, 1.5) / 1.5 : 0.3;
+  return Math.round(35 * a.dispP + 25 * (1 - a.odP) + 25 * (a.est ? a.realP : 0.5) + 15 * speed);
+}
+
+/* ============ filters UI ============ */
+function opt(v, l, cur) { return `<option value="${esc(v)}"${v === cur ? ' selected' : ''}>${esc(l)}</option>`; }
+function syncFilters() {
+  $('#ftype').innerHTML = opt('', 'All task types', F.type) + TYPES.map(t => opt(t.k, t.name, F.type)).join('');
+  $('#fcircle').innerHTML = opt('', 'All 17 circles', F.circle) + Object.keys(CIRCLES).map(c => opt(c, title(c), F.circle)).join('');
+  const chs = F.circle ? CIRCLES[F.circle].map(x => x[0]) : Object.values(CIRCLES).flat().map(x => x[0]).sort();
+  $('#fcharge').innerHTML = opt('', F.circle ? 'All charges in circle' : 'All charges', F.charge) + chs.map(c => opt(c, title(c), F.charge)).join('');
+  $('#flevel').value = F.level; $('#fmethod').value = F.method; $('#fod').checked = F.kpi === 'overdue';
+  if (document.activeElement !== $('#fq')) $('#fq').value = F.q;
+  document.querySelectorAll('#fperiod button').forEach(b => b.classList.toggle('on', b.dataset.v === F.period));
+  const chips = [];
+  if (F.q) chips.push(['q', 'Search: ' + F.q]);
+  if (F.type) chips.push(['type', TYPE[F.type].name]);
+  if (F.circle) chips.push(['circle', title(F.circle)]);
+  if (F.charge) chips.push(['charge', 'Charge: ' + title(F.charge)]);
+  if (F.level) chips.push(['level', 'L' + F.level + ' officers']);
+  if (F.method) chips.push(['method', F.method === 'RR' ? 'Round robin' : 'Manual']);
+  if (F.stage) chips.push(['stage', 'Stage: ' + STAGES[F.stage].name]);
+  if (F.kpi) chips.push(['kpi', { overdue: 'Overdue only', pending: 'Pending only', disposed: 'Disposed only', demand: 'With DRC-07 demand', realised: 'With amount realised' }[F.kpi]]);
+  $('#chips').innerHTML = chips.map(([k, l]) => `<button class="chip" data-k="${k}">${esc(l)}<i>×</i></button>`).join('') + (chips.length > 1 ? '<button class="chip clear" data-k="all">Clear all</button>' : '');
+  $('#chips').querySelectorAll('.chip').forEach(b => b.onclick = () => {
+    const k = b.dataset.k;
+    if (k === 'all') Object.assign(F, { q: '', type: '', circle: '', charge: '', level: '', method: '', stage: 0, kpi: '' });
+    else if (k === 'circle') { F.circle = ''; F.charge = ''; } else F[k] = k === 'stage' ? 0 : '';
+    set({});
+  });
+}
+function set(patch) { Object.assign(F, patch); V.shown = 25; V.regPage = 0; syncFilters(); draw(); saveHash(); }
+function saveHash() {
+  const p = new URLSearchParams(); Object.entries(F).forEach(([k, v]) => { if (v && !(k === 'period' && v === 'fy')) p.set(k, v); });
+  if (V.group !== 'officer') p.set('by', V.group);
+  if (V.tab !== 'ov') p.set('tab', V.tab);
+  try { history.replaceState(null, '', p.toString() ? '#' + p.toString() : location.pathname + location.search); } catch (e) {}
+}
+function readHash() {
+  const p = new URLSearchParams(location.hash.slice(1));
+  ['q', 'type', 'circle', 'charge', 'level', 'method', 'period', 'kpi'].forEach(k => { if (p.has(k)) F[k] = p.get(k); });
+  if (p.has('stage')) F.stage = Number(p.get('stage')) || 0;
+  if (['charge', 'circle'].includes(p.get('by'))) V.group = p.get('by');
+  if (p.get('tab')) V.tab = p.get('tab');
+  if (!CIRCLES[F.circle]) { F.circle = ''; F.charge = ''; }
+}
+
+/* ============ draw ============ */
+let STATE_MED = null;
+function draw() {
+  const base = view('stage');           // everything except the stage filter
+  STATE_MED = med(TASKS.filter(t => t.closed && t.allot >= PSTART[F.period]).map(t => t.closedOn - t.allot));
+  const BLOCKS = { ov: [kpis, overview, ovCircles, trend], tax: [typeTiles, taxKpis, amtStage, revTrend, revenue], task: [() => pipeline(base), () => matrix(base), circles, ageing, () => leaders(base), register], allot: [allotment, routes, allotters, batches] };
+  BLOCKS.all = [...BLOCKS.ov.filter(f => f !== overview), ...BLOCKS.tax, ...BLOCKS.task, ...BLOCKS.allot];
+  BLOCKS[V.tab].forEach(f => { try { f(); } catch (e) { console.error(e); } });   // one failing block must not blank the rest
+  const scope = [F.charge ? title(F.charge) + ' charge' : F.circle ? title(F.circle) + ' circle' : 'All circles', F.type ? TYPE[F.type].name : 'all task types'].join(' · ');
+  $('#asof').textContent = `Position as on 20-11-2026 · ${scope} · click any number, stage, bar or row to filter.`;
+}
+
+function kpis() {
+  const a = agg(view('kpi')), all = agg(TASKS.filter(t => t.allot >= PSTART[F.period]));
+  const card = kcard;
+  $('#kpis').innerHTML = [
+    card('', 'Tasks allotted', n0(a.n), a.n === all.n ? 'whole State' : `of ${n0(all.n)} in the State`, '', pct(a.n, all.n)),
+    card('pending', 'Pending', n0(a.open), pct(a.open, a.n) + '% of allotted', 'blue', pct(a.open, a.n)),
+    card('overdue', 'Overdue', n0(a.od), pct(a.od, a.open) + '% of pending', 'hot', pct(a.od, a.open)),
+    card('disposed', 'Disposed', n0(a.disp), pct(a.disp, a.n) + '% disposal', 'good', pct(a.disp, a.n)),
+    card('', 'Amount involved', money(a.amt), 'in tasks allotted', '', 100),
+    card('demand', 'Demand raised', money(a.demand), n0(view('kpi').filter(t => t.demand).length) + ' DRC-07 orders', 'warn', pct(a.demand, a.amt)),
+    card('realised', 'Amount realised', money(a.paid), 'DRC-03 and recovery', 'good', pct(a.paid, a.amt)),
+    card('', 'Realisation', pct(a.paid, a.est) + '%', 'of dues established', 'violet', pct(a.paid, a.est)),
+  ].join('');
+  $('#kpis').querySelectorAll('.kpi').forEach(b => b.onclick = () => { const k = b.dataset.k; set({ kpi: F.kpi === k ? '' : k }); });
+}
+
+function pipeline(list) {
+  const a = agg(list);
+  // tasks that ever reached each stage
+  const reached = new Array(11).fill(0), dIn = Array.from({ length: 11 }, () => []);
+  list.forEach(t => { const seen = new Set([1]); t.ev.forEach(e => seen.add(e.st)); seen.forEach(s => reached[s]++); if (!t.closed) dIn[t.stage].push(t.inStage); });
+  const conv = s => { const prev = s === 3 ? reached[2] : s === 5 ? reached[3] + list.filter(t => t.type === 'INT' && t.ev.some(e => e.st === 2)).length : reached[s - 1]; return prev ? pct(reached[s], prev) : 0; };
+  const tile = s => {
+    const st = STAGES[s], c = a.st[s], od = a.odSt[s], m = med(dIn[s]);
+    const meta = st.closed ? `${pct(c, a.n)}% of tasks` : `median ${m == null ? '–' : Math.round(m) + ' days'}</span><span class="pm">SLA ${st.sla} days`;
+    const arrow = s < 7 ? `<span class="arrow">${conv(s + 1)}%</span>` : '';
+    return `<button class="ptile${st.closed ? ' closed' : ''}${F.stage === s ? ' on' : ''}" data-s="${s}" title="${esc(st.name)}: ${c} tasks${st.closed ? '' : ', ' + od + ' overdue'}">
+      <span class="sn"><i style="background:${st.c}"></i>${esc(st.short)}</span><span class="pc">${n0(c)}</span><span class="pm">${meta}</span>
+      ${st.closed ? `<span class="od zero" style="color:var(--text-subtle);font-weight:600">${s === 8 ? money(list.filter(t => t.stage === 8).reduce((x, t) => x + t.paid, 0)) : s === 10 ? money(list.filter(t => t.stage === 10).reduce((x, t) => x + t.demand, 0)) + ' in appeal' : 'no dues found'}</span>`
+        : `<span class="od${od ? '' : ' zero'}">${od ? n0(od) + ' overdue' : 'none overdue'}</span><span class="obar"><em style="width:${pct(od, c)}%"></em></span>`}${arrow}</button>`;
+  };
+  $('#pipe').innerHTML = OPEN.map(tile).join('') + '<span class="gap"></span>' + SHUT.map(tile).join('');
+  $('#pipe').querySelectorAll('.ptile').forEach(b => b.onclick = () => { const s = Number(b.dataset.s); set({ stage: F.stage === s ? 0 : s }); });
+  const notice = list.filter(t => t.ev.some(e => e.st >= 3 && e.st <= 7)).length, examined = list.filter(t => t.ev.length).length;
+  $('#pipeFoot').innerHTML = `<span>Examined: <b>${n0(examined)}</b></span><span>Notice issued (ASMT-10 or later): <b>${pct(notice, examined)}%</b> of examined</span><span>Median days, allotment to disposal: <b>${a.medD == null ? '–' : Math.round(a.medD)}</b></span><span>Oldest open task: <b>${n0(Math.max(0, ...list.filter(t => !t.closed).map(t => TN - t.allot)))} days</b></span>`;
+}
+
+function groupRows(list) {
+  const g = {};
+  list.forEach(t => {
+    const o = OBY[t.off];
+    const k = V.group === 'officer' ? t.off : V.group === 'charge' ? t.c + '|' + t.ch : t.c;
+    (g[k] = g[k] || { k, tasks: [] }).tasks.push(t);
+  });
+  return Object.values(g).map(r => {
+    const a = agg(r.tasks), t0 = r.tasks[0], o = OBY[t0.off];
+    r.a = a; r.score = score(a, STATE_MED);
+    if (V.group === 'officer') { r.o = o; r.label = o.name; r.sub = `${o.desig} · ${title(o.charge)}`; r.lv = o.lv; }
+    else if (V.group === 'charge') { r.label = title(t0.ch); r.sub = title(t0.c) + ' · ' + byCharge[t0.c + '|' + t0.ch].L4.length + ' CTO/ACTO'; }
+    else { r.label = title(t0.c); r.sub = CIRCLES[t0.c].length + ' charges · ' + byCircle[t0.c].L2.desig + ' ' + byCircle[t0.c].L2.name; }
+    return r;
+  });
+}
+const cellOf = (a, s) => V.cell === 'amt' ? a.amtSt[s] : a.st[s];
+const mShort = l => !l ? '·' : l >= 100 ? (l / 100).toFixed(l >= 1000 ? 0 : 1) + ' cr' : l.toFixed(l < 10 ? 1 : 0) + ' L';
+const SORTS = {
+  name: r => r.label, n: r => r.a.n, amt: r => r.a.amt, s1: r => cellOf(r.a, 1), s2: r => cellOf(r.a, 2), s3: r => cellOf(r.a, 3), s4: r => cellOf(r.a, 4), s5: r => cellOf(r.a, 5), s6: r => cellOf(r.a, 6), s7: r => cellOf(r.a, 7),
+  disp: r => V.cell === 'amt' ? r.a.dispAmt : r.a.disp, od: r => V.cell === 'amt' ? r.a.odAmt : r.a.od, dispP: r => r.a.dispP, medD: r => r.a.medD == null ? 999 : r.a.medD, demand: r => r.a.demand, paid: r => r.a.paid, realP: r => r.a.realP, score: r => r.score == null ? -1 : r.score,
+};
+function matrix(list) {
+  const rows = groupRows(list), s = V.sort, f = SORTS[s.k] || SORTS.score;
+  rows.sort((x, y) => { const a = f(x), b = f(y); return (typeof a === 'string' ? a.localeCompare(b) : a - b) * s.dir || y.a.n - x.a.n; });
+  const amtMode = V.cell === 'amt', odOf = a => amtMode ? a.odAmt : a.od, cellTxt = v => amtMode ? mShort(v) : (v || '·');
+  const maxCell = Math.max(1, ...rows.map(r => Math.max(...OPEN.map(i => cellOf(r.a, i))))), maxOd = Math.max(1, ...rows.map(r => odOf(r.a)));
+  const H = (k, l, cls, tip) => `<th class="${cls || ''}${s.k === k ? ' sorted' : ''}" data-k="${k}" data-dir="${s.dir < 0 ? '↓' : '↑'}"${tip ? ` title="${esc(tip)}"` : ''}>${l}</th>`;
+  const heat = (v, max, bad) => { const p = v ? Math.round(12 + 70 * Math.sqrt(v / max)) : 0; return `background:${v ? `color-mix(in srgb, ${bad ? 'var(--heat-bad)' : 'var(--heat)'} ${p}%, var(--surface))` : 'transparent'};${p > 52 ? 'color:#fff' : ''}`; };
+  const head = `<thead><tr><th class="l" style="width:24px"></th>${H('name', V.group === 'officer' ? 'Officer' : V.group === 'charge' ? 'Charge' : 'Circle', 'l')}${H('n', 'Tasks')}${H('amt', 'Amount', '', 'Amount involved in all tasks allotted (₹)')}
+    ${OPEN.map(i => H('s' + i, STAGES[i].short, 'stg' + (F.stage === i ? ' on' : ''), STAGES[i].name + ' (SLA ' + STAGES[i].sla + ' days)' + (amtMode ? ', amount involved' : ', tasks'))).join('')}
+    ${H('disp', 'Disposed', '', 'Realised, closed or moved to appeal')}${H('od', 'Overdue')}${H('dispP', 'Disposal')}${H('medD', 'Days', '', 'Median days from allotment to disposal')}${H('demand', 'Demand')}${H('paid', 'Realised')}${H('score', 'Score')}</tr></thead>`;
+  const shown = rows.slice(0, V.shown);
+  const body = shown.map((r, i) => {
+    const a = r.a, sc = r.score;
+    const nameCell = V.group === 'officer'
+      ? `<div class="oname"><span class="av">${initials(r.label)}</span><span><b>${esc(r.label)}<span class="lv">L${r.lv}</span></b><small>${esc(r.sub)}</small></span></div>`
+      : `<div class="oname"><span class="av">${initials(r.label)}</span><span><b>${esc(r.label)}</b><small>${esc(r.sub)}</small></span></div>`;
+    return `<tr data-k="${esc(r.k)}"><td class="rank">${i + 1}</td><td class="l">${nameCell}</td><td>${n0(a.n)}</td>
+      <td title="Pending ${money(a.openAmt)} · overdue ${money(a.odAmt)}"><b style="color:var(--ink)">${money(a.amt)}</b></td>
+      ${OPEN.map(st => `<td class="h${a.st[st] ? '' : ' zero'}${F.stage === st ? ' on' : ''}" style="${heat(cellOf(a, st), maxCell)}" title="${esc(STAGES[st].name)}: ${a.st[st]} tasks, ${money(a.amtSt[st])}${a.odSt[st] ? ', ' + a.odSt[st] + ' overdue' : ''}">${cellTxt(cellOf(a, st))}</td>`).join('')}
+      <td title="${a.st[8]} realised · ${a.st[9]} closed · ${a.st[10]} in appeal · ${money(a.dispAmt)} involved">${amtMode ? mShort(a.dispAmt) : n0(a.disp)}<span class="dstack"><i style="flex:${a.st[8]};background:var(--s8)"></i><i style="flex:${a.st[9]};background:var(--s9)"></i><i style="flex:${a.st[10]};background:var(--s10)"></i></span></td>
+      <td class="h${a.od ? '' : ' zero'}" style="${heat(odOf(a), maxOd, true)}" title="${a.od} overdue tasks, ${money(a.odAmt)}">${cellTxt(odOf(a))}</td>
+      <td class="${a.dispP >= .6 ? 'good-t' : a.dispP < .3 ? 'bad-t' : ''}">${pct(a.disp, a.n)}%</td>
+      <td>${a.medD == null ? '–' : Math.round(a.medD)}</td><td>${money(a.demand)}</td><td title="${pct(a.paid, a.est)}% of dues established">${money(a.paid)}</td>
+      <td>${sc == null ? '<span class="faint">–</span>' : `<span class="score"><i><em style="width:${sc}%;background:${scoreColor(sc)}"></em></i><b>${sc}</b></span>`}</td></tr>`;
+  }).join('');
+  $('#mat').innerHTML = head + '<tbody>' + body + '</tbody>';
+  $('#matTitle').textContent = V.group === 'officer' ? 'Officer-wise, stage-wise' : V.group === 'charge' ? 'Charge-wise, stage-wise' : 'Circle-wise, stage-wise';
+  $('#matCount').textContent = `Showing ${Math.min(V.shown, rows.length)} of ${rows.length} ${V.group === 'officer' ? 'officers' : V.group === 'charge' ? 'charges' : 'circles'}`;
+  $('#matMore').style.display = $('#matAll').style.display = rows.length > V.shown ? '' : 'none';
+  $('#mat').querySelectorAll('th[data-k]').forEach(th => th.onclick = () => { const k = th.dataset.k; V.sort = { k, dir: V.sort.k === k ? -V.sort.dir : (k === 'name' || k === 'medD' ? 1 : -1) }; matrix(view('stage')); });
+  $('#mat').querySelectorAll('tbody tr').forEach(tr => tr.onclick = () => {
+    const k = tr.dataset.k;
+    if (V.group === 'officer') openOfficer(Number(k));
+    else if (V.group === 'charge') { const [c, ch] = k.split('|'); V.group = 'officer'; setGroup(); set({ circle: c, charge: ch }); }
+    else { V.group = 'charge'; setGroup(); set({ circle: k, charge: '' }); }
+  });
+}
+function setGroup() { document.querySelectorAll('#groupBy button').forEach(b => b.classList.toggle('on', b.dataset.v === V.group)); }
+
+function circles() {
+  const list = view('circle');
+  const drill = !!F.circle, key = t => drill ? t.ch : t.c;
+  const g = {}; list.filter(t => !drill || t.c === F.circle).forEach(t => (g[key(t)] = g[key(t)] || []).push(t));
+  const rows = Object.entries(g).map(([k, ts]) => ({ k, a: agg(ts) })).sort((x, y) => y.a.dispP - x.a.dispP);
+  const maxN = Math.max(1, ...rows.map(r => r.a.n));
+  $('#circTitle').textContent = drill ? title(F.circle) + ': charge-wise stage mix' : 'Circle-wise stage mix';
+  $('#circHint').innerHTML = drill ? '<button class="btn sm ghost" id="circBack">‹ All circles</button>' : 'Ranked by disposal rate. Click a circle for its charges.';
+  $('#mixLegend').innerHTML = MIX.map(m => `<span><i style="background:${m.c}"></i>${m.name}</span>`).join('');
+  $('#circ').innerHTML = rows.map(r => {
+    const on = drill ? F.charge === r.k : F.circle === r.k;
+    return `<button class="hrow${on ? ' on' : ''}" data-k="${esc(r.k)}" title="${esc(title(r.k))}: ${r.a.n} tasks, ${r.a.od} overdue, ${pct(r.a.disp, r.a.n)}% disposed">
+      <span class="hl">${esc(title(r.k))}<small>${n0(r.a.n)} tasks · <span style="color:var(--bad)">${n0(r.a.od)} overdue</span></small></span>
+      <span class="stack" style="width:${Math.max(6, r.a.n * 100 / maxN)}%">${MIX.map(m => `<i style="flex:${m.st.reduce((s, i) => s + r.a.st[i], 0)};background:${m.c}"></i>`).join('')}</span>
+      <span class="hn">${pct(r.a.disp, r.a.n)}%<small> disposed</small></span></button>`;
+  }).join('') || '<p class="faint">No tasks.</p>';
+  $('#circ').querySelectorAll('.hrow').forEach(b => b.onclick = () => drill ? set({ charge: F.charge === b.dataset.k ? '' : b.dataset.k }) : set({ circle: b.dataset.k, charge: '' }));
+  const back = $('#circBack'); if (back) back.onclick = () => set({ circle: '', charge: '' });
+}
+
+function ageing() {
+  const list = view('stage').filter(t => !t.closed);
+  const B = [{ c: 'var(--good)', f: t => !t.overdue }, { c: '#e8a24a', f: t => t.overdue && t.over <= 30 }, { c: 'var(--warn)', f: t => t.over > 30 && t.over <= 90 }, { c: 'var(--bad)', f: t => t.over > 90 }];
+  const rows = OPEN.map(s => { const ts = list.filter(t => t.stage === s); return { s, n: ts.length, b: B.map(b => ts.filter(b.f).length) }; });
+  const maxN = Math.max(1, ...rows.map(r => r.n));
+  $('#age').innerHTML = rows.map(r => `<button class="hrow${F.stage === r.s ? ' on' : ''}" data-s="${r.s}" title="${esc(STAGES[r.s].name)}: ${r.b[0]} within SLA, ${r.b[1]} overdue up to 30 days, ${r.b[2]} 31–90 days, ${r.b[3]} over 90 days">
+    <span class="hl">${esc(STAGES[r.s].name)}<small>SLA ${STAGES[r.s].sla} days</small></span>
+    <span class="stack" style="width:${Math.max(6, r.n * 100 / maxN)}%">${r.b.map((v, i) => `<i style="flex:${v};background:${B[i].c}"></i>`).join('')}</span>
+    <span class="hn">${n0(r.n)}<small> · ${pct(r.n - r.b[0], r.n)}% late</small></span></button>`).join('');
+  $('#age').querySelectorAll('.hrow').forEach(b => b.onclick = () => { const s = Number(b.dataset.s); set({ stage: F.stage === s ? 0 : s }); });
+  const worst = rows.slice().sort((x, y) => (y.b[2] + y.b[3]) - (x.b[2] + x.b[3]))[0];
+  const big = list.filter(t => t.over > 90).reduce((s, t) => s + t.amt, 0);
+  $('#ageNote').innerHTML = worst && worst.n ? `Most long delays are at <b>${esc(STAGES[worst.s].name)}</b> (${n0(worst.b[2] + worst.b[3])} tasks more than 30 days past the SLA). Tasks over 90 days late involve <b>${money(big)}</b>.` : '';
+}
+
+function leaders(list) {
+  const save = V.group; V.group = 'officer'; const rows = groupRows(list).filter(r => r.score != null); V.group = save;
+  rows.sort((a, b) => b.score - a.score || b.a.n - a.a.n);
+  const row = (r, i) => `<div class="lrow" data-id="${r.o.id}"><span class="rank">${i}</span><span class="av" style="background:${scoreColor(r.score)};color:#fff">${initials(r.label)}</span>
+    <span class="who2"><b>${esc(r.label)} <span class="lv">L${r.lv}</span></b><small>${esc(title(r.o.charge))} · ${pct(r.a.disp, r.a.n)}% disposed · ${r.a.od} overdue</small></span><span class="sc" style="color:${scoreColor(r.score)}">${r.score}</span></div>`;
+  const top = rows.slice(0, 5), bot = rows.slice(-5).reverse();
+  $('#lead').innerHTML = rows.length < 2 ? '<p class="faint">Not enough officers with 8 or more tasks in this selection.</p>' :
+    `<div><h3><span style="color:var(--good)">▲</span> Top five</h3>${top.map((r, i) => row(r, i + 1)).join('')}</div><div><h3><span style="color:var(--bad)">▼</span> Need attention</h3>${bot.map((r, i) => row(r, rows.length - i)).join('')}</div>`;
+  $('#lead').querySelectorAll('.lrow').forEach(e => e.onclick = () => openOfficer(Number(e.dataset.id)));
+}
+
+function trend() {
+  const list = TASKS.filter(t => pass(t, 'stage') || false), allP = TASKS.filter(t => { const s = F.period; F.period = 'fy'; const r = pass(t, 'stage'); F.period = s; return r; });
+  const mOf = d => new Date(FY0 + d * DAY).getUTCMonth() - 3;
+  const A = new Array(8).fill(0), D = new Array(8).fill(0), P = new Array(8).fill(0);
+  allP.forEach(t => { A[mOf(t.allot)]++; if (t.closed) D[mOf(t.closedOn)]++; t.ev.forEach(e => { if (e.amt && !e.demand) P[mOf(e.d)] += e.amt; }); });
+  const W = 560, Hh = 200, pl = 34, pr = 40, pb = 22, pt = 10, iw = W - pl - pr, ih = Hh - pt - pb;
+  const maxY = Math.max(1, ...A, ...D), maxP = Math.max(1, ...P) / 100, bw = iw / 8;
+  const y = v => pt + ih - v / maxY * ih, yp = v => pt + ih - v / maxP * ih;
+  const ticks = [0, .5, 1].map(f => Math.round(maxY * f));
+  let svg = `<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Allotted and disposed tasks by month">`;
+  ticks.forEach(v => { svg += `<line x1="${pl}" x2="${W - pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${pl - 6}" y="${y(v) + 4}" text-anchor="end">${n0(v)}</text>`; });
+  [0, .5, 1].forEach(f => { svg += `<text x="${W - pr + 6}" y="${yp(maxP * f) + 4}">${(maxP * f).toFixed(maxP < 10 ? 1 : 0)}</text>`; });
+  A.forEach((v, i) => {
+    const x = pl + i * bw + bw * .14, w = bw * .34;
+    svg += `<rect x="${x}" y="${y(v)}" width="${w}" height="${ih + pt - y(v)}" rx="3" fill="var(--s2)"><title>${MONTHS[i]}: ${v} allotted</title></rect>`;
+    svg += `<rect x="${x + w + 3}" y="${y(D[i])}" width="${w}" height="${ih + pt - y(D[i])}" rx="3" fill="var(--good)"><title>${MONTHS[i]}: ${D[i]} disposed</title></rect>`;
+    svg += `<text x="${pl + i * bw + bw / 2}" y="${Hh - 6}" text-anchor="middle">${MONTHS[i]}${i === 7 ? '*' : ''}</text>`;
+  });
+  const pts = P.map((v, i) => [pl + i * bw + bw / 2, yp(v / 100)]);
+  svg += `<polyline points="${pts.map(p => p.join(',')).join(' ')}" fill="none" stroke="var(--violet)" stroke-width="2.5" stroke-linejoin="round"/>`;
+  pts.forEach((p, i) => svg += `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="var(--surface)" stroke="var(--violet)" stroke-width="2"><title>${MONTHS[i]}: ${money(P[i])} realised</title></circle>`);
+  svg += '</svg>';
+  const tA = A.reduce((a, b) => a + b, 0), tD = D.reduce((a, b) => a + b, 0);
+  $('#trend').innerHTML = svg + `<div class="note">FY 2026-27 to date: <b>${n0(tA)}</b> allotted, <b>${n0(tD)}</b> disposed, <b>${money(P.reduce((a, b) => a + b, 0))}</b> realised. Disposals ${tD >= tA * .5 ? 'are keeping pace' : 'are falling behind'} with new allotments. *November up to the 20th.</div>`;
+}
+
+/* ============ Overview ============ */
+const kcard = (k, label, val, sub, cls, w) => `<button class="kpi ${cls}${k && F.kpi === k ? ' on' : ''}" data-k="${k}"><span>${label}</span><b>${val}</b><small>${sub}</small><i class="kbar"><em style="width:${clamp(w, 0, 100)}%"></em></i></button>`;
+const wireK = sel => $(sel).querySelectorAll('.kpi').forEach(b => b.onclick = () => { const k = b.dataset.k; if (k) set({ kpi: F.kpi === k ? '' : k }); });
+function overview() {
+  const list = view(), a = agg(list);
+  // tax
+  const tr = TYPES.map(T => ({ T, a: agg(list.filter(t => t.type === T.k)) })).filter(r => r.a.n).sort((x, y) => y.a.paid - x.a.paid);
+  const maxP = Math.max(1, ...tr.map(r => r.a.paid));
+  // task
+  const save = V.group; V.group = 'officer'; const orows = groupRows(list).filter(r => r.score != null).sort((x, y) => y.score - x.score); V.group = save;
+  // allotment
+  const steps = list.flatMap(t => t.steps), rr = steps.filter(s => s.method === 'RR').length, g = {};
+  steps.forEach(s => (g[s.from] = g[s.from] || []).push(s));
+  const al = Object.entries(g).map(([id, ss]) => ({ o: OBY[id], n: ss.length, rrP: ss.filter(s => s.method === 'RR').length / ss.length, hold: med(ss.map(s => s.hold)) }));
+  const slow = al.filter(r => r.n >= 10).sort((x, y) => y.hold - x.hold).slice(0, 3);
+  const mini = (l, v, st) => `<div class="mini"><span>${l}</span><b${st ? ` style="${st}"` : ''}>${v}</b></div>`;
+  const oRow = (r, good) => `<div class="li"><button class="lnk" data-oid="${r.o.id}">${esc(r.label)}</button><b style="color:${scoreColor(r.score)}">${r.score}</b><small class="faint" style="grid-column:1/-1">${esc(title(r.o.charge))} · ${pct(r.a.disp, r.a.n)}% disposed · ${r.a.od} overdue</small></div>`;
+  $('#ovPanels').innerHTML = `
+    <section class="card ovp"><h2>Tax Track</h2><p class="faint" style="margin:2px 0 0">Revenue mobilised through tasks</p>
+      <div class="mini-kpis">${mini('Amount realised', money(a.paid), 'color:var(--good-ink)')}${mini('Realisation', pct(a.paid, a.est) + '%')}${mini('Demand raised', money(a.demand))}${mini('Amount in overdue tasks', money(a.odAmt), 'color:var(--bad)')}</div>
+      <div class="lst"><h4>Realised, by task type</h4>${tr.slice(0, 4).map(r => `<div class="li"><span>${esc(r.T.name)}</span><b>${money(r.a.paid)}</b><span class="stack"><i style="flex:${r.a.paid};background:var(--good)"></i><i style="flex:${maxP - r.a.paid};background:transparent"></i></span></div>`).join('')}</div>
+      <button class="btn sm soft go" data-go="tax">Open Tax Track ›</button></section>
+    <section class="card ovp"><h2>Task Track</h2><p class="faint" style="margin:2px 0 0">Officer and circle performance</p>
+      <div class="mini-kpis">${mini('Pending', n0(a.open))}${mini('Overdue', n0(a.od) + ' <small class="faint">' + pct(a.od, a.open) + '%</small>', 'color:var(--bad)')}${mini('Disposal', pct(a.disp, a.n) + '%', 'color:var(--good-ink)')}${mini('Median days to dispose', a.medD == null ? '–' : Math.round(a.medD))}</div>
+      <div class="lst"><h4>Best officers</h4>${orows.slice(0, 2).map(r => oRow(r)).join('') || '<p class="faint">Not enough data.</p>'}<h4 style="margin-top:8px">Need attention</h4>${orows.length > 3 ? orows.slice(-2).reverse().map(r => oRow(r)).join('') : ''}</div>
+      <button class="btn sm soft go" data-go="task">Open Task Track ›</button></section>
+    <section class="card ovp"><h2>Task Allocation</h2><p class="faint" style="margin:2px 0 0">Who allots, how and how fast</p>
+      <div class="mini-kpis">${mini('By round robin', pct(rr, steps.length) + '%', 'color:var(--violet-ink)')}${mini('By hand', pct(steps.length - rr, steps.length) + '%', 'color:var(--teal)')}${mini('Mostly manual allotters', al.filter(r => habitOf(r.rrP) === 'm').length + ' <small class="faint">of ' + al.length + '</small>')}${mini('Days to pass a task on', dF0(med(steps.map(s => s.hold))))}</div>
+      <div class="lst"><h4>Slowest to pass tasks on</h4>${slow.map(r => `<div class="li"><button class="lnk" data-aid="${r.o.id}">${esc(r.o.lv === 0 ? 'Commissioner, CT' : r.o.name)} <span class="lv">L${r.o.lv}</span></button><b class="bad-t">${dF0(r.hold)} days</b><small class="faint" style="grid-column:1/-1">${esc(r.o.lv <= 1 ? 'Directorate' : officeOf(r.o))} · ${r.n} allotments · ${Math.round(r.rrP * 100)}% round robin</small></div>`).join('') || '<p class="faint">Not enough data.</p>'}</div>
+      <button class="btn sm soft go" data-go="allot">Open Task Allocation ›</button></section>`;
+  $('#ovPanels').querySelectorAll('[data-go]').forEach(b => b.onclick = () => setTab(b.dataset.go));
+  $('#ovPanels').querySelectorAll('[data-oid]').forEach(b => b.onclick = () => openOfficer(Number(b.dataset.oid)));
+  $('#ovPanels').querySelectorAll('[data-aid]').forEach(b => b.onclick = () => openOfficer(Number(b.dataset.aid), 'allot'));
+}
+
+function ovCircles() {
+  const list = view('circle'), g = {}; list.forEach(t => (g[t.c] = g[t.c] || []).push(t));
+  const rows = Object.entries(g).map(([k, ts]) => ({ k, a: agg(ts) })).sort((x, y) => y.a.paid - x.a.paid), mx = Math.max(1, ...rows.map(r => r.a.paid));
+  $('#ovCirc').innerHTML = `<thead><tr><th class="l" style="cursor:default">Circle</th><th style="cursor:default">Tasks</th><th style="cursor:default">Overdue</th><th style="cursor:default">Disposal</th><th class="l" style="cursor:default">Realised</th><th style="cursor:default">Realisation</th></tr></thead><tbody>` +
+    rows.map(r => `<tr data-k="${esc(r.k)}"${F.circle === r.k ? ' style="background:var(--primary-soft)"' : ''}><td class="l"><b style="color:var(--ink)">${esc(title(r.k))}</b></td><td>${n0(r.a.n)}</td><td class="${r.a.od / Math.max(1, r.a.open) > .35 ? 'bad-t' : ''}">${n0(r.a.od)}</td><td>${pct(r.a.disp, r.a.n)}%</td>
+      <td class="l"><span class="share" style="width:60px"><i style="background:var(--good);width:${r.a.paid / mx * 100}%"></i></span>${money(r.a.paid)}</td><td>${pct(r.a.paid, r.a.est)}%</td></tr>`).join('') + '</tbody>';
+  $('#ovCirc').querySelectorAll('tbody tr').forEach(tr => tr.onclick = () => set({ circle: F.circle === tr.dataset.k ? '' : tr.dataset.k, charge: '' }));
+}
+
+/* ============ Tax Track ============ */
+function typeTiles() {
+  const list = view('type');
+  const rows = TYPES.map(T => ({ k: T.k, name: T.name, a: agg(list.filter(t => t.type === T.k)) })).filter(r => r.a.n).sort((x, y) => y.a.paid - x.a.paid);
+  const all = { k: '', name: 'All task types', a: agg(list) };
+  const maxAmt = Math.max(1, ...rows.map(r => r.a.amt));
+  const tile = (r, isAll) => { const a = r.a, sc = isAll ? a.amt : maxAmt;
+    return `<button class="ttile${isAll ? ' all' : ''}${F.type === r.k ? ' on' : ''}" data-k="${r.k}">
+      <span class="tt-h">${esc(r.name)}</span><span class="tt-s">${n0(a.n)} tasks · ${pct(a.disp, a.n)}% disposed · ${a.medD == null ? '–' : Math.round(a.medD)} days</span>
+      <b>${money(a.paid)}</b><small>realised · ${pct(a.paid, a.est)}% of dues established</small>
+      <span class="tt-f"><span>Involved</span><span class="bar"><i style="width:${a.amt / sc * 100}%;background:var(--s2)"></i></span><em>${mShort(a.amt)}</em>
+        <span>Demand</span><span class="bar"><i style="width:${a.demand / sc * 100}%;background:var(--warn)"></i></span><em>${mShort(a.demand)}</em>
+        <span>Realised</span><span class="bar"><i style="width:${a.paid / sc * 100}%;background:var(--good)"></i></span><em>${mShort(a.paid)}</em></span>
+      <span class="tt-g"><span>Pending <b>${n0(a.open)}</b></span><span>Overdue <b class="bad-t">${n0(a.od)}</b></span><span>In overdue <b>${mShort(a.odAmt)}</b></span></span></button>`; };
+  $('#ttiles').innerHTML = tile(all, true) + rows.map(r => tile(r)).join('');
+  $('#ttiles').querySelectorAll('.ttile').forEach(b => b.onclick = () => set({ type: F.type === b.dataset.k ? '' : b.dataset.k }));
+}
+function taxKpis() {
+  const list = view('kpi'), a = agg(list), notice = list.filter(t => !t.closed && t.stage >= 3).reduce((x, t) => x + t.amt, 0);
+  const appeal = list.filter(t => t.stage === 10).reduce((x, t) => x + t.demand, 0);
+  $('#taxK').innerHTML = [
+    kcard('', 'Amount involved', money(a.amt), n0(a.n) + ' tasks', '', 100),
+    kcard('pending', 'In pending tasks', money(a.openAmt), pct(a.openAmt, a.amt) + '% of involved', 'blue', pct(a.openAmt, a.amt)),
+    kcard('', 'Under notice', money(notice), 'pending at ASMT-10 or later', 'blue', pct(notice, a.amt)),
+    kcard('overdue', 'In overdue tasks', money(a.odAmt), n0(a.od) + ' tasks past the SLA', 'hot', pct(a.odAmt, a.amt)),
+    kcard('demand', 'Demand raised', money(a.demand), 'DRC-07 orders', 'warn', pct(a.demand, a.amt)),
+    kcard('realised', 'Amount realised', money(a.paid), pct(a.paid, a.amt) + '% of involved', 'good', pct(a.paid, a.amt)),
+    kcard('', 'Realisation', pct(a.paid, a.est) + '%', 'of dues established', 'violet', pct(a.paid, a.est)),
+    kcard('', 'Held in appeal', money(appeal), n0(a.st[10]) + ' tasks in appeal', '', pct(appeal, a.demand)),
+  ].join('');
+  wireK('#taxK');
+}
+function amtStage() {
+  const list = view('stage'), a = agg(list);
+  const rows = OPEN.map(s => { const ts = list.filter(t => t.stage === s); const od = ts.filter(t => t.overdue).reduce((x, t) => x + t.amt, 0); return { s, amt: a.amtSt[s], od, n: ts.length }; });
+  const paid = a.paid, nodue = a.amtSt[9], appeal = list.filter(t => t.stage === 10).reduce((x, t) => x + t.demand, 0);
+  const mx = Math.max(1, ...rows.map(r => r.amt), paid, nodue, appeal);
+  $('#amtStage').innerHTML = rows.map(r => `<button class="hrow${F.stage === r.s ? ' on' : ''}" data-s="${r.s}" title="${esc(STAGES[r.s].name)}: ${r.n} tasks, ${money(r.amt)}, of which ${money(r.od)} overdue">
+      <span class="hl">${esc(STAGES[r.s].name)}<small>${n0(r.n)} tasks</small></span>
+      <span class="stack" style="width:${Math.max(3, r.amt / mx * 100)}%"><i style="flex:${r.amt - r.od};background:var(--s3)"></i><i style="flex:${r.od};background:var(--bad)"></i></span>
+      <span class="hn">${money(r.amt)}<small style="display:block">${pct(r.od, r.amt)}% overdue</small></span></button>`).join('') +
+    `<div style="border-top:1px dashed var(--border);margin:6px 0"></div>` +
+    [[8, 'Amount realised', paid, 'var(--good)'], [9, 'Closed, no dues', nodue, 'var(--s9)'], [10, 'Demand in appeal', appeal, 'var(--s10)']].map(([s, l, v, c]) => `<button class="hrow${F.stage === s ? ' on' : ''}" data-s="${s}">
+      <span class="hl">${l}<small>${s === 8 ? 'incl. part payments' : s === 9 ? 'amount involved, ' + n0(a.st[s]) + ' tasks' : n0(a.st[s]) + ' tasks'}</small></span><span class="stack" style="width:${Math.max(3, v / mx * 100)}%"><i style="flex:1;background:${c}"></i></span><span class="hn">${money(v)}</span></button>`).join('');
+  $('#amtStage').querySelectorAll('.hrow').forEach(b => b.onclick = () => { const s = Number(b.dataset.s); set({ stage: F.stage === s ? 0 : s }); });
+  const big = rows.slice().sort((x, y) => y.amt - x.amt)[0];
+  $('#amtNote').innerHTML = big && big.amt ? `The largest pending amount is at <b>${esc(STAGES[big.s].name)}</b> (${money(big.amt)}). ${money(a.odAmt)} is held in tasks past the SLA of their stage.` : '';
+}
+function revTrend() {
+  const allP = TASKS.filter(t => { const s = F.period; F.period = 'fy'; const r = pass(t, 'stage'); F.period = s; return r; });
+  const mOf = d => new Date(FY0 + d * DAY).getUTCMonth() - 3, D = new Array(8).fill(0), P = new Array(8).fill(0);
+  allP.forEach(t => t.ev.forEach(e => { if (!e.amt) return; (e.demand ? D : P)[mOf(e.d)] += e.amt / 100; }));
+  const W = 560, Hh = 210, pl = 40, pr = 10, pb = 22, pt = 10, iw = W - pl - pr, ih = Hh - pt - pb, mx = Math.max(.1, ...D, ...P), bw = iw / 8, y = v => pt + ih - v / mx * ih;
+  let svg = `<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Demand raised and amount realised by month">`;
+  [0, .5, 1].forEach(f => { const v = mx * f; svg += `<line x1="${pl}" x2="${W - pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${pl - 6}" y="${y(v) + 4}" text-anchor="end">${v.toFixed(mx < 10 ? 1 : 0)}</text>`; });
+  D.forEach((v, i) => { const x = pl + i * bw + bw * .14, w = bw * .34;
+    svg += `<rect x="${x}" y="${y(v)}" width="${w}" height="${ih + pt - y(v)}" rx="3" fill="var(--warn)"><title>${MONTHS[i]}: demand ${money(v * 100)}</title></rect>`;
+    svg += `<rect x="${x + w + 3}" y="${y(P[i])}" width="${w}" height="${ih + pt - y(P[i])}" rx="3" fill="var(--good)"><title>${MONTHS[i]}: realised ${money(P[i] * 100)}</title></rect>`;
+    svg += `<text x="${pl + i * bw + bw / 2}" y="${Hh - 6}" text-anchor="middle">${MONTHS[i]}${i === 7 ? '*' : ''}</text>`; });
+  svg += '</svg>';
+  const tD = D.reduce((a, b) => a + b, 0), tP = P.reduce((a, b) => a + b, 0);
+  $('#revTrend').innerHTML = svg + `<div class="note">FY 2026-27 to date: demand raised <b>${money(tD * 100)}</b>, realised <b>${money(tP * 100)}</b> (including payments made before a demand order). *November up to the 20th.</div>`;
+}
+const REV_SORTS = { name: r => r.k, n: r => r.a.n, amt: r => r.a.amt, open: r => r.a.openAmt, od: r => r.a.odAmt, demand: r => r.a.demand, paid: r => r.a.paid, realP: r => r.a.est ? r.a.paid / r.a.est : 0, perTask: r => r.a.paid / Math.max(1, r.a.n) };
+function revenue() {
+  const list = view('circle'), drill = !!F.circle, key = t => drill ? t.ch : t.c, g = {};
+  list.filter(t => !drill || t.c === F.circle).forEach(t => (g[key(t)] = g[key(t)] || []).push(t));
+  const rows = Object.entries(g).map(([k, ts]) => ({ k, a: agg(ts) })), s = V.revSort, f = REV_SORTS[s.k];
+  rows.sort((x, y) => { const a = f(x), b = f(y); return (typeof a === 'string' ? a.localeCompare(b) : a - b) * s.dir; });
+  const tot = agg(list.filter(t => !drill || t.c === F.circle)), maxP = Math.max(1, ...rows.map(r => r.a.paid));
+  const H = (k, l, cls, tip) => `<th class="${cls || ''}${s.k === k ? ' sorted' : ''}" data-k="${k}" data-dir="${s.dir < 0 ? '↓' : '↑'}"${tip ? ` title="${esc(tip)}"` : ''}>${l}</th>`;
+  $('#revTitle').textContent = drill ? title(F.circle) + ': charge-wise revenue from tasks' : 'Circle-wise revenue from tasks';
+  $('#revHint').innerHTML = drill ? '<button class="btn sm ghost" id="revBack">‹ All circles</button>' : '';
+  const line = (r, isTot) => `<tr${isTot ? ' style="cursor:default"' : ` data-k="${esc(r.k)}"`}${!isTot && (drill ? F.charge : '') === r.k ? ' class="on"' : ''}><td class="l">${isTot ? '<b style="color:var(--ink)">Total</b>' : `<b style="color:var(--ink)">${esc(title(r.k))}</b>`}</td><td>${n0(r.a.n)}</td><td>${money(r.a.amt)}</td><td>${money(r.a.openAmt)}</td>
+    <td class="${r.a.odAmt > r.a.openAmt * .45 ? 'bad-t' : ''}">${money(r.a.odAmt)}</td><td>${money(r.a.demand)}</td>
+    <td class="l"><span class="share" style="width:80px;${isTot ? 'visibility:hidden' : ''}"><i style="background:var(--good);width:${Math.min(100, r.a.paid / maxP * 100)}%"></i></span><b style="color:var(--good-ink)">${money(r.a.paid)}</b></td>
+    <td class="${r.a.est && r.a.paid / r.a.est >= .75 ? 'good-t' : r.a.est && r.a.paid / r.a.est < .5 ? 'bad-t' : ''}">${pct(r.a.paid, r.a.est)}%</td><td>${money(r.a.paid / Math.max(1, r.a.n))}</td></tr>`;
+  $('#rev').innerHTML = `<thead><tr>${H('name', drill ? 'Charge' : 'Circle', 'l')}${H('n', 'Tasks')}${H('amt', 'Involved')}${H('open', 'Pending', '', 'Amount involved in pending tasks')}${H('od', 'Overdue', '', 'Amount involved in overdue tasks')}${H('demand', 'Demand')}${H('paid', 'Realised', 'l')}${H('realP', 'Realisation', '', 'Realised ÷ dues established')}${H('perTask', 'Per task', '', 'Realised per task allotted')}</tr></thead><tbody>` +
+    rows.map(r => line(r)).join('') + line({ a: tot }, true) + '</tbody>';
+  $('#rev').querySelectorAll('th[data-k]').forEach(th => th.onclick = () => { const k = th.dataset.k; V.revSort = { k, dir: V.revSort.k === k ? -V.revSort.dir : (k === 'name' ? 1 : -1) }; revenue(); });
+  $('#rev').querySelectorAll('tbody tr[data-k]').forEach(tr => tr.onclick = () => drill ? set({ charge: F.charge === tr.dataset.k ? '' : tr.dataset.k }) : set({ circle: tr.dataset.k, charge: '' }));
+  const back = $('#revBack'); if (back) back.onclick = () => set({ circle: '', charge: '' });
+}
+
+/* ============ Task Allocation ============ */
+function routes() {
+  const list = view(), g = {};
+  list.forEach(t => { const k = t.chain.map(c => OBY[c.from].lv + c.method).join('|') + '|' + OBY[t.off].lv; (g[k] = g[k] || { k, chain: t.chain, off: OBY[t.off].lv, ts: [] }).ts.push(t); });
+  const rows = Object.values(g).sort((x, y) => y.ts.length - x.ts.length).slice(0, 10), mx = Math.max(1, ...rows.map(r => r.ts.length));
+  $('#routes').innerHTML = `<thead><tr><th class="l" style="cursor:default">Route</th><th style="cursor:default">Tasks</th><th style="cursor:default">Days</th><th style="cursor:default">Disposal</th><th style="cursor:default">Overdue</th></tr></thead><tbody>` +
+    rows.map(r => { const a = agg(r.ts); return `<tr style="cursor:default"><td class="l"><div class="path">${r.chain.map(c => `<span class="lv" style="margin:0">L${OBY[c.from].lv}</span>${mchip(c.method)}<span class="arr">→</span>`).join('')}<span class="lv" style="margin:0">L${r.off}</span></div></td>
+      <td><span class="share" style="width:50px"><i style="background:var(--blue);width:${r.ts.length / mx * 100}%"></i></span>${n0(r.ts.length)}</td><td>${dF0(med(r.ts.map(t => t.allot - t.created)))}</td><td>${pct(a.disp, a.n)}%</td><td class="${a.od ? 'bad-t' : ''}">${n0(a.od)}</td></tr>`; }).join('') + '</tbody>';
+}
+function batches() {
+  const steps = view().flatMap(t => t.steps).filter(s => s.rr), B = {};
+  steps.forEach(s => { const b = B[s.rr] = B[s.rr] || { id: s.rr, from: s.from, d: s.d, n: 0, amt: 0, offs: {}, ch: new Set(), c: new Set(), lv: OBY[s.to].lv }; b.n++; b.amt += s.t.amt; b.offs[s.to] = (b.offs[s.to] || 0) + 1; b.ch.add(s.t.ch); b.c.add(s.t.c); });
+  const bl = Object.values(B).sort((x, y) => y.d - x.d || y.n - x.n), sl = bl.slice(0, V.bShown);
+  const scope = b => b.ch.size === 1 ? title([...b.ch][0]) + ' charge' : b.c.size === 1 ? b.ch.size + ' charges, ' + title([...b.c][0]) : b.c.size + ' circles';
+  $('#batches').innerHTML = `<thead><tr><th class="l" style="cursor:default">Batch</th><th class="l" style="cursor:default">Date</th><th class="l" style="cursor:default">Run by</th><th style="cursor:default">To level</th><th style="cursor:default">Tasks</th><th style="cursor:default">Officers</th><th style="cursor:default">Each got</th><th style="cursor:default">Amount</th><th class="l" style="cursor:default">Scope</th></tr></thead><tbody>` +
+    sl.map(b => { const v = Object.values(b.offs), o = OBY[b.from]; return `<tr data-b="${b.id}" data-from="${b.from}"><td class="l"><b style="color:var(--link)">${b.id}</b></td><td class="l">${fmtD(b.d)}</td><td class="l">${esc(o.lv === 0 ? 'Commissioner' : o.name)} <span class="lv">L${o.lv}</span></td><td>L${b.lv}</td><td>${b.n}</td><td>${v.length}</td><td>${Math.min(...v) === Math.max(...v) ? Math.min(...v) : Math.min(...v) + '–' + Math.max(...v)}</td><td>${money(b.amt)}</td><td class="l">${esc(scope(b))}</td></tr>`; }).join('') + '</tbody>';
+  $('#batchCount').textContent = `${n0(bl.length)} batches in the selection`;
+  $('#batchMore').style.display = bl.length > V.bShown ? '' : 'none';
+  $('#batches').querySelectorAll('tbody tr').forEach(tr => tr.onclick = () => openOfficer(Number(tr.dataset.from), 'allot', { k: 'batch', v: tr.dataset.b }));
+}
+
+/* ============ tabs ============ */
+const TAB_TITLE = { all: 'Master Dashboard.', ov: 'Overview.', tax: 'Tax Track.', task: 'Task Track.', allot: 'Task Allocation.' };
+function setTab(t) {
+  V.tab = TAB_TITLE[t] ? t : 'ov';
+  document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === V.tab));
+  document.querySelectorAll('.tab').forEach(d => d.classList.toggle('on', V.tab === 'all' || d.dataset.tab === V.tab));
+  document.body.classList.toggle('all-mode', V.tab === 'all');
+  $('#pageTitle').textContent = TAB_TITLE[V.tab];
+  $('#bCsv').style.display = V.tab === 'task' || V.tab === 'all' ? '' : 'none';
+  draw(); saveHash();
+  if (window.scrollY > 200) window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function allotment() {
+  const list = view();
+  const rr = list.filter(t => t.method === 'RR'), batches = new Set(rr.map(t => t.rr));
+  $('#allotK').innerHTML = `<div class="mini"><span>By round robin</span><b>${pct(rr.length, list.length)}%</b></div><div class="mini"><span>Round robin batches</span><b>${n0(batches.size)}</b></div><div class="mini"><span>Re-allotments in chain</span><b>${n0(list.reduce((s, t) => s + t.chain.length - 1, 0))}</b></div>`;
+  const lvName = ['L0 Commissioner', 'L1 Spl./Addl. Commr.', 'L2 Jt. Commissioner', 'L3 Dy./Asst. Commr.'];
+  const rows = [0, 1, 2, 3].map(lv => { const ts = list.filter(t => OBY[t.by].lv === lv); return { lv, n: ts.length, m: ts.filter(t => t.method === 'M').length, r: ts.filter(t => t.method === 'RR').length }; });
+  const maxN = Math.max(1, ...rows.map(r => r.n));
+  $('#allotBars').innerHTML = `<div class="legend" style="margin-bottom:6px"><span><i style="background:var(--teal)"></i>Manual</span><span><i style="background:var(--violet)"></i>Round robin</span></div>` + rows.map(r => `<button class="hrow${V.alv === String(r.lv) ? ' on' : ''}" data-lv="${r.lv}" title="See the L${r.lv} officers who allot">
+    <span class="hl">${lvName[r.lv]}</span><span class="stack" style="width:${Math.max(6, r.n * 100 / maxN)}%"><i style="flex:${r.m};background:var(--teal)"></i><i style="flex:${r.r};background:var(--violet)"></i></span>
+    <span class="hn">${n0(r.n)}<small> · ${pct(r.r, r.n)}% RR</small></span></button>`).join('');
+  $('#allotBars').querySelectorAll('.hrow').forEach(b => b.onclick = () => { V.alv = V.alv === b.dataset.lv ? '' : b.dataset.lv; V.alShown = 20; allotment(); allotters(); $('#allotCard').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+  // load per L4 officer
+  const load = {}; OFF.filter(o => o.lv === 4 && (!F.circle || o.circle === F.circle) && (!F.charge || o.charge === F.charge)).forEach(o => load[o.id] = 0);
+  list.filter(t => !t.closed && load[t.off] != null).forEach(t => load[t.off]++);
+  const vals = Object.values(load), mx = Math.max(1, ...vals), bins = 12, h = new Array(bins).fill(0);
+  vals.forEach(v => h[Math.min(bins - 1, Math.floor(v / (mx + 1) * bins))]++);
+  const hm = Math.max(1, ...h);
+  $('#hist').innerHTML = h.map((v, i) => `<i style="height:${v / hm * 100}%" title="${v} officers with ${Math.ceil(i * (mx + 1) / bins)}–${Math.ceil((i + 1) * (mx + 1) / bins) - 1} open tasks"></i>`).join('');
+  $('#histX').innerHTML = `<span>0 open</span><span>median ${vals.length ? Math.round(med(vals)) : 0}</span><span>${mx} open</span>`;
+}
+
+const AL_SORTS = { name: r => r.label, lv: r => r.o.lv, n: r => r.A.n, m: r => r.A.m, r: r => r.A.r, rrP: r => r.A.rrP, b: r => r.A.batches.size, hold: r => r.A.medHold, to: r => r.A.to.size, open: r => r.A.out.open, od: r => r.A.out.od, disp: r => r.A.out.dispP };
+function allotters() {
+  const steps = view().flatMap(t => t.steps), g = {};
+  steps.forEach(s => (g[s.from] = g[s.from] || []).push(s));
+  let rows = Object.entries(g).map(([id, ss]) => { const o = OBY[id], A = allotAgg(ss); return { o, A, h: habitOf(A.rrP), label: o.lv === 0 ? 'Commissioner, CT' : o.name }; });
+  const all = rows;
+  rows = rows.filter(r => (V.alv === '' || String(r.o.lv) === V.alv) && (!V.ah || r.h === V.ah));
+  const lvRows = all.filter(r => V.alv === '' || String(r.o.lv) === V.alv);
+  const cnt = h => lvRows.filter(r => r.h === h).length;
+  $('#alK').innerHTML = `<div class="mini"><span>Officers who allotted</span><b>${n0(lvRows.length)}</b></div><div class="mini"><span>Mostly round robin</span><b style="color:var(--violet-ink)">${cnt('rr')}</b><small class="faint" style="display:block">65% or more of their allotments</small></div><div class="mini"><span>Mostly manual</span><b style="color:var(--teal)">${cnt('m')}</b><small class="faint" style="display:block">65% or more by hand</small></div><div class="mini"><span>Days to pass a task on</span><b>${dF0(med(lvRows.flatMap(r => g[r.o.id].map(s => s.hold))))}</b><small class="faint" style="display:block">median, after it reaches the allotter</small></div>`;
+  const s = V.alSort, f = AL_SORTS[s.k];
+  rows.sort((x, y) => { const a = f(x), b = f(y); return (typeof a === 'string' ? a.localeCompare(b) : (a ?? 0) - (b ?? 0)) * s.dir || y.A.n - x.A.n; });
+  const H = (k, l, cls, tip) => `<th class="${cls || ''}${s.k === k ? ' sorted' : ''}" data-k="${k}" data-dir="${s.dir < 0 ? '↓' : '↑'}"${tip ? ` title="${esc(tip)}"` : ''}>${l}</th>`;
+  const holdMed = med(steps.map(x => x.hold));
+  $('#allotters').innerHTML = `<thead><tr><th class="l" style="width:24px"></th>${H('name', 'Officer', 'l')}${H('n', 'Allotted')}${H('m', 'Manual')}${H('r', 'Round robin')}${H('rrP', 'Method', 'l', 'Share of allotments by round robin')}${H('b', 'Batches', '', 'Round robin batches')}${H('hold', 'Days', '', 'Median days from receiving a task to allotting it')}${H('to', 'Officers', '', 'Officers allotted to')}${H('open', 'Pending', '', 'Of the tasks this officer allotted')}${H('od', 'Overdue')}${H('disp', 'Disposal')}</tr></thead><tbody>` +
+    rows.slice(0, V.alShown).map((r, i) => `<tr data-id="${r.o.id}"><td class="rank">${i + 1}</td>
+      <td class="l"><div class="oname"><span class="av">${r.o.lv === 0 ? 'CT' : initials(r.o.name)}</span><span><b>${esc(r.label)}<span class="lv">L${r.o.lv}</span></b><small>${esc(r.o.lv === 0 ? 'Directorate' : r.o.desig + ' · ' + officeOf(r.o))}</small></span></div></td>
+      <td><b style="color:var(--ink)">${n0(r.A.n)}</b></td><td>${n0(r.A.m)}</td><td>${n0(r.A.r)}</td>
+      <td class="l"><span class="share"><i style="background:var(--teal);width:${100 - Math.round(r.A.rrP * 100)}%"></i><i style="background:var(--violet);width:${Math.round(r.A.rrP * 100)}%"></i></span>${habitChip(r.h)}</td>
+      <td>${r.A.batches.size || '<span class="faint">–</span>'}</td><td class="${r.A.medHold > holdMed * 1.6 ? 'bad-t' : ''}">${dF0(r.A.medHold)}</td><td>${n0(r.A.to.size)}</td>
+      <td>${n0(r.A.out.open)}</td><td class="${r.A.out.od ? 'bad-t' : ''}">${n0(r.A.out.od)}</td><td>${pct(r.A.out.disp, r.A.out.n)}%</td></tr>`).join('') + '</tbody>';
+  $('#alCount').textContent = `Showing ${Math.min(V.alShown, rows.length)} of ${rows.length} officers`;
+  $('#alMore').style.display = rows.length > V.alShown ? '' : 'none';
+  document.querySelectorAll('#alvSeg button').forEach(b => b.classList.toggle('on', b.dataset.v === V.alv));
+  document.querySelectorAll('#ahSeg button').forEach(b => b.classList.toggle('on', b.dataset.v === V.ah));
+  $('#allotters').querySelectorAll('th[data-k]').forEach(th => th.onclick = () => { const k = th.dataset.k; V.alSort = { k, dir: V.alSort.k === k ? -V.alSort.dir : (k === 'name' || k === 'hold' ? 1 : -1) }; allotters(); });
+  $('#allotters').querySelectorAll('tbody tr').forEach(tr => tr.onclick = () => openOfficer(Number(tr.dataset.id), 'allot'));
+}
+
+const REG_COLS = [
+  ['id', 'Task', t => t.id], ['trade', 'GSTIN / trade name', t => t.trade], ['type', 'Type', t => TYPE[t.type].name], ['ch', 'Charge', t => t.ch], ['off', 'Officer', t => OBY[t.off].name],
+  ['by', 'Allotted by', t => OBY[t.by].lv], ['method', 'Method', t => t.method], ['allot', 'Allotted on', t => t.allot], ['stage', 'Stage', t => t.stage], ['over', 'Days in stage', t => t.overdue ? 1e4 + t.over : t.inStage], ['amt', 'Amount', t => t.amt],
+];
+function register() {
+  const list = view(), s = V.regSort, col = REG_COLS.find(c => c[0] === s.k);
+  list.sort((a, b) => { const x = col[2](a), y = col[2](b); return (typeof x === 'string' ? x.localeCompare(y) : x - y) * s.dir; });
+  const per = 20, pages = Math.max(1, Math.ceil(list.length / per)); V.regPage = clamp(V.regPage, 0, pages - 1);
+  const slice = list.slice(V.regPage * per, V.regPage * per + per);
+  $('#reg').innerHTML = `<thead><tr>${REG_COLS.map(c => `<th class="${['id', 'trade', 'type', 'ch', 'off', 'by', 'method', 'stage'].includes(c[0]) ? 'l' : ''}${s.k === c[0] ? ' sorted' : ''}" data-k="${c[0]}" data-dir="${s.dir < 0 ? '↓' : '↑'}">${c[1]}</th>`).join('')}</tr></thead><tbody>` +
+    slice.map(t => { const o = OBY[t.off], b = OBY[t.by], st = STAGES[t.stage]; return `<tr data-id="${t.id}">
+      <td class="l"><b style="color:var(--ink)">${t.id}</b></td><td class="l"><span class="tn">${esc(t.trade)}</span><span class="gst">${t.gstin}</span></td><td class="l">${esc(TYPE[t.type].name)}</td><td class="l">${esc(title(t.ch))}</td>
+      <td class="l">${esc(o.name)} <span class="lv">L${o.lv}</span></td><td class="l">${esc(offShort(b))} <span class="lv">L${b.lv}</span></td>
+      <td class="l"><span class="method ${t.method === 'RR' ? 'rr' : 'm'}">${t.method === 'RR' ? 'Round robin' : 'Manual'}</span></td><td>${fmtD(t.allot)}</td>
+      <td class="l"><span class="pill"><i style="background:${st.c}"></i>${esc(st.name)}</span></td>
+      <td>${t.closed ? '<span class="faint">closed</span>' : t.overdue ? `<span class="bad-t">${t.inStage} (+${t.over})</span>` : t.inStage}</td><td>${money(t.amt)}</td></tr>`; }).join('') + '</tbody>';
+  $('#regCount').textContent = list.length ? `${n0(V.regPage * per + 1)}–${n0(V.regPage * per + slice.length)} of ${n0(list.length)} tasks · page ${V.regPage + 1} of ${pages}` : 'No tasks in this selection.';
+  $('#regPrev').disabled = V.regPage === 0; $('#regNext').disabled = V.regPage >= pages - 1;
+  $('#reg').querySelectorAll('th').forEach(th => th.onclick = () => { const k = th.dataset.k; V.regSort = { k, dir: V.regSort.k === k ? -V.regSort.dir : -1 }; V.regPage = 0; register(); });
+  $('#reg').querySelectorAll('tbody tr').forEach(tr => tr.onclick = () => openTask(tr.dataset.id));
+}
+
+/* ============ popup in the centre, with back and breadcrumb ============ */
+const NAV = [];
+const X = '<button class="icon-btn close-x" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>';
+const BK = '<button class="icon-btn back-x" aria-label="Back" title="Back"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>';
+const PERIOD_NAME = { fy: 'FY 2026-27 to date', q3: 'allotted since 1 October', d30: 'allotted in the last 30 days' };
+const mchip = m => `<span class="method ${m === 'RR' ? 'rr' : 'm'}">${m === 'RR' ? 'Round robin' : 'Manual'}</span>`;
+const dayCell = t => t.closed ? '<span class="faint">closed</span>' : t.overdue ? `<span class="bad-t">${t.inStage} (+${t.over})</span>` : t.inStage;
+const officeOf = o => o.lv <= 1 ? 'Directorate' : o.lv === 2 ? title(o.circle) + ' circle' : title(o.charge) + ' charge, ' + title(o.circle);
+const oLink = (o, tab) => `<button class="lnk" data-o="${o.id}" data-tab="${tab}">${esc(offShort(o))}</button>`;
+const routeKey = t => t.chain.map(c => c.from + ':' + c.method).join('>');
+const habitOf = p => p >= .65 ? 'rr' : p <= .35 ? 'm' : 'mix';
+const HABIT = { rr: 'Mostly round robin', m: 'Mostly manual', mix: 'Both methods' };
+const habitChip = h => `<span class="method ${h === 'rr' ? 'rr' : h === 'm' ? 'm' : ''}" style="${h === 'mix' ? 'background:var(--surface-sunken);color:var(--text-strong)' : ''}">${HABIT[h]}</span>`;
+const dF0 = x => x == null ? '–' : (Math.round(x * 10) / 10).toString();
+
+function openOfficer(id, tab, f) { navOpen({ kind: 'off', id, tab, f: f || {}, all: false }); }
+function openTask(id) { navOpen({ kind: 'task', id }); }
+function navOpen(e) { if (!$('#drawer').classList.contains('on')) NAV.length = 0; NAV.push(e); renderNav(true); }
+function navBack() { NAV.pop(); NAV.length ? renderNav(true) : closeDrawer(); }
+const navLabel = e => e.kind === 'task' ? e.id : offShort(OBY[e.id]);
+function renderNav(fresh) {
+  const e = NAV[NAV.length - 1], d = $('#drawer'), b0 = d.querySelector('.dbody'), keep = !fresh && b0 ? b0.scrollTop : 0;
+  const crumb = NAV.length > 1 ? `<div class="crumb">${NAV.map((x, i) => i < NAV.length - 1 ? `<button data-nav="${i}">${esc(navLabel(x))}</button><span>›</span>` : `<b>${esc(navLabel(x))}</b>`).join('')}</div>` : '';
+  d.className = 'drawer on' + (e.kind === 'task' ? ' narrow' : '');
+  d.innerHTML = crumb + (e.kind === 'task' ? taskHtml(e) : officerHtml(e));
+  d.setAttribute('aria-hidden', 'false'); $('#scrim').classList.add('on');
+  const b = d.querySelector('.dbody'); if (b) b.scrollTop = keep;
+  d.querySelector('.close-x').onclick = closeDrawer;
+  const bk = d.querySelector('.back-x'); if (bk) bk.onclick = navBack;
+}
+function closeDrawer() { NAV.length = 0; const d = $('#drawer'); d.classList.remove('on'); d.setAttribute('aria-hidden', 'true'); $('#scrim').classList.remove('on'); }
+$('#drawer').addEventListener('click', ev => {
+  const el = ev.target.closest('[data-o],[data-t],[data-fk],[data-tabsw],[data-more],[data-nav]'); if (!el) return;
+  const e = NAV[NAV.length - 1], ds = el.dataset;
+  if (ds.nav != null) { NAV.length = Number(ds.nav) + 1; renderNav(true); }
+  else if (ds.o) { if (e.kind === 'off' && Number(ds.o) === e.id) { e.tab = ds.tab || e.tab; e.f = {}; renderNav(true); } else openOfficer(Number(ds.o), ds.tab); }
+  else if (ds.t) openTask(ds.t);
+  else if (ds.tabsw) { e.tab = ds.tabsw; e.f = {}; e.all = false; renderNav(true); }
+  else if (ds.more) { e.all = true; renderNav(); }
+  else {
+    const k = ds.fk, v = ds.fv;
+    e.f = k === 'none' || (e.f.k === k && String(e.f.v) === v) ? {} : { k, v }; e.all = false; renderNav();
+    if (k !== 'none') { const h = $('#tlist'); if (h) h.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+  }
+});
+
+/* task list inside the popup: rows are { t, s } (s = the allotment step, in the allotments view) */
+const SETNAME = { open: 'Pending', od: 'Overdue', disp: 'Disposed', demand: 'With DRC-07 demand', paid: 'With amount realised' };
+function fpass(t, s, f) {
+  switch (f.k) {
+    case 'set': return f.v === 'open' ? !t.closed : f.v === 'od' ? t.overdue : f.v === 'disp' ? t.closed : f.v === 'demand' ? t.demand > 0 : f.v === 'paid' ? t.paid > 0 : true;
+    case 'st': return t.stage === Number(f.v);
+    case 'stod': return t.stage === Number(f.v) && t.overdue;
+    case 'route': return routeKey(t) === f.v;
+    case 'to': return !!s && s.to === Number(f.v);
+    case 'batch': return !!s && s.rr === f.v;
+    case 'method': return s ? s.method === f.v : t.method === f.v;
+    default: return true;
+  }
+}
+function fLabel(f) {
+  if (!f.k) return '';
+  if (f.k === 'set') return SETNAME[f.v] || 'All tasks';
+  if (f.k === 'st') return 'Stage: ' + STAGES[f.v].name;
+  if (f.k === 'stod') return 'Overdue at ' + STAGES[f.v].name;
+  if (f.k === 'route') return 'Route: ' + f.v.split('>').map(x => offShort(OBY[x.split(':')[0]])).join(' → ') + ' → this officer';
+  if (f.k === 'to') return 'Allotted to ' + offShort(OBY[f.v]);
+  if (f.k === 'batch') return 'Batch ' + f.v;
+  if (f.k === 'method') return f.v === 'RR' ? 'Round robin only' : 'Manual only';
+  return '';
+}
+function tlist(rows, e, mode) {
+  rows.sort((a, b) => (b.t.overdue - a.t.overdue) || (a.t.closed - b.t.closed) || (b.t.over - a.t.over) || (b.t.inStage - a.t.inStage));
+  const lim = e.all ? rows.length : 30, sl = rows.slice(0, lim), lbl = fLabel(e.f), amt = rows.reduce((x, r) => x + r.t.amt, 0);
+  return `<h3 id="tlist" style="scroll-margin-top:8px">${mode === 'allot' ? 'Tasks allotted by this officer' : 'Tasks with this officer'} <span class="faint" style="text-transform:none;letter-spacing:0;font-weight:500">· ${n0(rows.length)} tasks · ${money(amt)}</span></h3>
+  <div class="tfilter">${lbl ? `<button class="chip" data-fk="none">${esc(lbl)}<i>×</i></button><span>Click × to see all tasks again.</span>` : '<span>Overdue first. Click a card, stage, route or row above to narrow this list. Click a task for its full history.</span>'}</div>
+  <div class="tablewrap"><table class="dtable"><thead><tr><th class="l">Task</th><th class="l">Trade name / GSTIN</th><th class="l">Type</th><th class="l">Stage</th><th>Days in stage</th><th>Amount</th><th class="l">${mode === 'allot' ? 'Allotted to' : 'Allotted by'}</th></tr></thead><tbody>
+  ${sl.map(({ t, s }) => {
+    const st = STAGES[t.stage], who = mode === 'allot' ? OBY[s.to] : OBY[t.by], meth = mode === 'allot' ? s.method : t.method;
+    const tab = mode === 'allot' ? (t.off === who.id ? 'work' : 'allot') : 'allot';
+    return `<tr data-t="${t.id}"><td class="l"><b style="color:var(--ink)">${t.id}</b></td><td class="l"><span class="tn">${esc(t.trade)}</span><span class="gst">${t.gstin}</span></td><td class="l">${esc(TYPE[t.type].name)}</td>
+      <td class="l"><span class="pill"><i style="background:${st.c}"></i>${esc(st.name)}</span></td><td>${dayCell(t)}</td><td>${money(t.amt)}</td>
+      <td class="l">${oLink(who, tab)} <span class="lv">L${who.lv}</span> ${mchip(meth)}</td></tr>`;
+  }).join('') || '<tr><td colspan="7" class="l faint">No tasks in this selection.</td></tr>'}
+  </tbody></table></div>
+  ${rows.length > lim ? `<div class="tfoot"><span class="faint">Showing ${lim} of ${n0(rows.length)}</span><span class="sp"></span><button class="btn sm" data-more="1">Show all ${n0(rows.length)}</button></div>` : ''}`;
+}
+
+function officerHtml(e) {
+  const o = OBY[e.id], P = PSTART[F.period];
+  const mine = TASKS.filter(t => t.off === o.id && t.allot >= P);
+  const steps = (STEPS_BY[o.id] || []).filter(s => s.d >= P);
+  let canWork = o.lv >= 3 && (mine.length > 0 || o.lv === 4); const canAllot = o.lv <= 3 && (steps.length > 0 || o.lv <= 2);
+  if (!canWork && !canAllot) canWork = true;
+  if (!e.tab || (e.tab === 'allot' && !canAllot) || (e.tab === 'work' && !canWork)) e.tab = canWork ? 'work' : 'allot';
+  const a = agg(mine), sc = e.tab === 'work' ? score(a, STATE_MED) : null;
+  const ring = sc == null ? '' : `<span class="ring" style="--p:${sc};--c:${scoreColor(sc)}" title="Performance score"><b>${sc}</b></span>`;
+  const nm = o.lv === 0 ? 'Commissioner, Commercial Taxes' : o.name;
+  const head = `<div class="dhead">${NAV.length > 1 ? BK : ''}<span class="av">${o.lv === 0 ? 'CT' : initials(o.name)}</span><div><h2>${esc(nm)} <span class="lv">L${o.lv}</span></h2><p>${esc(o.lv === 0 ? 'Directorate of Commercial Taxes' : o.desig + ' · ' + officeOf(o))} · ${PERIOD_NAME[F.period]}</p></div>${ring}${X}</div>`;
+  const tabs = canWork && canAllot ? `<div class="dtabs"><button data-tabsw="work" class="${e.tab === 'work' ? 'on' : ''}">Tasks with this officer<small>${n0(mine.length)}</small></button><button data-tabsw="allot" class="${e.tab === 'allot' ? 'on' : ''}">Allotments made<small>${n0(steps.length)}</small></button></div>` : '';
+  return head + tabs + `<div class="dbody">${e.tab === 'work' ? workHtml(o, mine, a, e) : allotHtml(o, steps, e)}</div>`;
+}
+
+function workHtml(o, mine, a, e) {
+  const f = e.f, on = (k, v) => f.k === k && String(f.v) === String(v) ? ' on' : '';
+  const card = (v, label, val, sub, style) => `<button class="mini${on('set', v)}" data-fk="set" data-fv="${v}" title="Show these tasks"><span>${label}</span><b${style ? ` style="${style}"` : ''}>${val}</b><small class="faint" style="display:block">${sub}</small></button>`;
+  const peers = groupRowsFor(OFF.filter(p => p.lv === o.lv && p.circle === o.circle).map(p => p.id)), state = groupRowsFor(OFF.filter(p => p.lv === o.lv).map(p => p.id));
+  const cmp = (label, v, peer, stt, fmt, max) => `<div class="cmp"><span>${label}</span><span class="track" title="Circle median ${fmt(peer)} · State median ${fmt(stt)}"><em style="width:${clamp(v / max * 100, 0, 100)}%"></em><u style="left:${clamp(stt / max * 100, 0, 100)}%"></u></span><b>${fmt(v)}</b></div>`;
+  const mF = x => x == null ? '–' : Math.round(x * 100) + '%', dF = x => x == null ? '–' : Math.round(x);
+  const routes = {}; mine.forEach(t => { const k = routeKey(t); const r = routes[k] = routes[k] || { k, chain: t.chain, n: 0, amt: 0 }; r.n++; r.amt += t.amt; });
+  const routeHtml = Object.values(routes).sort((x, y) => y.n - x.n).map(r => `<div class="route${on('route', r.k)}"><div class="path">${r.chain.map(c => { const fo = OBY[c.from]; return `${oLink(fo, 'allot')}<span class="lv">L${fo.lv}</span>${mchip(c.method)}<span class="arr">→</span>`; }).join('')}<b style="color:var(--ink)">this officer</b></div>
+    <button class="btn sm" data-fk="route" data-fv="${r.k}" title="Show these tasks">${r.n} task${r.n > 1 ? 's' : ''} · ${money(r.amt)}</button></div>`).join('') || '<p class="faint">No tasks.</p>';
+  const rows = mine.filter(t => fpass(t, null, f)).map(t => ({ t }));
+  return `<div class="dk six">
+      ${card('all', 'Tasks allotted', n0(a.n), money(a.amt) + ' involved')}
+      ${card('open', 'Pending', n0(a.open), money(a.openAmt) + ' involved')}
+      ${card('od', 'Overdue', n0(a.od), money(a.odAmt) + ' involved', 'color:var(--bad)')}
+      ${card('disp', 'Disposed', n0(a.disp), money(a.dispAmt) + ' involved', 'color:var(--good-ink)')}
+      ${card('demand', 'Demand raised', money(a.demand), pct(a.demand, a.amt) + '% of amount involved')}
+      ${card('paid', 'Realised', money(a.paid), pct(a.paid, a.amt) + '% of amount involved', 'color:var(--good-ink)')}
+    </div>
+    <div class="dcols">
+      <div>
+        <h3>Tasks and amount involved by stage <span class="faint" style="text-transform:none;letter-spacing:0;font-weight:500">· click a stage to see its tasks</span></h3>
+        <div class="stack" style="height:18px;border-radius:6px">${[...OPEN, ...SHUT].map(s => `<i style="flex:${a.st[s]};background:${STAGES[s].c}" title="${esc(STAGES[s].name)}: ${a.st[s]} tasks, ${money(a.amtSt[s])}"></i>`).join('')}</div>
+        <div class="tw"><table class="dtable" style="margin-top:8px"><thead><tr><th class="l">Stage</th><th>Tasks</th><th>Overdue</th><th>Amount</th><th class="l" style="width:28%">Share</th></tr></thead><tbody>
+          ${[...OPEN, ...SHUT].filter(s => a.st[s]).map(s => `<tr data-fk="st" data-fv="${s}" class="${on('st', s).trim()}"><td class="l"><span class="pill"><i style="background:${STAGES[s].c}"></i>${esc(STAGES[s].name)}</span></td><td><b style="color:var(--link)">${a.st[s]}</b></td>
+            <td>${a.odSt[s] ? `<button class="lnk bad-t" data-fk="stod" data-fv="${s}" title="Show the overdue tasks at this stage">${a.odSt[s]}</button>` : '<span class="faint">–</span>'}</td><td><b style="color:var(--ink)">${money(a.amtSt[s])}</b></td>
+            <td class="l"><span class="stack" style="height:7px;width:${Math.max(2, pct(a.amtSt[s], a.amt))}%"><i style="flex:1;background:${STAGES[s].c}"></i></span></td></tr>`).join('')}
+          <tr data-fk="none"><td class="l"><b style="color:var(--ink)">Total</b></td><td><b>${a.n}</b></td><td class="bad-t">${a.od || '–'}</td><td><b style="color:var(--ink)">${money(a.amt)}</b></td><td></td></tr>
+        </tbody></table></div>
+      </div>
+      <div>
+        <h3>How the tasks reached this officer <span class="faint" style="text-transform:none;letter-spacing:0;font-weight:500">· click a name to see how they allot</span></h3>
+        <div style="max-height:300px;overflow:auto;padding-right:2px">${routeHtml}</div>
+        ${o.lv >= 3 ? `<h3>Against other L${o.lv} officers <span class="faint" style="text-transform:none;letter-spacing:0;font-weight:500">· bar: this officer · line: State median</span></h3>
+        ${cmp('Disposal rate', a.dispP, med(peers.map(r => r.a.dispP)), med(state.map(r => r.a.dispP)), mF, 1)}
+        ${cmp('Overdue share', a.odP, med(peers.map(r => r.a.odP)), med(state.map(r => r.a.odP)), mF, 1)}
+        ${cmp('Realisation', a.realP, med(peers.map(r => r.a.realP)), med(state.map(r => r.a.realP)), mF, 1)}
+        ${cmp('Days to dispose', a.medD, med(peers.map(r => r.a.medD).filter(x => x != null)), med(state.map(r => r.a.medD).filter(x => x != null)), dF, 200)}` : ''}
+      </div>
+    </div>
+    ${tlist(rows, e, 'work')}`;
+}
+
+function allotAgg(steps) {
+  const A = { n: steps.length, m: 0, r: 0, amt: 0, batches: new Set(), to: new Set() };
+  steps.forEach(s => { if (s.method === 'RR') { A.r++; A.batches.add(s.rr); } else A.m++; A.amt += s.t.amt; A.to.add(s.to); });
+  A.rrP = A.n ? A.r / A.n : 0; A.medHold = med(steps.map(s => s.hold)); A.out = agg(steps.map(s => s.t));
+  return A;
+}
+function allotHtml(o, steps, e) {
+  const f = e.f, on = (k, v) => f.k === k && String(f.v) === String(v) ? ' on' : '', P = PSTART[F.period];
+  const A = allotAgg(steps), lvMed = med(STEPS.filter(s => s.d >= P && OBY[s.from].lv === o.lv).map(s => s.hold));
+  const nm = o.lv === 0 ? 'The Commissioner' : o.name;
+  const card = (fk, fv, label, val, sub, style) => `<${fk ? `button class="mini${on(fk, fv)}" data-fk="${fk}" data-fv="${fv}" title="Show these tasks"` : 'div class="mini"'}><span>${label}</span><b${style ? ` style="${style}"` : ''}>${val}</b><small class="faint" style="display:block">${sub}</small></${fk ? 'button' : 'div'}>`;
+  if (!A.n) return `<p class="faint" style="margin-top:12px">${esc(nm)} made no allotments in this period.</p>`;
+  // month-wise manual and round robin
+  const mOf = d => clamp(new Date(FY0 + d * DAY).getUTCMonth() - 3, 0, 7), MM = new Array(8).fill(0), MR = new Array(8).fill(0);
+  steps.forEach(s => (s.method === 'RR' ? MR : MM)[mOf(s.d)]++);
+  const mx = Math.max(1, ...MM.map((v, i) => v + MR[i]));
+  const mbars = `<div class="mbars">${MM.map((v, i) => `<div title="${MONTHS[i]}: ${v} manual, ${MR[i]} round robin"><i style="height:${MR[i] / mx * 100}%;background:var(--violet)"></i><i style="height:${v / mx * 100}%;background:var(--teal)"></i></div>`).join('')}</div><div class="mbx">${MONTHS.map(m => `<span>${m}</span>`).join('')}</div>`;
+  // method compared
+  const byM = ['M', 'RR'].map(m => { const ss = steps.filter(s => s.method === m); return { m, n: ss.length, a: agg(ss.map(s => s.t)) }; });
+  const mtab = `<div class="tw"><table class="dtable"><thead><tr><th class="l">Method</th><th>Tasks</th><th>Pending</th><th>Overdue</th><th>Disposal</th><th>Realisation</th></tr></thead><tbody>${byM.map(r => `<tr data-fk="method" data-fv="${r.m}" class="${on('method', r.m).trim()}"><td class="l">${mchip(r.m)}</td><td><b style="color:var(--link)">${n0(r.n)}</b></td><td>${n0(r.a.open)}</td><td class="${r.a.od ? 'bad-t' : ''}">${n0(r.a.od)}</td><td>${r.n ? pct(r.a.disp, r.a.n) + '%' : '–'}</td><td>${r.a.est ? pct(r.a.paid, r.a.est) + '%' : '–'}</td></tr>`).join('')}</tbody></table></div>`;
+  // round robin batches
+  const B = {}; steps.filter(s => s.rr).forEach(s => { const b = B[s.rr] = B[s.rr] || { id: s.rr, d: s.d, n: 0, offs: {}, ch: new Set(), c: new Set(), lv: new Set() }; b.n++; b.offs[s.to] = (b.offs[s.to] || 0) + 1; b.ch.add(s.t.ch); b.c.add(s.t.c); b.lv.add(OBY[s.to].lv); });
+  const bl = Object.values(B).sort((x, y) => y.d - x.d);
+  const scope = b => b.ch.size === 1 ? title([...b.ch][0]) + ' charge' : b.c.size === 1 ? b.ch.size + ' charges, ' + title([...b.c][0]) : b.c.size + ' circles';
+  const btab = bl.length ? `<div style="max-height:250px;overflow:auto"><table class="dtable"><thead><tr><th class="l">Batch</th><th class="l">Date</th><th>Tasks</th><th class="l">Officers</th><th class="l">Scope</th></tr></thead><tbody>${bl.map(b => { const v = Object.values(b.offs); return `<tr data-fk="batch" data-fv="${b.id}" class="${on('batch', b.id).trim()}"><td class="l"><b style="color:var(--link)">${b.id}</b></td><td class="l">${fmtD(b.d)}</td><td>${b.n}</td><td class="l">${v.length} <span class="lv">L${[...b.lv].join('/')}</span> <span class="faint">· ${Math.min(...v) === Math.max(...v) ? Math.min(...v) : Math.min(...v) + '–' + Math.max(...v)} each</span></td><td class="l">${esc(scope(b))}</td></tr>`; }).join('')}</tbody></table></div>` : '<p class="faint">No round robin batches in this period. All allotments were made by hand.</p>';
+  // allotted to
+  const T = {}; steps.forEach(s => { const r = T[s.to] = T[s.to] || { o: OBY[s.to], ss: [] }; r.ss.push(s); });
+  const tl = Object.values(T).map(r => ({ o: r.o, n: r.ss.length, m: r.ss.filter(s => s.method === 'M').length, amt: r.ss.reduce((x, s) => x + s.t.amt, 0), a: agg(r.ss.map(s => s.t)), holds: r.ss.every(s => s.t.off === r.o.id) })).sort((x, y) => y.n - x.n);
+  const maxT = Math.max(1, ...tl.map(r => r.n));
+  const ttab = `<div style="max-height:330px;overflow:auto"><table class="dtable"><thead><tr><th class="l">Allotted to</th><th class="l">Office</th><th>Tasks</th><th class="l">Manual / round robin</th><th>Amount</th><th>Pending</th><th>Overdue</th><th>Disposal</th></tr></thead><tbody>${tl.map(r => `<tr data-fk="to" data-fv="${r.o.id}" class="${on('to', r.o.id).trim()}" title="Click to see these tasks">
+    <td class="l">${oLink(r.o, r.holds ? 'work' : 'allot')} <span class="lv">L${r.o.lv}</span></td><td class="l faint">${esc(r.o.lv >= 3 ? title(r.o.charge) : r.o.lv === 2 ? title(r.o.circle) + ' circle' : 'Directorate')}</td><td><b style="color:var(--link)">${r.n}</b></td>
+    <td class="l"><span class="share" style="width:${Math.max(10, r.n / maxT * 90)}px"><i style="background:var(--teal);width:${pct(r.m, r.n)}%"></i><i style="background:var(--violet);width:${100 - pct(r.m, r.n)}%"></i></span><span class="faint">${r.m} / ${r.n - r.m}</span></td>
+    <td>${money(r.amt)}</td><td>${n0(r.a.open)}</td><td class="${r.a.od ? 'bad-t' : ''}">${n0(r.a.od)}</td><td>${pct(r.a.disp, r.a.n)}%</td></tr>`).join('')}</tbody></table></div>`;
+  const loads = tl.filter(r => r.o.lv === 4).map(r => r.n);
+  const h = habitOf(A.rrP);
+  const rows = steps.filter(s => fpass(s.t, s, f)).map(s => ({ t: s.t, s }));
+  return `<div class="dk six">
+      ${card('', '', 'Tasks allotted', n0(A.n), money(A.amt) + ' involved')}
+      ${card('method', 'M', 'Manually', n0(A.m), (100 - pct(A.r, A.n)) + '% of allotments', 'color:var(--teal)')}
+      ${card('method', 'RR', 'By round robin', n0(A.r), pct(A.r, A.n) + '% of allotments', 'color:var(--violet-ink)')}
+      ${card('', '', 'Round robin batches', n0(A.batches.size), A.batches.size ? 'about ' + Math.round(A.r / A.batches.size) + ' task' + (Math.round(A.r / A.batches.size) === 1 ? '' : 's') + ' a batch' : 'none in this period')}
+      ${card('', '', 'Days to allot', dF0(A.medHold), o.lv ? 'median · all L' + o.lv + ': ' + dF0(lvMed) : 'median, from upload', A.medHold > lvMed * 1.5 ? 'color:var(--bad)' : '')}
+      ${card('', '', 'Officers allotted to', n0(A.to.size), loads.length > 1 ? 'L4 load ' + Math.min(...loads) + ' to ' + Math.max(...loads) + ' tasks' : '')}
+    </div>
+    <p class="note" style="margin-top:12px">${habitChip(h)} &nbsp;${esc(nm)} allotted ${n0(A.n)} tasks in this period, ${pct(A.r, A.n)}% by round robin in ${n0(A.batches.size)} batch${A.batches.size === 1 ? '' : 'es'} and ${100 - pct(A.r, A.n)}% by hand. A task was passed on a median of <b>${dF0(A.medHold)} day${A.medHold === 1 ? '' : 's'}</b> after it reached ${o.lv === 0 ? 'the Commissioner' : 'the officer'}${o.lv ? ` (all L${o.lv} officers: ${dF0(lvMed)} day${lvMed === 1 ? '' : 's'})` : ''}. Of these tasks <b>${pct(A.out.disp, A.out.n)}%</b> are disposed and <b>${n0(A.out.od)}</b> are overdue.</p>
+    <div class="dcols">
+      <div><h3>Month-wise <span class="faint" style="text-transform:none;letter-spacing:0;font-weight:500">· <span style="color:var(--teal)">■</span> manual <span style="color:var(--violet)">■</span> round robin</span></h3>${mbars}
+        <h3>Results by method <span class="faint" style="text-transform:none;letter-spacing:0;font-weight:500">· click to see the tasks</span></h3>${mtab}</div>
+      <div><h3>Round robin batches <span class="faint" style="text-transform:none;letter-spacing:0;font-weight:500">· latest first, click to see the tasks</span></h3>${btab}</div>
+    </div>
+    <h3>Allotted to <span class="faint" style="text-transform:none;letter-spacing:0;font-weight:500">· ${n0(tl.length)} officers · click a row for the tasks, a name for that officer</span></h3>${ttab}
+    ${tlist(rows, e, 'allot')}`;
+}
+function groupRowsFor(ids) {
+  const set1 = new Set(ids), g = {};
+  TASKS.forEach(t => { if (set1.has(t.off) && t.allot >= PSTART[F.period]) (g[t.off] = g[t.off] || []).push(t); });
+  return Object.values(g).filter(ts => ts.length >= 8).map(ts => ({ a: agg(ts) }));
+}
+
+function taskHtml(e) {
+  const t = TASKS.find(x => x.id === e.id), o = OBY[t.off], st = STAGES[t.stage], cr = OBY[t.chain[0].from];
+  const items = [];
+  items.push({ d: t.created, c: 'var(--border-strong)', h: 'Task created', s: `${TYPE[t.type].name} · ${t.period} · uploaded by ${oLink(cr, 'allot')}` });
+  t.chain.forEach(c => { const f = OBY[c.from], to = OBY[c.to]; items.push({ d: c.d, c: c.method === 'RR' ? 'var(--violet)' : 'var(--teal)', h: `Allotted to L${to.lv} ${oLink(to, to.id === t.off ? 'work' : 'allot')}`, s: `by L${f.lv} ${oLink(f, 'allot')} · ${c.method === 'RR' ? 'Round robin (' + c.rr + ')' : 'Manual'}` }); });
+  t.ev.forEach(ev => items.push({ d: ev.d, c: STAGES[ev.st].c, h: ev.part ? 'Part payment received' : t.type === 'AUD' && ev.st === 3 ? 'ADT-01 issued (audit notice)' : STAGES[ev.st].name, s: [ev.ref, ev.amt ? (ev.demand ? 'Demand ' : 'Paid ') + money(ev.amt) : '', ev.note].filter(Boolean).map(x => esc(x)).join(' · ') }));
+  items.forEach((x, i) => x.i = i); items.sort((a, b) => b.d - a.d || b.i - a.i);
+  const path = `<div class="path">${t.chain.map(c => { const f = OBY[c.from]; return `${oLink(f, 'allot')}<span class="lv">L${f.lv}</span>${mchip(c.method)}<span class="arr">→</span>`; }).join('')}${oLink(o, 'work')}<span class="lv">L${o.lv}</span></div>`;
+  return `<div class="dhead">${NAV.length > 1 ? BK : ''}<span class="av" style="background:${st.c};color:#fff">${initials(t.trade)}</span><div><h2>${esc(t.trade)}</h2><p>${t.gstin} · ${t.id}</p></div>${X}</div>
+  <div class="dbody">
+    <div class="dk"><div class="mini"><span>Amount involved</span><b>${money(t.amt)}</b></div><div class="mini"><span>Demand (DRC-07)</span><b>${t.demand ? money(t.demand) : '–'}</b></div><div class="mini"><span>Realised</span><b style="color:var(--good-ink)">${t.paid ? money(t.paid) : '–'}</b></div></div>
+    <h3>Present position</h3>
+    <div class="kv">
+      <span>Stage</span><b><span class="pill"><i style="background:${st.c}"></i>${esc(st.name)}</span> ${t.closed ? '' : t.overdue ? `<span class="bad-t">${t.inStage} days, ${t.over} past the SLA</span>` : `${t.inStage} days (SLA ${st.sla})`}</b>
+      <span>Task type</span><b>${esc(TYPE[t.type].name)} · ${t.period}</b>
+      <span>Charge</span><b>${esc(title(t.ch))}, ${esc(title(t.c))} circle</b>
+      <span>With</span><b>${esc(o.desig)} ${oLink(o, 'work')} (L${o.lv})</b>
+      <span>Allotted by</span><b>${oLink(OBY[t.by], 'allot')} (L${OBY[t.by].lv}) · ${mchip(t.method)}</b>
+    </div>
+    <h3>How this task reached the officer <span class="faint" style="text-transform:none;letter-spacing:0;font-weight:500">· click a name</span></h3>
+    ${path}
+    <h3>History, latest first</h3>
+    <ul class="tl">${items.map(i => `<li><i style="background:${i.c}"></i><b>${i.h}</b><small>${fmtD(i.d)}${i.s ? ' · ' + i.s : ''}</small></li>`).join('')}</ul>
+  </div>`;
+}
+
+/* ============ CSV ============ */
+function download(name, rows) {
+  const csv = rows.map(r => r.map(v => { const s = String(v == null ? '' : v); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }).join(',')).join('\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv' })); a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+$('#bCsv').onclick = () => {
+  const rows = groupRows(view('stage')).sort((a, b) => (b.score ?? -1) - (a.score ?? -1));
+  download(`utt_${V.group}_performance_20-11-2026.csv`, [[V.group === 'officer' ? 'Officer' : V.group === 'charge' ? 'Charge' : 'Circle', 'Detail', 'Tasks', 'Amount involved (Rs lakh)', ...OPEN.map(s => STAGES[s].name), ...OPEN.map(s => STAGES[s].name + ' (Rs lakh)'), 'Disposed', 'Overdue', 'Overdue amount (Rs lakh)', 'Disposal %', 'Median days', 'Demand (Rs lakh)', 'Realised (Rs lakh)', 'Score'],
+    ...rows.map(r => [r.label, r.sub, r.a.n, r.a.amt.toFixed(2), ...OPEN.map(s => r.a.st[s]), ...OPEN.map(s => r.a.amtSt[s].toFixed(2)), r.a.disp, r.a.od, r.a.odAmt.toFixed(2), pct(r.a.disp, r.a.n), r.a.medD == null ? '' : Math.round(r.a.medD), r.a.demand.toFixed(2), r.a.paid.toFixed(2), r.score ?? ''])]);
+  toast('Officer table downloaded');
+};
+$('#bTaskCsv').onclick = () => {
+  const list = view();
+  download('utt_tasks_20-11-2026.csv', [['Task ID', 'GSTIN', 'Trade name', 'Task type', 'Circle', 'Charge', 'Officer', 'Level', 'Allotted by', 'Allotted by level', 'Method', 'Round robin batch', 'Allotted on', 'Stage', 'Days in stage', 'Overdue', 'Amount involved (Rs lakh)', 'Demand (Rs lakh)', 'Realised (Rs lakh)'],
+    ...list.map(t => [t.id, t.gstin, t.trade, TYPE[t.type].name, title(t.c), title(t.ch), OBY[t.off].name, 'L' + OBY[t.off].lv, oLabel(OBY[t.by]), 'L' + OBY[t.by].lv, t.method === 'RR' ? 'Round robin' : 'Manual', t.rr || '', fmtD(t.allot), STAGES[t.stage].name, t.closed ? '' : t.inStage, t.overdue ? 'Yes' : 'No', t.amt, t.demand || '', t.paid ? t.paid.toFixed(2) : ''])]);
+  toast(`${n0(list.length)} tasks downloaded`);
+};
+$('#bPrint').onclick = () => window.print();
+
+/* ============ wiring ============ */
+let qt; $('#fq').oninput = e => { clearTimeout(qt); qt = setTimeout(() => set({ q: e.target.value.trim() }), 220); };
+$('#ftype').onchange = e => set({ type: e.target.value });
+$('#fcircle').onchange = e => set({ circle: e.target.value, charge: '' });
+$('#fcharge').onchange = e => { const ch = e.target.value; const c = ch ? Object.keys(CIRCLES).find(k => CIRCLES[k].some(x => x[0] === ch)) : F.circle; set({ charge: ch, circle: c }); };
+$('#flevel').onchange = e => set({ level: e.target.value });
+$('#fmethod').onchange = e => set({ method: e.target.value });
+$('#fod').onchange = e => set({ kpi: e.target.checked ? 'overdue' : '' });
+document.querySelectorAll('#fperiod button').forEach(b => b.onclick = () => set({ period: b.dataset.v }));
+document.querySelectorAll('#groupBy button').forEach(b => b.onclick = () => { V.group = b.dataset.v; V.shown = 25; V.sort = { k: 'score', dir: -1 }; setGroup(); matrix(view('stage')); saveHash(); });
+document.querySelectorAll('#cellBy button').forEach(b => b.onclick = () => { V.cell = b.dataset.v; document.querySelectorAll('#cellBy button').forEach(x => x.classList.toggle('on', x === b)); matrix(view('stage')); });
+$('#matMore').onclick = () => { V.shown += 25; matrix(view('stage')); };
+$('#matAll').onclick = () => { V.shown = 9999; matrix(view('stage')); };
+document.querySelectorAll('#alvSeg button').forEach(b => b.onclick = () => { V.alv = b.dataset.v; V.alShown = 20; allotment(); allotters(); });
+document.querySelectorAll('#ahSeg button').forEach(b => b.onclick = () => { V.ah = b.dataset.v; V.alShown = 20; allotters(); });
+$('#alMore').onclick = () => { V.alShown += 20; allotters(); };
+$('#regPrev').onclick = () => { V.regPage--; register(); };
+$('#regNext').onclick = () => { V.regPage++; register(); };
+$('#scrim').onclick = closeDrawer;
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && NAV.length) closeDrawer(); });
+$('#themeBtn').onclick = () => {
+  const root = document.documentElement, dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = dark ? 'light' : 'dark'; try { localStorage.setItem('tms-theme', root.dataset.theme); } catch (e) {}
+};
+try { const th = localStorage.getItem('tms-theme'); if (th) document.documentElement.dataset.theme = th; } catch (e) {}
+
+document.querySelectorAll('#tabs button').forEach(b => b.onclick = () => setTab(b.dataset.tab));
+$('#batchMore').onclick = () => { V.bShown += 15; batches(); };
+readHash(); setGroup(); syncFilters(); setTab(V.tab);
+})();
+</script>
+</body>
+</html>
