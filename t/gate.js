@@ -1,6 +1,6 @@
 /* Access code gate for ifs.gs/t pages.
    Use: <script src="../gate.js" data-sec="ppt"></script> in <head>.
-   Sections: doc (report), ppt (presentation), utt (Unified Tax and Tasks).
+   Sections: doc (report), ppt (presentation), res (research tools), utt (Unified Tax and Tasks).
    Codes are stored only as SHA-256 hashes of "ifsgs|" + code.
    lim > 0: the code opens the section that many times on one device (one opening = one browser session).
    lim = 0: no limit; the device is remembered. */
@@ -9,12 +9,13 @@
   var me = document.currentScript, SEC = (me && me.getAttribute('data-sec')) || 'doc';
   var CODES = [
     { h: '9c835ddfaf10542b651fb1d4eeb9002d1a948fe9cefde278a637842ae315bb76', s: ['*'], lim: 0 },
-    { h: '98de6c7f1512a79d9e03c0823b3693afebdc1cd21a18515bef6c268cb1e12ce2', s: ['doc', 'ppt'], lim: 5 },
-    { h: '50abd0b9042b45d3e486c50c88eb175c42f4091fac347264b415466118cf8475', s: ['doc', 'ppt'], lim: 0 },
+    { h: 'e85e8125fb27e13776c5a848fb90ac5caa0c5608e9dab8b7b34c91375eaf6a5b', s: ['*'], lim: 0 },
+    { h: '98de6c7f1512a79d9e03c0823b3693afebdc1cd21a18515bef6c268cb1e12ce2', s: ['doc', 'ppt', 'res'], lim: 5 },
+    { h: '50abd0b9042b45d3e486c50c88eb175c42f4091fac347264b415466118cf8475', s: ['doc', 'ppt', 'res'], lim: 0 },
     { h: '087baf1c6635277b6bce7b130b45083c69e03f2a2377fdfdf706e776b8722878', s: ['utt'], lim: 5 },
     { h: 'd54853b4ebdb8bd1a4dc5de60eeee1e4251028663b114baaa2f6f1c1e1371b0a', s: ['utt'], lim: 0 }
   ];
-  var NAME = { doc: 'Detailed Report', ppt: 'Presentation', utt: 'Unified Tax and Tasks' };
+  var NAME = { doc: 'Detailed Report', ppt: 'Presentation', utt: 'Unified Tax and Tasks', res: 'Research' };
   function get(st, k) { try { return st.getItem(k); } catch (e) { return null; } }
   function put(st, k, v) { try { st.setItem(k, v); } catch (e) {} }
   var L = window.localStorage, S = window.sessionStorage;

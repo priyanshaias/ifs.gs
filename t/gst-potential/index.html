@@ -1,0 +1,1436 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<script src="../gate.js" data-sec="res"></script>
+<title>GST Potential</title>
+<link rel="stylesheet" href="../assets/app.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="../assets/dash-runtime.js"></script>
+<style>
+/* state colours: saffron for West Bengal, pink for Gujarat; brighter tints where the theme is dark */
+#dash-root{--wb-bengal:#F47A00;--wb-gujarat:#EC1A80}
+@supports (color: light-dark(#000, #fff)){#dash-root{--wb-bengal:light-dark(#F47A00,#FF9A3D);--wb-gujarat:light-dark(#EC1A80,#FF5FA8)}}
+.wb{display:flex;flex-direction:column;gap:var(--cds-gap-xl);font-family:var(--font-anthropic-sans);color:var(--color-fg)}
+.wb-eyebrow{font-size:var(--cds-font-size-caption);letter-spacing:.06em;text-transform:uppercase;color:var(--color-fg-muted);margin:0}
+.wb-title{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);margin:0;text-wrap:balance}
+.wb-lead{font-size:var(--cds-font-size-heading);line-height:1.45;margin:0;max-width:62ch}
+.wb-lead b,.wb-take b{font-variant-numeric:tabular-nums;font-weight:var(--cds-font-weight-medium)}
+.wb-head{display:flex;flex-direction:column;gap:var(--cds-gap-sm)}
+.wb-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:var(--cds-gap-md)}
+.wb-kpi{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-md) var(--cds-pad-lg);display:flex;flex-direction:column;gap:var(--cds-gap-xs);min-width:0}
+.wb-kpi h3{font-size:var(--cds-font-size-caption);font-weight:var(--cds-font-weight-medium);color:var(--color-fg-muted);margin:0;line-height:1.3}
+.wb-kpi .wb-big{font-family:var(--font-anthropic-serif);font-size:var(--cds-font-size-title);font-variant-numeric:tabular-nums;line-height:1.1}
+.wb-kpi .wb-vs{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);font-variant-numeric:tabular-nums}
+.wb-kpi .wb-vs b{color:var(--color-fg);font-weight:var(--cds-font-weight-medium)}
+.wb-sec{display:flex;flex-direction:column;gap:var(--cds-gap-sm);min-width:0}
+.wb-sec h2{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0;text-wrap:balance}
+.wb-take{margin:0;max-width:70ch;line-height:1.5}
+.wb-note{margin:0;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);max-width:75ch}
+.wb-card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg);display:flex;flex-direction:column;gap:var(--cds-gap-md);min-width:0}
+.wb-controls{display:flex;flex-wrap:wrap;gap:var(--cds-gap-md);align-items:flex-end}
+.wb-ctl{display:flex;flex-direction:column;gap:4px;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.wb-seg{display:inline-flex;border:1px solid var(--color-border-line);border-radius:var(--cds-radius);overflow:hidden}
+.wb-seg label{padding:5px 10px;cursor:pointer;font-size:var(--cds-font-size-caption);color:var(--color-fg)}
+.wb-seg input{position:absolute;opacity:0;pointer-events:none}
+.wb-seg label:has(input:checked){background:var(--color-fg);color:var(--color-bg)}
+.wb-seg label:has(input:focus-visible){outline:2px solid var(--color-fg);outline-offset:-2px}
+.wb-chips{display:flex;flex-wrap:wrap;gap:6px}
+.wb-chip{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--color-border-line);border-radius:999px;padding:3px 10px;font-size:var(--cds-font-size-caption);cursor:pointer;color:var(--color-fg)}
+.wb-chip.wb-fixed{cursor:default;font-weight:var(--cds-font-weight-medium)}
+.wb-chip input{margin:0}
+.wb-chart{position:relative;min-height:300px;width:100%}
+.wb-chart.wb-tall{min-height:380px}
+.wb-chart.wb-short{min-height:240px}
+.wb-chart svg{display:block;overflow:visible}
+.wb-chart .tick text{fill:var(--cds-text-secondary);font-size:var(--cds-font-size-caption)}
+.wb-chart .domain,.wb-chart .tick line{stroke:var(--cds-chart-axis)}
+.wb-chart .wb-grid line{stroke:var(--cds-chart-grid)}
+.wb-chart .wb-grid .domain{display:none}
+.wb-lbl{font-size:var(--cds-font-size-caption);fill:var(--color-fg)}
+.wb-lbl-muted{font-size:var(--cds-font-size-caption);fill:var(--cds-text-secondary)}
+.wb-tip{position:absolute;pointer-events:none;background:var(--cds-surface-popover);border:1px solid var(--cds-border);box-shadow:var(--cds-shadow-popover);border-radius:var(--cds-radius);padding:8px 10px;font-size:var(--cds-font-size-caption);font-variant-numeric:tabular-nums;z-index:5;min-width:150px;max-width:260px}
+.wb-tip .wb-tip-h{font-weight:var(--cds-font-weight-medium);margin-bottom:4px}
+.wb-tip .wb-tip-r{display:flex;justify-content:space-between;gap:12px;color:var(--cds-text-secondary)}
+.wb-tip .wb-tip-r b{color:var(--color-fg);font-weight:var(--cds-font-weight-medium)}
+.wb-legend{display:flex;flex-wrap:wrap;gap:12px;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.wb-legend span{display:inline-flex;align-items:center;gap:6px}
+.wb-legend i{display:inline-block;width:14px;height:3px;border-radius:2px}
+.wb-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--cds-gap-lg)}
+.wb-two>*{min-width:0}
+.wb-two h3{font-size:var(--cds-font-size-body);font-weight:var(--cds-font-weight-medium);margin:0}
+.wb-principle{border-left:3px solid var(--color-fg);padding:var(--cds-pad-sm) var(--cds-pad-md);background:var(--color-panel);border-radius:0 var(--cds-radius) var(--cds-radius) 0;display:flex;flex-direction:column;gap:6px}
+.wb-principle p{margin:0;line-height:1.5}
+.wb-formula{font-family:ui-monospace,Menlo,monospace;font-size:var(--cds-font-size-caption);overflow-x:auto;white-space:nowrap}
+.wb-tablewrap{overflow-x:auto}
+.wb-table{border-collapse:collapse;width:100%;font-size:var(--cds-font-size-body);font-variant-numeric:tabular-nums}
+.wb-table th{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);font-weight:var(--cds-font-weight-medium);text-align:right;padding:6px 8px;border-bottom:1px solid var(--color-border-line);white-space:nowrap}
+.wb-table th:first-child,.wb-table td:first-child{text-align:left}
+.wb-table td{padding:7px 8px;border-bottom:1px solid var(--color-border-line);text-align:right}
+.wb-table td:first-child{white-space:normal;min-width:180px}
+.wb-pos{color:var(--color-ok)}
+.wb-sim{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--cds-gap-lg);align-items:start}
+.wb-sim>*{min-width:0}
+.wb-range{display:flex;flex-direction:column;gap:4px;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.wb-range input{width:100%}
+.wb-range output{color:var(--color-fg);font-weight:var(--cds-font-weight-medium);font-variant-numeric:tabular-nums}
+.wb-simout{display:grid;grid-template-columns:1fr 1fr;gap:var(--cds-gap-md)}
+.wb-simout div{display:flex;flex-direction:column;gap:2px}
+.wb-simout span{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.wb-simout b{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);font-variant-numeric:tabular-nums}
+.wb-levers{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:var(--cds-gap-md)}
+.wb-lever{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-md) var(--cds-pad-lg);display:flex;flex-direction:column;gap:6px;min-width:0}
+.wb-lever h3{margin:0;font-size:var(--cds-font-size-body);font-weight:var(--cds-font-weight-medium)}
+.wb-lever p{margin:0;line-height:1.45;font-size:var(--cds-font-size-body)}
+.wb-lever .wb-tag{font-size:var(--cds-font-size-caption);letter-spacing:.05em;text-transform:uppercase;color:var(--color-fg-muted)}
+.wb-details{font-size:var(--cds-font-size-body)}
+.wb-details summary{cursor:pointer;font-weight:var(--cds-font-weight-medium)}
+.wb-details ul{margin:8px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:6px;max-width:80ch}
+[data-dash-source-state=refreshing]{opacity:.5}
+.wb-card .wb-h3{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0}
+.wb-card>h3{font-size:var(--cds-font-size-body);font-weight:var(--cds-font-weight-medium);margin:0}
+.wb-table th.wb-thgroup{text-align:center;border-bottom:1px solid var(--color-border-line)}
+#sec-summary{border-top:1px solid var(--color-border-line);padding-top:var(--cds-gap-lg)}
+</style>
+</head>
+<body>
+<nav class="app-bar" aria-label="GSTapp"><a href="../">GST</a><span class="app-crumb">/ GST potential</span></nav>
+<p class="app-notice" id="app-notice" hidden>Some data files did not load. Start the app with <b>start.command</b> (or run <code>python3 -m http.server</code> in the GSTapp folder) rather than opening this file directly.</p>
+<div id="dash-root">
+<div class="wb" id="wb-top">
+  <header class="wb-head" id="wb-header">
+    <p class="wb-eyebrow">West Bengal vs Gujarat and all states · GSTN data, FY 2018-19 to 2025-26</p>
+    <h1 class="wb-title">West Bengal's GST potential</h1>
+    <p class="wb-lead" data-read lang="en">West Bengal produces <b data-draw="k-gsdpshare" data-source="kpi" data-field="gsdp_share_pct" data-where="state=West Bengal">—</b>% of India's GSDP but collects only <b data-draw="k-sgstshare" data-source="kpi" data-field="own_sgst_share_pct" data-where="state=West Bengal">—</b>% of the country's own SGST. Taxing its economy as intensively as Gujarat does would add about ₹<b data-draw="k-prize" data-source="potential" data-field="uplift_cr" data-where="id=own_gj">—</b> Cr of SGST a year.</p>
+  </header>
+
+  <section class="wb-kpis" id="wb-kpis" aria-label="West Bengal against Gujarat, FY 2025-26">
+    <div class="wb-kpi" id="kpi-intensity">
+      <h3>Own SGST as % of GSDP, 2025-26</h3>
+      <div class="wb-big"><span data-draw="k1" data-source="kpi" data-field="own_sgst_gsdp_pct" data-where="state=West Bengal">—</span>%</div>
+      <div class="wb-vs">Gujarat <b data-draw="k1g" data-source="kpi" data-field="own_sgst_gsdp_pct" data-where="state=Gujarat">—</b>% · India <b data-draw="k1i" data-source="kpi" data-field="own_sgst_gsdp_pct" data-where="state=India">—</b>%</div>
+    </div>
+    <div class="wb-kpi" id="kpi-staterev">
+      <h3>State revenue (SGST + IGST settlement) as % of GSDP</h3>
+      <div class="wb-big"><span data-draw="k2" data-source="kpi" data-field="post_gsdp_pct" data-where="state=West Bengal">—</span>%</div>
+      <div class="wb-vs">Gujarat <b data-draw="k2g" data-source="kpi" data-field="post_gsdp_pct" data-where="state=Gujarat">—</b>% · India <b data-draw="k2i" data-source="kpi" data-field="post_gsdp_pct" data-where="state=India">—</b>%</div>
+    </div>
+    <div class="wb-kpi" id="kpi-yield">
+      <h3>Own SGST per taxpayer, 2025-26 (₹ lakh)</h3>
+      <div class="wb-big" data-draw="k3" data-source="kpi" data-field="sgst_per_tp_lakh" data-where="state=West Bengal">—</div>
+      <div class="wb-vs">Gujarat <b data-draw="k3g" data-source="kpi" data-field="sgst_per_tp_lakh" data-where="state=Gujarat">—</b> · India <b data-draw="k3i" data-source="kpi" data-field="sgst_per_tp_lakh" data-where="state=India">—</b></div>
+    </div>
+    <div class="wb-kpi" id="kpi-r1">
+      <h3>GSTR-1 filed by due date, 2025-26</h3>
+      <div class="wb-big"><span data-draw="k4" data-source="kpi" data-field="gstr1_ontime_pct" data-where="state=West Bengal">—</span>%</div>
+      <div class="wb-vs">Gujarat <b data-draw="k4g" data-source="kpi" data-field="gstr1_ontime_pct" data-where="state=Gujarat">—</b>% · India <b data-draw="k4i" data-source="kpi" data-field="gstr1_ontime_pct" data-where="state=India">—</b>%</div>
+    </div>
+    <div class="wb-kpi" id="kpi-ytd">
+      <h3>Growth in state revenue, Apr–Oct 2026 vs Apr–Oct 2025</h3>
+      <div class="wb-big"><span data-draw="k5" data-source="kpi" data-field="ytd_growth_pct" data-where="state=West Bengal">—</span>%</div>
+      <div class="wb-vs">Gujarat <b data-draw="k5g" data-source="kpi" data-field="ytd_growth_pct" data-where="state=Gujarat">—</b>% · India <b data-draw="k5i" data-source="kpi" data-field="ytd_growth_pct" data-where="state=India">—</b>%</div>
+    </div>
+  </section>
+
+  <aside class="wb-principle" id="wb-first-principles">
+    <p class="wb-eyebrow">First principles</p>
+    <p data-read lang="en">GST is a destination tax, so a state's revenue should track the size of its economy. Every rupee of SGST can be split into two factors, and any gap with another state has to sit in one of them:</p>
+    <p class="wb-formula">SGST = GSDP × (taxpayers ÷ GSDP) × (SGST ÷ taxpayer)</p>
+    <p data-read lang="en">The economy (GSDP) is given. The registration base and the tax collected per registrant are what the department can move. The sections below test each one.</p>
+  </aside>
+
+  <section class="wb-sec" id="sec-trend">
+    <h2>Eight years of GST, indexed to a base year</h2>
+    <p class="wb-take" data-read lang="en">From 2018-19 to 2025-26, West Bengal's state revenue grew <b data-draw="t-wb" data-source="kpi" data-field="cagr_post_pct" data-where="state=West Bengal">—</b>% a year, against <b data-draw="t-gj" data-source="kpi" data-field="cagr_post_pct" data-where="state=Gujarat">—</b>% for Gujarat and <b data-draw="t-in" data-source="kpi" data-field="cagr_post_pct" data-where="state=India">—</b>% for all states combined. Its own SGST grew <b data-draw="t-wbo" data-source="kpi" data-field="cagr_own_pct" data-where="state=West Bengal">—</b>% a year (Gujarat <b data-draw="t-gjo" data-source="kpi" data-field="cagr_own_pct" data-where="state=Gujarat">—</b>%).</p>
+    <div class="wb-card">
+      <div class="wb-controls">
+        <label class="wb-ctl" for="trend-metric">Measure
+          <select class="dash-select" id="trend-metric">
+            <option value="post_settlement_sgst">State revenue: SGST + IGST settlement</option>
+            <option value="sgst">Own SGST (before settlement)</option>
+            <option value="collection">Total GST collected in the state (CGST + SGST + IGST)</option>
+            <option value="igst_settlement">IGST settled to the state</option>
+            <option value="taxpayers">Taxpayers filing GSTR-3B</option>
+            <option value="sgst_per_taxpayer">Own SGST per taxpayer</option>
+            <option value="refunds">Refunds paid (from 2020-21)</option>
+          </select>
+        </label>
+        <div class="wb-ctl">View
+          <div class="wb-seg" role="radiogroup" aria-label="View">
+            <label><input type="radio" name="trend-mode" id="trend-mode-index" value="index" checked>Index</label>
+            <label><input type="radio" name="trend-mode" id="trend-mode-abs" value="abs">₹ Cr / count</label>
+          </div>
+        </div>
+        <label class="wb-ctl" for="trend-base">Base year = 100
+          <select class="dash-select" id="trend-base">
+            <option value="2018-19" selected>2018-19</option>
+            <option value="2019-20">2019-20</option>
+            <option value="2020-21">2020-21</option>
+            <option value="2021-22">2021-22</option>
+            <option value="2022-23">2022-23</option>
+            <option value="2023-24">2023-24</option>
+            <option value="2024-25">2024-25</option>
+          </select>
+        </label>
+      </div>
+      <div class="wb-chips" id="trend-peers" aria-label="States to compare">
+        <span class="wb-chip wb-fixed">West Bengal</span>
+        <span class="wb-chip wb-fixed">Gujarat</span>
+        <span class="wb-chip wb-fixed">All states</span>
+        <label class="wb-chip"><input type="checkbox" id="peer-mh" value="Maharashtra">Maharashtra</label>
+        <label class="wb-chip"><input type="checkbox" id="peer-tn" value="Tamil Nadu" checked>Tamil Nadu</label>
+        <label class="wb-chip"><input type="checkbox" id="peer-ka" value="Karnataka">Karnataka</label>
+        <label class="wb-chip"><input type="checkbox" id="peer-up" value="Uttar Pradesh">Uttar Pradesh</label>
+        <label class="wb-chip"><input type="checkbox" id="peer-tg" value="Telangana">Telangana</label>
+        <label class="wb-chip"><input type="checkbox" id="peer-rj" value="Rajasthan">Rajasthan</label>
+        <label class="wb-chip"><input type="checkbox" id="peer-od" value="Odisha">Odisha</label>
+        <label class="wb-chip"><input type="checkbox" id="peer-kl" value="Kerala">Kerala</label>
+        <label class="wb-chip"><input type="checkbox" id="peer-ap" value="Andhra Pradesh">Andhra Pradesh</label>
+        <label class="wb-chip"><input type="checkbox" id="peer-br" value="Bihar">Bihar</label>
+      </div>
+      <div class="wb-chart wb-tall" id="chart-trend" data-draw="trend" data-source="series"></div>
+    </div>
+    <p class="wb-note">2017-18 is left out because GST started in July 2017. Index = value ÷ base-year value × 100. If a state has no value in the chosen base year, it is indexed to its first available year. State revenue for 2025-26 is the official post-settlement figure.</p>
+  </section>
+
+  <section class="wb-sec" id="sec-gap">
+    <h2>What slower growth has cost</h2>
+    <p class="wb-take" data-read lang="en">Had West Bengal's state revenue grown at the all-states pace from 2018-19, it would have received ₹<b data-draw="g-tot" data-source="gap" data-field="gap_india_cr" data-where="fy=Total">—</b> Cr more over seven years, including ₹<b data-draw="g-last" data-source="gap" data-field="gap_india_cr" data-where="fy=2025-26">—</b> Cr in 2025-26 alone. At Gujarat's pace, 2025-26 alone would have brought ₹<b data-draw="g-gj" data-source="gap" data-field="gap_gujarat_cr" data-where="fy=2025-26">—</b> Cr more.</p>
+    <div class="wb-card">
+      <div class="wb-legend" id="gap-legend">
+        <span><i data-legend="0"></i>West Bengal, actual</span>
+        <span><i data-legend="ref"></i>At all-states growth</span>
+        <span><i data-legend="1"></i>At Gujarat's growth</span>
+      </div>
+      <div class="wb-chart" id="chart-gap" data-draw="gap" data-source="gap"></div>
+    </div>
+  </section>
+
+  <section class="wb-sec" id="sec-share">
+    <h2>West Bengal's slice of the national SGST pool</h2>
+    <p class="wb-take" data-read lang="en">West Bengal's share of all states' own SGST went from <b data-draw="s-first" data-source="shares" data-field="own_share_pct" data-where="state=West Bengal&amp;fy=2018-19">—</b>% in 2018-19 to <b data-draw="s-last" data-source="shares" data-field="own_share_pct" data-where="state=West Bengal&amp;fy=2025-26">—</b>% in 2025-26, against a <b data-draw="s-gsdp" data-source="kpi" data-field="gsdp_share_pct" data-where="state=West Bengal">—</b>% share of India's GSDP. Gujarat collects <b data-draw="s-gj" data-source="shares" data-field="own_share_pct" data-where="state=Gujarat&amp;fy=2025-26">—</b>% of SGST from <b data-draw="s-gjg" data-source="kpi" data-field="gsdp_share_pct" data-where="state=Gujarat">—</b>% of GSDP.</p>
+    <div class="wb-card">
+      <div class="wb-legend">
+        <span><i data-legend="0"></i>West Bengal, own SGST share</span>
+        <span><i data-legend="0" data-dashed="1"></i>West Bengal, state revenue share</span>
+        <span><i data-legend="1"></i>Gujarat, own SGST share</span>
+        <span><i data-legend="1" data-dashed="1"></i>Gujarat, state revenue share</span>
+      </div>
+      <div class="wb-chart" id="chart-share" data-draw="share" data-source="shares kpi"></div>
+    </div>
+    <p class="wb-note">Dotted horizontal lines show each state's share of India's GSDP in 2025-26. A state collecting in line with its economy would sit on its line.</p>
+  </section>
+
+  <section class="wb-sec" id="sec-intensity">
+    <h2>Tax intensity: how much GST each state raises from its economy</h2>
+    <p class="wb-take" data-read lang="en">Among the large states, West Bengal raises <b data-draw="i-wb" data-source="kpi" data-field="own_sgst_gsdp_pct" data-where="state=West Bengal">—</b>% of GSDP as own SGST. Gujarat raises <b data-draw="i-gj" data-source="kpi" data-field="own_sgst_gsdp_pct" data-where="state=Gujarat">—</b>% and Maharashtra <b data-draw="i-mh" data-source="kpi" data-field="own_sgst_gsdp_pct" data-where="state=Maharashtra">—</b>%. West Bengal ranks <b data-draw="i-rank" data-source="kpi" data-field="own_rank" data-where="state=West Bengal">—</b> of <b data-draw="i-n" data-source="kpi" data-field="rank_of" data-where="state=West Bengal">—</b> states with GSDP above ₹2 lakh Cr.</p>
+    <div class="wb-card">
+      <div class="wb-controls">
+        <div class="wb-ctl">Y axis
+          <div class="wb-seg" role="radiogroup" aria-label="Measure for tax intensity">
+            <label><input type="radio" name="int-metric" id="int-own" value="own_pct" checked>Own SGST</label>
+            <label><input type="radio" name="int-metric" id="int-post" value="post_pct">SGST + settlement</label>
+            <label><input type="radio" name="int-metric" id="int-coll" value="coll_pct">All GST collected</label>
+          </div>
+        </div>
+      </div>
+      <div class="wb-chart wb-tall" id="chart-intensity" data-draw="intensity" data-source="intensity"></div>
+    </div>
+    <p class="wb-note">FY 2025-26. X axis: GSDP at current prices (log scale). Bubble size: taxpayers filing GSTR-3B. The dashed line is the all-states average. "All GST collected" favours states where large companies pay centrally (Maharashtra, Haryana, Karnataka), so own SGST and state revenue are the fairer comparisons.</p>
+  </section>
+
+  <section class="wb-sec" id="sec-decomp">
+    <h2>Where the gap with Gujarat sits</h2>
+    <p class="wb-take" data-read lang="en">West Bengal has <b data-draw="d-den" data-source="decomp" data-field="wb_index" data-where="id=density">—</b>% of Gujarat's registrations per rupee of GSDP, but only <b data-draw="d-yld" data-source="decomp" data-field="wb_index" data-where="id=yield">—</b>% of its SGST per taxpayer. About <b data-draw="d-share" data-source="decomp" data-field="share_of_gap_pct" data-where="id=yield">—</b>% of the intensity gap is yield per taxpayer, which points to under-reporting and leakage more than missing registrations.</p>
+    <div class="wb-two">
+      <div class="wb-card">
+        <h3>West Bengal as % of Gujarat (Gujarat = 100)</h3>
+        <div class="wb-chart wb-short" id="chart-decomp" data-draw="decomp" data-source="decomp"></div>
+      </div>
+      <div class="wb-card">
+        <h3>Bridge to Gujarat's intensity, own SGST 2025-26 (₹ Cr)</h3>
+        <div class="wb-chart wb-short" id="chart-bridge" data-draw="bridge" data-source="bridge"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wb-sec" id="sec-compliance">
+    <h2>Filing discipline</h2>
+    <p class="wb-take" data-read lang="en">In 2025-26, <b data-draw="c-wb" data-source="kpi" data-field="gstr1_ontime_pct" data-where="state=West Bengal">—</b>% of West Bengal's GSTR-1 returns were filed by the due date, against <b data-draw="c-gj" data-source="kpi" data-field="gstr1_ontime_pct" data-where="state=Gujarat">—</b>% in Gujarat. Late GSTR-1 means late invoice data for buyers and for the department's matching. GSTR-3B on-time filing is closer: <b data-draw="c-wb3" data-source="kpi" data-field="gstr3b_ontime_pct" data-where="state=West Bengal">—</b>% vs <b data-draw="c-gj3" data-source="kpi" data-field="gstr3b_ontime_pct" data-where="state=Gujarat">—</b>%.</p>
+    <div class="wb-card">
+      <div class="wb-legend">
+        <span><i data-legend="0"></i>West Bengal</span>
+        <span><i data-legend="1"></i>Gujarat</span>
+        <span><i data-legend="ref"></i>All states (weighted)</span>
+      </div>
+      <div class="wb-two">
+        <div><h3>GSTR-1 filed by due date (%)</h3><div class="wb-chart wb-short" id="chart-r1" data-draw="comp-r1" data-source="compliance"></div></div>
+        <div><h3>GSTR-3B filed by due date (%)</h3><div class="wb-chart wb-short" id="chart-r3b" data-draw="comp-r3b" data-source="compliance"></div></div>
+      </div>
+    </div>
+    <p class="wb-note">Share of eligible taxpayers who filed by the due date, averaged over all return periods in the year. 2020-21 includes COVID-era deadline extensions.</p>
+  </section>
+
+  <section class="wb-sec" id="sec-momentum">
+    <h2>Momentum this year: April to October 2026</h2>
+    <p class="wb-take" data-read lang="en">State revenue grew <b data-draw="m-wb" data-source="kpi" data-field="ytd_growth_pct" data-where="state=West Bengal">—</b>% in West Bengal, against <b data-draw="m-gj" data-source="kpi" data-field="ytd_growth_pct" data-where="state=Gujarat">—</b>% in Gujarat and <b data-draw="m-in" data-source="kpi" data-field="ytd_growth_pct" data-where="state=India">—</b>% for all states. West Bengal's own SGST grew <b data-draw="m-own" data-source="kpi" data-field="ytd_own_growth_pct" data-where="state=West Bengal">—</b>%.</p>
+    <div class="wb-card">
+      <div class="wb-chart wb-tall" id="chart-momentum" data-draw="momentum" data-source="momentum"></div>
+    </div>
+    <p class="wb-note">States with more than ₹5,000 Cr of state revenue in Apr–Oct 2025. State revenue = SGST + SGST share of IGST settled.</p>
+  </section>
+
+  <section class="wb-sec" id="sec-prize">
+    <h2>Sizing the prize</h2>
+    <p class="wb-take" data-read lang="en">Each row asks what West Bengal would have collected in 2025-26 at another benchmark's intensity, on its own GSDP.</p>
+    <div class="wb-card">
+      <div class="wb-tablewrap">
+        <table class="wb-table" id="prize-table" data-source="potential" data-row-key="id">
+          <thead><tr><th data-field="scenario">Scenario</th><th data-field="current_pct">WB now (% of GSDP)</th><th data-field="target_pct">Target (% of GSDP)</th><th data-field="potential_cr">Revenue at target (₹ Cr)</th><th data-field="uplift_cr">Extra a year (₹ Cr)</th><th data-field="uplift_pct">Extra (%)</th></tr></thead>
+          <tbody data-draw="prize"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="wb-card" id="sim">
+      <h3 style="margin:0;font-size:var(--cds-font-size-body);font-weight:var(--cds-font-weight-medium)">Five-year simulator, 2026-27 to 2030-31</h3>
+      <p class="wb-note">Own SGST grows with GSDP at today's intensity. The gap to Gujarat's intensity then closes in equal steps, reaching your chosen share by 2030-31.</p>
+      <div class="wb-sim">
+        <div class="wb-controls" style="flex-direction:column;align-items:stretch">
+          <label class="wb-range" for="sim-close">Share of the gap to Gujarat closed by 2030-31: <output id="sim-close-out" for="sim-close">50%</output>
+            <input type="range" id="sim-close" min="0" max="100" step="5" value="50">
+          </label>
+          <label class="wb-range" for="sim-growth">Nominal GSDP growth a year: <output id="sim-growth-out" for="sim-growth">10%</output>
+            <input type="range" id="sim-growth" min="5" max="14" step="0.5" value="10">
+          </label>
+          <div class="wb-simout" data-source="kpi">
+            <div><span>Extra own SGST in 2030-31 (₹ Cr)</span><b data-draw="sim-last">—</b></div>
+            <div><span>Extra over five years (₹ Cr)</span><b data-draw="sim-cum">—</b></div>
+          </div>
+        </div>
+        <div class="wb-chart wb-short" id="chart-sim" data-draw="sim" data-source="kpi"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wb-sec" id="sec-levers">
+    <h2>Where to find it: six levers</h2>
+    <p class="wb-take" data-read lang="en">The gap is mostly yield per taxpayer, so the biggest levers act on what existing registrants report and on where their credit flows. The amounts below come from the department's own Tableau reports and are leads to verify, not revenue.</p>
+    <div class="wb-levers">
+      <div class="wb-lever" id="lever-settlement">
+        <span class="wb-tag">Settlement</span>
+        <h3>Stop credit routing that favours the Centre</h3>
+        <p data-read lang="en">In 2025-26, ₹<b data-draw="l-sr2" data-source="dct" data-field="value_cr" data-row="0">—</b> Cr of remaining IGST credit went to CGST while SGST was paid in cash, across <b data-draw="l-sr2n" data-source="dct" data-field="count" data-row="0">—</b> records. Used on SGST instead, it would have been settled to the State. Taxpayer advisories and SR-2 follow-up change this at no cost to business.</p>
+      </div>
+      <div class="wb-lever" id="lever-thirdparty">
+        <span class="wb-tag">Third-party data</span>
+        <h3>Reconcile TDS and TCS against GSTR-3B</h3>
+        <p data-read lang="en">GSTR-7 shows ₹<b data-draw="l-tds" data-source="dct" data-field="value_cr" data-row="2">—</b> Cr more taxable supply than <b data-draw="l-tdsn" data-source="dct" data-field="count" data-row="2">—</b> deductees declared, and GSTR-8 shows ₹<b data-draw="l-tcs" data-source="dct" data-field="value_cr" data-row="3">—</b> Cr more for e-commerce sellers. Both come with a third party's own record as evidence.</p>
+      </div>
+      <div class="wb-lever" id="lever-nonfilers">
+        <span class="wb-tag">Non-filers</span>
+        <h3>Close the "GSTR-1 yes, GSTR-3B never" loop</h3>
+        <p data-read lang="en"><b data-draw="l-nf" data-source="dct" data-field="count" data-row="1">—</b> GSTINs issued invoices but never filed GSTR-3B, leaving ₹<b data-draw="l-nfv" data-source="dct" data-field="value_cr" data-row="1">—</b> Cr of liability unpaid while buyers took the credit. Block the credit and recover the tax.</p>
+      </div>
+      <div class="wb-lever" id="lever-filing">
+        <span class="wb-tag">Compliance</span>
+        <h3>Lift on-time GSTR-1 to Gujarat's level</h3>
+        <p data-read lang="en">Moving on-time GSTR-1 filing from <b data-draw="l-r1" data-source="kpi" data-field="gstr1_ontime_pct" data-where="state=West Bengal">—</b>% to <b data-draw="l-r1g" data-source="kpi" data-field="gstr1_ontime_pct" data-where="state=Gujarat">—</b>% gives the department current invoice data for matching, and gives buyers earlier visibility of fake credit.</p>
+      </div>
+      <div class="wb-lever" id="lever-base">
+        <span class="wb-tag">Base</span>
+        <h3>Widen registration where the economy is</h3>
+        <p data-read lang="en">At Gujarat's registrations per rupee of GSDP, West Bengal would have about <b data-draw="l-tp" data-source="kpi" data-field="extra_taxpayers_at_gj_density" data-where="state=West Bengal">—</b> more taxpayers filing returns. Target sectors and districts where e-way bill movement is high but registrations are thin.</p>
+      </div>
+      <div class="wb-lever" id="lever-yield">
+        <span class="wb-tag">Yield</span>
+        <h3>Raise SGST per taxpayer</h3>
+        <p data-read lang="en">SGST per taxpayer is ₹<b data-draw="l-y" data-source="kpi" data-field="sgst_per_tp_lakh" data-where="state=West Bengal">—</b> lakh against Gujarat's ₹<b data-draw="l-yg" data-source="kpi" data-field="sgst_per_tp_lakh" data-where="state=Gujarat">—</b> lakh. Risk-scored scrutiny of tax-to-turnover outliers by charge, using the SR-1 to SR-5 rules, is the direct way to close it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wb-sec" id="sec-summary">
+    <p class="wb-eyebrow">Summary</p>
+    <h2>West Bengal against Gujarat, all states and the best state</h2>
+    <p class="wb-take" data-read lang="en">Three tests: how fast revenue grew, how promptly taxpayers file, and how much of the economy is taxed. Growth is compared with all states, Gujarat and Odisha, a comparable eastern state. Tax share of GSDP is compared with all states, Gujarat and the best large state.</p>
+
+    <div class="wb-card" id="sum-pace-card">
+      <h3 class="wb-h3">1. Potential at benchmark growth: own SGST and total GST collection</h3>
+      <p class="wb-take" data-read lang="en">From 2018-19 to 2025-26, West Bengal's total GST collection grew <b data-draw="su-g-wb" data-source="sumpace">—</b>%, against <b data-draw="su-g-gj" data-source="sumpace">—</b>% in Gujarat and <b data-draw="su-g-od" data-source="sumpace">—</b>% in Odisha, a comparable eastern state. At Gujarat's pace, West Bengal's total collection in 2025-26 would be ₹<b data-draw="su-gg-coll" data-source="sumpace">—</b> Cr higher, and at Odisha's pace ₹<b data-draw="su-gb-coll" data-source="sumpace">—</b> Cr higher. For own SGST the shortfalls are ₹<b data-draw="su-gg-own" data-source="sumpace">—</b> Cr against Gujarat and ₹<b data-draw="su-gb-own" data-source="sumpace">—</b> Cr against Odisha.</p>
+      <div class="wb-legend">
+        <span><i data-legend="0"></i>West Bengal, actual</span>
+        <span><i data-legend="ref" data-dashed></i>At all-states growth</span>
+        <span><i data-legend="1"></i>At Gujarat's growth</span>
+        <span><i data-legend="2"></i>At Odisha's growth</span>
+      </div>
+      <div class="wb-chart wb-tall" id="chart-sum-pace" data-draw="sum-pace" data-source="sumpace"></div>
+      <div class="wb-tablewrap">
+        <table class="wb-table" id="sum-pace-table" data-source="sumpace">
+          <thead>
+            <tr><th rowspan="2">Measure</th><th colspan="3" class="wb-thgroup">West Bengal's shortfall in 2025-26 (₹ Cr)</th></tr>
+            <tr><th>vs all states</th><th>vs Gujarat</th><th>vs Odisha</th></tr>
+          </thead>
+          <tbody data-draw="sum-pace-table"></tbody>
+        </table>
+      </div>
+      <p class="wb-note">Each line starts from West Bengal's 2018-19 value and grows at the benchmark's own rate. Odisha is an eastern neighbour that started from a similar position; part of its faster growth comes from mining and steel.</p>
+    </div>
+
+    <div class="wb-card" id="sum-filing-card">
+      <h3 class="wb-h3">2. Filing discipline: GSTR-1 and GSTR-3B</h3>
+      <p class="wb-take" data-read lang="en">Gujarat has the best on-time filing of any large state on both returns. West Bengal is <b data-draw="su-r1-gap" data-source="sumfiling">—</b> points behind it on GSTR-1 but only <b data-draw="su-r3-gap" data-source="sumfiling">—</b> points behind on GSTR-3B. The weak spot is invoice reporting, not tax payment.</p>
+      <div class="wb-legend">
+        <span><i data-legend="0"></i>West Bengal</span>
+        <span><i data-legend="1"></i>Gujarat (best large state)</span>
+      </div>
+      <div class="wb-two">
+        <div><h3>GSTR-1 filed by due date (%)</h3><div class="wb-chart wb-short" id="chart-sum-r1" data-draw="sum-r1" data-source="sumfiling"></div></div>
+        <div><h3>GSTR-3B filed by due date (%)</h3><div class="wb-chart wb-short" id="chart-sum-r3b" data-draw="sum-r3b" data-source="sumfiling"></div></div>
+      </div>
+      <p class="wb-note">Large states have 2025-26 GSDP of ₹2 lakh Cr or more. Share of eligible taxpayers who filed by the due date, averaged over the year.</p>
+    </div>
+
+    <div class="wb-card" id="sum-gsdp-card">
+      <h3 class="wb-h3">3. Potential as a share of GSDP, 2025-26</h3>
+      <p class="wb-take" data-read lang="en">West Bengal's own SGST is <b data-draw="su-own-wb" data-source="sumleague">—</b>% of GSDP. At Gujarat's <b data-draw="su-own-gj" data-source="sumleague">—</b>% it would collect ₹<b data-draw="su-pz-own-gj" data-source="sumprize">—</b> Cr more a year, and at <b data-draw="su-own-bs" data-source="sumleague">—</b>'s <b data-draw="su-own-bsp" data-source="sumleague">—</b>%, ₹<b data-draw="su-pz-own-bs" data-source="sumprize">—</b> Cr more. On total collection, matching the all-states share alone would add ₹<b data-draw="su-pz-coll-in" data-source="sumprize">—</b> Cr.</p>
+      <div class="wb-legend">
+        <span><i data-legend="0"></i>West Bengal</span>
+        <span><i data-legend="1"></i>Gujarat</span>
+        <span><i data-legend="2"></i>Best large state</span>
+        <span><i data-legend="ref" data-dashed></i>All states</span>
+        <span><i data-legend="muted"></i>Other large states</span>
+      </div>
+      <div class="wb-chart wb-short" id="chart-sum-league" data-draw="sum-league" data-source="sumleague"></div>
+      <h3>What West Bengal would collect at each benchmark's share of GSDP (₹ Cr a year)</h3>
+      <div class="wb-chart" id="chart-sum-stair" data-draw="sum-stair" data-source="sumprize"></div>
+      <p class="wb-note">Each benchmark's share of GSDP applied to West Bengal's 2025-26 GSDP. The best state on total collection (Haryana) gains from corporate headquarters that pay centrally for supplies made elsewhere, so the realistic targets are the all-states and Gujarat shares.</p>
+    </div>
+  </section>
+
+  <details class="wb-details" id="wb-method">
+    <summary>Method, sources and caveats</summary>
+    <ul>
+      <li>GST figures are from GSTN's state-wise collection, IGST settlement and return-filing files, FY 2018-19 to 2025-26. Collections exclude cess, which is not reported for 2025-26.</li>
+      <li>Own SGST is SGST paid by taxpayers registered in the state. State revenue adds the state's share of IGST settlement. For 2025-26 and April–October 2026 it uses the official post-settlement table. Earlier years are SGST + settlement from the GSTN files, which match the official table for 2023-24 and 2024-25.</li>
+      <li>GSDP at current prices is from MoSPI as compiled by StatisticsTimes: all states for 2024-25 and 2025-26, and yearly series for West Bengal and Gujarat. These are estimates and get revised.</li>
+      <li>Taxpayers are the largest number eligible to file GSTR-3B in the last three return periods of each year.</li>
+      <li>Intensity ratios assume each state's taxable consumption moves with its GSDP. A state that exports more of its output, or has a larger exempt or informal economy, will show lower intensity for reasons the department cannot change. Part of the gap is structural, which is why the simulator lets you choose how much of it to close.</li>
+      <li>Summary charts: growth is compared with Odisha, a comparable eastern state. The "best state" on share of GSDP is the highest among large states (2025-26 GSDP of ₹2 lakh Cr or more); on total collection this reflects corporate headquarters, so it marks a ceiling, not a target.</li>
+      <li>The six-lever amounts come from DCT Tableau reports and are leads to verify. They overlap and should not be added together.</li>
+    </ul>
+  </details>
+</div>
+
+<script>
+/* ---------- calculations (readers see these in Sources) ---------- */
+dash.calc('series', {
+  inputs: ['gst'],
+  title: 'Yearly measures by state, with an all-states total',
+  description: 'Long table of each measure by state and year, plus an all-states row.',
+  fn: (gst) => {
+    const n = (v) => (v === '' || v == null || isNaN(+v)) ? null : +v;
+    const keys = ['collection', 'sgst', 'igst_settlement', 'post_settlement_sgst', 'refunds', 'taxpayers'];
+    const out = []; const tot = {};
+    for (const r of gst) {
+      for (const k of keys) {
+        const v = n(r[k]); if (v == null) continue;
+        out.push({state: r.state, fy: r.fy, metric: k, value: v});
+        const t = tot[r.fy] || (tot[r.fy] = {}); t[k] = (t[k] || 0) + v;
+      }
+      const s = n(r.sgst), tp = n(r.taxpayers);
+      if (s != null && tp) {
+        out.push({state: r.state, fy: r.fy, metric: 'sgst_per_taxpayer', value: s * 100 / tp});
+        const t = tot[r.fy]; t._s = (t._s || 0) + s; t._tp = (t._tp || 0) + tp;
+      }
+    }
+    for (const [fy, t] of Object.entries(tot)) {
+      for (const k of keys) if (t[k] != null) out.push({state: 'India', fy, metric: k, value: t[k]});
+      if (t._tp) out.push({state: 'India', fy, metric: 'sgst_per_taxpayer', value: t._s * 100 / t._tp});
+    }
+    return out;
+  }
+});
+
+dash.calc('kpi', {
+  inputs: ['gst', 'gsdp', 'ytd'],
+  title: 'Headline ratios for West Bengal, Gujarat and all states, 2025-26',
+  description: 'Shares, intensity (% of GSDP), yield per taxpayer, filing, growth rates and ranks.',
+  fn: (gst, gsdp, ytd) => {
+    const n = (v) => (v === '' || v == null || isNaN(+v)) ? null : +v;
+    const r1 = (x, d) => x == null ? null : Math.round(x * 10 ** d) / 10 ** d;
+    const FY = '2025-26', BASE = '2018-19';
+    const g = {}; for (const r of gsdp) if (r.fy === FY) g[r.state] = n(r.gsdp_cr);
+    const by = {}; for (const r of gst) (by[r.state] = by[r.state] || {})[r.fy] = r;
+    const sum = (fy, k) => gst.filter((r) => r.fy === fy).reduce((a, r) => a + (n(r[k]) || 0), 0);
+    const wsum = (fy, k) => { let a = 0, w = 0; for (const r of gst) if (r.fy === fy && n(r[k]) != null && n(r.taxpayers)) { a += n(r[k]) * n(r.taxpayers); w += n(r.taxpayers); } return w ? a / w : null; };
+    const yt = {}; let yp = 0, yc = 0, op = 0, oc = 0;
+    for (const r of ytd) { yt[r.state] = r; yp += n(r.post_settlement_ytd_2025_26) || 0; yc += n(r.post_settlement_ytd_2026_27) || 0; op += n(r.own_sgst_ytd_2025_26) || 0; oc += n(r.own_sgst_ytd_2026_27) || 0; }
+    const India = {sgst: sum(FY, 'sgst'), post: sum(FY, 'post_settlement_sgst'), coll: sum(FY, 'collection'), tp: sum(FY, 'taxpayers'),
+      postBase: sum(BASE, 'post_settlement_sgst'), sgstBase: sum(BASE, 'sgst'), gsdp: g['India']};
+    const big = Object.keys(by).filter((s) => g[s] >= 200000 && by[s][FY]);
+    const ownRank = big.map((s) => ({s, v: n(by[s][FY].sgst) / g[s]})).sort((a, b) => b.v - a.v).map((x) => x.s);
+    const make = (state) => {
+      let sgst, post, coll, tp, r1o, r3o, postB, sgstB, gs, yg, yo;
+      if (state === 'India') {
+        ({sgst, post, coll, tp} = India); postB = India.postBase; sgstB = India.sgstBase; gs = India.gsdp;
+        r1o = wsum(FY, 'gstr1_ontime_pct'); r3o = wsum(FY, 'gstr3b_ontime_pct');
+        yg = (yc / yp - 1) * 100; yo = (oc / op - 1) * 100;
+      } else {
+        const r = by[state][FY], b = by[state][BASE];
+        sgst = n(r.sgst); post = n(r.post_settlement_sgst); coll = n(r.collection); tp = n(r.taxpayers);
+        r1o = n(r.gstr1_ontime_pct); r3o = n(r.gstr3b_ontime_pct); postB = n(b.post_settlement_sgst); sgstB = n(b.sgst); gs = g[state];
+        const y = yt[state];
+        yg = y ? (n(y.post_settlement_ytd_2026_27) / n(y.post_settlement_ytd_2025_26) - 1) * 100 : null;
+        yo = y ? (n(y.own_sgst_ytd_2026_27) / n(y.own_sgst_ytd_2025_26) - 1) * 100 : null;
+      }
+      return {state, gsdp_cr: gs, own_sgst_cr: r1(sgst, 0), post_cr: r1(post, 0), taxpayers: tp,
+        gsdp_share_pct: r1(gs / India.gsdp * 100, 2), own_sgst_share_pct: r1(sgst / India.sgst * 100, 2),
+        own_sgst_gsdp_pct: r1(sgst / gs * 100, 2), post_gsdp_pct: r1(post / gs * 100, 2), coll_gsdp_pct: r1(coll / gs * 100, 2),
+        sgst_per_tp_lakh: r1(sgst * 100 / tp, 2), tp_per_1000cr: r1(tp / gs * 1000, 1),
+        gstr1_ontime_pct: r1(r1o, 1), gstr3b_ontime_pct: r1(r3o, 1),
+        cagr_post_pct: r1(((post / postB) ** (1 / 7) - 1) * 100, 1), cagr_own_pct: r1(((sgst / sgstB) ** (1 / 7) - 1) * 100, 1),
+        ytd_growth_pct: r1(yg, 1), ytd_own_growth_pct: r1(yo, 1),
+        own_rank: ownRank.indexOf(state) + 1 || null, rank_of: big.length};
+    };
+    const rows = ['West Bengal', 'Gujarat', 'Maharashtra', 'India'].map(make);
+    const wb = rows[0], gj = rows[1];
+    wb.extra_taxpayers_at_gj_density = Math.round((gj.taxpayers / gj.gsdp_cr - wb.taxpayers / wb.gsdp_cr) * wb.gsdp_cr / 100) * 100;
+    return rows;
+  }
+});
+
+dash.calc('gap', {
+  inputs: ['gst'],
+  title: 'West Bengal state revenue vs growth at all-states and Gujarat pace',
+  description: 'Counterfactual: 2018-19 state revenue grown at the all-states or Gujarat index, minus actual.',
+  fn: (gst) => {
+    const n = (v) => (v === '' || v == null || isNaN(+v)) ? null : +v;
+    const yrs = [...new Set(gst.map((r) => r.fy))].sort();
+    const tot = {}, wb = {}, gj = {};
+    for (const r of gst) {
+      const v = n(r.post_settlement_sgst); if (v == null) continue;
+      tot[r.fy] = (tot[r.fy] || 0) + v;
+      if (r.state === 'West Bengal') wb[r.fy] = v;
+      if (r.state === 'Gujarat') gj[r.fy] = v;
+    }
+    const b = yrs[0]; const rows = []; let gi = 0, gg = 0;
+    for (const fy of yrs) {
+      const atIndia = wb[b] * tot[fy] / tot[b], atGj = wb[b] * gj[fy] / gj[b];
+      const row = {fy, wb_actual_cr: Math.round(wb[fy]), wb_at_india_pace_cr: Math.round(atIndia), wb_at_gujarat_pace_cr: Math.round(atGj),
+        gap_india_cr: Math.round(atIndia - wb[fy]), gap_gujarat_cr: Math.round(atGj - wb[fy])};
+      if (fy !== b) { gi += row.gap_india_cr; gg += row.gap_gujarat_cr; }
+      rows.push(row);
+    }
+    rows.push({fy: 'Total', gap_india_cr: gi, gap_gujarat_cr: gg});
+    return rows;
+  }
+});
+
+dash.calc('shares', {
+  inputs: ['gst'],
+  title: 'Share of all states’ SGST, West Bengal and Gujarat',
+  description: 'Own SGST and state revenue as a share of the all-states total, by year.',
+  fn: (gst) => {
+    const n = (v) => (v === '' || v == null || isNaN(+v)) ? null : +v;
+    const t = {};
+    for (const r of gst) { const x = t[r.fy] || (t[r.fy] = {s: 0, p: 0}); x.s += n(r.sgst) || 0; x.p += n(r.post_settlement_sgst) || 0; }
+    return gst.filter((r) => r.state === 'West Bengal' || r.state === 'Gujarat').map((r) => ({
+      state: r.state, fy: r.fy,
+      own_share_pct: Math.round(n(r.sgst) / t[r.fy].s * 10000) / 100,
+      post_share_pct: n(r.post_settlement_sgst) == null ? null : Math.round(n(r.post_settlement_sgst) / t[r.fy].p * 10000) / 100}));
+  }
+});
+
+dash.calc('intensity', {
+  inputs: ['gst', 'gsdp'],
+  title: 'Tax intensity by state, 2025-26',
+  description: 'Own SGST, state revenue and all GST collected as % of GSDP.',
+  fn: (gst, gsdp) => {
+    const n = (v) => (v === '' || v == null || isNaN(+v)) ? null : +v;
+    const g = {}; for (const r of gsdp) if (r.fy === '2025-26') g[r.state] = n(r.gsdp_cr);
+    const rows = []; let s = 0, p = 0, c = 0;
+    for (const r of gst) if (r.fy === '2025-26') {
+      s += n(r.sgst) || 0; p += n(r.post_settlement_sgst) || 0; c += n(r.collection) || 0;
+      if (!g[r.state]) continue;
+      rows.push({state: r.state, gsdp_cr: g[r.state], taxpayers: n(r.taxpayers),
+        own_pct: Math.round(n(r.sgst) / g[r.state] * 10000) / 100,
+        post_pct: Math.round(n(r.post_settlement_sgst) / g[r.state] * 10000) / 100,
+        coll_pct: Math.round(n(r.collection) / g[r.state] * 10000) / 100});
+    }
+    rows.push({state: 'India', gsdp_cr: g['India'], taxpayers: null,
+      own_pct: Math.round(s / g['India'] * 10000) / 100, post_pct: Math.round(p / g['India'] * 10000) / 100, coll_pct: Math.round(c / g['India'] * 10000) / 100});
+    return rows;
+  }
+});
+
+dash.calc('decomp', {
+  inputs: ['kpi'],
+  title: 'Intensity split into registration density and yield, West Bengal vs Gujarat',
+  description: 'Own SGST/GSDP = (taxpayers/GSDP) x (SGST/taxpayer); each factor indexed to Gujarat = 100.',
+  fn: (kpi) => {
+    const wb = kpi.find((r) => r.state === 'West Bengal'), gj = kpi.find((r) => r.state === 'Gujarat');
+    const d = wb.tp_per_1000cr / gj.tp_per_1000cr, y = wb.sgst_per_tp_lakh / gj.sgst_per_tp_lakh;
+    const ld = Math.log(d), ly = Math.log(y);
+    return [
+      {id: 'density', factor: 'Taxpayers per ₹1,000 Cr of GSDP', wb: wb.tp_per_1000cr, gj: gj.tp_per_1000cr, wb_index: Math.round(d * 1000) / 10, share_of_gap_pct: Math.round(ld / (ld + ly) * 100)},
+      {id: 'yield', factor: 'Own SGST per taxpayer (₹ lakh)', wb: wb.sgst_per_tp_lakh, gj: gj.sgst_per_tp_lakh, wb_index: Math.round(y * 1000) / 10, share_of_gap_pct: Math.round(ly / (ld + ly) * 100)},
+      {id: 'intensity', factor: 'Own SGST as % of GSDP', wb: wb.own_sgst_gsdp_pct, gj: gj.own_sgst_gsdp_pct, wb_index: Math.round(wb.own_sgst_gsdp_pct / gj.own_sgst_gsdp_pct * 1000) / 10, share_of_gap_pct: 100}
+    ];
+  }
+});
+
+dash.calc('bridge', {
+  inputs: ['kpi'],
+  title: 'Bridge from West Bengal own SGST to Gujarat intensity, 2025-26',
+  description: 'Steps: lift registrations per GSDP to Gujarat, then lift SGST per taxpayer to Gujarat.',
+  fn: (kpi) => {
+    const wb = kpi.find((r) => r.state === 'West Bengal'), gj = kpi.find((r) => r.state === 'Gujarat');
+    const base = wb.own_sgst_cr, d = gj.tp_per_1000cr / wb.tp_per_1000cr, y = gj.sgst_per_tp_lakh / wb.sgst_per_tp_lakh;
+    const step1 = Math.round(base * (d - 1)), step2 = Math.round(base * d * (y - 1));
+    return [
+      {step: 'West Bengal today', kind: 'total', value_cr: base},
+      {step: 'Gujarat’s registration density', kind: 'delta', value_cr: step1},
+      {step: 'Gujarat’s SGST per taxpayer', kind: 'delta', value_cr: step2},
+      {step: 'At Gujarat’s intensity', kind: 'total', value_cr: base + step1 + step2}
+    ];
+  }
+});
+
+dash.calc('potential', {
+  inputs: ['kpi', 'intensity'],
+  title: 'West Bengal revenue at benchmark intensity, 2025-26',
+  description: 'West Bengal GSDP times a benchmark’s own SGST or state revenue share of GSDP, minus actual.',
+  fn: (kpi, intensity) => {
+    const wb = kpi.find((r) => r.state === 'West Bengal');
+    const bench = (s) => intensity.find((r) => r.state === s);
+    const big = intensity.filter((r) => r.state !== 'India' && r.gsdp_cr >= 200000).map((r) => r.own_pct).sort((a, b) => b - a);
+    const q = big[Math.floor(big.length / 4)];
+    const mk = (id, scenario, cur, target, actual) => {
+      const pot = Math.round(wb.gsdp_cr * target / 100);
+      return {id, scenario, current_pct: cur, target_pct: target, potential_cr: pot, uplift_cr: pot - actual, uplift_pct: Math.round((pot - actual) / actual * 1000) / 10};
+    };
+    return [
+      mk('own_india', 'Own SGST at the all-states average', wb.own_sgst_gsdp_pct, bench('India').own_pct, wb.own_sgst_cr),
+      mk('own_q', 'Own SGST at the top-quartile large state', wb.own_sgst_gsdp_pct, q, wb.own_sgst_cr),
+      mk('own_gj', 'Own SGST at Gujarat’s intensity', wb.own_sgst_gsdp_pct, bench('Gujarat').own_pct, wb.own_sgst_cr),
+      mk('post_india', 'State revenue at the all-states average', wb.post_gsdp_pct, bench('India').post_pct, wb.post_cr),
+      mk('post_gj', 'State revenue at Gujarat’s intensity', wb.post_gsdp_pct, bench('Gujarat').post_pct, wb.post_cr)
+    ];
+  }
+});
+
+dash.calc('compliance', {
+  inputs: ['gst'],
+  title: 'On-time filing of GSTR-1 and GSTR-3B',
+  description: 'West Bengal, Gujarat and all states weighted by taxpayers.',
+  fn: (gst) => {
+    const n = (v) => (v === '' || v == null || isNaN(+v)) ? null : +v;
+    const out = []; const t = {};
+    for (const r of gst) {
+      const tp = n(r.taxpayers), a = n(r.gstr1_ontime_pct), b = n(r.gstr3b_ontime_pct);
+      if (r.state === 'West Bengal' || r.state === 'Gujarat') out.push({state: r.state, fy: r.fy, gstr1_ontime_pct: a, gstr3b_ontime_pct: b});
+      if (!tp) continue;
+      const x = t[r.fy] || (t[r.fy] = {a: 0, wa: 0, b: 0, wb: 0});
+      if (a != null) { x.a += a * tp; x.wa += tp; }
+      if (b != null) { x.b += b * tp; x.wb += tp; }
+    }
+    for (const [fy, x] of Object.entries(t)) out.push({state: 'India', fy, gstr1_ontime_pct: Math.round(x.a / x.wa * 10) / 10, gstr3b_ontime_pct: Math.round(x.b / x.wb * 10) / 10});
+    return out;
+  }
+});
+
+dash.calc('momentum', {
+  inputs: ['ytd'],
+  title: 'State revenue growth, Apr–Oct 2026 vs Apr–Oct 2025',
+  description: 'Post-settlement SGST growth for states above ₹5,000 Cr, plus all states.',
+  fn: (ytd) => {
+    const n = (v) => (v === '' || v == null || isNaN(+v)) ? null : +v;
+    let p = 0, c = 0; const rows = [];
+    for (const r of ytd) {
+      const a = n(r.post_settlement_ytd_2025_26), b = n(r.post_settlement_ytd_2026_27);
+      p += a || 0; c += b || 0;
+      if (a >= 5000) rows.push({state: r.state, prev_cr: a, cur_cr: b, growth_pct: Math.round((b / a - 1) * 1000) / 10});
+    }
+    rows.push({state: 'All states', prev_cr: p, cur_cr: c, growth_pct: Math.round((c / p - 1) * 1000) / 10});
+    return rows.sort((x, y) => y.growth_pct - x.growth_pct);
+  }
+});
+
+dash.calc('sumpace', {
+  inputs: ['gst'],
+  title: 'West Bengal own SGST and total GST collection at benchmark growth',
+  description: '2018-19 value grown at the all-states, Gujarat and Odisha index, minus actual. Odisha is a comparable eastern state.',
+  fn: (gst) => {
+    const n = (v) => (v === '' || v == null || isNaN(+v)) ? null : +v;
+    const yrs = [...new Set(gst.map((r) => r.fy))].sort(), b = yrs[0], L = yrs[yrs.length - 1];
+    const out = [];
+    for (const [k, label] of [['sgst', 'Own SGST'], ['collection', 'Total GST collection']]) {
+      const val = {}, tot = {};
+      for (const r of gst) { const v = n(r[k]); if (v == null) continue; (val[r.state] = val[r.state] || {})[r.fy] = v; tot[r.fy] = (tot[r.fy] || 0) + v; }
+      const best = 'Odisha';
+      const wb = val['West Bengal'], gj = val['Gujarat'], bs = val[best];
+      for (const fy of yrs) {
+        const ai = wb[b] * tot[fy] / tot[b], ag = wb[b] * gj[fy] / gj[b], ab = wb[b] * bs[fy] / bs[b];
+        const row = {metric: k, metric_label: label, fy, best_state: best, wb_actual_cr: Math.round(wb[fy]),
+          at_india_cr: Math.round(ai), at_gujarat_cr: Math.round(ag), at_best_cr: Math.round(ab),
+          gap_india_cr: Math.round(ai - wb[fy]), gap_gujarat_cr: Math.round(ag - wb[fy]), gap_best_cr: Math.round(ab - wb[fy]),
+          wb_growth_pct: Math.round((wb[fy] / wb[b] - 1) * 100), gujarat_growth_pct: Math.round((gj[fy] / gj[b] - 1) * 100),
+          best_growth_pct: Math.round((bs[fy] / bs[b] - 1) * 100), india_growth_pct: Math.round((tot[fy] / tot[b] - 1) * 100)};
+        out.push(row);
+      }
+    }
+    return out;
+  }
+});
+
+dash.calc('sumfiling', {
+  inputs: ['gst', 'gsdp'],
+  title: 'On-time GSTR-1 and GSTR-3B: West Bengal and Gujarat',
+  description: 'Gujarat has the highest 2025-26 on-time rate on both returns among states with 2025-26 GSDP of ₹2 lakh Cr or more.',
+  fn: (gst, gsdp) => {
+    const n = (v) => (v === '' || v == null || isNaN(+v)) ? null : +v;
+    const g = {}; for (const r of gsdp) if (r.fy === '2025-26') g[r.state] = n(r.gsdp_cr);
+    const out = [];
+    for (const [k, ret] of [['gstr1_ontime_pct', 'GSTR-1'], ['gstr3b_ontime_pct', 'GSTR-3B']]) {
+      const last = gst.filter((r) => r.fy === '2025-26' && g[r.state] >= 200000 && r.state !== 'India' && n(r[k]) != null);
+      last.sort((a, b) => n(b[k]) - n(a[k]));
+      const gjBest = last[0].state === 'Gujarat';
+      for (const [role, st] of [['West Bengal', 'West Bengal'], ['Gujarat', 'Gujarat']])
+        for (const r of gst) if (r.state === st && n(r[k]) != null) out.push({ret, role, state: st, fy: r.fy, pct: n(r[k]), gujarat_is_best: gjBest});
+    }
+    return out;
+  }
+});
+
+dash.calc('sumleague', {
+  inputs: ['gst', 'gsdp'],
+  title: 'Own SGST and total GST collection as % of GSDP, large states, 2025-26',
+  description: 'States with 2025-26 GSDP of ₹2 lakh Cr or more, plus the all-states total. Best = highest share of GSDP.',
+  fn: (gst, gsdp) => {
+    const n = (v) => (v === '' || v == null || isNaN(+v)) ? null : +v;
+    const g = {}; for (const r of gsdp) if (r.fy === '2025-26') g[r.state] = n(r.gsdp_cr);
+    const out = [];
+    for (const [k, metric, label] of [['sgst', 'own', 'Own SGST'], ['collection', 'coll', 'Total GST collection']]) {
+      let t = 0; const rows = [];
+      for (const r of gst) if (r.fy === '2025-26') {
+        const v = n(r[k]); t += v || 0;
+        if (v != null && g[r.state] >= 200000) rows.push({metric, metric_label: label, state: r.state, gsdp_cr: g[r.state], value_cr: Math.round(v), pct: Math.round(v / g[r.state] * 10000) / 100});
+      }
+      const best = rows.filter((r) => r.state !== 'West Bengal').sort((a, b) => b.pct - a.pct)[0].state;
+      rows.forEach((r) => { r.role = r.state === 'West Bengal' ? 'wb' : r.state === 'Gujarat' ? 'gj' : r.state === best ? 'best' : 'other'; });
+      rows.push({metric, metric_label: label, state: 'All states', role: 'india', gsdp_cr: g['India'], value_cr: Math.round(t), pct: Math.round(t / g['India'] * 10000) / 100});
+      out.push(...rows);
+    }
+    return out;
+  }
+});
+
+dash.calc('sumprize', {
+  inputs: ['sumleague'],
+  title: 'West Bengal revenue at benchmark shares of GSDP, 2025-26',
+  description: 'West Bengal GSDP times the benchmark’s own SGST or total collection as % of GSDP, minus actual.',
+  fn: (lg) => {
+    const out = [];
+    for (const metric of ['own', 'coll']) {
+      const rows = lg.filter((r) => r.metric === metric);
+      const wb = rows.find((r) => r.role === 'wb');
+      const pick = [['wb', 'West Bengal today'], ['india', 'At all-states share'], ['gj', 'At Gujarat’s share'], ['best', null]];
+      for (const [role, name] of pick) {
+        const r = rows.find((x) => x.role === role);
+        const pot = role === 'wb' ? wb.value_cr : Math.round(wb.gsdp_cr * r.pct / 100);
+        out.push({metric, metric_label: wb.metric_label, role, bench: name || `At ${r.state}’s share (best)`, bench_state: r.state, target_pct: r.pct,
+          value_cr: pot, uplift_cr: pot - wb.value_cr, uplift_pct: Math.round((pot - wb.value_cr) / wb.value_cr * 1000) / 10});
+      }
+    }
+    return out;
+  }
+});
+</script>
+
+<script>
+/* ---------- shared helpers and page state ---------- */
+window.WB = (function () {
+  const S = {metric: 'post_settlement_sgst', mode: 'index', base: '2018-19', peers: new Set(['Tamil Nadu']), int: 'own_pct', close: 50, growth: 10};
+  const fmtIN = (x, d = 0) => x == null || isNaN(x) ? '—' : Number(x).toLocaleString('en-IN', {minimumFractionDigits: d, maximumFractionDigits: d});
+  const PEER = [2, 3, 5, 0, 1, 4];
+  const col = (i) => i === 0 ? 'var(--wb-bengal)' : i === 1 ? 'var(--wb-gujarat)' : dash.colors[PEER[(i - 2) % PEER.length] % dash.colors.length];
+  const REF = 'var(--cds-chart-reference)';
+  const MUTED = 'var(--cds-chart-muted)';
+  const reduce = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function tip(el) {
+    let t = el.querySelector(':scope > .wb-tip');
+    if (!t) { t = document.createElement('div'); t.className = 'wb-tip'; t.hidden = true; el.appendChild(t); }
+    return {
+      show(html, x, y) {
+        t.replaceChildren();
+        for (const [k, v, cls] of html) {
+          const d = document.createElement('div');
+          if (v === undefined) { d.className = 'wb-tip-h'; d.textContent = k; }
+          else { d.className = 'wb-tip-r'; const a = document.createElement('span'); a.textContent = k; const b = document.createElement('b'); b.textContent = v; d.append(a, b); }
+          t.appendChild(d);
+        }
+        t.hidden = false;
+        const W = el.clientWidth, tw = t.offsetWidth, th = t.offsetHeight;
+        let left = x + 14; if (left + tw > W) left = Math.max(0, x - tw - 14);
+        let top = y - th / 2; if (top < 0) top = 0;
+        t.style.left = left + 'px'; t.style.top = top + 'px';
+      },
+      hide() { t.hidden = true; }
+    };
+  }
+  function status(el, ids) {
+    for (const id of ids) {
+      const d = dash.data(id);
+      if (d.status === 'loading' || d.status === 'connect') { el.replaceChildren(); el.classList.add('dash-skeleton'); return false; }
+      if (d.status !== 'ok') { el.classList.remove('dash-skeleton'); const p = document.createElement('p'); p.className = 'wb-note'; p.textContent = 'Failed to load'; el.replaceChildren(p); return false; }
+    }
+    el.classList.remove('dash-skeleton');
+    return true;
+  }
+  function svg(el, h) {
+    el.querySelectorAll(':scope > svg').forEach((s) => s.remove());
+    const w = Math.max(280, el.clientWidth);
+    const s = d3.select(el).insert('svg', ':first-child').attr('width', '100%').attr('viewBox', `0 0 ${w} ${h}`).attr('role', 'img');
+    return {s, w, h};
+  }
+  function measure(s, texts) {
+    const g = s.append('g').attr('class', 'wb-lbl-muted');
+    let m = 0; for (const t of texts) { const n = g.append('text').attr('class', 'wb-lbl-muted').text(t); m = Math.max(m, n.node().getComputedTextLength()); }
+    g.remove(); return m;
+  }
+  return {S, fmtIN, col, REF, MUTED, tip, status, svg, measure, reduce};
+})();
+</script>
+
+<script>
+/* ---------- controls: listen only ---------- */
+(function () {
+  const redraw = (...names) => names.forEach((n) => dash.draw(n));
+  document.querySelectorAll('#trend-metric').forEach((el) => el.addEventListener('change', () => { WB.S.metric = el.value; redraw('trend'); }));
+  document.querySelectorAll('#trend-base').forEach((el) => el.addEventListener('change', () => { WB.S.base = el.value; redraw('trend'); }));
+  document.querySelectorAll('input[name="trend-mode"]').forEach((el) => el.addEventListener('change', () => {
+    if (!el.checked) return; WB.S.mode = el.value;
+    document.querySelectorAll('#trend-base').forEach((b) => { b.disabled = el.value !== 'index'; });
+    redraw('trend');
+  }));
+  document.querySelectorAll('#trend-peers input[type=checkbox]').forEach((el) => el.addEventListener('change', () => {
+    if (el.checked) WB.S.peers.add(el.value); else WB.S.peers.delete(el.value); redraw('trend');
+  }));
+  document.querySelectorAll('input[name="int-metric"]').forEach((el) => el.addEventListener('change', () => { if (el.checked) { WB.S.int = el.value; redraw('intensity'); } }));
+  document.querySelectorAll('#sim-close').forEach((el) => el.addEventListener('input', () => {
+    WB.S.close = +el.value; document.querySelectorAll('#sim-close-out').forEach((o) => { o.value = el.value + '%'; }); redraw('sim', 'sim-last', 'sim-cum');
+  }));
+  document.querySelectorAll('#sim-growth').forEach((el) => el.addEventListener('input', () => {
+    WB.S.growth = +el.value; document.querySelectorAll('#sim-growth-out').forEach((o) => { o.value = el.value + '%'; }); redraw('sim', 'sim-last', 'sim-cum');
+  }));
+  document.querySelectorAll('.wb-legend i[data-legend]').forEach((i) => {
+    const k = i.getAttribute('data-legend');
+    const c = k === 'ref' ? WB.REF : k === 'muted' ? WB.MUTED : WB.col(+k);
+    i.style.background = i.hasAttribute('data-dashed') ? `repeating-linear-gradient(90deg, ${c} 0 4px, transparent 4px 7px)` : c;
+  });
+})();
+</script>
+
+<script>
+/* ---------- number marks ---------- */
+(function () {
+  const marks = [
+    // [draw name, source, field, where-key, where-value, decimals]
+    ['k-gsdpshare', 'kpi', 'gsdp_share_pct', 'state', 'West Bengal', 2], ['k-sgstshare', 'kpi', 'own_sgst_share_pct', 'state', 'West Bengal', 2],
+    ['k-prize', 'potential', 'uplift_cr', 'id', 'own_gj', 0],
+    ['k1', 'kpi', 'own_sgst_gsdp_pct', 'state', 'West Bengal', 2], ['k1g', 'kpi', 'own_sgst_gsdp_pct', 'state', 'Gujarat', 2], ['k1i', 'kpi', 'own_sgst_gsdp_pct', 'state', 'India', 2],
+    ['k2', 'kpi', 'post_gsdp_pct', 'state', 'West Bengal', 2], ['k2g', 'kpi', 'post_gsdp_pct', 'state', 'Gujarat', 2], ['k2i', 'kpi', 'post_gsdp_pct', 'state', 'India', 2],
+    ['k3', 'kpi', 'sgst_per_tp_lakh', 'state', 'West Bengal', 2], ['k3g', 'kpi', 'sgst_per_tp_lakh', 'state', 'Gujarat', 2], ['k3i', 'kpi', 'sgst_per_tp_lakh', 'state', 'India', 2],
+    ['k4', 'kpi', 'gstr1_ontime_pct', 'state', 'West Bengal', 1], ['k4g', 'kpi', 'gstr1_ontime_pct', 'state', 'Gujarat', 1], ['k4i', 'kpi', 'gstr1_ontime_pct', 'state', 'India', 1],
+    ['k5', 'kpi', 'ytd_growth_pct', 'state', 'West Bengal', 1], ['k5g', 'kpi', 'ytd_growth_pct', 'state', 'Gujarat', 1], ['k5i', 'kpi', 'ytd_growth_pct', 'state', 'India', 1],
+    ['t-wb', 'kpi', 'cagr_post_pct', 'state', 'West Bengal', 1], ['t-gj', 'kpi', 'cagr_post_pct', 'state', 'Gujarat', 1], ['t-in', 'kpi', 'cagr_post_pct', 'state', 'India', 1],
+    ['t-wbo', 'kpi', 'cagr_own_pct', 'state', 'West Bengal', 1], ['t-gjo', 'kpi', 'cagr_own_pct', 'state', 'Gujarat', 1],
+    ['g-tot', 'gap', 'gap_india_cr', 'fy', 'Total', 0], ['g-last', 'gap', 'gap_india_cr', 'fy', '2025-26', 0], ['g-gj', 'gap', 'gap_gujarat_cr', 'fy', '2025-26', 0],
+    ['s-gsdp', 'kpi', 'gsdp_share_pct', 'state', 'West Bengal', 2], ['s-gjg', 'kpi', 'gsdp_share_pct', 'state', 'Gujarat', 2],
+    ['i-wb', 'kpi', 'own_sgst_gsdp_pct', 'state', 'West Bengal', 2], ['i-gj', 'kpi', 'own_sgst_gsdp_pct', 'state', 'Gujarat', 2], ['i-mh', 'kpi', 'own_sgst_gsdp_pct', 'state', 'Maharashtra', 2],
+    ['i-rank', 'kpi', 'own_rank', 'state', 'West Bengal', 0], ['i-n', 'kpi', 'rank_of', 'state', 'West Bengal', 0],
+    ['d-den', 'decomp', 'wb_index', 'id', 'density', 1], ['d-yld', 'decomp', 'wb_index', 'id', 'yield', 1], ['d-share', 'decomp', 'share_of_gap_pct', 'id', 'yield', 0],
+    ['c-wb', 'kpi', 'gstr1_ontime_pct', 'state', 'West Bengal', 1], ['c-gj', 'kpi', 'gstr1_ontime_pct', 'state', 'Gujarat', 1],
+    ['c-wb3', 'kpi', 'gstr3b_ontime_pct', 'state', 'West Bengal', 1], ['c-gj3', 'kpi', 'gstr3b_ontime_pct', 'state', 'Gujarat', 1],
+    ['m-wb', 'kpi', 'ytd_growth_pct', 'state', 'West Bengal', 1], ['m-gj', 'kpi', 'ytd_growth_pct', 'state', 'Gujarat', 1], ['m-in', 'kpi', 'ytd_growth_pct', 'state', 'India', 1],
+    ['m-own', 'kpi', 'ytd_own_growth_pct', 'state', 'West Bengal', 1],
+    ['l-r1', 'kpi', 'gstr1_ontime_pct', 'state', 'West Bengal', 1], ['l-r1g', 'kpi', 'gstr1_ontime_pct', 'state', 'Gujarat', 1],
+    ['l-tp', 'kpi', 'extra_taxpayers_at_gj_density', 'state', 'West Bengal', 0],
+    ['l-y', 'kpi', 'sgst_per_tp_lakh', 'state', 'West Bengal', 2], ['l-yg', 'kpi', 'sgst_per_tp_lakh', 'state', 'Gujarat', 2]
+  ];
+  for (const [name, src, field, wk, wv, dec] of marks) {
+    dash.draw(name, (el) => {
+      const d = dash.data(src);
+      if (d.status !== 'ok' || !Array.isArray(d.data)) { el.textContent = '—'; return; }
+      const r = d.data.find((x) => String(x[wk]) === wv);
+      el.textContent = r && r[field] != null ? WB.fmtIN(r[field], dec) : '—';
+    });
+  }
+  const shareMarks = [['s-first', 'West Bengal', '2018-19'], ['s-last', 'West Bengal', '2025-26'], ['s-gj', 'Gujarat', '2025-26']];
+  for (const [name, st, fy] of shareMarks) {
+    dash.draw(name, (el) => {
+      const d = dash.data('shares');
+      if (d.status !== 'ok' || !Array.isArray(d.data)) { el.textContent = '—'; return; }
+      const r = d.data.find((x) => x.state === st && x.fy === fy);
+      el.textContent = r ? WB.fmtIN(r.own_share_pct, 2) : '—';
+    });
+  }
+  const dct = [['l-sr2', 0, 'value_cr', 0], ['l-sr2n', 0, 'count', 0], ['l-tds', 2, 'value_cr', 0], ['l-tdsn', 2, 'count', 0], ['l-tcs', 3, 'value_cr', 0], ['l-nf', 1, 'count', 0], ['l-nfv', 1, 'value_cr', 1]];
+  for (const [name, i, field, dec] of dct) {
+    dash.draw(name, (el) => {
+      const d = dash.data('dct');
+      if (d.status !== 'ok' || !d.data[i]) { el.textContent = '—'; return; }
+      el.textContent = WB.fmtIN(+d.data[i][field], dec);
+    });
+  }
+})();
+</script>
+
+<script>
+/* ---------- trend chart ---------- */
+dash.draw('trend', (el) => {
+  if (!WB.status(el, ['series'])) return;
+  const S = WB.S, rows = dash.data('series').data.filter((r) => r.metric === S.metric);
+  const years = [...new Set(rows.map((r) => r.fy))].sort();
+  const want = [['West Bengal', WB.col(0), 3, false], ['Gujarat', WB.col(1), 2.5, false], ['India', WB.REF, 2, true]];
+  let pi = 2; for (const p of ['Maharashtra', 'Tamil Nadu', 'Karnataka', 'Uttar Pradesh', 'Telangana', 'Rajasthan', 'Odisha', 'Kerala', 'Andhra Pradesh', 'Bihar']) { if (S.peers.has(p)) want.push([p, WB.col(pi), 1.5, false]); pi++; }
+  const isMoney = !['taxpayers', 'sgst_per_taxpayer'].includes(S.metric);
+  const unit = S.metric === 'taxpayers' ? '' : S.metric === 'sgst_per_taxpayer' ? ' lakh' : ' Cr';
+  const series = want.map(([name, color, width, dashed]) => {
+    const pts = years.map((fy) => { const r = rows.find((x) => x.state === name && x.fy === fy); return {fy, raw: r ? r.value : null}; }).filter((p) => p.raw != null);
+    let base = pts.find((p) => p.fy === S.base) || pts[0];
+    pts.forEach((p) => { p.v = S.mode === 'index' ? p.raw / base.raw * 100 : p.raw; });
+    return {name: name === 'India' ? 'All states' : name, color, width, dashed, pts, baseFy: base && base.fy};
+  }).filter((s) => s.pts.length);
+  const showSeries = S.mode === 'abs' ? series.filter((s) => s.name !== 'All states') : series;
+  const {s, w, h} = WB.svg(el, 360);
+  const all = showSeries.flatMap((x) => x.pts.map((p) => p.v));
+  const y = d3.scaleLinear().domain(d3.extent(all.concat(S.mode === 'index' ? [100] : []))).nice().range([h - 28, 12]);
+  const fmtY = (v) => S.mode === 'index' ? d3.format(',.0f')(v) : (isMoney ? WB.fmtIN(v) : (S.metric === 'sgst_per_taxpayer' ? v.toFixed(1) : d3.format('.2s')(v)));
+  const ml = WB.measure(s, y.ticks(6).map(fmtY)) + 10;
+  const endW = WB.measure(s, showSeries.map((x) => x.name)) + 14;
+  const x = d3.scalePoint().domain(years).range([ml, w - Math.min(endW, w * 0.32)]).padding(0.1);
+  s.attr('aria-label', `Line chart of ${S.metric} by year for West Bengal, Gujarat and selected states`);
+  s.append('g').attr('class', 'wb-grid').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).ticks(6).tickSize(-(x.range()[1] - ml)).tickFormat(''));
+  s.append('g').attr('transform', `translate(0,${h - 28})`).call(d3.axisBottom(x).tickValues(years.filter((_, i) => w > 520 || i % 2 === 0)));
+  s.append('g').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).ticks(6).tickFormat(fmtY));
+  if (S.mode === 'index') s.append('line').attr('x1', ml).attr('x2', x.range()[1]).attr('y1', y(100)).attr('y2', y(100)).style('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '3 3');
+  const line = d3.line().x((p) => x(p.fy)).y((p) => y(p.v));
+  const ordered = [...showSeries].reverse();
+  const paths = s.append('g').selectAll('path').data(ordered).join('path').attr('fill', 'none').attr('d', (d) => line(d.pts))
+    .style('stroke', (d) => d.color).attr('stroke-width', (d) => d.width).attr('stroke-dasharray', (d) => d.dashed ? '5 4' : null).attr('stroke-linejoin', 'round');
+  s.append('g').selectAll('circle').data(ordered.flatMap((d) => d.pts.map((p) => ({...p, d})))).join('circle')
+    .attr('cx', (p) => x(p.fy)).attr('cy', (p) => y(p.v)).attr('r', (p) => p.d.name === 'West Bengal' ? 3.5 : 2.5).style('fill', (p) => p.d.color);
+  // end labels, nudged apart
+  const ends = showSeries.map((d) => ({d, y: y(d.pts[d.pts.length - 1].v), v: d.pts[d.pts.length - 1].v})).sort((a, b) => a.y - b.y);
+  for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 14) ends[i].y = ends[i - 1].y + 14;
+  s.append('g').selectAll('text').data(ends).join('text').attr('class', 'wb-lbl').attr('x', x(years[years.length - 1]) + 8).attr('y', (e) => e.y + 4)
+    .style('fill', (e) => e.d.color).style('font-weight', (e) => e.d.name === 'West Bengal' ? 600 : 400).text((e) => e.d.name);
+  if (!WB.reduce()) paths.each(function () { const L = this.getTotalLength(); d3.select(this).attr('stroke-dasharray', `${L} ${L}`).attr('stroke-dashoffset', L).transition().duration(700).attr('stroke-dashoffset', 0).on('end', function (d) { d3.select(this).attr('stroke-dasharray', d.dashed ? '5 4' : null); }); });
+  // hover
+  const tp = WB.tip(el);
+  const guide = s.append('line').attr('y1', 12).attr('y2', h - 28).style('stroke', 'var(--cds-chart-axis)').attr('opacity', 0);
+  s.append('rect').attr('x', ml).attr('y', 0).attr('width', x.range()[1] - ml + 10).attr('height', h - 28).attr('fill', 'transparent')
+    .on('pointermove', (ev) => {
+      const [mx] = d3.pointer(ev); const fy = years.reduce((a, b) => Math.abs(x(b) - mx) < Math.abs(x(a) - mx) ? b : a);
+      guide.attr('x1', x(fy)).attr('x2', x(fy)).attr('opacity', 1);
+      const lines = [[fy + (S.mode === 'index' ? ' · index' : '')]];
+      for (const sr of series) { const p = sr.pts.find((q) => q.fy === fy); if (!p) continue;
+        lines.push([sr.name, S.mode === 'index' ? `${p.v.toFixed(0)}  (₹${WB.fmtIN(p.raw, S.metric === 'sgst_per_taxpayer' ? 2 : 0)}${unit})`.replace('₹', isMoney || S.metric === 'sgst_per_taxpayer' ? '₹' : '') : `${isMoney || S.metric === 'sgst_per_taxpayer' ? '₹' : ''}${WB.fmtIN(p.raw, S.metric === 'sgst_per_taxpayer' ? 2 : 0)}${unit}`]); }
+      const r = el.getBoundingClientRect(), sv = s.node().getBoundingClientRect();
+      tp.show(lines, x(fy) * sv.width / w, ev.clientY - r.top);
+    })
+    .on('pointerleave', () => { tp.hide(); guide.attr('opacity', 0); });
+});
+</script>
+
+<script>
+/* ---------- counterfactual gap chart ---------- */
+dash.draw('gap', (el) => {
+  if (!WB.status(el, ['gap'])) return;
+  const rows = dash.data('gap').data.filter((r) => r.fy !== 'Total');
+  const {s, w, h} = WB.svg(el, 300);
+  s.attr('aria-label', 'West Bengal state revenue actual vs growth at all-states and Gujarat pace');
+  const y = d3.scaleLinear().domain([0, d3.max(rows, (r) => Math.max(r.wb_actual_cr, r.wb_at_india_pace_cr, r.wb_at_gujarat_pace_cr))]).nice().range([h - 28, 10]);
+  const ml = WB.measure(s, y.ticks(5).map((v) => WB.fmtIN(v))) + 10;
+  const x = d3.scalePoint().domain(rows.map((r) => r.fy)).range([ml, w - 70]).padding(0.1);
+  s.append('g').attr('class', 'wb-grid').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(w - 70 - ml)).tickFormat(''));
+  s.append('g').attr('transform', `translate(0,${h - 28})`).call(d3.axisBottom(x).tickValues(rows.map((r) => r.fy).filter((_, i) => w > 520 || i % 2 === 0)));
+  s.append('g').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).ticks(5).tickFormat((v) => WB.fmtIN(v)));
+  s.append('path').datum(rows).attr('d', d3.area().x((r) => x(r.fy)).y0((r) => y(r.wb_actual_cr)).y1((r) => y(r.wb_at_india_pace_cr))).style('fill', WB.col(0)).attr('opacity', 0.12);
+  const L = [['wb_at_gujarat_pace_cr', WB.col(1), null], ['wb_at_india_pace_cr', WB.REF, '5 4'], ['wb_actual_cr', WB.col(0), null]];
+  for (const [k, c, da] of L) s.append('path').datum(rows).attr('fill', 'none').style('stroke', c).attr('stroke-width', k === 'wb_actual_cr' ? 3 : 2).attr('stroke-dasharray', da).attr('d', d3.line().x((r) => x(r.fy)).y((r) => y(r[k])));
+  const last = rows[rows.length - 1];
+  s.append('text').attr('class', 'wb-lbl').attr('x', x(last.fy) + 6).attr('y', (y(last.wb_actual_cr) + y(last.wb_at_india_pace_cr)) / 2 + 4).text(`₹${WB.fmtIN(last.gap_india_cr)} Cr`);
+  const tp = WB.tip(el);
+  s.append('rect').attr('x', ml).attr('width', w - 70 - ml).attr('height', h - 28).attr('fill', 'transparent')
+    .on('pointermove', (ev) => { const [mx] = d3.pointer(ev); const r = rows.reduce((a, b) => Math.abs(x(b.fy) - mx) < Math.abs(x(a.fy) - mx) ? b : a);
+      const sv = s.node().getBoundingClientRect(), er = el.getBoundingClientRect();
+      tp.show([[r.fy], ['Actual', `₹${WB.fmtIN(r.wb_actual_cr)} Cr`], ['At all-states pace', `₹${WB.fmtIN(r.wb_at_india_pace_cr)} Cr`], ['At Gujarat’s pace', `₹${WB.fmtIN(r.wb_at_gujarat_pace_cr)} Cr`], ['Gap vs all states', `₹${WB.fmtIN(r.gap_india_cr)} Cr`]], x(r.fy) * sv.width / w, ev.clientY - er.top); })
+    .on('pointerleave', () => tp.hide());
+});
+</script>
+
+<script>
+/* ---------- share chart ---------- */
+dash.draw('share', (el) => {
+  if (!WB.status(el, ['shares', 'kpi'])) return;
+  const rows = dash.data('shares').data, kpi = dash.data('kpi').data;
+  const years = [...new Set(rows.map((r) => r.fy))].sort();
+  const ser = [['West Bengal', 'own_share_pct', 0, null], ['West Bengal', 'post_share_pct', 0, '5 4'], ['Gujarat', 'own_share_pct', 1, null], ['Gujarat', 'post_share_pct', 1, '5 4']]
+    .map(([st, k, c, da]) => ({st, k, color: WB.col(c), da, pts: years.map((fy) => { const r = rows.find((x) => x.state === st && x.fy === fy); return r && r[k] != null ? {fy, v: r[k]} : null; }).filter(Boolean)}));
+  const refs = ['West Bengal', 'Gujarat'].map((st, i) => ({st, v: kpi.find((r) => r.state === st).gsdp_share_pct, color: WB.col(i)}));
+  const {s, w, h} = WB.svg(el, 300);
+  s.attr('aria-label', 'Share of all states SGST for West Bengal and Gujarat by year, with GSDP share lines');
+  const all = ser.flatMap((x) => x.pts.map((p) => p.v)).concat(refs.map((r) => r.v));
+  const y = d3.scaleLinear().domain([Math.floor(d3.min(all) - 0.5), Math.ceil(d3.max(all) + 0.5)]).range([h - 28, 10]);
+  const ml = WB.measure(s, y.ticks(5).map((v) => v + '%')) + 10;
+  const x = d3.scalePoint().domain(years).range([ml, w - 110]).padding(0.1);
+  s.append('g').attr('class', 'wb-grid').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(w - 110 - ml)).tickFormat(''));
+  s.append('g').attr('transform', `translate(0,${h - 28})`).call(d3.axisBottom(x).tickValues(years.filter((_, i) => w > 520 || i % 2 === 0)));
+  s.append('g').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).ticks(5).tickFormat((v) => v + '%'));
+  for (const r of refs) {
+    s.append('line').attr('x1', ml).attr('x2', w - 110).attr('y1', y(r.v)).attr('y2', y(r.v)).style('stroke', r.color).attr('stroke-dasharray', '1 4').attr('stroke-width', 2);
+    s.append('text').attr('class', 'wb-lbl-muted').attr('x', w - 104).attr('y', y(r.v) + 4).text(`${r.st === 'West Bengal' ? 'WB' : 'Gujarat'} GSDP ${r.v}%`);
+  }
+  for (const sr of ser) s.append('path').datum(sr.pts).attr('fill', 'none').style('stroke', sr.color).attr('stroke-width', 2.5).attr('stroke-dasharray', sr.da).attr('d', d3.line().x((p) => x(p.fy)).y((p) => y(p.v)));
+  const tp = WB.tip(el);
+  s.append('rect').attr('x', ml).attr('width', w - 110 - ml).attr('height', h - 28).attr('fill', 'transparent')
+    .on('pointermove', (ev) => { const [mx] = d3.pointer(ev); const fy = years.reduce((a, b) => Math.abs(x(b) - mx) < Math.abs(x(a) - mx) ? b : a);
+      const L = [[fy]]; for (const sr of ser) { const p = sr.pts.find((q) => q.fy === fy); if (p) L.push([`${sr.st}, ${sr.k === 'own_share_pct' ? 'own SGST' : 'state revenue'}`, p.v.toFixed(2) + '%']); }
+      const sv = s.node().getBoundingClientRect(), er = el.getBoundingClientRect(); tp.show(L, x(fy) * sv.width / w, ev.clientY - er.top); })
+    .on('pointerleave', () => tp.hide());
+});
+</script>
+
+<script>
+/* ---------- intensity scatter ---------- */
+dash.draw('intensity', (el) => {
+  if (!WB.status(el, ['intensity'])) return;
+  const k = WB.S.int, data = dash.data('intensity').data;
+  const india = data.find((r) => r.state === 'India');
+  const rows = data.filter((r) => r.state !== 'India' && r.gsdp_cr >= 200000);
+  const {s, w, h} = WB.svg(el, 380);
+  s.attr('aria-label', 'Scatter of GSDP against GST as a share of GSDP for large states, West Bengal and Gujarat highlighted');
+  const y = d3.scaleLinear().domain([0, d3.max(rows, (r) => r[k]) * 1.08]).nice().range([h - 34, 14]);
+  const ml = WB.measure(s, y.ticks(6).map((v) => v + '%')) + 12;
+  const x = d3.scaleLog().domain([d3.min(rows, (r) => r.gsdp_cr) * 0.85, d3.max(rows, (r) => r.gsdp_cr) * 1.15]).range([ml, w - 16]);
+  const rr = d3.scaleSqrt().domain([0, d3.max(rows, (r) => r.taxpayers || 0)]).range([0, w < 500 ? 16 : 24]);
+  s.append('g').attr('class', 'wb-grid').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).ticks(6).tickSize(-(w - 16 - ml)).tickFormat(''));
+  const ticks = [200000, 500000, 1000000, 2000000, 5000000].filter((t) => t >= x.domain()[0] && t <= x.domain()[1]);
+  s.append('g').attr('transform', `translate(0,${h - 34})`).call(d3.axisBottom(x).tickValues(ticks).tickFormat((v) => `₹${v / 100000}L Cr`));
+  s.append('g').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).ticks(6).tickFormat((v) => v + '%'));
+  s.append('line').attr('x1', ml).attr('x2', w - 16).attr('y1', y(india[k])).attr('y2', y(india[k])).style('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '5 4');
+  s.append('text').attr('class', 'wb-lbl-muted').attr('x', ml + 4).attr('y', y(india[k]) - 5).text(`All states ${india[k]}%`);
+  const hl = (st) => st === 'West Bengal' ? WB.col(0) : st === 'Gujarat' ? WB.col(1) : null;
+  const sorted = [...rows].sort((a, b) => (b.taxpayers || 0) - (a.taxpayers || 0));
+  s.append('g').selectAll('circle').data(sorted).join('circle').attr('cx', (r) => x(r.gsdp_cr)).attr('cy', (r) => y(r[k])).attr('r', (r) => Math.max(4, rr(r.taxpayers || 0)))
+    .style('fill', (r) => hl(r.state) || WB.MUTED).attr('fill-opacity', (r) => hl(r.state) ? 0.85 : 0.45).style('stroke', (r) => hl(r.state) || 'var(--cds-chart-axis)').attr('stroke-width', 1);
+  const labelled = new Set(['West Bengal', 'Gujarat', 'Maharashtra', 'Tamil Nadu', 'Uttar Pradesh', 'Haryana', 'Odisha']);
+  s.append('g').selectAll('text').data(rows.filter((r) => labelled.has(r.state) && (w > 520 || hl(r.state)))).join('text').attr('class', (r) => hl(r.state) ? 'wb-lbl' : 'wb-lbl-muted')
+    .attr('x', (r) => x(r.gsdp_cr) + Math.max(4, rr(r.taxpayers || 0)) + 3).attr('y', (r) => y(r[k]) + 4).style('font-weight', (r) => hl(r.state) ? 600 : 400).text((r) => r.state);
+  const tp = WB.tip(el);
+  s.selectAll('circle').on('pointerenter pointermove', (ev, r) => { const sv = s.node().getBoundingClientRect();
+    tp.show([[r.state], ['GSDP', `₹${WB.fmtIN(r.gsdp_cr)} Cr`], ['Own SGST', r.own_pct + '%'], ['SGST + settlement', r.post_pct + '%'], ['All GST collected', r.coll_pct + '%'], ['Taxpayers', WB.fmtIN(r.taxpayers)]], x(r.gsdp_cr) * sv.width / w, y(r[k]) * sv.height / h); })
+    .on('pointerleave', () => tp.hide());
+});
+</script>
+
+<script>
+/* ---------- decomposition and bridge ---------- */
+dash.draw('decomp', (el) => {
+  if (!WB.status(el, ['decomp'])) return;
+  const rows = dash.data('decomp').data;
+  const {s, w, h} = WB.svg(el, 210);
+  s.attr('aria-label', 'West Bengal as a percent of Gujarat on registration density, yield per taxpayer and intensity');
+  const labels = {density: 'Registrations per GSDP', yield: 'SGST per taxpayer', intensity: 'Own SGST / GSDP'};
+  const ml = WB.measure(s, Object.values(labels)) + 12;
+  const x = d3.scaleLinear().domain([0, 110]).range([ml, w - 50]);
+  const y = d3.scaleBand().domain(rows.map((r) => r.id)).range([10, h - 28]).padding(0.35);
+  s.append('g').attr('transform', `translate(0,${h - 28})`).call(d3.axisBottom(x).tickValues([0, 25, 50, 75, 100]));
+  s.append('g').selectAll('rect').data(rows).join('rect').attr('x', ml).attr('y', (r) => y(r.id)).attr('height', y.bandwidth()).attr('width', (r) => x(r.wb_index) - ml)
+    .style('fill', (r) => r.id === 'intensity' ? WB.col(0) : WB.MUTED).attr('rx', 2);
+  s.append('line').attr('x1', x(100)).attr('x2', x(100)).attr('y1', 4).attr('y2', h - 28).style('stroke', WB.col(1)).attr('stroke-width', 2);
+  s.append('text').attr('class', 'wb-lbl').attr('x', x(100)).attr('y', 0).attr('text-anchor', 'middle').style('fill', WB.col(1)).text('Gujarat = 100');
+  s.append('g').selectAll('text').data(rows).join('text').attr('class', 'wb-lbl').attr('x', ml - 8).attr('y', (r) => y(r.id) + y.bandwidth() / 2 + 4).attr('text-anchor', 'end').text((r) => labels[r.id]);
+  s.append('g').selectAll('text').data(rows).join('text').attr('class', 'wb-lbl').attr('x', (r) => x(r.wb_index) + 5).attr('y', (r) => y(r.id) + y.bandwidth() / 2 + 4).text((r) => r.wb_index.toFixed(1));
+  const tp = WB.tip(el);
+  s.selectAll('rect').on('pointermove', (ev, r) => { const sv = s.node().getBoundingClientRect(), er = el.getBoundingClientRect();
+    tp.show([[r.factor], ['West Bengal', WB.fmtIN(r.wb, 2)], ['Gujarat', WB.fmtIN(r.gj, 2)], ['Share of gap', r.share_of_gap_pct + '%']], ev.clientX - er.left, ev.clientY - er.top); })
+    .on('pointerleave', () => tp.hide());
+});
+
+dash.draw('bridge', (el) => {
+  if (!WB.status(el, ['bridge'])) return;
+  const rows = dash.data('bridge').data;
+  let run = 0; const bars = rows.map((r) => { const b = r.kind === 'total' ? {y0: 0, y1: r.value_cr} : {y0: run, y1: run + r.value_cr}; run = b.y1; return {...r, ...b}; });
+  const {s, w, h} = WB.svg(el, 210);
+  s.attr('aria-label', 'Waterfall from West Bengal own SGST to the level at Gujarat intensity');
+  const y = d3.scaleLinear().domain([0, d3.max(bars, (b) => b.y1) * 1.12]).range([h - 40, 10]);
+  const x = d3.scaleBand().domain(bars.map((b) => b.step)).range([4, w - 4]).padding(0.25);
+  s.append('g').selectAll('rect').data(bars).join('rect').attr('x', (b) => x(b.step)).attr('width', x.bandwidth()).attr('y', (b) => y(b.y1)).attr('height', (b) => y(b.y0) - y(b.y1))
+    .style('fill', (b, i) => i === 0 ? WB.col(0) : b.kind === 'total' ? WB.col(1) : 'var(--color-ok)').attr('rx', 2);
+  s.append('g').selectAll('text').data(bars).join('text').attr('class', 'wb-lbl').attr('text-anchor', 'middle').attr('x', (b) => x(b.step) + x.bandwidth() / 2).attr('y', (b) => y(b.y1) - 5)
+    .text((b) => (b.kind === 'delta' ? '+' : '') + WB.fmtIN(b.value_cr));
+  const short = {0: 'WB today', 1: '+ density', 2: '+ yield', 3: 'At Gujarat'};
+  s.append('g').selectAll('text').data(bars).join('text').attr('class', 'wb-lbl-muted').attr('text-anchor', 'middle').attr('x', (b) => x(b.step) + x.bandwidth() / 2).attr('y', h - 22).text((b, i) => short[i]);
+  const tp = WB.tip(el);
+  s.selectAll('rect').on('pointermove', (ev, b) => { const er = el.getBoundingClientRect(); tp.show([[b.step], ['₹ Cr', (b.kind === 'delta' ? '+' : '') + WB.fmtIN(b.value_cr)]], ev.clientX - er.left, ev.clientY - er.top); })
+    .on('pointerleave', () => tp.hide());
+});
+</script>
+
+<script>
+/* ---------- compliance small multiples ---------- */
+['gstr1_ontime_pct', 'gstr3b_ontime_pct'].forEach((k, idx) => dash.draw(idx ? 'comp-r3b' : 'comp-r1', (el) => {
+  if (!WB.status(el, ['compliance'])) return;
+  const rows = dash.data('compliance').data;
+  const years = [...new Set(rows.map((r) => r.fy))].sort();
+  const ser = [['India', WB.REF, '5 4'], ['Gujarat', WB.col(1), null], ['West Bengal', WB.col(0), null]].map(([st, c, da]) => ({st, c, da, pts: years.map((fy) => { const r = rows.find((x) => x.state === st && x.fy === fy); return r && r[k] != null ? {fy, v: r[k]} : null; }).filter(Boolean)}));
+  const {s, w, h} = WB.svg(el, 230);
+  s.attr('aria-label', `${k === 'gstr1_ontime_pct' ? 'GSTR-1' : 'GSTR-3B'} on-time filing percent by year`);
+  const y = d3.scaleLinear().domain([20, 100]).range([h - 28, 8]);
+  const ml = WB.measure(s, ['100%']) + 10;
+  const x = d3.scalePoint().domain(years).range([ml, w - 10]).padding(0.1);
+  s.append('g').attr('class', 'wb-grid').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).ticks(4).tickSize(-(w - 10 - ml)).tickFormat(''));
+  s.append('g').attr('transform', `translate(0,${h - 28})`).call(d3.axisBottom(x).tickValues(years.filter((_, i) => i % 2 === 0)));
+  s.append('g').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).ticks(4).tickFormat((v) => v + '%'));
+  for (const sr of ser) {
+    s.append('path').datum(sr.pts).attr('fill', 'none').style('stroke', sr.c).attr('stroke-width', sr.st === 'West Bengal' ? 3 : 2).attr('stroke-dasharray', sr.da).attr('d', d3.line().x((p) => x(p.fy)).y((p) => y(p.v)));
+    const last = sr.pts[sr.pts.length - 1];
+    if (sr.st !== 'India') s.append('circle').attr('cx', x(last.fy)).attr('cy', y(last.v)).attr('r', 4).style('fill', sr.c);
+  }
+  const tp = WB.tip(el);
+  s.append('rect').attr('x', ml).attr('width', w - 10 - ml).attr('height', h - 28).attr('fill', 'transparent')
+    .on('pointermove', (ev) => { const [mx] = d3.pointer(ev); const fy = years.reduce((a, b) => Math.abs(x(b) - mx) < Math.abs(x(a) - mx) ? b : a);
+      const L = [[fy]]; for (const sr of [...ser].reverse()) { const p = sr.pts.find((q) => q.fy === fy); if (p) L.push([sr.st === 'India' ? 'All states' : sr.st, p.v.toFixed(1) + '%']); }
+      const sv = s.node().getBoundingClientRect(), er = el.getBoundingClientRect(); tp.show(L, x(fy) * sv.width / w, ev.clientY - er.top); })
+    .on('pointerleave', () => tp.hide());
+}));
+</script>
+
+<script>
+/* ---------- momentum bars ---------- */
+dash.draw('momentum', (el) => {
+  if (!WB.status(el, ['momentum'])) return;
+  const rows = dash.data('momentum').data;
+  const bh = 20, h = rows.length * bh + 34;
+  const {s, w} = WB.svg(el, h);
+  s.attr('aria-label', 'State revenue growth April to October 2026 by state');
+  const ml = WB.measure(s, rows.map((r) => r.state)) + 12;
+  const ext = d3.extent(rows, (r) => r.growth_pct);
+  const x = d3.scaleLinear().domain([Math.min(0, ext[0]), ext[1] * 1.12]).nice().range([ml, w - 46]);
+  const y = d3.scaleBand().domain(rows.map((r) => r.state)).range([4, h - 28]).padding(0.25);
+  s.append('g').attr('class', 'wb-grid').attr('transform', `translate(0,${h - 28})`).call(d3.axisBottom(x).ticks(5).tickSize(-(h - 32)).tickFormat(''));
+  s.append('g').attr('transform', `translate(0,${h - 28})`).call(d3.axisBottom(x).ticks(5).tickFormat((v) => v + '%'));
+  const fill = (r) => r.state === 'West Bengal' ? WB.col(0) : r.state === 'Gujarat' ? WB.col(1) : r.state === 'All states' ? 'var(--cds-chart-reference)' : WB.MUTED;
+  s.append('g').selectAll('rect').data(rows).join('rect').attr('x', (r) => x(Math.min(0, r.growth_pct))).attr('y', (r) => y(r.state)).attr('height', y.bandwidth())
+    .attr('width', (r) => Math.abs(x(r.growth_pct) - x(0))).style('fill', fill).attr('rx', 2);
+  s.append('line').attr('x1', x(0)).attr('x2', x(0)).attr('y1', 0).attr('y2', h - 28).style('stroke', 'var(--cds-chart-axis)');
+  s.append('g').selectAll('text').data(rows).join('text').attr('class', (r) => ['West Bengal', 'Gujarat', 'All states'].includes(r.state) ? 'wb-lbl' : 'wb-lbl-muted').attr('x', ml - 8).attr('y', (r) => y(r.state) + y.bandwidth() / 2 + 4)
+    .attr('text-anchor', 'end').style('font-weight', (r) => ['West Bengal', 'Gujarat'].includes(r.state) ? 600 : 400).text((r) => r.state);
+  s.append('g').selectAll('text.v').data(rows).join('text').attr('class', 'wb-lbl-muted').attr('x', (r) => r.growth_pct >= 0 ? x(r.growth_pct) + 4 : x(0) + 4).attr('y', (r) => y(r.state) + y.bandwidth() / 2 + 4).text((r) => r.growth_pct.toFixed(1) + '%');
+  const tp = WB.tip(el);
+  s.selectAll('rect').on('pointermove', (ev, r) => { const er = el.getBoundingClientRect(); tp.show([[r.state], ['Apr–Oct 2025', `₹${WB.fmtIN(r.prev_cr)} Cr`], ['Apr–Oct 2026', `₹${WB.fmtIN(r.cur_cr)} Cr`], ['Growth', r.growth_pct.toFixed(1) + '%']], ev.clientX - er.left, ev.clientY - er.top); })
+    .on('pointerleave', () => tp.hide());
+});
+</script>
+
+<script>
+/* ---------- prize table ---------- */
+dash.draw('prize', (tb) => {
+  const d = dash.data('potential');
+  if (d.status !== 'ok' || !Array.isArray(d.data)) { tb.replaceChildren(); return; }
+  tb.replaceChildren(...d.data.map((r) => {
+    const tr = document.createElement('tr'); tr.setAttribute('data-key', r.id);
+    const cells = [r.scenario, WB.fmtIN(r.current_pct, 2), WB.fmtIN(r.target_pct, 2), WB.fmtIN(r.potential_cr), (r.uplift_cr > 0 ? '+' : '') + WB.fmtIN(r.uplift_cr), (r.uplift_pct > 0 ? '+' : '') + WB.fmtIN(r.uplift_pct, 1)];
+    cells.forEach((c, i) => { const td = document.createElement('td'); td.textContent = c; if (i >= 4 && r.uplift_cr > 0) td.className = 'wb-pos'; tr.appendChild(td); });
+    return tr;
+  }));
+});
+</script>
+
+<script>
+/* ---------- five-year simulator ---------- */
+window.WBsim = function () {
+  const d = dash.data('kpi'); if (d.status !== 'ok' || !Array.isArray(d.data)) return null;
+  const wb = d.data.find((r) => r.state === 'West Bengal'), gj = d.data.find((r) => r.state === 'Gujarat');
+  const g = WB.S.growth / 100, close = WB.S.close / 100;
+  const r0 = wb.own_sgst_gsdp_pct / 100, r1 = gj.own_sgst_gsdp_pct / 100;
+  const yrs = ['2026-27', '2027-28', '2028-29', '2029-30', '2030-31'];
+  const out = yrs.map((fy, i) => { const t = i + 1; const gsdp = wb.gsdp_cr * (1 + g) ** t; const extra = gsdp * (r1 - r0) * close * t / yrs.length; return {fy, base: gsdp * r0, extra}; });
+  return {rows: out, cum: d3.sum(out, (o) => o.extra), last: out[out.length - 1].extra};
+};
+dash.draw('sim-last', (el) => { const r = WBsim(); el.textContent = r ? WB.fmtIN(r.last) : '—'; });
+dash.draw('sim-cum', (el) => { const r = WBsim(); el.textContent = r ? WB.fmtIN(r.cum) : '—'; });
+dash.draw('sim', (el) => {
+  if (!WB.status(el, ['kpi'])) return;
+  const r = WBsim(); if (!r) return;
+  const {s, w, h} = WB.svg(el, 230);
+  s.attr('aria-label', 'Projected own SGST with and without closing the intensity gap, 2026-27 to 2030-31');
+  const y = d3.scaleLinear().domain([0, d3.max(r.rows, (o) => o.base + o.extra) * 1.1]).nice().range([h - 28, 8]);
+  const ml = WB.measure(s, y.ticks(4).map((v) => WB.fmtIN(v))) + 10;
+  const x = d3.scaleBand().domain(r.rows.map((o) => o.fy)).range([ml, w - 6]).padding(0.3);
+  s.append('g').attr('class', 'wb-grid').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).ticks(4).tickSize(-(w - 6 - ml)).tickFormat(''));
+  s.append('g').attr('transform', `translate(0,${h - 28})`).call(d3.axisBottom(x).tickFormat((v, i) => w < 420 && i % 2 ? '' : v));
+  s.append('g').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).ticks(4).tickFormat((v) => WB.fmtIN(v)));
+  const g = s.append('g');
+  g.selectAll('rect.b').data(r.rows).join('rect').attr('class', 'b').attr('x', (o) => x(o.fy)).attr('width', x.bandwidth()).attr('y', (o) => y(o.base)).attr('height', (o) => y(0) - y(o.base)).style('fill', WB.col(0)).attr('opacity', 0.55);
+  g.selectAll('rect.e').data(r.rows).join('rect').attr('class', 'e').attr('x', (o) => x(o.fy)).attr('width', x.bandwidth()).attr('y', (o) => y(o.base + o.extra)).attr('height', (o) => y(o.base) - y(o.base + o.extra)).style('fill', 'var(--color-ok)');
+  const tp = WB.tip(el);
+  g.selectAll('rect').on('pointermove', (ev, o) => { const er = el.getBoundingClientRect(); tp.show([[o.fy], ['Own SGST at today’s intensity', `₹${WB.fmtIN(o.base)} Cr`], ['Extra from closing the gap', `₹${WB.fmtIN(o.extra)} Cr`]], ev.clientX - er.left, ev.clientY - er.top); })
+    .on('pointerleave', () => tp.hide());
+});
+</script>
+
+<script>
+/* ---------- summary: number marks ---------- */
+(function () {
+  const mark = (name, src, pred, field, dec) => dash.draw(name, (el) => {
+    const d = dash.data(src);
+    if (d.status !== 'ok' || !Array.isArray(d.data)) { el.textContent = '—'; return; }
+    const r = d.data.find(pred);
+    el.textContent = r && r[field] != null ? (typeof r[field] === 'number' ? WB.fmtIN(r[field], dec) : r[field]) : '—';
+  });
+  const pace = (m) => (r) => r.metric === m && r.fy === '2025-26';
+  mark('su-g-wb', 'sumpace', pace('collection'), 'wb_growth_pct', 0);
+  mark('su-g-gj', 'sumpace', pace('collection'), 'gujarat_growth_pct', 0);
+  mark('su-g-od', 'sumpace', pace('collection'), 'best_growth_pct', 0);
+  mark('su-gb-own', 'sumpace', pace('sgst'), 'gap_best_cr', 0);
+  mark('su-gb-coll', 'sumpace', pace('collection'), 'gap_best_cr', 0);
+  mark('su-gg-own', 'sumpace', pace('sgst'), 'gap_gujarat_cr', 0);
+  mark('su-gg-coll', 'sumpace', pace('collection'), 'gap_gujarat_cr', 0);
+  const lg = (m, role) => (r) => r.metric === m && r.role === role;
+  mark('su-own-wb', 'sumleague', lg('own', 'wb'), 'pct', 2);
+  mark('su-own-gj', 'sumleague', lg('own', 'gj'), 'pct', 2);
+  mark('su-own-bs', 'sumleague', lg('own', 'best'), 'state');
+  mark('su-own-bsp', 'sumleague', lg('own', 'best'), 'pct', 2);
+  mark('su-pz-own-gj', 'sumprize', lg('own', 'gj'), 'uplift_cr', 0);
+  mark('su-pz-own-bs', 'sumprize', lg('own', 'best'), 'uplift_cr', 0);
+  mark('su-pz-coll-in', 'sumprize', lg('coll', 'india'), 'uplift_cr', 0);
+  const filingGap = (name, ret) => dash.draw(name, (el) => {
+    const d = dash.data('sumfiling');
+    if (d.status !== 'ok') { el.textContent = '—'; return; }
+    const f = (role) => d.data.find((r) => r.ret === ret && r.role === role && r.fy === '2025-26');
+    const a = f('West Bengal'), b = f('Gujarat');
+    el.textContent = a && b ? WB.fmtIN(b.pct - a.pct, 1) : '—';
+  });
+  filingGap('su-r1-gap', 'GSTR-1'); filingGap('su-r3-gap', 'GSTR-3B');
+})();
+</script>
+
+<script>
+/* ---------- summary 1: growth-pace potential, both measures on one chart ---------- */
+dash.draw('sum-pace', (el) => {
+  if (!WB.status(el, ['sumpace'])) return;
+  const all = dash.data('sumpace').data;
+  const years = [...new Set(all.map((r) => r.fy))].sort();
+  const groups = ['collection', 'sgst'].map((m) => ({m, rows: all.filter((r) => r.metric === m)}));
+  const {s, w, h} = WB.svg(el, 380);
+  s.attr('aria-label', 'West Bengal own SGST and total GST collection, actual vs growth at all-states, Gujarat and best-state pace');
+  const top = d3.max(all, (r) => Math.max(r.wb_actual_cr, r.at_india_cr, r.at_gujarat_cr, r.at_best_cr));
+  const y = d3.scaleLinear().domain([0, top]).nice().range([h - 28, 10]);
+  const ml = WB.measure(s, y.ticks(6).map((v) => WB.fmtIN(v))) + 10;
+  const narrow = w < 520;
+  const lblW = narrow ? 12 : WB.measure(s, ['Total collection', 'Own SGST']) + 14;
+  const x = d3.scalePoint().domain(years).range([ml, w - lblW]).padding(0.1);
+  s.append('g').attr('class', 'wb-grid').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).ticks(6).tickSize(-(x.range()[1] - ml)).tickFormat(''));
+  s.append('g').attr('transform', `translate(0,${h - 28})`).call(d3.axisBottom(x).tickValues(years.filter((_, i) => w > 520 || i % 2 === 0)));
+  s.append('g').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).ticks(6).tickFormat((v) => WB.fmtIN(v)));
+  const L = [['at_best_cr', WB.col(2), 2, null], ['at_gujarat_cr', WB.col(1), 2, null], ['at_india_cr', WB.REF, 2, '5 4'], ['wb_actual_cr', WB.col(0), 3, null]];
+  for (const g of groups) {
+    s.append('path').datum(g.rows).attr('d', d3.area().x((r) => x(r.fy)).y0((r) => y(r.wb_actual_cr)).y1((r) => y(Math.max(r.wb_actual_cr, r.at_best_cr)))).style('fill', WB.col(2)).attr('opacity', 0.1);
+    for (const [k, c, sw, da] of L) s.append('path').datum(g.rows).attr('fill', 'none').style('stroke', c).attr('stroke-width', sw).attr('stroke-dasharray', da).attr('stroke-linejoin', 'round').attr('d', d3.line().x((r) => x(r.fy)).y((r) => y(r[k])));
+    const last = g.rows[g.rows.length - 1];
+    s.append('circle').attr('cx', x(last.fy)).attr('cy', y(last.wb_actual_cr)).attr('r', 3.5).style('fill', WB.col(0));
+    const mid = (y(last.wb_actual_cr) + y(last.at_best_cr)) / 2;
+    const name = g.m === 'sgst' ? 'Own SGST' : 'Total collection';
+    s.append('text').attr('class', 'wb-lbl').attr('text-anchor', 'end').attr('x', x(last.fy) - 6).attr('y', (y(last.at_gujarat_cr) + y(last.at_best_cr)) / 2 + 4)
+      .style('fill', WB.col(2)).style('font-weight', 600).style('paint-order', 'stroke').style('stroke', 'var(--color-panel)').attr('stroke-width', 4)
+      .text(`₹${WB.fmtIN(last.gap_best_cr)} Cr short of Odisha's pace`);
+    if (narrow) s.append('text').attr('class', 'wb-lbl').attr('text-anchor', 'end').attr('x', x(last.fy)).attr('y', y(last.at_best_cr) - 8).style('font-weight', 600).text(name);
+    else s.append('text').attr('class', 'wb-lbl').attr('x', x(last.fy) + 8).attr('y', mid + 4).style('font-weight', 600).text(name);
+  }
+  const tp = WB.tip(el);
+  const guide = s.append('line').attr('y1', 10).attr('y2', h - 28).style('stroke', 'var(--cds-chart-axis)').attr('opacity', 0);
+  s.append('rect').attr('x', ml).attr('width', x.range()[1] - ml + 10).attr('height', h - 28).attr('fill', 'transparent')
+    .on('pointermove', (ev) => {
+      const [mx] = d3.pointer(ev); const fy = years.reduce((a, b) => Math.abs(x(b) - mx) < Math.abs(x(a) - mx) ? b : a);
+      guide.attr('x1', x(fy)).attr('x2', x(fy)).attr('opacity', 1);
+      const lines = [[fy]];
+      for (const g of groups) { const r = g.rows.find((q) => q.fy === fy); if (!r) continue;
+        lines.push([(g.m === 'sgst' ? 'Own SGST' : 'Total collection') + ' (₹ Cr)'], ['Actual', WB.fmtIN(r.wb_actual_cr)], ['At all states', WB.fmtIN(r.at_india_cr)], ['At Gujarat', WB.fmtIN(r.at_gujarat_cr)], [`At ${r.best_state}`, WB.fmtIN(r.at_best_cr)]); }
+      const sv = s.node().getBoundingClientRect(), er = el.getBoundingClientRect();
+      tp.show(lines, x(fy) * sv.width / w, ev.clientY - er.top);
+    })
+    .on('pointerleave', () => { tp.hide(); guide.attr('opacity', 0); });
+});
+
+dash.draw('sum-pace-table', (tb) => {
+  const d = dash.data('sumpace');
+  if (d.status !== 'ok') { tb.replaceChildren(); return; }
+  const rows = [];
+  for (const m of ['sgst', 'collection']) {
+    const a = d.data.find((r) => r.metric === m && r.fy === '2025-26');
+    const tr = document.createElement('tr'); tr.setAttribute('data-row', m);
+    const cells = [a.metric_label, a.gap_india_cr, a.gap_gujarat_cr, a.gap_best_cr];
+    cells.forEach((v, i) => { const td = document.createElement('td'); td.textContent = i < 1 ? v : WB.fmtIN(v); tr.appendChild(td); });
+    rows.push(tr);
+  }
+  tb.replaceChildren(...rows);
+});
+</script>
+
+<script>
+/* ---------- summary 2: filing discipline with best state ---------- */
+[['GSTR-1', 'sum-r1'], ['GSTR-3B', 'sum-r3b']].forEach(([ret, name]) => dash.draw(name, (el) => {
+  if (!WB.status(el, ['sumfiling'])) return;
+  const rows = dash.data('sumfiling').data.filter((r) => r.ret === ret);
+  const years = [...new Set(rows.map((r) => r.fy))].sort();
+  const ser = [['Gujarat', WB.col(1)], ['West Bengal', WB.col(0)]].map(([role, c]) => {
+    const pts = rows.filter((r) => r.role === role).sort((a, b) => a.fy < b.fy ? -1 : 1);
+    return {role, c, name: pts.length ? pts[0].state : role, pts};
+  });
+  const {s, w, h} = WB.svg(el, 230);
+  s.attr('aria-label', `${ret} on-time filing percent by year for West Bengal and Gujarat`);
+  const lo = Math.max(0, Math.floor((d3.min(rows, (r) => r.pct) - 5) / 10) * 10);
+  const y = d3.scaleLinear().domain([lo, 100]).range([h - 28, 8]);
+  const ml = WB.measure(s, ['100%']) + 10;
+  const lblW = Math.min(WB.measure(s, ser.map((x) => x.name)) + 12, w * 0.3);
+  const x = d3.scalePoint().domain(years).range([ml, w - lblW]).padding(0.1);
+  s.append('g').attr('class', 'wb-grid').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).ticks(4).tickSize(-(x.range()[1] - ml)).tickFormat(''));
+  s.append('g').attr('transform', `translate(0,${h - 28})`).call(d3.axisBottom(x).tickValues(years.filter((_, i) => i % 2 === 0)));
+  s.append('g').attr('transform', `translate(${ml},0)`).call(d3.axisLeft(y).ticks(4).tickFormat((v) => v + '%'));
+  const ends = [];
+  for (const sr of ser) {
+    if (!sr.pts.length) continue;
+    s.append('path').datum(sr.pts).attr('fill', 'none').style('stroke', sr.c).attr('stroke-width', sr.role === 'West Bengal' ? 3 : 2).attr('stroke-linejoin', 'round').attr('d', d3.line().x((p) => x(p.fy)).y((p) => y(p.pct)));
+    const last = sr.pts[sr.pts.length - 1];
+    s.append('circle').attr('cx', x(last.fy)).attr('cy', y(last.pct)).attr('r', 3.5).style('fill', sr.c);
+    ends.push({sr, y: y(last.pct)});
+  }
+  ends.sort((a, b) => a.y - b.y);
+  for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 13) ends[i].y = ends[i - 1].y + 13;
+  s.append('g').selectAll('text').data(ends).join('text').attr('class', 'wb-lbl').attr('x', x(years[years.length - 1]) + 7).attr('y', (e) => e.y + 4)
+    .style('fill', (e) => e.sr.c).style('font-weight', (e) => e.sr.role === 'West Bengal' ? 600 : 400).text((e) => e.sr.name);
+  const tp = WB.tip(el);
+  s.append('rect').attr('x', ml).attr('width', x.range()[1] - ml).attr('height', h - 28).attr('fill', 'transparent')
+    .on('pointermove', (ev) => { const [mx] = d3.pointer(ev); const fy = years.reduce((a, b) => Math.abs(x(b) - mx) < Math.abs(x(a) - mx) ? b : a);
+      const L = [[`${ret} · ${fy}`]]; for (const sr of [...ser].reverse()) { const p = sr.pts.find((q) => q.fy === fy); if (p) L.push([sr.name, p.pct.toFixed(1) + '%']); }
+      const sv = s.node().getBoundingClientRect(), er = el.getBoundingClientRect(); tp.show(L, x(fy) * sv.width / w, ev.clientY - er.top); })
+    .on('pointerleave', () => tp.hide());
+}));
+</script>
+
+<script>
+/* ---------- summary 3a: where West Bengal sits among large states ---------- */
+dash.draw('sum-league', (el) => {
+  if (!WB.status(el, ['sumleague'])) return;
+  const data = dash.data('sumleague').data;
+  const metrics = [['own', 'Own SGST, % of GSDP'], ['coll', 'Total GST collection, % of GSDP']];
+  const narrowL = (el.clientWidth || 600) < 560;
+  const rowH = narrowL ? 112 : 96, {s, w, h} = WB.svg(el, metrics.length * rowH + 8);
+  s.attr('aria-label', 'Strip plot of own SGST and total GST collection as percent of GSDP for large states, with West Bengal, Gujarat, the best state and all states marked');
+  const ml = 8, mr = 16;
+  const color = {wb: WB.col(0), gj: WB.col(1), best: WB.col(2)};
+  const tp = WB.tip(el);
+  let defs = s.append('defs');
+  defs.append('marker').attr('id', 'su-arrow').attr('viewBox', '0 0 10 10').attr('refX', 9).attr('refY', 5).attr('markerWidth', 7).attr('markerHeight', 7).attr('orient', 'auto-start-reverse')
+    .append('path').attr('d', 'M0,0L10,5L0,10z').style('fill', WB.col(2));
+  metrics.forEach(([m, title], i) => {
+    const rows = data.filter((r) => r.metric === m), y0 = i * rowH;
+    const x = d3.scaleLinear().domain([0, d3.max(rows, (r) => r.pct) * 1.06]).nice().range([ml, w - mr]);
+    const cy = narrowL ? y0 + 34 : y0 + 50;
+    s.append('text').attr('class', 'wb-lbl').attr('x', ml).attr('y', y0 + 14).style('font-weight', 600).text(title);
+    s.append('g').attr('transform', `translate(0,${cy + 16})`).call(d3.axisBottom(x).ticks(w > 520 ? 8 : 4).tickFormat((v) => v + '%')).call((g) => g.select('.domain').remove());
+    s.append('line').attr('x1', ml).attr('x2', w - mr).attr('y1', cy).attr('y2', cy).style('stroke', 'var(--cds-chart-grid)');
+    const ind = rows.find((r) => r.role === 'india'), wb = rows.find((r) => r.role === 'wb'), best = rows.find((r) => r.role === 'best');
+    s.append('line').attr('x1', x(ind.pct)).attr('x2', x(ind.pct)).attr('y1', cy - 16).attr('y2', cy + 12).style('stroke', WB.REF).attr('stroke-width', 2).attr('stroke-dasharray', '4 3');
+    s.append('line').attr('x1', x(wb.pct) + 8).attr('x2', x(best.pct) - 8).attr('y1', cy).attr('y2', cy).style('stroke', WB.col(2)).attr('stroke-width', 1.5).attr('marker-end', 'url(#su-arrow)').attr('opacity', 0.8);
+    const order = {other: 0, gj: 1, best: 2, wb: 3};
+    const dots = rows.filter((r) => r.role !== 'india').sort((a, b) => order[a.role] - order[b.role]);
+    s.append('g').selectAll('circle').data(dots).join('circle').attr('cx', (r) => x(r.pct)).attr('cy', cy).attr('r', (r) => r.role === 'other' ? 4 : r.role === 'wb' ? 7 : 6)
+      .style('fill', (r) => color[r.role] || WB.MUTED).attr('opacity', (r) => r.role === 'other' ? 0.55 : 1)
+      .style('stroke', 'var(--color-panel)').attr('stroke-width', 1.5)
+      .on('pointermove', (ev, r) => { const sv = s.node().getBoundingClientRect(), er = el.getBoundingClientRect();
+        tp.show([[r.state], [title.split(',')[0], r.pct.toFixed(2) + '%'], ['₹ Cr', WB.fmtIN(r.value_cr)]], x(r.pct) * sv.width / w, ev.clientY - er.top); })
+      .on('pointerleave', () => tp.hide());
+    if (narrowL) {
+      const gjr = rows.find((r) => r.role === 'gj');
+      const lines = [[[`West Bengal ${wb.pct.toFixed(2)}%`, WB.col(0)], [`  Gujarat ${gjr.pct.toFixed(2)}%`, WB.col(1)]],
+        [[`All states ${ind.pct.toFixed(2)}%`, 'var(--cds-text-secondary)'], [`  ${best.state} ${best.pct.toFixed(2)}%`, WB.col(2)]]];
+      lines.forEach((ln, k) => { const t = s.append('text').attr('class', 'wb-lbl').attr('x', ml).attr('y', cy + 50 + k * 15);
+        ln.forEach(([txt, c]) => t.append('tspan').style('fill', c).attr('xml:space', 'preserve').text(txt)); });
+      return;
+    }
+    // labels: WB below-left, all-states above, Gujarat and best above, staggered when close
+    const lab = [];
+    lab.push({t: `West Bengal ${wb.pct.toFixed(2)}%`, x: x(wb.pct), y: cy - 14, c: WB.col(0), b: 600});
+    const gj = rows.find((r) => r.role === 'gj');
+    lab.push({t: `All states ${ind.pct.toFixed(2)}%`, x: x(ind.pct), y: cy - 22, c: 'var(--cds-text-secondary)', b: 400});
+    lab.push({t: `Gujarat ${gj.pct.toFixed(2)}%`, x: x(gj.pct), y: cy - 14, c: WB.col(1), b: 400});
+    lab.push({t: `${best.state} ${best.pct.toFixed(2)}%`, x: x(best.pct), y: cy - 14, c: WB.col(2), b: 400});
+    const tx = s.append('g').selectAll('text').data(lab).join('text').attr('class', 'wb-lbl').attr('text-anchor', 'middle').attr('x', (d) => d.x).attr('y', (d) => d.y).style('fill', (d) => d.c).style('font-weight', (d) => d.b).text((d) => d.t);
+    // resolve overlaps by lifting later labels and clamping to the chart width
+    const boxes = [];
+    tx.each(function (d) {
+      const node = this; let bb = node.getBBox();
+      if (bb.x < 0) { d3.select(node).attr('text-anchor', 'start').attr('x', 0); bb = node.getBBox(); }
+      if (bb.x + bb.width > w) { d3.select(node).attr('text-anchor', 'end').attr('x', w); bb = node.getBBox(); }
+      let yy = +d3.select(node).attr('y');
+      while (boxes.some((o) => bb.x < o.x + o.width + 4 && o.x < bb.x + bb.width + 4 && Math.abs(o.y - (yy - bb.height)) < bb.height)) { yy -= 13; d3.select(node).attr('y', yy); bb = node.getBBox(); }
+      boxes.push({x: bb.x, y: yy - bb.height, width: bb.width});
+    });
+  });
+});
+</script>
+
+<script>
+/* ---------- summary 3b: revenue staircase at each benchmark share ---------- */
+dash.draw('sum-stair', (el) => {
+  if (!WB.status(el, ['sumprize'])) return;
+  const data = dash.data('sumprize').data;
+  const blocks = [['own', 'Own SGST'], ['coll', 'Total GST collection']];
+  const narrowS = (el.clientWidth || 600) < 520;
+  const bh = narrowS ? 16 : 20, gap = narrowS ? 22 : 6, head = narrowS ? 38 : 24, blockH = head + 4 * (bh + gap) + 10;
+  const {s, w} = WB.svg(el, blocks.length * blockH);
+  s.attr('aria-label', 'Bar chart of West Bengal revenue at its own, all-states, Gujarat and best-state share of GSDP, for own SGST and total collection');
+  const names = data.map((r) => r.bench);
+  const ml = narrowS ? 0 : Math.min(WB.measure(s, names) + 12, w * 0.42);
+  const valW = WB.measure(s, ['1,76,194  (+1,10,964)']) + 10;
+  const color = {wb: WB.col(0), india: WB.REF, gj: WB.col(1), best: WB.col(2)};
+  const tp = WB.tip(el);
+  blocks.forEach(([m, title], i) => {
+    const rows = data.filter((r) => r.metric === m), y0 = i * blockH;
+    const x = d3.scaleLinear().domain([0, d3.max(rows, (r) => r.value_cr)]).range([ml, Math.max(ml + 40, w - valW)]);
+    s.append('text').attr('class', 'wb-lbl').attr('x', 0).attr('y', y0 + 15).style('font-weight', 600).text(title);
+    const wbv = rows.find((r) => r.role === 'wb').value_cr;
+    rows.forEach((r, j) => {
+      const yy = y0 + head + j * (bh + gap);
+      if (narrowS) s.append('text').attr('class', 'wb-lbl-muted').attr('x', 0).attr('y', yy - 5).text(r.bench);
+      else s.append('text').attr('class', 'wb-lbl-muted').attr('x', ml - 8).attr('y', yy + bh / 2 + 4).attr('text-anchor', 'end').text(r.bench);
+      s.append('rect').attr('x', ml).attr('y', yy).attr('height', bh).attr('width', Math.max(1, x(Math.min(wbv, r.value_cr)) - ml)).attr('rx', 2).style('fill', color[r.role]).attr('opacity', r.role === 'wb' ? 1 : 0.45);
+      if (r.value_cr > wbv) s.append('rect').attr('x', x(wbv)).attr('y', yy).attr('height', bh).attr('width', x(r.value_cr) - x(wbv)).attr('rx', 2).style('fill', color[r.role]);
+      s.append('text').attr('class', 'wb-lbl').attr('x', x(r.value_cr) + 6).attr('y', yy + bh / 2 + 4).text(WB.fmtIN(r.value_cr) + (r.uplift_cr > 0 ? `  (+${WB.fmtIN(r.uplift_cr)})` : ''));
+      s.append('rect').attr('x', 0).attr('y', yy).attr('width', w).attr('height', bh).attr('fill', 'transparent')
+        .on('pointermove', (ev) => { const sv = s.node().getBoundingClientRect(), er = el.getBoundingClientRect();
+          tp.show([[r.bench], ['Share of GSDP', r.target_pct.toFixed(2) + '%'], ['West Bengal would collect', '₹' + WB.fmtIN(r.value_cr) + ' Cr'], ['Extra a year', '₹' + WB.fmtIN(r.uplift_cr) + ' Cr'], ['Extra (%)', r.uplift_pct.toFixed(1) + '%']], ev.clientX - er.left, ev.clientY - er.top); })
+        .on('pointerleave', () => tp.hide());
+    });
+    if (!narrowS) s.append('line').attr('x1', x(wbv)).attr('x2', x(wbv)).attr('y1', y0 + head - 3).attr('y2', y0 + head + 4 * (bh + gap) - gap + 3).style('stroke', WB.col(0)).attr('stroke-width', 1.5).attr('stroke-dasharray', '3 2');
+  });
+});
+</script>
+</div>
+<script>
+dashBoot({
+  gst: 'data/gst_states.csv',
+  gsdp: 'data/gsdp.csv',
+  ytd: 'data/ytd_2026_27.csv',
+  dct: 'data/dct_findings.csv'
+});
+</script>
+</body>
+</html>

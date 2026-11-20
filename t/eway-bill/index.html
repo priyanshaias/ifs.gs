@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<script src="../gate.js" data-sec="res"></script>
+<title>E-Way Bill Growth</title>
+<link rel="stylesheet" href="../assets/app.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="data.js"></script>
+<style>
+:root{
+  --s-wb:#2a78d6; --s-gj:#eb6834; --s-mh:#1baf7a; --s-tn:#eda100; --s-ka:#e87ba4; --s-up:#008300; --s-od:#6250d6;
+  --s-in:#8a877f; --s-other:#c9c5bb;
+  --pos:#2a78d6; --neg:#e34948; --mid:#e9e7e1;
+  --t1:#3d5a80; --t2:#8fa9c7; --t3:#d3dde9;
+  --band:rgba(42,120,214,.07);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --s-wb:#3987e5; --s-gj:#d95926; --s-mh:#199e70; --s-tn:#c98500; --s-ka:#d55181; --s-up:#0ca30c; --s-od:#9085e9;
+  --s-in:#9a978f; --s-other:#4a4843;
+  --pos:#3987e5; --neg:#e66767; --mid:#2e2d2a;
+  --t1:#9fbbe0; --t2:#5f7fa6; --t3:#34465c;
+  --band:rgba(57,135,229,.12);
+}}
+:root[data-theme="dark"]{
+  --s-wb:#3987e5; --s-gj:#d95926; --s-mh:#199e70; --s-tn:#c98500; --s-ka:#d55181; --s-up:#0ca30c; --s-od:#9085e9;
+  --s-in:#9a978f; --s-other:#4a4843;
+  --pos:#3987e5; --neg:#e66767; --mid:#2e2d2a;
+  --t1:#9fbbe0; --t2:#5f7fa6; --t3:#34465c;
+  --band:rgba(57,135,229,.12);
+}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 16px 64px}
+.eyebrow{font-size:var(--cds-font-size-caption);letter-spacing:.08em;text-transform:uppercase;color:var(--color-fg-muted);margin:0 0 6px}
+h1{font:400 34px/1.15 var(--font-anthropic-serif);margin:0 0 10px}
+.lead{margin:0 0 6px;max-width:82ch;color:var(--color-fg-muted);font-size:15px}
+h2{font:400 23px/1.25 var(--font-anthropic-serif);margin:0 0 4px}
+h3{font-size:14px;font-weight:600;margin:0 0 2px}
+.sec{margin:40px 0 0;scroll-margin-top:120px}
+.sec>.sub{margin:0 0 14px;color:var(--color-fg-muted);max-width:88ch}
+.app-bar{flex-wrap:wrap}
+.app-bar .jump{display:flex;gap:4px 14px;flex-wrap:wrap;margin-left:auto;font-size:13px}
+.app-bar .jump a{font-weight:400;color:var(--color-fg-muted)}
+.filters{position:sticky;top:45px;z-index:15;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:10px 0;background:var(--color-bg);border-bottom:1px solid var(--color-border-line);margin-top:18px}
+.filters label{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--color-fg-muted)}
+select,button{font:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--color-border-line);border-radius:6px;background:var(--color-panel);color:var(--color-fg)}
+button{cursor:pointer}button:hover{border-color:var(--color-fg-muted)}
+select:focus-visible,button:focus-visible{outline:2px solid var(--color-fg);outline-offset:1px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:12.5px}
+.chip i{width:10px;height:10px;border-radius:50%;background:var(--c);display:inline-block}
+.chip i.dash{border-radius:0;height:2px;width:14px;background:none;border-top:2px dashed var(--c)}
+.chip[aria-pressed="false"]{opacity:.5}
+.chip[aria-pressed="false"] i{background:none;border:1.5px solid var(--c)}
+.chip[aria-pressed="false"] i.dash{border:none;border-top:2px dashed var(--c)}
+.chip.fixed{cursor:default;font-weight:600}
+.seg{display:inline-flex;border:1px solid var(--color-border-line);border-radius:6px;overflow:hidden}
+.seg button{border:0;border-radius:0;background:var(--color-panel);padding:5px 10px}
+.seg button+button{border-left:1px solid var(--color-border-line)}
+.seg button[aria-pressed="true"]{background:var(--color-fg);color:var(--color-bg)}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:22px}
+.kpi{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:14px 16px}
+.kpi h3{font-size:12px;font-weight:500;color:var(--color-fg-muted);text-transform:none;margin:0 0 6px}
+.kpi .big{font:400 30px/1.1 var(--font-anthropic-serif)}
+.kpi .big small{font:400 15px var(--font-anthropic-sans);color:var(--color-fg-muted)}
+.kpi .vs{font-size:12.5px;color:var(--color-fg-muted);margin-top:6px}
+.kpi .vs b{color:var(--color-fg);font-weight:600}
+.up{color:var(--color-ok)}.dn{color:var(--color-bad)}
+
+.card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:16px}
+.card .note{font-size:12px;color:var(--color-fg-muted);margin:8px 0 0}
+.card-head{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px 16px;justify-content:space-between;margin-bottom:6px}
+.card-head p{margin:0;font-size:12.5px;color:var(--color-fg-muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid32{display:grid;grid-template-columns:3fr 2fr;gap:14px}
+@media (max-width:860px){.grid2,.grid32{grid-template-columns:1fr}}
+.take{background:var(--band);border-left:3px solid var(--s-wb);padding:10px 14px;border-radius:0 6px 6px 0;margin:0 0 14px;max-width:96ch}
+.take b{font-weight:600}
+.chart{width:100%;min-height:120px;position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart text{fill:var(--color-fg-muted);font-size:11px}
+.chart .axis path,.chart .axis line{stroke:var(--cds-chart-axis)}
+.chart .grid line{stroke:var(--cds-chart-grid)}
+.chart .grid path{display:none}
+.chart .lbl{fill:var(--color-fg);font-size:11.5px;font-weight:600}
+.chart .lbl-m{fill:var(--color-fg-muted);font-size:11px}
+.chart .ref{stroke:var(--cds-chart-reference);stroke-dasharray:3 3}
+.chart .xh{stroke:var(--cds-chart-reference);stroke-width:1}
+.tt{position:fixed;z-index:50;pointer-events:none;background:var(--cds-surface-popover);border:1px solid var(--cds-border);box-shadow:var(--cds-shadow-popover);border-radius:8px;padding:8px 10px;font-size:12px;min-width:150px;max-width:300px;opacity:0;transition:opacity .08s}
+.tt .h{font-weight:600;margin-bottom:4px}
+.tt .r{display:flex;align-items:center;gap:6px;justify-content:space-between}
+.tt .r span:first-child{display:flex;align-items:center;gap:6px;color:var(--color-fg-muted)}
+.tt .r i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.tt .r b{font-weight:600;font-variant-numeric:tabular-nums}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--color-fg-muted);margin:4px 0 6px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:12px;height:10px;border-radius:2px;display:inline-block}
+.legend i.o{border-radius:50%;width:9px;height:9px;border:1.5px solid var(--color-fg);background:var(--color-panel)}
+.legend i.f{border-radius:50%;width:9px;height:9px;background:var(--color-fg)}
+.heat-scale{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--color-fg-muted)}
+.heat-scale .bar{width:160px;height:8px;border-radius:4px;background:linear-gradient(90deg,var(--neg),var(--mid),var(--pos))}
+table.t{border-collapse:collapse;width:100%;font-size:12.5px;font-variant-numeric:tabular-nums}
+table.t th,table.t td{padding:6px 8px;border-bottom:1px solid var(--color-border-line);text-align:right;white-space:nowrap}
+table.t th:first-child,table.t td:first-child{text-align:left}
+table.t th{color:var(--color-fg-muted);font-weight:500}
+table.t tr.wb td{background:var(--band)}
+#tbl-wrap.month{max-height:640px;overflow:auto}
+#tbl-wrap.month thead th{position:sticky;top:0;background:var(--color-panel);z-index:2}
+#tbl-wrap.month thead tr:first-child th{top:0}
+#tbl-wrap.month thead tr:nth-child(2) th{top:29px}
+#tbl-wrap.month td:first-child,#tbl-wrap.month th:first-child{position:sticky;left:0;background:var(--color-panel);z-index:1}
+#tbl-wrap.month thead th:first-child{z-index:3}
+table.t th.grp{text-align:center;color:var(--color-fg);font-weight:600;border-bottom:2px solid var(--gc)}
+table.t td.wbc{background:var(--band)}
+table.t tr.fy td{border-top:2px solid var(--color-border-line)}
+.tscroll{overflow-x:auto}
+.foot{margin-top:40px;font-size:12px;color:var(--color-fg-muted);max-width:96ch}
+.foot p{margin:4px 0}
+.app-notice{display:block}
+.filters label{min-width:0;max-width:100%;flex-wrap:wrap}
+.filters select{max-width:100%;min-width:0}
+@media (max-width:640px){.filters{position:static}.app-bar .jump{margin-left:0}}
+</style>
+</head>
+<body>
+<header class="app-bar">
+  <a href="../">GST</a><span class="app-crumb">/ E-way bill growth</span>
+  <nav class="jump" aria-label="Sections">
+    <a href="#race">Growth</a><a href="#pulse">Monthly</a><a href="#league">States</a><a href="#flows">Flows</a><a href="#bill">Bill size</a><a href="#gst">GST and GSDP</a><a href="#table">Monthly table</a>
+  </nav>
+</header>
+<div class="wrap">
+  <p class="eyebrow">GSTN e-way bill statistics · Jul 2018 to Sep 2026</p>
+  <h1>West Bengal e-way bill growth</h1>
+  <p class="lead">Movement of goods recorded on e-way bills in West Bengal, compared with Gujarat and other major states. The last section relates e-way bill value and GST collection to GSDP.</p>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="filters" role="group" aria-label="Chart controls">
+    <label>Measure
+      <select id="f-metric">
+        <option value="v">Assessable value (₹ Cr)</option>
+        <option value="n">Number of e-way bills</option>
+        <option value="sup">Number of suppliers</option>
+      </select>
+    </label>
+    <label>Movement
+      <select id="f-flow">
+        <option value="gen">Generated in state (within + outgoing)</option>
+        <option value="within">Within the state</option>
+        <option value="out">Outgoing to other states</option>
+        <option value="inc">Incoming from other states</option>
+        <option value="all">All movement (within + outgoing + incoming)</option>
+      </select>
+    </label>
+    <div class="seg" id="f-period" aria-label="Period"><button aria-pressed="true" data-v="month">Month-wise</button><button aria-pressed="false" data-v="year">Year-wise</button></div>
+    <div class="chips" id="chips" aria-label="States shown"></div>
+  </div>
+
+  <!-- 1 growth race -->
+  <section class="sec" id="race">
+    <h2>Growth since 2019-20</h2>
+    <p class="sub" id="race-sub"></p>
+    <p class="take" id="take-race"></p>
+    <div class="card">
+      <div class="card-head">
+        <p id="race-cap"></p>
+        <div class="seg" id="race-mode"><button aria-pressed="true" data-v="idx">Indexed</button><button aria-pressed="false" data-v="abs">Actual</button><button aria-pressed="false" data-v="yoy">Growth %</button></div>
+      </div>
+      <div class="chart" id="c-race"></div>
+    </div>
+  </section>
+
+  <!-- 2 monthly pulse -->
+  <section class="sec" id="pulse">
+    <h2>Monthly pulse</h2>
+    <p class="sub">Month by month, with a 12-month rolling average. The heat map shows growth over the same month of the previous year.</p>
+    <p class="take" id="take-pulse"></p>
+    <div class="card">
+      <div class="card-head"><p id="pulse-cap"></p>
+        <div class="seg" id="pulse-mode"><button aria-pressed="true" data-v="roll">12-month average</button><button aria-pressed="false" data-v="raw">Monthly</button></div>
+      </div>
+      <div class="chart" id="c-pulse"></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div class="card-head">
+        <div><h3 id="heat-title">Growth over the same month last year</h3><p id="heat-cap"></p></div>
+        <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+          <label style="font-size:13px;color:var(--color-fg-muted)">Show
+            <select id="heat-mode"><option value="wb">West Bengal growth</option><option value="gap">West Bengal minus Gujarat (points)</option><option value="gj">Gujarat growth</option></select>
+          </label>
+          <div class="heat-scale"><span id="hs-lo">−30%</span><span class="bar"></span><span id="hs-hi">+30%</span></div>
+        </div>
+      </div>
+      <div class="chart" id="c-heat"></div>
+    </div>
+  </section>
+
+  <!-- 3 league -->
+  <section class="sec" id="league">
+    <h2>Where West Bengal stands among states</h2>
+    <p class="sub">The 16 largest states by e-way bills generated in 2025-26.</p>
+    <p class="take" id="take-league"></p>
+    <div class="grid2">
+      <div class="card">
+        <h3>Growth: long run and this year</h3>
+        <div class="legend"><span><i class="o"></i>Average yearly growth, 2019-20 to 2025-26</span><span><i class="f"></i>Apr–Sep 2026 over Apr–Sep 2025</span></div>
+        <div class="chart" id="c-dumb"></div>
+        <p class="note">Kerala's within-state value in the source data has one-month spikes in December 2025 and June 2026, about three times the usual level, which lift its 2026 growth.</p>
+      </div>
+      <div class="card">
+        <h3>Rank by year</h3>
+        <p style="margin:0 0 6px;font-size:12.5px;color:var(--color-fg-muted)">Rank among all states on the selected measure. Selected states are coloured.</p>
+        <div class="chart" id="c-bump"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>Share of all-India e-way bills</h3>
+      <p style="margin:0 0 6px;font-size:12.5px;color:var(--color-fg-muted)">Each state's share of the national total on the selected measure.</p>
+      <div class="chart" id="c-share"></div>
+    </div>
+  </section>
+
+  <!-- 4 flows -->
+  <section class="sec" id="flows">
+    <h2>Which way the goods move</h2>
+    <p class="sub">Within-state, outgoing and incoming value. A state that sends out more than it receives is a net supplier to other states.</p>
+    <p class="take" id="take-flows"></p>
+    <div class="grid32">
+      <div class="card">
+        <h3>Net supplier or net receiver, 2025-26</h3>
+        <p style="margin:0 0 6px;font-size:12.5px;color:var(--color-fg-muted)">(Outgoing − incoming) ÷ (outgoing + incoming), by value.</p>
+        <div class="chart" id="c-bal"></div>
+      </div>
+      <div class="card">
+        <h3>Make-up of value moved</h3>
+        <div class="legend"><span><i style="background:var(--t1)"></i>Within state</span><span><i style="background:var(--t2)"></i>Outgoing</span><span><i style="background:var(--t3)"></i>Incoming</span></div>
+        <div class="chart" id="c-mix"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 bill size -->
+  <section class="sec" id="bill">
+    <h2>Size of a consignment</h2>
+    <p class="sub">Average value per e-way bill and bills per supplier. Falling value per bill with rising bills usually means smaller consignments and more small traders coming on to e-way bills.</p>
+    <p class="take" id="take-bill"></p>
+    <div class="grid2">
+      <div class="card"><h3>Average value per e-way bill (₹ thousand)</h3><p style="margin:0 0 6px;font-size:12.5px;color:var(--color-fg-muted)" id="bill-cap"></p><div class="chart" id="c-avg"></div></div>
+      <div class="card"><h3>E-way bills per supplier a month</h3><p style="margin:0 0 6px;font-size:12.5px;color:var(--color-fg-muted)" id="bps-cap"></p><div class="chart" id="c-bps"></div></div>
+    </div>
+  </section>
+
+  <!-- 6 GST & GSDP -->
+  <section class="sec" id="gst">
+    <h2>GST and e-way bills against GSDP</h2>
+    <p class="sub">GSDP at current prices. GSDP for states other than West Bengal and Gujarat is available for 2024-25 and 2025-26 only.</p>
+    <div class="filters" style="position:static;margin-top:0;border:0;padding-top:0">
+      <label>GST measure
+        <select id="f-gst">
+          <option value="collection">Total GST collected in the state (CGST + SGST + IGST)</option>
+          <option value="sgst">Own SGST</option>
+          <option value="post">State revenue: SGST + IGST settlement</option>
+        </select>
+      </label>
+    </div>
+    <p class="take" id="take-gst"></p>
+    <div class="grid2">
+      <div class="card"><h3 id="g1-title">GST as % of GSDP</h3><p style="margin:0 0 6px;font-size:12.5px;color:var(--color-fg-muted)">West Bengal and Gujarat, 2018-19 to 2025-26.</p><div class="chart" id="c-gsdp"></div></div>
+      <div class="card"><h3>E-way bill value generated as % of GSDP</h3><p style="margin:0 0 6px;font-size:12.5px;color:var(--color-fg-muted)">Within-state plus outgoing value. A rough measure of how much of the economy moves on e-way bills.</p><div class="chart" id="c-ewgsdp"></div></div>
+    </div>
+    <div class="grid2" style="margin-top:14px">
+      <div class="card"><h3 id="g3-title">GST as % of GSDP, all states, 2025-26</h3><p style="margin:0 0 6px;font-size:12.5px;color:var(--color-fg-muted)">States with GSDP above ₹1 lakh Cr. The dashed line is the all-states figure.</p><div class="chart" id="c-gbar"></div></div>
+      <div class="card"><h3>GST against goods movement, 2025-26</h3><p style="margin:0 0 6px;font-size:12.5px;color:var(--color-fg-muted)">Each dot is a state with GSDP above ₹1 lakh Cr. Right: more goods moved per rupee of GSDP. Up: more GST per rupee of GSDP.</p><div class="chart" id="c-scatter"></div></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3 id="g5-title">GST per ₹100 of e-way bill value generated</h3>
+      <p style="margin:0 0 6px;font-size:12.5px;color:var(--color-fg-muted)">GST measure ÷ (within-state + outgoing e-way bill value) × 100, for the selected states. E-way bills cover goods only, so this is an indicator, not a tax rate.</p>
+      <div class="chart" id="c-yield"></div>
+    </div>
+  </section>
+
+  <!-- 7 table -->
+  <section class="sec" id="table">
+    <h2 id="tbl-title">Month-wise figures</h2>
+    <p class="sub" id="tbl-sub"></p>
+    <div class="card">
+      <div class="card-head"><p id="tbl-cap"></p>
+        <div class="seg" id="tbl-mode"><button aria-pressed="true" data-v="month">Month-wise</button><button aria-pressed="false" data-v="year">Year-wise</button></div>
+      </div>
+      <div class="tscroll" id="tbl-wrap"><table class="t" id="tbl"></table></div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <p><b>Sources.</b> E-way bills: GSTN e-way bill statistics by state and month, July 2018 to September 2026 (<code>Data/GSTN Data/ewb-data-*.xlsx</code>). GST collection and GSDP: the files used by the GST potential tool (<code>gst-potential/data</code>).</p>
+    <p><b>Notes.</b> 2018-19 starts in July 2018, so growth is measured from 2019-20. Daman and Diu and Dadra and Nagar Haveli are combined. The source file for October 2021 has near-zero within-state and outgoing figures for <span id="est-list"></span>; these are replaced with the average of September and November 2021 and marked * in the month-wise table. Incoming figures for October 2021 are understated for all states for the same reason. Supplier counts are monthly figures; for a year they are the monthly average and cannot be added across movement types. "All India" is the sum of all states. Rebuild the data with <code>python3 build_data.py</code> after adding a new file.</p>
+  </div>
+</div>
+<div class="tt" id="tt" role="tooltip"></div>
+
+<script>
+(function(){
+const D = window.EWB_DATA;
+if(!D || !window.d3){document.querySelector('.wrap').insertAdjacentHTML('afterbegin','<p class="app-notice">Data or charting library did not load. Check data.js and the internet connection.</p>');return;}
+
+/* ---------- entities ---------- */
+const ENT = [
+  {k:'West Bengal', s:'WB', v:'--s-wb', fixed:true},
+  {k:'Gujarat', s:'GJ', v:'--s-gj', on:true},
+  {k:'Maharashtra', s:'MH', v:'--s-mh', on:false},
+  {k:'Tamil Nadu', s:'TN', v:'--s-tn', on:false},
+  {k:'Karnataka', s:'KA', v:'--s-ka', on:false},
+  {k:'Uttar Pradesh', s:'UP', v:'--s-up', on:false},
+  {k:'Odisha', s:'OD', v:'--s-od', on:true},
+  {k:'India', s:'India', v:'--s-in', on:true, dash:true, label:'All India'}
+];
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const colorOf = k => { const e = ENT.find(e=>e.k===k); return e ? css(e.v) : css('--s-other'); };
+const nameOf = k => { const e = ENT.find(e=>e.k===k); return e && e.label ? e.label : k; };
+const ST = { period:'month', tbl:'month', metric:'v', flow:'gen', race:'idx', pulse:'roll', heat:'wb', gst:'collection', on:new Set(ENT.filter(e=>e.fixed||e.on).map(e=>e.k)) };
+const selected = () => ENT.filter(e=>ST.on.has(e.k)).map(e=>e.k);
+
+/* ---------- data access ---------- */
+const M = D.months;                                   // [y,m,fy]
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const mlabel = i => MON[M[i][1]-1]+' '+String(M[i][0]).slice(2);
+const STATES = Object.keys(D.ewb).filter(s=>s!=='Other Territory');
+const FULL_FY = ['2019-20','2020-21','2021-22','2022-23','2023-24','2024-25','2025-26'];
+const GST_FY = ['2018-19',...FULL_FY];
+const FLOWS = {gen:[0,1], within:[0,0], out:[1,1], inc:[2,2], all:[0,2]};
+const MO = {sup:0, n:1, v:2};
+function mval(st, i, metric=ST.metric, flow=ST.flow){
+  if(st==='India'){ let t=0, any=false; for(const s of Object.keys(D.ewb)){ const v=mval(s,i,metric,flow); if(v!=null){t+=v;any=true;} } return any?t:null; }
+  const r = D.ewb[st] && D.ewb[st][i]; if(!r) return null;
+  const [a,b] = FLOWS[flow]; let t=0; for(let f=a; f<=b; f++) t += r[f*3+MO[metric]]; return t;
+}
+// cache per (metric,flow)
+const cache = new Map();
+function monthly(st, metric=ST.metric, flow=ST.flow){
+  const key = st+'|'+metric+'|'+flow; if(cache.has(key)) return cache.get(key);
+  const a = M.map((_,i)=>mval(st,i,metric,flow)); cache.set(key,a); return a;
+}
+function fyVal(st, fy, metric=ST.metric, flow=ST.flow, monthsFilter){
+  const a = monthly(st,metric,flow); let t=0,n=0;
+  M.forEach((m,i)=>{ if(m[2]===fy && a[i]!=null && (!monthsFilter || monthsFilter(m))){t+=a[i];n++;} });
+  if(!n) return null; return metric==='sup' ? t/n : t;
+}
+const h1 = m => m[1]>=4 && m[1]<=9;
+const cagr = (a,b,y) => (a>0&&b>0) ? (Math.pow(b/a,1/y)-1)*100 : null;
+const gsdpOf = (st,fy) => { if(st==='India'){ return D.gsdp.India && D.gsdp.India[fy]; } return D.gsdp[st] && D.gsdp[st][fy]; };
+function gstOf(st,fy,meas=ST.gst){
+  if(st==='India'){ let t=0; for(const s in D.gst){ if(s==='OIDAR') continue; const v=D.gst[s][fy]; if(v && v[meas]!=null) t+=v[meas]; } return t||null; }
+  const v = D.gst[st] && D.gst[st][fy]; return v ? v[meas] : null;
+}
+const GSTNAME = {collection:'Total GST collected', sgst:'Own SGST', post:'State revenue (SGST + IGST settlement)'};
+const GSTLOW = {collection:'total GST collected', sgst:'own SGST', post:'state revenue (SGST + IGST settlement)'};
+
+/* ---------- formatting ---------- */
+const nf = (d=1) => v => v==null||!isFinite(v) ? '—' : v.toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d});
+const f0=nf(0), f1=nf(1), f2=nf(2);
+function fmtCount(v){ if(v==null) return '—'; if(v>=1e7) return f2(v/1e7)+' Cr'; if(v>=1e5) return f1(v/1e5)+' lakh'; return f0(v); }
+function fmtCr(v){ if(v==null) return '—'; if(v>=1e5) return '₹'+f2(v/1e5)+' lakh Cr'; return '₹'+f0(v)+' Cr'; }
+function fmtM(v, metric=ST.metric){ return metric==='v' ? fmtCr(v) : fmtCount(v); }
+function axM(metric=ST.metric){
+  return v => metric==='v' ? (v>=1e5? f1(v/1e5)+'L Cr' : f0(v)) : (v>=1e7? f1(v/1e7)+' Cr' : v>=1e5? f0(v/1e5)+' L' : f0(v));
+}
+const pct = (v,d=1) => v==null||!isFinite(v) ? '—' : (v>0?'+':'')+nf(d)(v)+'%';
+const MNAME = {v:'e-way bill value', n:'number of e-way bills', sup:'number of suppliers'};
+const FNAME = {gen:'generated in the state', within:'within the state', out:'going to other states', inc:'coming from other states', all:'all movement'};
+
+/* ---------- tooltip ---------- */
+const tt = document.getElementById('tt');
+function showTT(ev, html){ tt.innerHTML = html; tt.style.opacity = 1; const w=tt.offsetWidth, h=tt.offsetHeight; let x=ev.clientX+14, y=ev.clientY+14; if(x+w>innerWidth-8) x=ev.clientX-w-14; if(y+h>innerHeight-8) y=ev.clientY-h-14; tt.style.left=x+'px'; tt.style.top=y+'px'; }
+function hideTT(){ tt.style.opacity = 0; }
+const ttRow = (c,l,v) => `<div class="r"><span>${c?`<i style="background:${c}"></i>`:''}${l}</span><b>${v}</b></div>`;
+
+/* ---------- generic line chart ---------- */
+function frame(el, h, m){
+  const W = Math.max(300, el.clientWidth); el.innerHTML='';
+  const svg = d3.select(el).append('svg').attr('viewBox',`0 0 ${W} ${h}`);
+  return {svg, W, H:h, iw:W-m.l-m.r, ih:h-m.t-m.b, g:svg.append('g').attr('transform',`translate(${m.l},${m.t})`)};
+}
+let CLIP_ID = 0;
+function lineChart(el, {series, xs, xlab, yfmt, tfmt, h=320, ref, yzero=false, endLabels=true, xticks, ydom}){
+  const m = {t:14, r: endLabels? 96:16, b:28, l:58};
+  const F = frame(el, h, m), {g, iw, ih} = F;
+  const x = d3.scalePoint().domain(xs.map((_,i)=>i)).range([0,iw]);
+  const all = series.flatMap(s=>s.values.filter(v=>v!=null&&isFinite(v)));
+  if(ref!=null) all.push(ref);
+  let lo = d3.min(all), hi = d3.max(all); if(yzero) lo = Math.min(0,lo);
+  const pad = (hi-lo)*0.08 || 1;
+  const y = d3.scaleLinear().domain(ydom || [yzero&&lo>=0?0:lo-pad, hi+pad]).nice().range([ih,0]);
+  const clip = 'clip'+(++CLIP_ID);
+  F.svg.append('defs').append('clipPath').attr('id',clip).append('rect').attr('x',-4).attr('y',-4).attr('width',iw+8).attr('height',ih+8);
+  g.append('g').attr('class','grid').call(d3.axisLeft(y).ticks(5).tickSize(-iw).tickFormat(''));
+  g.append('g').attr('class','axis').call(d3.axisLeft(y).ticks(5).tickFormat(yfmt).tickSizeOuter(0));
+  const step = xticks || Math.ceil(xs.length/ (iw/70));
+  g.append('g').attr('class','axis').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).tickValues(x.domain().filter(i=>typeof step==='function'? step(i) : i%step===0)).tickFormat(i=>xlab(i)).tickSizeOuter(0));
+  if(ref!=null) g.append('line').attr('class','ref').attr('x1',0).attr('x2',iw).attr('y1',y(ref)).attr('y2',y(ref));
+  const line = d3.line().defined(v=>v!=null&&isFinite(v)).x((_,i)=>x(i)).y(v=>y(v)).curve(d3.curveMonotoneX);
+  series.forEach(s=>{
+    g.append('path').attr('clip-path',`url(#${clip})`).attr('d',line(s.values)).attr('fill','none').attr('stroke',s.color).attr('stroke-width',s.k==='West Bengal'?2.6:2).attr('stroke-dasharray',s.dash?'5 4':null).attr('stroke-linejoin','round').attr('stroke-linecap','round');
+    if(xs.length<=12) s.values.forEach((v,i)=>{ if(v!=null&&isFinite(v)) g.append('circle').attr('cx',x(i)).attr('cy',y(v)).attr('r',3.2).attr('fill',s.color).attr('stroke',css('--color-panel')).attr('stroke-width',1.5); });
+  });
+  if(endLabels){
+    const ends = series.map(s=>{ let i=s.values.length-1; while(i>=0&&(s.values[i]==null||!isFinite(s.values[i]))) i--; return i<0?null:{s, i, yv:y(s.values[i])}; }).filter(Boolean).sort((a,b)=>a.yv-b.yv);
+    for(let k=1;k<ends.length;k++) if(ends[k].yv-ends[k-1].yv<13) ends[k].yv = ends[k-1].yv+13;
+    ends.forEach(e=>{ g.append('text').attr('x',x(e.i)+8).attr('y',e.yv+4).attr('class','lbl').text(e.s.short||e.s.label); });
+  }
+  // crosshair
+  const xh = g.append('line').attr('class','xh').attr('y1',0).attr('y2',ih).style('opacity',0);
+  const dots = g.append('g');
+  g.append('rect').attr('width',iw).attr('height',ih).attr('fill','transparent')
+    .on('mousemove',ev=>{
+      const [mx] = d3.pointer(ev); const i = Math.max(0,Math.min(xs.length-1, Math.round(mx/ (x.step()||1))));
+      xh.attr('x1',x(i)).attr('x2',x(i)).style('opacity',1); dots.selectAll('*').remove();
+      const rows = series.map(s=>({s,v:s.values[i]})).filter(r=>r.v!=null&&isFinite(r.v)).sort((a,b)=>b.v-a.v);
+      rows.filter(r=>r.v>=y.domain()[0]&&r.v<=y.domain()[1]).forEach(r=>dots.append('circle').attr('cx',x(i)).attr('cy',y(r.v)).attr('r',4.5).attr('fill',r.s.color).attr('stroke',css('--color-panel')).attr('stroke-width',2));
+      showTT(ev, `<div class="h">${xlab(i,true)}</div>`+rows.map(r=>ttRow(r.s.color, r.s.label, (tfmt||yfmt)(r.v, r.s, i))).join(''));
+    })
+    .on('mouseleave',()=>{xh.style('opacity',0);dots.selectAll('*').remove();hideTT();});
+}
+const ser = (k, values) => ({k, label:nameOf(k), short: ENT.find(e=>e.k===k)?.s==='India' ? 'India' : (k.length>12? ENT.find(e=>e.k===k)?.s||k : k), color:colorOf(k), dash: !!ENT.find(e=>e.k===k)?.dash, values});
+
+/* ---------- top 16 states ---------- */
+function topStates(n=16){ return STATES.map(s=>({s, v:fyVal(s,'2025-26','v','gen')})).sort((a,b)=>b.v-a.v).slice(0,n).map(d=>d.s); }
+const TOP = topStates();
+
+/* ---------- KPIs ---------- */
+function drawKPIs(){
+  const wb='West Bengal', gj='Gujarat';
+  const n26=fyVal(wb,'2025-26','n','gen'), n25=fyVal(wb,'2024-25','n','gen');
+  const v26=fyVal(wb,'2025-26','v','gen'), v25=fyVal(wb,'2024-25','v','gen');
+  const gjn26=fyVal(gj,'2025-26','n','gen'), gjn25=fyVal(gj,'2024-25','n','gen');
+  const gjv26=fyVal(gj,'2025-26','v','gen'), gjv25=fyVal(gj,'2024-25','v','gen');
+  const wbx = v26/fyVal(wb,'2019-20','v','gen'), gjx = gjv26/fyVal(gj,'2019-20','v','gen'), inx = fyVal('India','2025-26','v','gen')/fyVal('India','2019-20','v','gen');
+  const sh = v => v/fyVal('India','2025-26','v','gen')*100;
+  const sh20 = fyVal(wb,'2019-20','v','gen')/fyVal('India','2019-20','v','gen')*100;
+  const h1wb = fyVal(wb,'2026-27','v','gen',h1)/fyVal(wb,'2025-26','v','gen',h1)*100-100;
+  const h1gj = fyVal(gj,'2026-27','v','gen',h1)/fyVal(gj,'2025-26','v','gen',h1)*100-100;
+  const h1in = fyVal('India','2026-27','v','gen',h1)/fyVal('India','2025-26','v','gen',h1)*100-100;
+  const gwb = gstOf(wb,'2025-26','collection')/gsdpOf(wb,'2025-26')*100, ggj = gstOf(gj,'2025-26','collection')/gsdpOf(gj,'2025-26')*100;
+  const swb = gstOf(wb,'2025-26','sgst')/gsdpOf(wb,'2025-26')*100, sgj = gstOf(gj,'2025-26','sgst')/gsdpOf(gj,'2025-26')*100;
+  const cls = v => v>=0?'up':'dn';
+  const K = [
+    {t:'E-way bills generated, 2025-26', b:`${f2(n26/1e7)}<small> crore</small>`, vs:`<span class="${cls(n26/n25-1)}">${pct((n26/n25-1)*100)}</span> on 2024-25 · Gujarat <b>${f2(gjn26/1e7)} Cr</b> (${pct((gjn26/gjn25-1)*100)})`},
+    {t:'Value of goods moved, 2025-26', b:`₹${f2(v26/1e5)}<small> lakh Cr</small>`, vs:`<span class="${cls(v26/v25-1)}">${pct((v26/v25-1)*100)}</span> on 2024-25 · Gujarat <b>₹${f2(gjv26/1e5)} lakh Cr</b> (${pct((gjv26/gjv25-1)*100)})`},
+    {t:'Value growth, 2019-20 to 2025-26', b:`${f2(wbx)}<small>×</small>`, vs:`Gujarat <b>${f2(gjx)}×</b> · All India <b>${f2(inx)}×</b>`},
+    {t:'Share of all-India e-way bill value', b:`${f2(sh(v26))}<small>%</small>`, vs:`${f2(sh20)}% in 2019-20 · Gujarat <b>${f2(sh(gjv26))}%</b>`},
+    {t:'Value growth, Apr–Sep 2026', b:`<span class="${cls(h1wb)}">${pct(h1wb)}</span>`, vs:`over Apr–Sep 2025 · Gujarat <b>${pct(h1gj)}</b> · All India <b>${pct(h1in)}</b>`},
+    {t:'GST collected as % of GSDP, 2025-26', b:`${f2(gwb)}<small>%</small>`, vs:`Gujarat <b>${f2(ggj)}%</b> · own SGST: WB <b>${f2(swb)}%</b>, GJ <b>${f2(sgj)}%</b>`}
+  ];
+  document.getElementById('kpis').innerHTML = K.map(k=>`<div class="kpi"><h3>${k.t}</h3><div class="big">${k.b}</div><div class="vs">${k.vs}</div></div>`).join('');
+}
+
+/* ---------- chips ---------- */
+function drawChips(){
+  const box = document.getElementById('chips');
+  box.innerHTML = ENT.map(e=>`<button class="chip${e.fixed?' fixed':''}" style="--c:${css(e.v)}" data-k="${e.k}" aria-pressed="${ST.on.has(e.k)}" ${e.fixed?'aria-disabled="true"':''}><i class="${e.dash?'dash':''}"></i>${e.label||e.k}</button>`).join('');
+  box.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{ const k=b.dataset.k; if(ENT.find(e=>e.k===k).fixed) return; ST.on.has(k)?ST.on.delete(k):ST.on.add(k); b.setAttribute('aria-pressed',ST.on.has(k)); drawAll(); });
+}
+
+/* ---------- 1 race ---------- */
+const MONTHLY = () => ST.period==='month';
+const I_APR19 = M.findIndex(m=>m[0]===2019&&m[1]===4);
+function mAxis(from){ const xs=d3.range(from,M.length); return {xs, xlab:(i,full)=> full? mlabel(xs[i]) : (M[xs[i]][1]===4? 'FY'+String(M[xs[i]][0]+1).slice(2):''), xticks:i=>M[xs[i]][1]===4}; }
+function drawRaceMonthly(){
+  const S = selected(); let from, series;
+  const base = k => ST.metric==='sup'? fyVal(k,'2019-20') : fyVal(k,'2019-20')/12;
+  if(ST.race==='idx'){ from=I_APR19; series = S.map(k=>{ const a=monthly(k), b=base(k); return ser(k, d3.range(from,M.length).map(i=>a[i]!=null&&b? a[i]/b*100:null)); }); }
+  else if(ST.race==='abs'){ from=0; series = S.filter(k=>k!=='India').map(k=>ser(k, monthly(k).slice())); }
+  else { from=12; series = S.map(k=>{ const a=monthly(k); return ser(k, d3.range(from,M.length).map(i=>a[i]!=null&&a[i-12]? (a[i]/a[i-12]-1)*100:null)); }); }
+  const ax = mAxis(from);
+  const fmt = ST.race==='idx'? (v=>f0(v)) : ST.race==='abs'? axM() : (v=>pct(v,0));
+  const tf = ST.race==='idx'? (v=>f0(v)) : ST.race==='abs'? (v=>fmtM(v)) : (v=>pct(v));
+  lineChart(document.getElementById('c-race'), {series, xs:ax.xs, xlab:ax.xlab, xticks:ax.xticks, yfmt:fmt, tfmt:tf, h:360, ref: ST.race==='idx'?100: ST.race==='yoy'?0:null, yzero:ST.race==='abs', ydom: ST.race==='yoy'? [-60,100] : null});
+  document.getElementById('race-cap').textContent = (ST.race==='abs'?'Each month: ':ST.race==='yoy'?'Growth over the same month of the previous year: ':'Index, average month of 2019-20 = 100: ') + MNAME[ST.metric]+', '+FNAME[ST.flow]+'.' + (ST.race==='abs'?' All India is left out on this scale.':'') + (ST.race==='yoy'? ' The axis is cut at −60% and +100%: April and May 2020 (lockdown) and the same months of 2021 go beyond it. Hover for the values.' : ' March is usually the peak month of each year.');
+  document.getElementById('race-sub').textContent = 'Month by month. In the indexed view, 100 is the average month of 2019-20, the first full year of data. A line at 250 means that month was two and a half times the 2019-20 average.';
+}
+function drawRace(){
+  if(MONTHLY()) drawRaceMonthly(); else drawRaceYearly();
+  // take
+  const r = k => fyVal(k,'2025-26')/fyVal(k,'2019-20');
+  const c = k => cagr(fyVal(k,'2019-20'), fyVal(k,'2025-26'), 6);
+  const rank = TOP.map(s=>({s, c:c(s)})).sort((a,b)=>b.c-a.c); const pos = rank.findIndex(d=>d.s==='West Bengal')+1;
+  const L = M.length-1, a = monthly('West Bengal'), g = monthly('Gujarat');
+  document.getElementById('take-race').innerHTML = `From 2019-20 to 2025-26, West Bengal's ${MNAME[ST.metric]} ${FNAME[ST.flow]} grew <b>${f2(r('West Bengal'))} times</b>, or <b>${f1(c('West Bengal'))}%</b> a year. Gujarat grew <b>${f2(r('Gujarat'))} times</b> (${f1(c('Gujarat'))}% a year) and all India <b>${f2(r('India'))} times</b> (${f1(c('India'))}% a year). West Bengal ranks <b>${pos}</b> of the ${TOP.length} largest states on this growth. In ${mlabel(L)} West Bengal was <b>${pct((a[L]/a[L-12]-1)*100)}</b> over ${mlabel(L-12)}, against <b>${pct((g[L]/g[L-12]-1)*100)}</b> for Gujarat.`;
+}
+function drawRaceYearly(){
+  const S = selected();
+  let xs = FULL_FY.slice(), series;
+  if(ST.race==='idx'){
+    series = S.map(k=>{ const b=fyVal(k,'2019-20'); return ser(k, xs.map(fy=>{const v=fyVal(k,fy); return v&&b? v/b*100:null;})); });
+  } else if(ST.race==='abs'){
+    series = S.filter(k=>k!=='India').map(k=>ser(k, xs.map(fy=>fyVal(k,fy))));
+  } else {
+    xs = FULL_FY.slice(1);
+    series = S.map(k=>ser(k, xs.map(fy=>{ const p=FULL_FY[FULL_FY.indexOf(fy)-1]; const a=fyVal(k,p), b=fyVal(k,fy); return a&&b? (b/a-1)*100:null; })));
+  }
+  const fmt = ST.race==='idx'? (v=>f0(v)) : ST.race==='abs'? axM() : (v=>pct(v,0));
+  const tf = ST.race==='idx'? (v=>f0(v)) : ST.race==='abs'? (v=>fmtM(v)) : (v=>pct(v));
+  lineChart(document.getElementById('c-race'), {series, xs, xlab:i=>xs[i], yfmt:fmt, tfmt:tf, h:340, ref: ST.race==='idx'?100: ST.race==='yoy'?0:null, yzero:ST.race==='abs'});
+  document.getElementById('race-cap').textContent = (ST.race==='abs'?'':ST.race==='yoy'?'Growth over the previous year: ':'Index, 2019-20 = 100: ') + MNAME[ST.metric]+', '+FNAME[ST.flow]+'.' + (ST.race==='abs'?' All India is left out on this scale.':'');
+  document.getElementById('race-sub').textContent = 'Each line starts at 100 in 2019-20, the first full year of data. A line at 250 means the measure is two and a half times its 2019-20 level.';
+}
+
+/* ---------- 2 pulse ---------- */
+function drawPulse(){
+  const S = selected().filter(k=>k!=='India');
+  const idx = M.map((_,i)=>i);
+  const series = S.map(k=>{ const a=monthly(k); return ser(k, ST.pulse==='raw'? a : a.map((_,i)=> i<11? null : (()=>{ let t=0; for(let j=i-11;j<=i;j++){ if(a[j]==null) return null; t+=a[j]; } return t/12; })())); });
+  lineChart(document.getElementById('c-pulse'), {series, xs:idx, xlab:(i,full)=> full? mlabel(i) : (M[i][1]===4? 'FY'+String(M[i][0]+1).slice(2): ''), xticks:i=>M[i][1]===4, yfmt:axM(), tfmt:v=>fmtM(v), h:320, yzero:true});
+  document.getElementById('pulse-cap').textContent = (ST.pulse==='roll'?'Average of the last 12 months: ':'Each month: ')+MNAME[ST.metric]+', '+FNAME[ST.flow]+'. All India is left out on this scale.';
+  // heat
+  const heatState = ST.heat==='gj'?'Gujarat':'West Bengal';
+  const yoy = k => { const a=monthly(k); return M.map((m,i)=>{ const j=M.findIndex(p=>p[0]===m[0]-1&&p[1]===m[1]); return j>=0&&a[j]&&a[i]!=null? (a[i]/a[j]-1)*100 : null; }); };
+  const yw = yoy('West Bengal'), yg = yoy('Gujarat');
+  const val = ST.heat==='gap'? yw.map((v,i)=>v!=null&&yg[i]!=null? v-yg[i]:null) : ST.heat==='gj'? yg : yw;
+  const fys = [...new Set(M.map(m=>m[2]))].filter(f=>f!=='2018-19');
+  const cols = [4,5,6,7,8,9,10,11,12,1,2,3];
+  const el = document.getElementById('c-heat');
+  const mm = {t:22,r:8,b:8,l:62}; const cellH = 26;
+  const F = frame(el, mm.t+mm.b+fys.length*cellH, mm), {g, iw} = F;
+  const cw = iw/12; const lim = ST.heat==='gap'?20:30;
+  document.getElementById('hs-lo').textContent = ST.heat==='gap'? '−20 pts' : '−30%';
+  document.getElementById('hs-hi').textContent = ST.heat==='gap'? '+20 pts' : '+30%';
+  const col = d3.scaleLinear().domain([-lim,0,lim]).range([css('--neg'),css('--mid'),css('--pos')]).interpolate(d3.interpolateRgb).clamp(true);
+  cols.forEach((mo,c)=> g.append('text').attr('x',c*cw+cw/2).attr('y',-8).attr('text-anchor','middle').text(MON[mo-1]));
+  fys.forEach((fy,r)=>{
+    g.append('text').attr('x',-8).attr('y',r*cellH+cellH/2+4).attr('text-anchor','end').text(fy);
+    cols.forEach((mo,c)=>{
+      const i = M.findIndex(m=>m[2]===fy&&m[1]===mo); const v = i>=0? val[i]:null;
+      const cell = g.append('g');
+      cell.append('rect').attr('x',c*cw+1).attr('y',r*cellH+1).attr('width',cw-2).attr('height',cellH-2).attr('rx',3)
+        .attr('fill', v==null? 'transparent' : col(v)).attr('stroke', v==null? css('--color-border-line'):'none');
+      if(v!=null && cw>34){ const t = Math.abs(v)>lim*0.55; cell.append('text').attr('x',c*cw+cw/2).attr('y',r*cellH+cellH/2+4).attr('text-anchor','middle').style('fill', t? '#fff' : css('--color-fg')).style('font-size','10.5px').text((v>0?'+':'')+f0(v)); }
+      if(v!=null) cell.on('mousemove',ev=>{
+        showTT(ev, `<div class="h">${mlabel(i)}</div>` + ttRow(colorOf('West Bengal'),'West Bengal',pct(yw[i])) + ttRow(colorOf('Gujarat'),'Gujarat',pct(yg[i])) + (ST.heat==='gap'? ttRow(null,'Gap',(v>0?'+':'')+f1(v)+' pts'):'') + ttRow(null,'This month', fmtM(monthly(heatState)[i])));
+      }).on('mouseleave',hideTT);
+    });
+  });
+  document.getElementById('heat-title').textContent = ST.heat==='gap'? 'West Bengal growth minus Gujarat growth, by month' : `${heatState}: growth over the same month last year`;
+  document.getElementById('heat-cap').textContent = `${MNAME[ST.metric][0].toUpperCase()+MNAME[ST.metric].slice(1)}, ${FNAME[ST.flow]}. ${ST.heat==='gap'?'Blue: West Bengal grew faster. Red: Gujarat grew faster.':'Blue: growth. Red: fall.'}`;
+  // take
+  const last = M.length-1; const wbg = [], gjg=[]; for(let i=last-5;i<=last;i++){ wbg.push(yw[i]); gjg.push(yg[i]); }
+  const faster = wbg.filter((v,j)=>v>gjg[j]).length;
+  const r12 = k => { const a=monthly(k); let t=0,p=0; for(let i=last-11;i<=last;i++){t+=a[i]; p+=a[i-12];} return (t/p-1)*100; };
+  document.getElementById('take-pulse').innerHTML = `In the 12 months to ${mlabel(last)}, West Bengal's ${MNAME[ST.metric]} ${FNAME[ST.flow]} was <b>${pct(r12('West Bengal'))}</b> over the previous 12 months, against <b>${pct(r12('Gujarat'))}</b> for Gujarat. West Bengal grew faster than Gujarat in <b>${faster} of the last 6 months</b>.`;
+}
+
+/* ---------- 3 league ---------- */
+function drawLeague(){
+  // dumbbell
+  const rows = TOP.map(s=>({s, c:cagr(fyVal(s,'2019-20'),fyVal(s,'2025-26'),6), h:(fyVal(s,'2026-27',undefined,undefined,h1)/fyVal(s,'2025-26',undefined,undefined,h1)-1)*100}))
+    .concat([{s:'India', c:cagr(fyVal('India','2019-20'),fyVal('India','2025-26'),6), h:(fyVal('India','2026-27',undefined,undefined,h1)/fyVal('India','2025-26',undefined,undefined,h1)-1)*100}])
+    .sort((a,b)=>b.c-a.c);
+  {
+    const el=document.getElementById('c-dumb'); const rh=22, m={t:8,r:20,b:26,l:118};
+    const F=frame(el, m.t+m.b+rows.length*rh, m), {g,iw,ih}=F;
+    const ext = d3.extent(rows.flatMap(r=>[r.c,r.h]).filter(isFinite)); const x=d3.scaleLinear().domain([Math.min(0,ext[0]),ext[1]]).nice().range([0,iw]);
+    g.append('g').attr('class','grid').call(d3.axisBottom(x).ticks(6).tickSize(ih).tickFormat(''));
+    g.append('g').attr('class','axis').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).ticks(6).tickFormat(v=>v+'%').tickSizeOuter(0));
+    g.append('line').attr('class','ref').attr('x1',x(0)).attr('x2',x(0)).attr('y1',0).attr('y2',ih);
+    rows.forEach((r,i)=>{
+      const yy=i*rh+rh/2, isWB=r.s==='West Bengal', hl = ST.on.has(r.s);
+      if(isWB) g.append('rect').attr('x',-m.l).attr('y',i*rh).attr('width',iw+m.l).attr('height',rh).attr('fill',css('--band'));
+      g.append('text').attr('x',-8).attr('y',yy+4).attr('text-anchor','end').attr('class', hl?'lbl':'lbl-m').text(nameOf(r.s));
+      const c = hl? colorOf(r.s) : css('--color-fg-muted');
+      g.append('line').attr('x1',x(r.c)).attr('x2',x(r.h)).attr('y1',yy).attr('y2',yy).attr('stroke',c).attr('stroke-width',2).attr('opacity',.45);
+      g.append('circle').attr('cx',x(r.c)).attr('cy',yy).attr('r',5).attr('fill',css('--color-panel')).attr('stroke',c).attr('stroke-width',2);
+      g.append('circle').attr('cx',x(r.h)).attr('cy',yy).attr('r',5).attr('fill',c).attr('stroke',css('--color-panel')).attr('stroke-width',1.5);
+      g.append('rect').attr('x',-m.l).attr('y',i*rh).attr('width',iw+m.l).attr('height',rh).attr('fill','transparent')
+        .on('mousemove',ev=>showTT(ev,`<div class="h">${nameOf(r.s)}</div>`+ttRow(null,'Yearly growth 2019-20 to 2025-26',pct(r.c))+ttRow(null,'Apr–Sep 2026 over 2025',pct(r.h))+ttRow(null,'2025-26 total',fmtM(fyVal(r.s,'2025-26'))))).on('mouseleave',hideTT);
+    });
+  }
+  // bump
+  {
+    const fys = FULL_FY; const all = STATES;
+    const ranks = {}; fys.forEach(fy=>{ all.map(s=>({s,v:fyVal(s,fy)||0})).sort((a,b)=>b.v-a.v).forEach((d,i)=>{ (ranks[d.s]=ranks[d.s]||{})[fy]=i+1; }); });
+    const show = all.filter(s=>fys.some(fy=>ranks[s][fy]<=12));
+    const maxR = 12;
+    const el=document.getElementById('c-bump'); const m={t:10,r:112,b:24,l:30};
+    const F=frame(el, 380, m), {g,iw,ih}=F;
+    const x=d3.scalePoint().domain(fys).range([0,iw]); const y=d3.scaleLinear().domain([1,maxR]).range([0,ih]);
+    g.append('g').attr('class','axis').attr('transform',`translate(0,${ih+6})`).call(d3.axisBottom(x).tickFormat(f=>f.slice(2)).tickSize(0)).select('.domain').remove();
+    d3.range(1,maxR+1).forEach(r=>g.append('text').attr('x',-10).attr('y',y(r)+4).attr('text-anchor','end').text(r));
+    const order = show.sort((a,b)=> (ST.on.has(a)?1:0)-(ST.on.has(b)?1:0));
+    order.forEach(s=>{
+      const hl = ST.on.has(s); const c = hl? colorOf(s) : css('--s-other');
+      const pts = fys.map(fy=>({fy, r:ranks[s][fy]}));
+      const ln = d3.line().defined(p=>p.r<=maxR).x(p=>x(p.fy)).y(p=>y(p.r)).curve(d3.curveMonotoneX);
+      const grp = g.append('g');
+      grp.append('path').attr('d',ln(pts)).attr('fill','none').attr('stroke',c).attr('stroke-width',hl?3:1.6);
+      pts.filter(p=>p.r<=maxR).forEach(p=>grp.append('circle').attr('cx',x(p.fy)).attr('cy',y(p.r)).attr('r',hl?4.5:3).attr('fill',c).attr('stroke',css('--color-panel')).attr('stroke-width',1.5));
+      const lastR = ranks[s][fys[fys.length-1]]; if(lastR<=maxR) grp.append('text').attr('x',iw+10).attr('y',y(lastR)+4).attr('class',hl?'lbl':'lbl-m').text(lastR+'. '+s);
+      grp.style('cursor','default').on('mousemove',ev=>showTT(ev,`<div class="h">${s}</div>`+fys.map(fy=>ttRow(null,fy,'#'+ranks[s][fy])).join(''))).on('mouseleave',hideTT);
+    });
+  }
+  // share
+  {
+    const S = selected().filter(k=>k!=='India');
+    if(MONTHLY()){
+      const ax = mAxis(0), ind = monthly('India');
+      const series = S.map(k=>{ const a=monthly(k); return ser(k, ax.xs.map(i=>a[i]!=null&&ind[i]? a[i]/ind[i]*100:null)); });
+      lineChart(document.getElementById('c-share'), {series, xs:ax.xs, xlab:ax.xlab, xticks:ax.xticks, yfmt:v=>f1(v)+'%', tfmt:v=>f2(v)+'%', h:280, yzero:true});
+    } else {
+      const series = S.map(k=>ser(k, FULL_FY.map(fy=>fyVal(k,fy)/fyVal('India',fy)*100)));
+      lineChart(document.getElementById('c-share'), {series, xs:FULL_FY, xlab:i=>FULL_FY[i], yfmt:v=>f1(v)+'%', tfmt:v=>f2(v)+'%', h:260, yzero:true});
+    }
+  }
+  const wr = rows.findIndex(r=>r.s==='West Bengal')+1, wh = rows.find(r=>r.s==='West Bengal').h, hr = rows.filter(r=>r.s!=='India').sort((a,b)=>b.h-a.h).findIndex(r=>r.s==='West Bengal')+1;
+  const s20 = fyVal('West Bengal','2019-20')/fyVal('India','2019-20')*100, s26 = fyVal('West Bengal','2025-26')/fyVal('India','2025-26')*100;
+  document.getElementById('take-league').innerHTML = `On ${MNAME[ST.metric]} ${FNAME[ST.flow]}, West Bengal's share of the national total moved from <b>${f2(s20)}%</b> in 2019-20 to <b>${f2(s26)}%</b> in 2025-26. In April to September 2026 it grew <b>${pct(wh)}</b>, which ranks <b>${hr}</b> of ${TOP.length} large states.`;
+}
+
+/* ---------- 4 flows ---------- */
+function drawFlows(){
+  const fy='2025-26';
+  const rows = TOP.map(s=>{ const o=fyVal(s,fy,'v','out'), i=fyVal(s,fy,'v','inc'); return {s, o, i, b:(o-i)/(o+i)*100}; }).sort((a,b)=>b.b-a.b);
+  {
+    const el=document.getElementById('c-bal'); const rh=22, m={t:22,r:44,b:24,l:118};
+    const F=frame(el, m.t+m.b+rows.length*rh, m), {g,iw,ih}=F;
+    const mx = d3.max(rows,r=>Math.abs(r.b)); const x=d3.scaleLinear().domain([-mx,mx]).nice().range([0,iw]);
+    g.append('g').attr('class','grid').call(d3.axisBottom(x).ticks(6).tickSize(ih).tickFormat(''));
+    g.append('g').attr('class','axis').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).ticks(6).tickFormat(v=>v+'%').tickSizeOuter(0));
+    g.append('line').attr('x1',x(0)).attr('x2',x(0)).attr('y1',0).attr('y2',ih).attr('stroke',css('--cds-chart-axis'));
+    g.append('text').attr('x',x(0)+6).attr('y',-8).text('Net supplier →'); g.append('text').attr('x',x(0)-6).attr('y',-8).attr('text-anchor','end').text('← Net receiver');
+    rows.forEach((r,k)=>{
+      const yy=k*rh, isWB=r.s==='West Bengal', hl=ST.on.has(r.s);
+      if(isWB) g.append('rect').attr('x',-m.l).attr('y',yy).attr('width',iw+m.l+m.r).attr('height',rh).attr('fill',css('--band'));
+      g.append('text').attr('x',-8).attr('y',yy+rh/2+4).attr('text-anchor','end').attr('class',hl?'lbl':'lbl-m').text(r.s);
+      const x0 = x(Math.min(0,r.b)), w = Math.abs(x(r.b)-x(0));
+      g.append('rect').attr('x',x0).attr('y',yy+4).attr('width',Math.max(1,w)).attr('height',rh-8).attr('rx',3).attr('fill', r.b>=0? css('--pos'):css('--neg')).attr('opacity', hl?1:.55);
+      g.append('text').attr('x', r.b>=0? x(r.b)+4 : x(r.b)-4).attr('y',yy+rh/2+4).attr('text-anchor', r.b>=0?'start':'end').attr('class','lbl-m').text((r.b>0?'+':'')+f0(r.b)+'%');
+      g.append('rect').attr('x',-m.l).attr('y',yy).attr('width',iw+m.l+m.r).attr('height',rh).attr('fill','transparent')
+        .on('mousemove',ev=>showTT(ev,`<div class="h">${r.s}, ${fy}</div>`+ttRow(null,'Outgoing',fmtCr(r.o))+ttRow(null,'Incoming',fmtCr(r.i))+ttRow(null,'Net',(r.o-r.i>=0?'+':'−')+fmtCr(Math.abs(r.o-r.i))))).on('mouseleave',hideTT);
+    });
+  }
+  // mix: small multiples for WB and GJ (+ first other selected)
+  {
+    const S = ['West Bengal','Gujarat'];
+    const el=document.getElementById('c-mix'); const m={t:18,r:8,b:24,l:34}; const F=frame(el, 360, m), {g,iw,ih}=F;
+    const fys = FULL_FY; const blockH = (ih-20)/S.length;
+    S.forEach((s,si)=>{
+      const gg = g.append('g').attr('transform',`translate(0,${si*(blockH+20)})`);
+      gg.append('text').attr('x',0).attr('y',-6).attr('class','lbl').text(s);
+      const x=d3.scaleBand().domain(fys).range([0,iw]).padding(.18); const y=d3.scaleLinear().domain([0,100]).range([blockH-16,0]);
+      gg.append('g').attr('class','axis').call(d3.axisLeft(y).ticks(2).tickFormat(v=>v+'%').tickSizeOuter(0));
+      gg.append('g').attr('class','axis').attr('transform',`translate(0,${blockH-16})`).call(d3.axisBottom(x).tickFormat(f=>f.slice(2)).tickSizeOuter(0));
+      fys.forEach(fy=>{
+        const w=fyVal(s,fy,'v','within'), o=fyVal(s,fy,'v','out'), i=fyVal(s,fy,'v','inc'), t=w+o+i;
+        let acc=0; [[w,'--t1','Within state'],[o,'--t2','Outgoing'],[i,'--t3','Incoming']].forEach(([v,c,l])=>{
+          const p=v/t*100; gg.append('rect').attr('x',x(fy)).attr('width',x.bandwidth()).attr('y',y(acc+p)+1).attr('height',Math.max(0,y(acc)-y(acc+p)-2)).attr('fill',css(c)).attr('rx',2);
+          acc+=p; });
+        gg.append('rect').attr('x',x(fy)).attr('width',x.bandwidth()).attr('y',0).attr('height',blockH-16).attr('fill','transparent')
+          .on('mousemove',ev=>showTT(ev,`<div class="h">${s}, ${fy}</div>`+ttRow(css('--t1'),'Within state',f0(w/t*100)+'% · '+fmtCr(w))+ttRow(css('--t2'),'Outgoing',f0(o/t*100)+'% · '+fmtCr(o))+ttRow(css('--t3'),'Incoming',f0(i/t*100)+'% · '+fmtCr(i)))).on('mouseleave',hideTT);
+      });
+    });
+  }
+  const wb = rows.find(r=>r.s==='West Bengal'), gj = rows.find(r=>r.s==='Gujarat');
+  const ww = fyVal('West Bengal',fy,'v','within'), wt = ww+wb.o+wb.i, gw=fyVal('Gujarat',fy,'v','within'), gt=gw+gj.o+gj.i;
+  document.getElementById('take-flows').innerHTML = `In 2025-26 West Bengal sent goods worth <b>${fmtCr(wb.o)}</b> to other states and received <b>${fmtCr(wb.i)}</b>, a net ${wb.o>=wb.i?'outflow':'inflow'} of <b>${fmtCr(Math.abs(wb.o-wb.i))}</b>. Gujarat sent out <b>${fmtCr(gj.o)}</b> against <b>${fmtCr(gj.i)}</b> received. Within-state movement is <b>${f0(ww/wt*100)}%</b> of all value moved in West Bengal and ${f0(gw/gt*100)}% in Gujarat.`;
+}
+
+/* ---------- 5 bill size ---------- */
+function drawBill(){
+  const S = selected(); const fl = ST.flow==='all'?'all':ST.flow;
+  const bf = ST.flow==='gen'||ST.flow==='all' ? 'within' : ST.flow;
+  if(MONTHLY()){
+    const ax = mAxis(0);
+    const avgM = S.map(k=>{ const v=monthly(k,'v',fl), n=monthly(k,'n',fl); return ser(k, ax.xs.map(i=>v[i]&&n[i]? v[i]*1e4/n[i]:null)); });
+    lineChart(document.getElementById('c-avg'), {series:avgM, xs:ax.xs, xlab:ax.xlab, xticks:ax.xticks, yfmt:v=>f0(v), tfmt:v=>'₹'+f1(v)+' thousand', h:280});
+    document.getElementById('bill-cap').textContent = 'E-way bills '+FNAME[fl]+', each month.';
+    const bpsM = S.filter(k=>k!=='India').map(k=>{ const n=monthly(k,'n',bf), sp=monthly(k,'sup',bf); return ser(k, ax.xs.map(i=>n[i]&&sp[i]? n[i]/sp[i]:null)); });
+    lineChart(document.getElementById('c-bps'), {series:bpsM, xs:ax.xs, xlab:ax.xlab, xticks:ax.xticks, yfmt:v=>f0(v), tfmt:v=>f1(v)+' bills', h:280});
+    document.getElementById('bps-cap').textContent = 'E-way bills ÷ suppliers, '+FNAME[bf]+', each month.' + (bf!==ST.flow?' Suppliers cannot be added across movement types, so within-state is shown.':'');
+  } else drawBillYearly(S, fl, bf);
+  billTake();
+}
+function drawBillYearly(S, fl, bf){
+  const avg = S.map(k=>ser(k, FULL_FY.concat('2026-27').map(fy=>{ const v=fyVal(k,fy,'v',fl), n=fyVal(k,fy,'n',fl); return v&&n? v*1e4/n : null; })));
+  const xs = FULL_FY.concat('2026-27');
+  lineChart(document.getElementById('c-avg'), {series:avg, xs, xlab:i=>xs[i]==='2026-27'?'26-27*':xs[i].slice(2), yfmt:v=>f0(v), tfmt:v=>'₹'+f1(v)+' thousand', h:280});
+  document.getElementById('bill-cap').textContent = 'E-way bills '+FNAME[fl]+'. *2026-27 is April to September.';
+  const bps = S.filter(k=>k!=='India').map(k=>ser(k, xs.map(fy=>{ const n=fyVal(k,fy,'n',bf), sp=fyVal(k,fy,'sup',bf); const mths = M.filter(m=>m[2]===fy).length; return n&&sp? n/mths/sp : null; })));
+  lineChart(document.getElementById('c-bps'), {series:bps, xs, xlab:i=>xs[i]==='2026-27'?'26-27*':xs[i].slice(2), yfmt:v=>f0(v), tfmt:v=>f1(v)+' bills', h:280});
+  document.getElementById('bps-cap').textContent = 'E-way bills ÷ suppliers, '+FNAME[bf]+'.' + (bf!==ST.flow?' Suppliers cannot be added across movement types, so within-state is shown.':'');
+}
+function billTake(){
+  const a = k => [fyVal(k,'2019-20','v','gen')*1e4/fyVal(k,'2019-20','n','gen'), fyVal(k,'2025-26','v','gen')*1e4/fyVal(k,'2025-26','n','gen')];
+  const w=a('West Bengal'), gj=a('Gujarat');
+  const nw = fyVal('West Bengal','2025-26','n','gen')/fyVal('West Bengal','2019-20','n','gen'), vw = fyVal('West Bengal','2025-26','v','gen')/fyVal('West Bengal','2019-20','v','gen');
+  document.getElementById('take-bill').innerHTML = `The average e-way bill generated in West Bengal carried <b>₹${f0(w[0])} thousand</b> of goods in 2019-20 and <b>₹${f0(w[1])} thousand</b> in 2025-26. In Gujarat it went from ₹${f0(gj[0])} thousand to ₹${f0(gj[1])} thousand. West Bengal's number of bills grew ${f1(nw)} times while value grew ${f1(vw)} times, so much of the growth in bills is in smaller consignments.`;
+}
+
+/* ---------- 6 GST & GSDP ---------- */
+function drawGST(){
+  const meas = ST.gst, nm = GSTNAME[meas];
+  ['g1-title','g3-title'].forEach((id,i)=>document.getElementById(id).textContent = nm + (i? ' as % of GSDP, all states, 2025-26':' as % of GSDP'));
+  document.getElementById('g5-title').textContent = nm + ' per ₹100 of e-way bill value generated';
+  const pair = ['West Bengal','Gujarat'];
+  const s1 = pair.map(k=>ser(k, GST_FY.map(fy=>{ const g=gstOf(k,fy,meas), d=gsdpOf(k,fy); return g&&d? g/d*100:null; })));
+  lineChart(document.getElementById('c-gsdp'), {series:s1, xs:GST_FY, xlab:i=>GST_FY[i].slice(2), yfmt:v=>f1(v)+'%', tfmt:v=>f2(v)+'%', h:260, yzero:true});
+  const s2 = pair.map(k=>ser(k, GST_FY.map(fy=>{ const e=fyVal(k,fy,'v','gen'), d=gsdpOf(k,fy); return e&&d&&fy!=='2018-19'? e/d*100:null; })));
+  lineChart(document.getElementById('c-ewgsdp'), {series:s2, xs:GST_FY, xlab:i=>GST_FY[i].slice(2), yfmt:v=>f0(v)+'%', tfmt:v=>f1(v)+'%', h:260, yzero:true});
+
+  // bar: all states 2025-26
+  const fy='2025-26';
+  const list = Object.keys(D.gsdp).filter(s=>s!=='India' && D.gsdp[s][fy] && D.gsdp[s][fy]>=100000 && gstOf(s,fy,meas))
+    .map(s=>({s, g:gstOf(s,fy,meas)/D.gsdp[s][fy]*100, e: fyVal(s,fy,'v','gen')/D.gsdp[s][fy]*100, d:D.gsdp[s][fy]})).sort((a,b)=>b.g-a.g);
+  const indiaG = d3.sum(list,r=>gstOf(r.s,fy,meas))/d3.sum(list,r=>r.d)*100;
+  {
+    const el=document.getElementById('c-gbar'); const rh=20, m={t:8,r:44,b:24,l:118};
+    const F=frame(el, m.t+m.b+list.length*rh, m), {g,iw,ih}=F;
+    const x=d3.scaleLinear().domain([0,d3.max(list,r=>r.g)]).nice().range([0,iw]);
+    g.append('g').attr('class','grid').call(d3.axisBottom(x).ticks(5).tickSize(ih).tickFormat(''));
+    g.append('g').attr('class','axis').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).ticks(5).tickFormat(v=>v+'%').tickSizeOuter(0));
+    list.forEach((r,k)=>{
+      const yy=k*rh, hl = r.s==='West Bengal'||r.s==='Gujarat';
+      if(r.s==='West Bengal') g.append('rect').attr('x',-m.l).attr('y',yy).attr('width',iw+m.l+m.r).attr('height',rh).attr('fill',css('--band'));
+      g.append('text').attr('x',-8).attr('y',yy+rh/2+4).attr('text-anchor','end').attr('class',hl?'lbl':'lbl-m').text(r.s);
+      g.append('rect').attr('x',0).attr('y',yy+4).attr('width',x(r.g)).attr('height',rh-8).attr('rx',3).attr('fill', hl? colorOf(r.s) : css('--s-other'));
+      g.append('text').attr('x',x(r.g)+4).attr('y',yy+rh/2+4).attr('class',hl?'lbl':'lbl-m').text(f2(r.g)+'%');
+      g.append('rect').attr('x',-m.l).attr('y',yy).attr('width',iw+m.l+m.r).attr('height',rh).attr('fill','transparent')
+        .on('mousemove',ev=>showTT(ev,`<div class="h">${r.s}, ${fy}</div>`+ttRow(null,nm,fmtCr(gstOf(r.s,fy,meas)))+ttRow(null,'GSDP',fmtCr(r.d))+ttRow(null,'Ratio',f2(r.g)+'%'))).on('mouseleave',hideTT);
+    });
+    g.append('line').attr('class','ref').attr('x1',x(indiaG)).attr('x2',x(indiaG)).attr('y1',-4).attr('y2',ih);
+  }
+  // scatter
+  {
+    const el=document.getElementById('c-scatter'); const m={t:12,r:16,b:40,l:48}; const F=frame(el, 420, m), {g,iw,ih}=F;
+    const x=d3.scaleLinear().domain(d3.extent(list,r=>r.e)).nice().range([0,iw]); const y=d3.scaleLinear().domain(d3.extent(list,r=>r.g)).nice().range([ih,0]);
+    const r = d3.scaleSqrt().domain([0,d3.max(list,d=>d.d)]).range([0,20]);
+    g.append('g').attr('class','grid').call(d3.axisLeft(y).ticks(5).tickSize(-iw).tickFormat(''));
+    g.append('g').attr('class','axis').call(d3.axisLeft(y).ticks(5).tickFormat(v=>v+'%').tickSizeOuter(0));
+    g.append('g').attr('class','axis').attr('transform',`translate(0,${ih})`).call(d3.axisBottom(x).ticks(6).tickFormat(v=>v+'%').tickSizeOuter(0));
+    g.append('text').attr('x',iw).attr('y',ih+32).attr('text-anchor','end').text('E-way bill value generated as % of GSDP →');
+    g.append('text').attr('x',4).attr('y',4).text('↑ '+nm+' as % of GSDP');
+    const ex = d3.sum(list,d=>d.e*d.d)/d3.sum(list,d=>d.d);
+    g.append('line').attr('class','ref').attr('x1',x(ex)).attr('x2',x(ex)).attr('y1',0).attr('y2',ih);
+    g.append('line').attr('class','ref').attr('x1',0).attr('x2',iw).attr('y1',y(indiaG)).attr('y2',y(indiaG));
+    const ord = list.slice().sort((a,b)=>b.d-a.d);
+    ord.forEach(d=>{
+      const hl = d.s==='West Bengal'||d.s==='Gujarat';
+      g.append('circle').attr('cx',x(d.e)).attr('cy',y(d.g)).attr('r',Math.max(4,r(d.d))).attr('fill', hl? colorOf(d.s) : css('--s-other')).attr('fill-opacity', hl? .9:.7).attr('stroke',css('--color-panel')).attr('stroke-width',2)
+        .on('mousemove',ev=>showTT(ev,`<div class="h">${d.s}, ${fy}</div>`+ttRow(null,'E-way value / GSDP',f1(d.e)+'%')+ttRow(null,nm+' / GSDP',f2(d.g)+'%')+ttRow(null,'GSDP',fmtCr(d.d)))).on('mouseleave',hideTT);
+    });
+    // labels: West Bengal and Gujarat first, then the largest states, skipping any that would collide
+    const placed = [];
+    const cand = ['West Bengal','Gujarat'].map(s=>list.find(d=>d.s===s)).filter(Boolean).concat(ord.filter(d=>d.s!=='West Bengal'&&d.s!=='Gujarat'));
+    cand.forEach(d=>{
+      const hl = d.s==='West Bengal'||d.s==='Gujarat'; const w = d.s.length*6.2, ly = y(d.g)+4; let lx = x(d.e)+Math.max(4,r(d.d))+3; if(lx+w>iw+16) lx = x(d.e)-Math.max(4,r(d.d))-3-w;
+      if(placed.some(p=>Math.abs(p.y-ly)<13 && lx<p.x+p.w && p.x<lx+w)) return;
+      placed.push({x:lx,y:ly,w});
+      g.append('text').attr('x',lx).attr('y',ly).attr('class',hl?'lbl':'lbl-m').style('pointer-events','none').text(d.s);
+    });
+  }
+  // yield
+  {
+    const S = selected();
+    const series = S.map(k=>ser(k, FULL_FY.map(fy=>{ const g=gstOf(k,fy,meas), e=fyVal(k,fy,'v','gen'); return g&&e? g/e*100:null; })));
+    lineChart(document.getElementById('c-yield'), {series, xs:FULL_FY, xlab:i=>FULL_FY[i], yfmt:v=>'₹'+f1(v), tfmt:v=>'₹'+f2(v), h:280, yzero:true});
+  }
+  // take
+  const r = (k,fy)=> gstOf(k,fy,meas)/gsdpOf(k,fy)*100, e=(k,fy)=>fyVal(k,fy,'v','gen')/gsdpOf(k,fy)*100;
+  const yv = k => gstOf(k,'2025-26',meas)/fyVal(k,'2025-26','v','gen')*100;
+  const wbRank = list.findIndex(d=>d.s==='West Bengal')+1;
+  document.getElementById('take-gst').innerHTML = `${nm} was <b>${f2(r('West Bengal','2025-26'))}%</b> of West Bengal's GSDP in 2025-26 (${f2(r('West Bengal','2018-19'))}% in 2018-19), against <b>${f2(r('Gujarat','2025-26'))}%</b> for Gujarat. West Bengal ranks <b>${wbRank}</b> of ${list.length} states on this ratio. E-way bill value generated was <b>${f0(e('West Bengal','2025-26'))}%</b> of GSDP in West Bengal and <b>${f0(e('Gujarat','2025-26'))}%</b> in Gujarat. For every ₹100 of goods moved on e-way bills, ${GSTLOW[meas]} was <b>₹${f2(yv('West Bengal'))}</b> in West Bengal and <b>₹${f2(yv('Gujarat'))}</b> in Gujarat.`;
+}
+
+/* ---------- 7 table ---------- */
+function isEst(k,i){ const m=M[i]; const [a,b]=FLOWS[ST.flow]; const fl=['within','out','inc']; return (D.est||[]).some(e=>e[0]===k&&e[1]===m[0]&&e[2]===m[1]&&fl.indexOf(e[3])>=a&&fl.indexOf(e[3])<=b); }
+function drawMonthTable(){
+  const S = selected().filter(k=>k!=='India').concat(ST.on.has('India')?['India']:[]);
+  const has = metric => metric!=='sup' || (ST.flow!=='gen'&&ST.flow!=='all');
+  const cols = [['v','Value'],['n','E-way bills']].concat(has('sup')?[['sup','Suppliers']]:[]);
+  let h = '<thead><tr><th rowspan="2">Month</th>' + S.map(k=>`<th class="grp" colspan="${cols.length*2}" style="--gc:${colorOf(k)}">${nameOf(k)}</th>`).join('') + '</tr><tr>' +
+    S.map(()=>cols.map(c=>`<th>${c[1]}</th><th>YoY</th>`).join('')).join('') + '</tr></thead><tbody>';
+  const data = {}; S.forEach(k=>cols.forEach(([m])=>data[k+m]=monthly(k,m,ST.flow)));
+  for(let i=M.length-1;i>=0;i--){
+    const j = M.findIndex(p=>p[0]===M[i][0]-1&&p[1]===M[i][1]);
+    h += `<tr class="${M[i][1]===3?'fy':''}"><td>${mlabel(i)}</td>` + S.map(k=>cols.map(([m])=>{
+      const a=data[k+m], v=a[i], p=j>=0?a[j]:null, g = v!=null&&p? (v/p-1)*100 : null;
+      const cl = k==='West Bengal'?' class="wbc"':'';
+      const e = isEst(k,i) ? '*' : '';
+      return `<td${cl}>${m==='v'?fmtCr(v):fmtCount(v)}${e}</td><td${cl}><span class="${g==null?'':g>=0?'up':'dn'}">${pct(g)}</span></td>`;
+    }).join('')).join('') + '</tr>';
+  }
+  document.getElementById('tbl').innerHTML = h+'</tbody>';
+  document.getElementById('tbl-cap').textContent = 'Latest month first. YoY is growth over the same month of the previous year. Movement: '+FNAME[ST.flow]+'.' + (has('sup')?'':' Suppliers are not shown for combined movement because they cannot be added across movement types.') + ' * Estimated: the source file is incomplete for this month, so the average of the months before and after is used.';
+}
+function drawTable(){
+  const mo = ST.tbl==='month';
+  document.getElementById('tbl-wrap').classList.toggle('month', mo);
+  document.getElementById('tbl-title').textContent = mo? 'Month-wise figures' : 'Year-wise figures';
+  document.getElementById('tbl-sub').textContent = mo? 'Selected states, July 2018 to September 2026, for the movement chosen in the filter above. Scroll inside the table for earlier months.' : 'Selected states, e-way bills generated in the state (within + outgoing). GST is total collected in the state. 2026-27 covers April to September only.';
+  if(mo) return drawMonthTable();
+  document.getElementById('tbl-cap').textContent = '';
+  drawYearTable();
+}
+function drawYearTable(){
+  const S = selected().filter(k=>k!=='India').concat(['India']);
+  const fys = GST_FY.concat('2026-27');
+  let h = '<thead><tr><th>State</th><th>Year</th><th>E-way bills</th><th>Growth</th><th>Value</th><th>Growth</th><th>₹ thousand per bill</th><th>Suppliers a month (within)</th><th>E-way value / GSDP</th><th>GST collected / GSDP</th><th>Own SGST / GSDP</th></tr></thead><tbody>';
+  S.forEach(k=>{
+    fys.forEach((fy,i)=>{
+      const n=fyVal(k,fy,'n','gen'), v=fyVal(k,fy,'v','gen'), sp=fyVal(k,fy,'sup','within');
+      const pf=fys[i-1]; const pn = pf&&pf!=='2018-19'? fyVal(k,pf,'n','gen'):null, pv = pf&&pf!=='2018-19'? fyVal(k,pf,'v','gen'):null;
+      const part = fy==='2026-27'; const pn2 = part? fyVal(k,'2025-26','n','gen',h1):pn, pv2 = part? fyVal(k,'2025-26','v','gen',h1):pv;
+      const d=gsdpOf(k,fy);
+      h += `<tr class="${k==='West Bengal'?'wb':''}"><td>${i===0?nameOf(k):''}</td><td>${fy}${fy==='2018-19'?' (Jul–Mar)':part?' (Apr–Sep)':''}</td><td>${fmtCount(n)}</td><td>${pn2?pct((n/pn2-1)*100):'—'}</td><td>${fmtCr(v)}</td><td>${pv2?pct((v/pv2-1)*100):'—'}</td><td>${v&&n?f1(v*1e4/n):'—'}</td><td>${k==='India'?f0(sp):f0(sp)}</td><td>${d&&!part&&fy!=='2018-19'?f1(v/d*100)+'%':'—'}</td><td>${d&&gstOf(k,fy,'collection')?f2(gstOf(k,fy,'collection')/d*100)+'%':'—'}</td><td>${d&&gstOf(k,fy,'sgst')?f2(gstOf(k,fy,'sgst')/d*100)+'%':'—'}</td></tr>`;
+    });
+  });
+  document.getElementById('tbl').innerHTML = h+'</tbody>';
+}
+
+/* ---------- wiring ---------- */
+function drawAll(){ drawRace(); drawPulse(); drawLeague(); drawFlows(); drawBill(); drawGST(); drawTable(); }
+function seg(id, key){ const el=document.getElementById(id); el.querySelectorAll('button').forEach(b=>b.onclick=()=>{ ST[key]=b.dataset.v; el.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b)); drawAll(); }); }
+seg('race-mode','race'); seg('pulse-mode','pulse'); seg('tbl-mode','tbl'); seg('f-period','period');
+const fm=document.getElementById('f-metric'), ff=document.getElementById('f-flow');
+function syncFlow(){ const sup = ST.metric==='sup'; [...ff.options].forEach(o=>{ if(o.value==='gen'||o.value==='all') o.disabled=sup; }); if(sup && (ST.flow==='gen'||ST.flow==='all')){ ST.flow='within'; ff.value='within'; } }
+fm.onchange=()=>{ ST.metric=fm.value; syncFlow(); drawAll(); };
+ff.onchange=()=>{ ST.flow=ff.value; drawAll(); };
+document.getElementById('heat-mode').onchange=e=>{ ST.heat=e.target.value; drawPulse(); };
+document.getElementById('f-gst').onchange=e=>{ ST.gst=e.target.value; drawGST(); };
+document.getElementById('est-list').textContent = (()=>{ const l=[...new Set((D.est||[]).filter(e=>e[0]!=='Other Territory'&&e[1]===2021&&e[2]===10).map(e=>e[0]))]; return l.length>1? l.slice(0,-1).join(', ')+' and '+l[l.length-1] : l.join(''); })();
+drawChips(); drawKPIs(); drawAll();
+let rt; addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(drawAll,150); });
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{ drawChips(); drawAll(); });
+})();
+</script>
+</body>
+</html>

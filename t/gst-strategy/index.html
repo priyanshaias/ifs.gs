@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<script src="../gate.js" data-sec="res"></script>
+<title>GST revenue playbook</title>
+<link rel="stylesheet" href="../assets/app.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="data.js"></script>
+<style>
+:root{
+  --leak:#D9480F; --leak-soft:#FDE8DC; --now:#5F6B7A; --now-soft:#ECEFF3; --tech:#1D4ED8; --tech-soft:#E3EAFD;
+  --kpi:#0B7A53; --kpi-soft:#DDF3EA; --pol:#7A2E8E; --pol-soft:#F3E4F7; --ink:#14213D; --pipe:#14213D; --on-ink:#fff;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --leak:#FF8A50; --leak-soft:#3A2015; --now:#A9B4C2; --now-soft:#262B32; --tech:#8AB0FF; --tech-soft:#1A2540;
+    --kpi:#4FD1A1; --kpi-soft:#12302A; --pol:#D69AE6; --pol-soft:#32203A; --ink:#E9EDF5; --pipe:#C9D3E6; --on-ink:#151514;
+  }
+}
+:root[data-theme="dark"]{
+  --leak:#FF8A50; --leak-soft:#3A2015; --now:#A9B4C2; --now-soft:#262B32; --tech:#8AB0FF; --tech-soft:#1A2540;
+  --kpi:#4FD1A1; --kpi-soft:#12302A; --pol:#D69AE6; --pol-soft:#32203A; --ink:#E9EDF5; --pipe:#C9D3E6; --on-ink:#151514;
+}
+html{scroll-behavior:smooth;scroll-padding-top:60px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{font-size:15px;line-height:1.55}
+.app-bar{flex-wrap:wrap}
+.app-bar .jump{display:flex;gap:4px 16px;flex-wrap:wrap;margin-left:auto;font-size:13px}
+.app-bar .jump a{font-weight:400;color:var(--color-fg-muted)}
+.app-bar .jump a:hover{color:var(--color-fg)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--font-anthropic-serif);font-weight:400;letter-spacing:-.01em;margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--tech);outline-offset:2px}
+
+/* opening */
+.open{padding:56px 0 36px;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:end}
+.open h1{font-size:clamp(34px,4.6vw,60px);line-height:1.04}
+.open .lead{font-size:18px;color:var(--color-fg-muted);max-width:56ch;margin:20px 0 0}
+.ledger{margin:0;padding:0;list-style:none;border-top:2px solid var(--ink)}
+.ledger li{display:grid;grid-template-columns:132px 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--color-border-line);align-items:baseline}
+.ledger b{font:400 26px/1 var(--font-anthropic-serif);font-variant-numeric:tabular-nums;color:var(--ink)}
+.ledger span{color:var(--color-fg-muted);font-size:14px}
+.ledger li.bad b{color:var(--leak)}
+
+section.blk{padding:52px 0 8px;border-top:1px solid var(--color-border-line);margin-top:36px}
+.blk > .wrap > h2{font-size:clamp(26px,3vw,38px);line-height:1.1;max-width:26ch}
+.blk .intro{color:var(--color-fg-muted);max-width:74ch;margin:12px 0 26px;font-size:16px}
+.note{font-size:12.5px;color:var(--color-fg-muted);margin:10px 0 0;max-width:90ch}
+.panel{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:10px;padding:20px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.split{display:grid;grid-template-columns:1.5fr 1fr;gap:24px;align-items:start}
+h3.h{font-size:21px;margin:0 0 4px}
+p.sub{color:var(--color-fg-muted);font-size:13.5px;margin:0 0 14px}
+
+/* lifecycle rail */
+.rail-scroll{overflow-x:auto;margin:0 -20px;padding:0 20px 6px}
+.rail{display:grid;grid-template-columns:repeat(11,minmax(96px,1fr));min-width:1060px;position:relative}
+.phase{font-size:12.5px;color:var(--color-fg-muted);padding:0 6px 8px;border-left:1px solid var(--color-border-line)}
+.rail .pipe{grid-column:1/-1;height:10px;background:var(--pipe);border-radius:5px;margin:0 4%;position:relative;top:21px;opacity:.9}
+.stage{background:none;border:0;padding:0 4px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;position:relative}
+.stage .dot{width:32px;height:32px;border-radius:50%;background:var(--color-panel);border:3px solid var(--pipe);display:grid;place-items:center;font:600 13px/1 var(--font-anthropic-sans);font-variant-numeric:tabular-nums;transition:transform .15s}
+.stage .nm{font-size:13px;line-height:1.25;color:var(--color-fg-muted)}
+.stage:hover .dot{transform:scale(1.12)}
+.stage[aria-selected="true"] .dot{background:var(--leak);border-color:var(--leak);color:#fff;transform:scale(1.2)}
+.stage[aria-selected="true"] .nm{color:var(--color-fg);font-weight:600}
+.stage .drip{font-size:11.5px;color:var(--leak);line-height:1.2;max-width:14ch}
+.modes{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:22px 0 14px}
+.modes .lbl{color:var(--color-fg-muted);font-size:13px;margin-right:4px}
+.chip{border:1px solid var(--color-border-line);background:var(--color-panel);border-radius:999px;padding:5px 13px;font-size:13px;cursor:pointer}
+.chip:hover{border-color:var(--color-fg-muted)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.st-head{display:flex;justify-content:space-between;gap:20px;align-items:baseline;flex-wrap:wrap;margin-bottom:14px}
+.st-head h3{font-size:28px}
+.st-head .law{color:var(--color-fg-muted);font-size:13px}
+.cells{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.cell{background:var(--color-panel);border:1px solid var(--color-border-line);border-top:4px solid var(--c);border-radius:8px;padding:12px 14px 14px}
+.cell h4{margin:0 0 8px;font:600 13px/1.3 var(--font-anthropic-sans);color:var(--c)}
+.cell ul{margin:0;padding-left:16px}
+.cell li{margin:0 0 6px;font-size:13.5px;line-height:1.42}
+.cell li::marker{color:var(--c)}
+.cell .who{font-weight:600}
+.f-fraud,.f-gap{--c:var(--leak)} .f-today{--c:var(--now)} .f-quick,.f-long,.f-ai{--c:var(--tech)} .f-kpi{--c:var(--kpi)} .f-policy{--c:var(--pol)}
+.lens{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.lens .cell h4{font:400 17px/1.2 var(--font-anthropic-serif);color:var(--color-fg)}
+.lens .cell h4 i{font:600 12px/1 var(--font-anthropic-sans);font-style:normal;color:var(--c);margin-right:8px}
+details.full{margin-top:18px}
+details.full summary{cursor:pointer;color:var(--color-fg-muted);font-size:13.5px}
+.matrix-scroll{overflow:auto;max-height:78vh;margin-top:12px;border:1px solid var(--color-border-line);border-radius:8px;background:var(--color-panel)}
+table.matrix{border-collapse:collapse;font-size:12px;min-width:2100px}
+table.matrix th,table.matrix td{border:1px solid var(--color-border-line);padding:8px 10px;vertical-align:top;text-align:left}
+table.matrix thead th{position:sticky;top:0;background:var(--color-bg);z-index:2;font-weight:600}
+table.matrix tbody th{position:sticky;left:0;background:var(--color-bg);min-width:130px;font:400 15px/1.2 var(--font-anthropic-serif)}
+table.matrix ul{margin:0;padding-left:14px} table.matrix li{margin-bottom:4px}
+
+/* gap + funnel */
+.fun{display:grid;gap:8px}
+.fun .row{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center;font-size:13.5px}
+.fun .bar{height:30px;border-radius:4px;background:var(--ink);display:flex;align-items:center;justify-content:flex-end;padding:0 8px;color:var(--on-ink);font-variant-numeric:tabular-nums;font-size:13px;min-width:54px;white-space:nowrap}
+.fun .row.cash .bar{background:var(--kpi)}
+.fun .row.itc .bar{background:var(--kpi);opacity:.6}
+.flag{width:100%;border-collapse:collapse;font-size:13.5px}
+.flag td{padding:7px 0;border-bottom:1px solid var(--color-border-line);vertical-align:top}
+.flag td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:12px;font-weight:600}
+.flag small{color:var(--color-fg-muted);display:block}
+table.plain{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:14px}
+table.plain th{text-align:left;font-weight:600;color:var(--color-fg-muted);font-size:12.5px;padding:6px 10px 6px 0;border-bottom:1px solid var(--color-fg-muted)}
+table.plain td{padding:8px 10px 8px 0;border-bottom:1px solid var(--color-border-line);vertical-align:top}
+svg text{font-family:var(--font-anthropic-sans);fill:var(--color-fg)}
+svg .mut{fill:var(--color-fg-muted)}
+.chart{width:100%;height:auto;display:block}
+
+/* good case */
+.tests{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--ink);margin-bottom:24px}
+.tests div{padding:14px 18px 16px 0;border-bottom:1px solid var(--color-border-line)}
+.tests h4{font:400 19px/1.2 var(--font-anthropic-serif);margin:0 0 4px}
+.tests p{margin:0;font-size:13.5px;color:var(--color-fg-muted)}
+.tests .ex{color:var(--color-fg);display:block;margin-top:4px}
+.formula{font:400 20px/1.5 var(--font-anthropic-serif);padding:16px 20px;background:var(--now-soft);border-radius:8px;margin:0 0 14px}
+.formula small{display:block;font:400 13px/1.4 var(--font-anthropic-sans);color:var(--color-fg-muted);margin-top:6px}
+.calc label{display:grid;grid-template-columns:150px 1fr 92px;gap:10px;align-items:center;font-size:13.5px;margin-bottom:9px}
+.calc output{text-align:right;font-variant-numeric:tabular-nums;color:var(--color-fg-muted);font-size:13px}
+.calc input[type=range]{width:100%;accent-color:var(--tech)}
+.verdict{margin-top:14px;padding:14px 16px;border-radius:8px;border-left:5px solid var(--vc,var(--tech));background:var(--now-soft)}
+.verdict b{font:400 22px/1.2 var(--font-anthropic-serif);display:block}
+.verdict span{font-size:13.5px;color:var(--color-fg-muted)}
+.verdict .nums{display:flex;gap:22px;margin-top:8px;font-variant-numeric:tabular-nums;font-size:13.5px;color:var(--color-fg)}
+.reads{margin:14px 0 0;padding-left:18px;font-size:14px}
+.reads li{margin-bottom:7px}
+
+/* 2x2 grids */
+.q4{display:grid;grid-template-columns:28px 1fr 1fr;grid-template-rows:1fr 1fr 28px;gap:10px;min-height:520px}
+.q4 .ax-y{grid-row:1/3;writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;font-size:12.5px;color:var(--color-fg-muted)}
+.q4 .ax-x{grid-column:2/4;text-align:center;font-size:12.5px;color:var(--color-fg-muted)}
+.q{border-radius:10px;padding:14px 16px;background:var(--bg);border:1px solid var(--color-border-line)}
+.q h4{font:400 20px/1.15 var(--font-anthropic-serif);margin:0 0 2px;color:var(--c)}
+.q .how{font-size:12.5px;color:var(--color-fg-muted);margin:0 0 10px}
+.q ul{margin:0;padding-left:16px;font-size:13px} .q li{margin-bottom:4px}
+.q.a{--c:var(--tech);--bg:var(--tech-soft)} .q.b{--c:var(--leak);--bg:var(--leak-soft)} .q.c{--c:var(--kpi);--bg:var(--kpi-soft)} .q.d{--c:var(--now);--bg:var(--now-soft)}
+.ladder{list-style:none;margin:0;padding:0;counter-reset:l}
+.ladder li{counter-increment:l;display:grid;grid-template-columns:74px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--color-border-line);font-size:13.5px}
+.ladder li b{font-variant-numeric:tabular-nums;color:var(--tech)}
+.sms{font-size:13px;background:var(--kpi-soft);border-radius:12px 12px 12px 2px;padding:10px 12px;margin-top:12px;max-width:44ch}
+
+/* allocation */
+.rules{list-style:none;margin:0;padding:0;counter-reset:r}
+.rules li{counter-increment:r;padding:12px 0 12px 44px;border-bottom:1px solid var(--color-border-line);position:relative;font-size:14px}
+.rules li::before{content:counter(r);position:absolute;left:0;top:10px;width:30px;height:30px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font-weight:600;font-size:13px}
+.rules b{display:block;font:400 18px/1.25 var(--font-anthropic-serif);margin-bottom:2px}
+.rules span{color:var(--color-fg-muted)}
+.key{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--color-fg-muted);margin:6px 0 0}
+.key i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+
+/* tools */
+table.harvey{width:100%;border-collapse:collapse;font-size:13.5px}
+table.harvey th{font-weight:600;font-size:12.5px;color:var(--color-fg-muted);padding:6px 6px 10px;text-align:center;vertical-align:bottom}
+table.harvey th:first-child,table.harvey td:first-child{text-align:left;padding-left:0}
+table.harvey td{padding:9px 6px;border-top:1px solid var(--color-border-line);text-align:center}
+table.harvey td small{display:block;color:var(--color-fg-muted)}
+table.harvey tr.goal td{border-top:2px solid var(--ink);font-weight:600}
+.hb circle{fill:none;stroke:var(--ink);stroke-width:1.5} .hb path{fill:var(--ink)}
+.gaps{margin:0;padding:0;list-style:none;columns:2;column-gap:28px}
+.gaps li{break-inside:avoid;padding:10px 0;border-bottom:1px solid var(--color-border-line);font-size:13.5px}
+.gaps b{display:block;font-size:14.5px}
+.gaps span{color:var(--color-fg-muted)}
+.stack{display:grid;gap:6px}
+.layer{display:grid;grid-template-columns:170px 1fr 1fr;gap:14px;padding:12px 14px;border-radius:8px;background:var(--color-panel);border:1px solid var(--color-border-line);border-left:6px solid var(--c);font-size:13.5px;align-items:start}
+.layer h4{margin:0;font:400 18px/1.2 var(--font-anthropic-serif)}
+.layer p{margin:0} .layer .td{color:var(--color-fg-muted)}
+.layer .td b{color:var(--leak);font-weight:600}
+.stack .loop{font-size:13px;color:var(--kpi);text-align:center;padding:2px}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;align-items:end;margin-top:8px}
+.steps div{border:1px solid var(--color-border-line);border-radius:8px 8px 0 0;padding:10px 12px;background:var(--color-panel);font-size:12.5px;color:var(--color-fg-muted)}
+.steps b{display:block;color:var(--color-fg);font:400 16px/1.2 var(--font-anthropic-serif);margin-bottom:3px}
+.steps .here{background:var(--leak-soft);border-color:var(--leak)} .steps .goal{background:var(--kpi-soft);border-color:var(--kpi)}
+.steps em{font-style:normal;font-weight:600;display:block;margin-top:6px}
+.steps .here em{color:var(--leak)} .steps .goal em{color:var(--kpi)}
+
+/* roadmap */
+.ie{position:relative;aspect-ratio:1.15;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);background:
+  linear-gradient(var(--color-border-line),var(--color-border-line)) 50% 0/1px 100% no-repeat,
+  linear-gradient(var(--color-border-line),var(--color-border-line)) 0 50%/100% 1px no-repeat;margin:0 0 26px 22px}
+.ie .ql{position:absolute;font:400 17px/1.1 var(--font-anthropic-serif);color:var(--color-fg-muted);opacity:.75}
+.ie .pt{position:absolute;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;display:grid;place-items:center;font-size:12.5px;font-weight:600;color:#fff;background:var(--c);border:2px solid var(--color-panel);cursor:default}
+.ie .axx{position:absolute;bottom:-24px;left:0;right:0;text-align:center;font-size:12.5px;color:var(--color-fg-muted)}
+.ie .axy{position:absolute;left:-24px;top:0;bottom:0;writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;font-size:12.5px;color:var(--color-fg-muted)}
+.hz h3{font-size:20px;margin:0 0 2px;color:var(--c)} .hz{--c:var(--kpi);margin-bottom:18px}
+.hz.h2{--c:var(--tech)} .hz.h3{--c:var(--pol)}
+.hz ol{list-style:none;margin:8px 0 0;padding:0}
+.hz li{display:grid;grid-template-columns:30px 1fr;gap:8px;padding:6px 0;border-bottom:1px solid var(--color-border-line);font-size:13.5px}
+.hz li i{font-style:normal;width:22px;height:22px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font-size:11.5px;font-weight:600}
+.hz li span{color:var(--color-fg-muted)}
+#tip{position:fixed;z-index:50;pointer-events:none;background:var(--cds-surface-popover);border:1px solid var(--cds-border);box-shadow:var(--cds-shadow-popover);border-radius:6px;padding:8px 10px;font-size:12.5px;max-width:300px;display:none}
+#tip b{display:block;margin-bottom:2px}
+footer{margin:56px 0 0;padding:24px 0 60px;border-top:1px solid var(--color-border-line);color:var(--color-fg-muted);font-size:12.5px}
+@media (max-width:980px){
+  .open,.two,.split{grid-template-columns:1fr;gap:28px}
+  .cells{grid-template-columns:1fr 1fr} .lens{grid-template-columns:1fr 1fr} .tests{grid-template-columns:1fr 1fr}
+  .gaps{columns:1} .layer{grid-template-columns:1fr} .steps{grid-template-columns:1fr}
+  .app-bar .jump{display:none}
+}
+@media (max-width:620px){.cells,.lens,.tests{grid-template-columns:1fr} .q4{grid-template-columns:1fr;grid-template-rows:auto} .q4 .ax-y,.q4 .ax-x{display:none} .calc label{grid-template-columns:1fr 70px} .calc label input{grid-column:1/-1}}
+@media print{.app-bar,.modes,#tip{display:none} section.blk{break-inside:avoid-page} body{background:#fff}}
+</style>
+</head>
+<body>
+<nav class="app-bar" aria-label="GSTapp"><a href="../">GST</a><span class="app-crumb">/ Revenue playbook</span>
+  <span class="jump"><a href="#lifecycle">Lifecycle</a><a href="#gap">Gap</a><a href="#cases">Good cases</a><a href="#treat">Nudge or notice</a><a href="#alloc">Allocation</a><a href="#tools">Tools</a><a href="#roadmap">Roadmap</a></span>
+</nav>
+<div id="tip" role="status"></div>
+
+<header class="wrap open">
+  <div>
+    <h1>Where West Bengal's GST leaks, from registration to recovery</h1>
+    <p class="lead">A working frame for raising collection. It follows a taxpayer through eleven stages, and at each one asks the same eight questions: how revenue is lost, what we see today, where our tools fall short, what technology can fix now and later, what to measure, and what needs a policy change.</p>
+  </div>
+  <ul class="ledger" id="ledger"></ul>
+</header>
+
+<section class="blk" id="lifecycle"><div class="wrap">
+  <h2>The taxpayer lifecycle, one stage at a time</h2>
+  <p class="intro">Pick a stage to read across it. Or pick one question and read it down all eleven stages, which is the quickest way to draft a slide on, say, every quick tech fix.</p>
+  <div class="rail-scroll"><div class="rail" id="rail" role="tablist" aria-label="Lifecycle stages"></div></div>
+  <div class="modes" id="modes"></div>
+  <div id="stagePanel" aria-live="polite"></div>
+  <details class="full"><summary>Show the whole matrix as one table (for copying into slides)</summary><div class="matrix-scroll"><table class="matrix" id="matrix"></table></div></details>
+</div></section>
+
+<section class="blk" id="gap"><div class="wrap">
+  <h2>Sizing the gap, and how little of it reaches the treasury</h2>
+  <p class="intro">Slide 1 puts the prize at Gujarat's share of GSDP. The waterfall breaks that prize into the places it can hide. Only the two end bars are measured; the steps between are a structure to fill in, each with the measure that would size it.</p>
+  <div class="panel">
+    <h3 class="h">From own SGST today to SGST at Gujarat's share of GSDP</h3>
+    <p class="sub">₹ Cr, 2025-26. Hatched steps are drawn equal because they are not yet sized.</p>
+    <svg id="wf" class="chart" viewBox="0 0 1160 380" role="img" aria-label="Waterfall from West Bengal own SGST of 24,939 crore to 32,773 crore at Gujarat's share, through seven unsized gaps"></svg>
+    <table class="plain" id="wfTable"></table>
+  </div>
+  <div class="two" style="margin-top:24px">
+    <div class="panel">
+      <h3 class="h">Detection to cash: MyTask, April to October 2026</h3>
+      <p class="sub">All tasks open at any point in the period. Bars are scaled to tasks assigned; revenue is shown separately.</p>
+      <div class="fun" id="funnel"></div>
+      <p class="note">Two-thirds of what is recorded as realised is credit reversed, not cash paid. Both protect revenue, but they should be reported apart.</p>
+    </div>
+    <div class="panel">
+      <h3 class="h">Already flagged by the tools we have</h3>
+      <p class="sub">Amounts sitting in existing reports and lead lists. They overlap and are on different bases, so they are not added up.</p>
+      <table class="flag" id="flagged"></table>
+    </div>
+  </div>
+</div></section>
+
+<section class="blk" id="cases"><div class="wrap">
+  <h2>What makes a case worth an officer's day</h2>
+  <p class="intro">A good case is large, proved by records someone else filed, leaves the officer little to decide, can still be collected, and is within time. Scoring every lead on these tests replaces "who shouted loudest" with one ranked list.</p>
+  <div class="tests" id="tests"></div>
+  <div class="split">
+    <div class="panel">
+      <h3 class="h">Which case types have paid</h3>
+      <p class="sub">MyTask categories with 20 or more tasks, April to October 2026. Bubble size is number of tasks. Lines mark the all-category averages.</p>
+      <svg id="catChart" class="chart" viewBox="0 0 780 560" role="img" aria-label="Scatter of MyTask categories by share of tasks closed and revenue per task"></svg>
+      <ul class="reads" id="catReads"></ul>
+    </div>
+    <div class="panel calc">
+      <h3 class="h">Score a lead</h3>
+      <p class="formula">Expected yield per officer-day = tax at stake × State's share × chance the evidence holds × chance of recovery ÷ officer-days
+        <small>Time limit is a gate, not a factor: a lead with under 6 months left jumps the queue or is dropped.</small></p>
+      <label>Tax at stake <input type="range" id="cA" min="0" max="100" value="52"><output id="oA"></output></label>
+      <label>State's share <input type="range" id="cS" min="0" max="100" step="50" value="50"><output id="oS"></output></label>
+      <label>Evidence <input type="range" id="cE" min="1" max="5" value="4"><output id="oE"></output></label>
+      <label>Recoverability <input type="range" id="cR" min="1" max="5" value="4"><output id="oR"></output></label>
+      <label>Officer discretion <input type="range" id="cD" min="1" max="5" value="2"><output id="oD"></output></label>
+      <label>Officer-days <input type="range" id="cT" min="0" max="60" value="3"><output id="oT"></output></label>
+      <div class="verdict" id="verdict"></div>
+      <p class="note">Weights here are placeholders to make the idea concrete. The real ones should be fitted on MyTask outcomes: which leads, of what type and size, actually paid.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="blk" id="treat"><div class="wrap">
+  <h2>Nudge the certain, investigate the large</h2>
+  <p class="intro">Not every discrepancy deserves a notice. Sort leads by how much is at stake and how sure the data is. Small and certain goes to an automatic message with a payment link; large and uncertain goes to the people trained to dig.</p>
+  <div class="split">
+    <div class="q4">
+      <div class="ax-y">Tax at stake, low to high</div>
+      <div class="q b"><h4>Investigate</h4><p class="how">Large, but the data only hints. BoI, DRIE, audit, CFL.</p><ul id="qB"></ul></div>
+      <div class="q a"><h4>Fast-track desk notice</h4><p class="how">Large and documentary. System drafts, one officer signs, fixed clock.</p><ul id="qA"></ul></div>
+      <div class="q d"><h4>Watch and learn</h4><p class="how">Small and unsure. No officer time; keep a random sample to train the model.</p><ul id="qD"></ul></div>
+      <div class="q c"><h4>Nudge automatically</h4><p class="how">Small and certain. SMS, WhatsApp, email. No officer.</p><ul id="qC"></ul></div>
+      <div></div><div class="ax-x">Detectability: how sure the data is, low to high</div>
+    </div>
+    <div>
+      <div class="panel">
+        <h3 class="h">The nudge test</h3>
+        <p class="formula" style="font-size:17px">Nudge index = detectability × share who self-correct × amount ÷ cost per contact
+          <small>Send a nudge, not an officer, when detectability is 0.8 or more and the expected recovery is below what an average task returns. That bar is <b id="avgTask"></b> today.</small></p>
+        <ol class="ladder">
+          <li><b>Day 0</b><span>Message with the exact figure, the two returns that disagree, and a DRC-03 payment link.</span></li>
+          <li><b>Day 15</b><span>Reminder with a peer line ("9 in 10 dealers in your charge have matched their credit") and the interest that is running.</span></li>
+          <li><b>Day 30</b><span>System-drafted ASMT-10 for those above a floor; the rest stay in the next cycle's nudge.</span></li>
+          <li><b>Day 60</b><span>DRC-01 for the unresolved balance. Only now does the case take officer time.</span></li>
+        </ol>
+        <div class="sms">WB GST: Your GSTR-3B for Sep 2026 claims ITC ₹4,82,000. GSTR-2B shows ₹4,10,000. Pay or explain the ₹72,000 difference by 30 Nov: wbgst.gov.in/pay</div>
+        <p class="note">Run every message as a trial: hold back a random 10%, compare payments after 30 days, keep the wording that works. Send in Bengali, Hindi or English by taxpayer preference.</p>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section class="blk" id="alloc"><div class="wrap">
+  <h2>Sending the right case to the right desk</h2>
+  <p class="intro">Tasks follow jurisdiction today, so load and return have drifted far apart. The chart shows each charge and office by how many tasks it holds and what each task returned.</p>
+  <div class="split">
+    <div class="panel">
+      <h3 class="h">Load against return, by charge and office</h3>
+      <p class="sub">MyTask, April to October 2026. Both axes are log scales. Lines mark the median office. Offices with no revenue recorded sit on the floor line.</p>
+      <svg id="chChart" class="chart" viewBox="0 0 780 560" role="img" aria-label="Scatter of charges and offices by tasks assigned and revenue per task"></svg>
+      <div class="key"><span><i style="background:var(--kpi)"></i>Under 10% of tasks without feedback</span><span><i style="background:var(--color-warn)"></i>10 to 25%</span><span><i style="background:var(--leak)"></i>Over 25%</span></div>
+      <ul class="reads" id="chReads"></ul>
+    </div>
+    <ol class="rules" id="rules"></ol>
+  </div>
+</div></section>
+
+<section class="blk" id="tools"><div class="wrap">
+  <h2>What our tools do, and the one thing none of them does</h2>
+  <p class="intro">Each tool is good at finding things. None ranks what it finds by expected return, and none learns from what happened next. That missing loop matters more than any new dashboard.</p>
+  <div class="panel">
+      <h3 class="h">Capability by tool</h3>
+      <p class="sub">A full circle means the tool does this well. Our reading from the screens, extracts and notes reviewed, not a formal audit.</p>
+      <table class="harvey" id="harvey"></table>
+  </div>
+  <div class="panel" style="margin-top:24px">
+      <h3 class="h">Where West Bengal sits on the detection ladder</h3>
+      <p class="sub">The ladder from the Gujarat study-visit note.</p>
+      <div class="steps">
+        <div style="min-height:70px"><b>1 Manual</b>Standalone reports, cases picked by judgement</div>
+        <div class="here" style="min-height:100px"><b>2A Simple rules</b>Thresholds on GSTN data<em>Tableau, TMS today</em></div>
+        <div style="min-height:130px"><b>2B Weighted rules</b>Many indicators, hand-set weights<em>NGTP, in build</em></div>
+        <div class="goal" style="min-height:160px"><b>3 Machine learning</b>Weights fitted on past outcomes<em>Target in 12 months</em></div>
+        <div style="min-height:190px"><b>4 Self-learning</b>Improves from every closed case</div>
+      </div>
+  </div>
+  <div class="panel" style="margin-top:24px">
+    <h3 class="h">Ten gaps, each seen in our own files</h3>
+    <ul class="gaps" id="gapsList"></ul>
+  </div>
+  <div style="margin-top:24px">
+    <h3 class="h">The tool to build: six layers and a loop</h3>
+    <p class="sub">Read from the bottom. Each layer says what it should do and what exists today.</p>
+    <div class="stack" id="stack"></div>
+  </div>
+</div></section>
+
+<section class="blk" id="roadmap"><div class="wrap">
+  <h2>What to do first</h2>
+  <p class="intro">Sixteen moves, placed by revenue impact and by effort. Positions are a first judgement to argue over, not a measurement.</p>
+  <div class="split">
+    <div class="panel"><div class="ie" id="ie">
+      <span class="ql" style="left:4%;top:4%">Do now</span><span class="ql" style="right:4%;top:4%">Plan and fund</span>
+      <span class="ql" style="left:4%;bottom:4%">Fill in</span><span class="ql" style="right:4%;bottom:4%">Question</span>
+      <span class="axx">Effort and dependence on others, low to high</span><span class="axy">Revenue impact, low to high</span>
+    </div></div>
+    <div id="horizons"></div>
+  </div>
+</div></section>
+
+<footer class="wrap">
+  Sources: GSTN state-wise collections and MoSPI GSDP (as in GST potential); DCT Tableau screenshots and extracts; TMS and MIS screens; MyTask report, 1 April to 31 October 2026, data as on 2 November 2026; RMC report as on 1 October 2026; lead lists dated 10 November 2026; CFL and ComTax notes; Gujarat module note. Quadrant placements, capability ratings and roadmap positions are judgements. Section and rule references should be checked against the current Act and Rules before use in a notice or note.
+</footer>
+
+<script>
+/* ---------- helpers ---------- */
+const $ = (s) => document.querySelector(s);
+const el = (tag, attrs = {}, html = '') => { const e = document.createElement(tag); for (const k in attrs) e.setAttribute(k, attrs[k]); e.innerHTML = html; return e; };
+const inr = (x, d = 0) => Number(x).toLocaleString('en-IN', {minimumFractionDigits: d, maximumFractionDigits: d});
+const cr = (v) => v / 1e7, lakh = (v) => v / 1e5;
+const ul = (a) => '<ul>' + a.map((x) => `<li>${x}</li>`).join('') + '</ul>';
+const tip = $('#tip');
+function showTip(e, html) { tip.innerHTML = html; tip.style.display = 'block'; const w = tip.offsetWidth, h = tip.offsetHeight; tip.style.left = Math.min(window.innerWidth - w - 8, e.clientX + 14) + 'px'; tip.style.top = Math.max(8, e.clientY - h - 10) + 'px'; }
+function hideTip() { tip.style.display = 'none'; }
+const M = window.MYTASK, T = M.tot;
+
+/* ---------- opening ledger ---------- */
+$('#ledger').innerHTML = [
+  ['bad', '+0.5%', 'Own SGST, April to October 2026 against a year earlier (₹14,925 Cr vs ₹14,857 Cr). All states grew 6.9%, Gujarat 10.6%.'],
+  ['', '₹7,833 Cr', 'Extra own SGST a year if West Bengal raised Gujarat\'s share of GSDP (1.65% against 1.25%).'],
+  ['', inr(T.a), `Tasks in MyTask this year. ${Math.round(T.c / T.a * 100)}% closed, ₹${inr(cr(T.rev))} Cr realised in seven months.`],
+  ['bad', '12% → 0.7%', 'Share of tasks spent on 2017-20 mismatch and scrutiny lists, and the share of revenue they returned.']
+].map(([c, b, s]) => `<li class="${c}"><b>${b}</b><span>${s}</span></li>`).join('');
+
+/* ---------- lifecycle content ---------- */
+const FIELDS = [
+  ['fraud', 'How revenue is lost'], ['today', 'What we see today'], ['gap', 'Where our tools fall short'],
+  ['quick', 'Quick tech, 0 to 3 months'], ['long', 'Long-term tech'], ['ai', 'AI and analytics'],
+  ['kpi', 'Key indicators'], ['policy', 'Policy or legal lever']
+];
+const PHASES = [['Enter', 1], ['Transact', 2], ['Declare and pay', 2], ['Verify', 2], ['Decide', 2], ['Collect and exit', 2]];
+const STAGES = [
+ {n: 'Registration', law: 'REG-01, Rules 8, 9 and 14A', drip: 'Shell firms get in',
+  fraud: ['Shell firms on borrowed or forged PAN, Aadhaar, rent deeds and electricity bills', 'Many GSTINs behind one phone, email, address or bank account', 'Deemed approval when the officer misses the Rule 9 deadline', 'Rule 14A fast lane used by firms that soon issue large B2B invoices'],
+  today: ['Tableau SR-1: 397 new GSTINs averaging over ₹1 Cr a return', 'Fraud-link view: Cooch Behar has 205 fraud-linked GSTINs still active', 'Officer disposal and deemed-approval views', '67.8% of new registrations (59,035 of 87,053) took the Rule 14A route'],
+  gap: ['Blank mobile numbers are grouped as one "shared" link, which creates false hits', 'Links cover phone, PAN and email only: no address, bank account, device or consultant', 'Checks run after approval, not while the application is on the officer\'s desk', 'No risk score on the application itself'],
+  quick: ['Risk score on every pending ARN: fraud links, address reuse, PAN history', 'Daily alert to the charge head for ARNs two days from deemed approval', 'Fix the blank-mobile grouping', 'Geo-tagged photo visit through a mobile app for red-scored ARNs'],
+  long: ['Entity graph of people, addresses, phones, bank accounts and devices', 'Address geocoding, matched to electricity consumer ID and property tax', 'Biometric Aadhaar check routed by risk'],
+  ai: ['Classifier trained on 2.49 lakh suo-moto cancellations as known bad outcomes', 'Fuzzy matching of names and addresses; forgery checks on uploaded proofs', 'Community detection to find registration rings'],
+  kpi: ['New GSTINs cancelled suo-moto within 12 months, %', 'Deemed approvals as a share of disposals, by officer', 'Days from registration to first red flag', 'Fraud-linked GSTINs still active'],
+  policy: ['Physical or biometric verification made compulsory for risk-flagged applicants', 'Ask GSTN for device, IP and bank-validation fields in the State feed', 'System enforcement of the Rule 14A liability ceiling']},
+ {n: 'Inward supplies and ITC', law: 'Section 16, 17(5); Rules 36, 42, 43, 86A', drip: 'Credit with no tax behind it',
+  fraud: ['Credit on invoices from non-existent or cancelled suppliers', 'ITC claimed in 3B above what 2B shows', 'Blocked credits claimed; no reversal against exempt supplies', 'Circular trading to build turnover and credit', 'Reverse-charge credit claimed without paying the tax'],
+  today: ['Lead list: top 100 fraud leads carry ₹732 Cr, mostly purchases from cancelled sellers and 3B above 2B', 'SR-5 exempt supply against reversal; SR-9 high credit-ledger balance', 'ITC categories are MyTask\'s biggest earners'],
+  gap: ['SR-5 counts return rows as GSTINs and shows ₹36,362 Cr at risk, too loose to act on', 'No view of the supply chain beyond the first supplier', 'Large companies top every list on timing differences; no materiality filter', 'No workflow to propose a Rule 86A block'],
+  quick: ['Auto message when 3B credit exceeds 2B beyond a tolerance, with a DRC-03 link', 'Weekly list of West Bengal buyers of every newly cancelled supplier, with the credit taken', 'One-click Rule 86A proposal for approval'],
+  long: ['Supply-chain graph to follow credit to the third and fourth tier and find the cash-out point', 'Invoice Management System accept and reject data brought in', 'E-invoice item lines checked against the declared business'],
+  ai: ['Cycle and pass-through detection on the invoice graph', 'ITC-to-turnover outliers within sector and HSN peer groups', 'Model of which suppliers are likely to be cancelled, to warn before credit flows'],
+  kpi: ['ITC as a share of output tax against sector peers', 'Credit taken from suppliers later cancelled, and % reversed', 'Rule 86A blocks: amount, days to block, % sustained', 'Cash share of tax paid'],
+  policy: ['Written SOP for Rule 86A with value thresholds and review, so blocks survive writs', 'Support hard-locking of 3B credit to 2B at the GST Council']},
+ {n: 'Outward supplies and invoicing', law: 'GSTR-1, e-invoice, e-way bill (Rule 138)', drip: 'Sales that are never declared',
+  fraud: ['Sales suppressed in cash-heavy sectors: restaurants, hotels, retail, real estate, sand', 'Invoices shown in GSTR-1 so buyers get credit, but tax not paid in 3B', 'Goods moved without an e-way bill, or the bill cancelled after movement', 'Undervaluation, wrong HSN or rate, taxable supply shown as exempt', 'Supplies to government under-reported'],
+  today: ['SR-4: TDS and TCS returns against 3B, ₹3,408 Cr difference in value across 17,958 records', 'E-way bill dashboard with six panels, and spike analysis', 'Sector drives: real estate, hotels, sand, manpower, telecom'],
+  gap: ['E-way bill "inward far above outward" is topped by Railways, Flipkart and one ₹3.44 lakh Cr unit error', 'No e-invoice analytics', 'No outside data for B2C sales', 'Hotel drive in the RMC report: 217 tasks, 2 closed'],
+  quick: ['Outlier caps and an exclusion list (government, PSUs, manufacturers) on e-way bill panels', 'Monthly TDS message: "Departments reported paying you ₹X; your 3B shows ₹Y"', 'Follow-up list for GSTR-1 liability above 3B'],
+  long: ['Data exchange with property registration, RERA, VAHAN, mining e-challans, excise, power utilities and municipal licences', 'UPI receipts against 3B (IIT-H module)', 'FASTag and toll data against e-way bill routes'],
+  ai: ['Expected turnover from electricity units, rooms, seats or floor area, by sector', 'Tax-to-turnover anomalies over time', 'Language model to read item descriptions for rate and HSN errors', 'Unit-price outliers on e-invoices'],
+  kpi: ['E-way bill value against GSTR-1 against 3B, by charge', 'TDS-implied turnover covered by 3B, %', 'Tax-to-turnover by sector against peers', 'Nil filers with outside footprints'],
+  policy: ['MoUs with State departments for data: within the State\'s own power', 'GSTIN made mandatory on government payments, RERA projects and trade licences', 'Invoice-lottery scheme to make consumers ask for bills']},
+ {n: 'Returns, payment and settlement', law: 'GSTR-3B, Sections 39, 49, 50; Rule 88A', drip: 'Tax goes to the Centre',
+  fraud: ['Non-filers, stop-filers and nil filers with activity elsewhere', 'Late payment with no interest paid', 'IGST credit used on CGST while SGST is paid in cash, so the State loses settlement', 'SGST credit used to pay IGST', 'Permanent reversals shown as temporary in 4(B)(2)'],
+  today: ['SR-2: ₹707 Cr of excess CGST set-off across 60,923 records in 2025-26', 'SR-3: 386 taxpayers; IGST in and out reports', '373 GSTINs file GSTR-1 but never 3B: ₹116 Cr unpaid, 152 still active', 'MIS interest reports'],
+  gap: ['Headline cards set 5 days against a full month', 'Filing rate uses all registrations as the base, not those required to file', 'Non-filers are chased one by one; no defaulter app', 'SR-2 behaviour is lawful, so it needs persuasion, not a notice'],
+  quick: ['Three reminders by SMS and WhatsApp: 3 days before, 1 day after, 7 days after', 'Automatic GSTR-3A to defaulters, then a best-judgement queue under Section 62', 'SR-2 outreach to the top 200: a letter and a call to the consultant asking that IGST credit go to SGST first'],
+  long: ['Officer-in-charge defaulter app with live lists, as in Gujarat', 'Automatic interest computation and demand', 'Settlement simulator showing each large taxpayer\'s effect on State revenue'],
+  ai: ['Propensity-to-file model so reminders go where they change behaviour', 'Trials of wording, channel and timing', 'Forecast of SGST by charge with alerts when a top-1,000 taxpayer drops (they pay 75.5%)'],
+  kpi: ['3B filed on time, % of those required', 'Stop-filers brought back within 30 days', 'IGST credit used on SGST as a share of cross-utilisation', 'SGST lost through IGST paid from SGST credit', 'Interest demanded against collected'],
+  policy: ['GST Council: proportionate use of IGST credit between CGST and SGST by default', 'Ask GSTN to pre-fill 3B with IGST credit applied to SGST first', 'Outreach through trade bodies and consultants']},
+ {n: 'Refunds', law: 'Section 54, RFD-01', drip: 'Cash paid out on fake credit',
+  fraud: ['Exports or zero-rated supplies claimed with no purchases behind them', 'Inverted-duty refund on inflated credit', 'Refund taken, then the firm vanishes'],
+  today: ['E-way bill panel: only exports, no inward supply', 'MIS refund card: ₹32.6 Cr in six days of November', 'MyTask refund anomalies: 5 tasks'],
+  gap: ['No risk score before a refund is sanctioned', 'No post-refund audit sample', 'Refund claims are not checked against supplier-chain risk'],
+  quick: ['Pre-sanction sheet filled by the system: supplier risk, e-way bills, earlier refunds', 'Hold flag where the supplier has not paid in 3B'],
+  long: ['Refund risk engine: green channel for low risk, hold for high', 'Shipping-bill and bank-realisation data from Customs'],
+  ai: ['Classifier fitted on past refund outcomes', 'Exposure score to known fake suppliers'],
+  kpi: ['Days to refund in the green channel', 'Refunds audited after payment, %', 'Wrong refunds recovered', 'Refunds as a share of gross tax, by sector'],
+  policy: ['Risk-based withholding of provisional refunds', 'Norms for post-refund audit']},
+ {n: 'Scrutiny and audit', law: 'Sections 61 and 65; ASMT-10', drip: 'Effort on the wrong cases',
+  fraud: ['Officer time spent on old, small or time-barred mismatches', 'The same taxpayer picked several times from different lists', 'Replies accepted without checking; limitation allowed to lapse'],
+  today: ['TMS: 16 discrepancy types', 'MyTask: 2,620 scrutiny tasks for 2021-22; 1,162 mismatch tasks for 2018-19', 'IIT-H scrutiny module drafts ASMT-10 automatically'],
+  gap: ['2017-20 mismatch and scrutiny lists take 12% of tasks and return 0.7% of revenue', 'No materiality floor and no ranking by expected return', '792 GSTINs have three or more separate tasks: no single view of a taxpayer', 'Categories overlap: SR-4 and "3B vs TDS/TCS", SR-9 and "High balance in credit ledger"'],
+  quick: ['Rank every list by expected return; move the tail to a nudge campaign', 'Merge tasks so there is one case per GSTIN', 'Limitation countdown on every task'],
+  long: ['Taxpayer 360 profile', 'Reply capture by discrepancy; auto-closure when a matching DRC-03 arrives', 'Audit selection: risk-ranked plus a random sample'],
+  ai: ['Yield model fitted on MyTask outcomes', 'Language model to read replies and 9C notes', 'Draft ASMT-10 with the computation attached'],
+  kpi: ['Revenue per officer-day, by category', 'Hit rate: % of cases with tax found', 'DRC-03 paid within 30 days of ASMT-10', 'Tasks within 6 months of limitation', 'Tasks per GSTIN'],
+  policy: ['Annual scrutiny and audit plan with published selection norms', 'Materiality thresholds by circular', 'Rule for closing time-barred and low-value legacy tasks in bulk']},
+ {n: 'Enforcement and investigation', law: 'Section 67; BoI, DRIE, CFL', drip: 'Evidence too weak to hold',
+  fraud: ['Search without digital evidence, so the case dies at adjudication', 'Name-lenders caught, the person running the ring missed', 'Leads under Central jurisdiction passed on and forgotten'],
+  today: ['DRIE: 94 tasks returned ₹28.8 Cr, the best yield of any office', 'CFL: 959 items examined; two cases of ₹121 Cr and ₹100 Cr', '26 networks in the fraud-network file', '61 of the NGTP top 100 sit with the Centre'],
+  gap: ['CFL\'s only mobile and cloud extraction tool has failed since July 2026', 'No repository of relied-upon documents', 'No tracking of referrals to CGST or other States', 'Networks are traced by hand in spreadsheets'],
+  quick: ['Clear Magnet AXIOM and the ₹1.28 Cr CFL upgrade', 'Referral register with CGST, status due in 15 days', 'Evidence checklist by case type before any search'],
+  long: ['Field app and ITC-blocking workflow on the NETRA pattern', 'Document repository searchable by GSTIN', 'Case management with chain of custody', 'Link-analysis workbench'],
+  ai: ['Graph analytics to find the controller behind many GSTINs', 'Language model over seized chats and ledgers in Bengali, Hindi and English', 'Ranking of networks by money and reach'],
+  kpi: ['Detections converted to demand, %', 'Cases with digital evidence, %', 'Paid during investigation through DRC-03', 'Days for a referral to get a response'],
+  policy: ['Joint State and Centre protocol for fake-invoice networks', 'Prosecution SOP with thresholds', 'Reward scheme for informers']},
+ {n: 'Adjudication', law: 'Sections 73, 74, 74A; DRC-01, DRC-07', drip: 'Orders that will not stand',
+  fraud: ['Orders without reasons, hearing or computation, set aside on appeal', 'Wide discretion on penalty and on invoking fraud provisions', 'Similar facts decided differently across charges', 'Orders passed in the last week before limitation'],
+  today: ['MyTask feedback: 535 notices issued, 139 orders passed (RMC report)', 'AI adjudication assistant proposed by IIT-H on the Andhra Pradesh model'],
+  gap: ['No data on how many orders survive appeal', 'No standard order template', 'Status typed in by hand', 'A confirmed demand is not linked to its recovery'],
+  quick: ['Standard notice and order templates by discrepancy: grounds, computation, documents, hearing record', 'Limitation dashboard', 'Peer review of orders above ₹1 Cr'],
+  long: ['Status pulled from the GSTN back office', 'One case record from scrutiny to recovery', 'Searchable library of orders and precedents'],
+  ai: ['Drafting assistant for notices and orders with citations; the officer decides and signs', 'Consistency check against similar past orders', 'Score for the chance an order survives appeal'],
+  kpi: ['Demands sustained at first appeal, %', 'Days from notice to order', 'Orders passed in the final 90 days, %', 'Demand confirmed against proposed', 'Spread of penalties across officers'],
+  policy: ['Faceless, randomly assigned adjudication for desk-provable cases', 'Monetary limits by rank reviewed', 'Pre-notice consultation for large cases']},
+ {n: 'Appeals and litigation', law: 'Section 107, GSTAT, High Court', drip: 'Revenue locked for years',
+  fraud: ['Demands stay locked while appeals wait', 'Cases lost on procedure, not merits', 'Reasons for losing never reach the officers who draft notices'],
+  today: ['No tool we reviewed covers appeals', 'AI modules for appellate and court work requested from IIT-H'],
+  gap: ['No litigation database', 'No view of money at stake by age and forum', 'Lost cases are not coded by reason'],
+  quick: ['Litigation register: forum, stake, stage, next date, counsel', 'Reason code on every order lost'],
+  long: ['Litigation system joined to case tracking', 'Precedent search'],
+  ai: ['Summaries of appeal grounds and retrieval of precedents', 'Win-probability to decide where counsel time goes and which orders to appeal'],
+  kpi: ['Money locked in appeal, by age', 'Success rate by forum and issue', 'Pre-deposit collected', 'Top five reasons for losing'],
+  policy: ['Litigation policy with thresholds for departmental appeals', 'Readiness for GSTAT benches', 'Settlement windows for old disputes']},
+ {n: 'Recovery and arrears', law: 'Sections 78 to 84; DRC-07, DRC-13', drip: 'Demand raised, never paid',
+  fraud: ['Demand confirmed but not collected', 'Assets moved before attachment', 'Cancelled firm with nothing to recover', 'Interest left unbilled'],
+  today: ['MyTask records tax, interest and penalty realised', '₹206 Cr realised April to October 2026: ₹141 Cr by credit, ₹65 Cr in cash'],
+  gap: ['No ageing of arrears by collectability', 'Credit reversal and cash are reported as one number', 'No link to bank or asset data'],
+  quick: ['Sort arrears into collectable, disputed and dead', 'Garnishee list drawn from bank accounts on record', 'Payment-link messages on day 1, 30 and 60 after an order'],
+  long: ['Land records, VAHAN and bank-account data for attachment', 'Recovery workflow with timers'],
+  ai: ['Collectability score, as in credit scoring', 'Next best action: call, garnishee, attachment or instalments'],
+  kpi: ['Recovered within 12 months of demand, %', 'Cash against credit realised', 'Arrears by age and class', 'Value under provisional attachment'],
+  policy: ['Norms for instalments under Section 80', 'Write-off policy for dead arrears', 'SOP for provisional attachment']},
+ {n: 'Cancellation and exit', law: 'Section 29, REG-16, GSTR-10', drip: 'Leaves with the credit',
+  fraud: ['Firm closes holding stock and capital goods without reversing credit', 'No final return filed', 'Cancels to escape a demand, returns under a new name', 'Suo-moto cancellation with nothing recovered from buyers', 'Invoices issued after the cancellation date'],
+  today: ['4.19 lakh of 13.77 lakh registrations cancelled; 2.49 lakh suo-moto', 'Special drive for cancellation: 2,223 tasks, ₹6.6 Cr', 'NGTP checks: activity after cancellation, cancelled soon after approval', '927 tasks on first-level buyers of cancelled firms'],
+  gap: ['No list of cancelled firms that skipped GSTR-10', 'Closing stock and credit balance are not checked at exit', 'No check for a cancelled firm re-registering', 'Buyers are chased only at the first level'],
+  quick: ['Auto-list: cancelled GSTINs with a credit balance or recent ITC and no GSTR-10', 'Dues check before approving a cancellation request', 'Weekly buyers-of-cancelled list'],
+  long: ['Exit workflow: dues, open cases and reversal worked out before the order', 'Match at registration against people linked to firms cancelled with dues'],
+  ai: ['Model of who is about to go dormant, for early scrutiny', 'Entity resolution to catch the same people under a new name'],
+  kpi: ['GSTR-10 filed, %', 'Credit reversed at exit', 'Cancelled-with-dues persons re-registered', 'Buyer credit reversed per fake supplier cancelled'],
+  policy: ['Refusal of fresh registration where promoters have unpaid demands', 'Norms for revocation of cancellation']}
+];
+
+/* ---------- lifecycle UI ---------- */
+let cur = 0, lens = null;
+const rail = $('#rail');
+PHASES.forEach(([p, span]) => rail.appendChild(el('div', {class: 'phase', style: `grid-column:span ${span}`}, p)));
+rail.appendChild(el('div', {class: 'pipe'}));
+STAGES.forEach((s, i) => {
+  const b = el('button', {class: 'stage', role: 'tab', 'aria-selected': i === 0, id: 'st' + i}, `<span class="dot">${i + 1}</span><span class="nm">${s.n}</span><span class="drip">${s.drip}</span>`);
+  b.onclick = () => { cur = i; lens = null; draw(); };
+  rail.appendChild(b);
+});
+const modes = $('#modes');
+modes.appendChild(el('span', {class: 'lbl'}, 'Read one question down all stages:'));
+FIELDS.forEach(([k, name]) => { const c = el('button', {class: 'chip', 'aria-pressed': false, 'data-k': k}, name); c.onclick = () => { lens = lens === k ? null : k; draw(); }; modes.appendChild(c); });
+function draw() {
+  document.querySelectorAll('.stage').forEach((b, i) => b.setAttribute('aria-selected', lens ? false : i === cur));
+  document.querySelectorAll('#modes .chip').forEach((c) => c.setAttribute('aria-pressed', c.dataset.k === lens));
+  const p = $('#stagePanel');
+  if (lens) {
+    const name = FIELDS.find((f) => f[0] === lens)[1];
+    p.innerHTML = `<div class="st-head"><h3>${name}</h3><span class="law">across all eleven stages</span></div><div class="lens">` +
+      STAGES.map((s, i) => `<div class="cell f-${lens}"><h4><i>${i + 1}</i>${s.n}</h4>${ul(s[lens])}</div>`).join('') + '</div>';
+  } else {
+    const s = STAGES[cur];
+    p.innerHTML = `<div class="st-head"><h3>${cur + 1}. ${s.n}</h3><span class="law">${s.law}</span></div><div class="cells">` +
+      FIELDS.map(([k, name]) => `<div class="cell f-${k}"><h4>${name}</h4>${ul(s[k])}</div>`).join('') + '</div>';
+  }
+}
+draw();
+$('#matrix').innerHTML = '<thead><tr><th>Stage</th>' + FIELDS.map((f) => `<th>${f[1]}</th>`).join('') + '</tr></thead><tbody>' +
+  STAGES.map((s, i) => `<tr><th>${i + 1}. ${s.n}</th>` + FIELDS.map(([k]) => `<td>${ul(s[k])}</td>`).join('') + '</tr>').join('') + '</tbody>';
+
+/* ---------- waterfall ---------- */
+const WF = [
+  ['Registration gap', 'Businesses outside the net, or split to stay under the threshold', 'Power, trade-licence and property data against the register', '1'],
+  ['Filing gap', 'Registered but not filing, or filing nil', 'Tax of stop-filers in their last 12 active months', '4'],
+  ['Reporting gap', 'Outward supply under-declared', 'E-way bill, TDS, e-invoice and UPI value against 3B', '3'],
+  ['ITC gap', 'Credit that should not have been taken', '3B above 2B, credit from cancelled suppliers, missed reversals', '2'],
+  ['Settlement gap', 'State\'s tax flowing to the Centre', 'SR-2 excess (₹707 Cr), SR-3, IGST paid from SGST credit', '4'],
+  ['Collection gap', 'Demands raised but not recovered', 'Arrears by age; demand sustained on appeal', '8–10'],
+  ['Structure of the economy', 'Sector mix, exports, exemptions: not an administration problem', 'Sector-wise tax to GSDP against Gujarat', '–']
+];
+(function () {
+  const s = d3.select('#wf'), W = 1160, H = 380, mt = 34, mb = 78, ml = 10, a = 24939, b = 32773;
+  const y = d3.scaleLinear().domain([0, b]).range([H - mb, mt]);
+  const n = WF.length + 2, bw = 96, gap = (W - ml * 2 - n * bw) / (n - 1), x = (i) => ml + i * (bw + gap);
+  const defs = s.append('defs');
+  const pat = defs.append('pattern').attr('id', 'hatch').attr('width', 8).attr('height', 8).attr('patternUnits', 'userSpaceOnUse').attr('patternTransform', 'rotate(45)');
+  pat.append('rect').attr('width', 8).attr('height', 8).style('fill', 'var(--leak-soft)');
+  pat.append('line').attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', 8).style('stroke', 'var(--leak)').attr('stroke-width', 3);
+  const pat2 = defs.append('pattern').attr('id', 'hatch2').attr('width', 8).attr('height', 8).attr('patternUnits', 'userSpaceOnUse').attr('patternTransform', 'rotate(45)');
+  pat2.append('rect').attr('width', 8).attr('height', 8).style('fill', 'var(--now-soft)');
+  pat2.append('line').attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', 8).style('stroke', 'var(--now)').attr('stroke-width', 3);
+  const lab = (i, lines, bold) => lines.forEach((t, k) => s.append('text').attr('x', x(i) + bw / 2).attr('y', H - mb + 20 + k * 16).attr('text-anchor', 'middle').attr('class', k || !bold ? 'mut' : '').style('font-size', '12.5px').style('font-weight', k === 0 && bold ? 600 : 400).text(t));
+  s.append('rect').attr('x', x(0)).attr('y', y(a)).attr('width', bw).attr('height', y(0) - y(a)).attr('rx', 3).style('fill', 'var(--ink)');
+  s.append('text').attr('x', x(0) + bw / 2).attr('y', y(a) - 8).attr('text-anchor', 'middle').style('font-size', '17px').style('font-weight', 600).text('₹' + inr(a));
+  lab(0, ['Own SGST', '2025-26'], true);
+  const step = (b - a) / WF.length;
+  WF.forEach((w, i) => {
+    const lo = a + i * step, hi = lo + step, xi = x(i + 1);
+    s.append('rect').attr('x', xi).attr('y', y(hi)).attr('width', bw).attr('height', y(lo) - y(hi)).attr('rx', 2).style('fill', i === WF.length - 1 ? 'url(#hatch2)' : 'url(#hatch)');
+    s.append('line').attr('x1', xi - gap).attr('x2', xi).attr('y1', y(lo)).attr('y2', y(lo)).style('stroke', 'var(--color-fg-muted)').attr('stroke-dasharray', '3 3');
+    s.append('text').attr('x', xi + bw / 2).attr('y', y(hi) - 7).attr('text-anchor', 'middle').attr('class', 'mut').style('font-size', '13px').text('?');
+    const words = w[0].split(' '); const l1 = words.length > 2 ? words.slice(0, 2).join(' ') : words[0], l2 = words.length > 2 ? words.slice(2).join(' ') : words.slice(1).join(' ');
+    lab(i + 1, [l1, l2], true);
+    s.append('text').attr('x', xi + bw / 2).attr('y', H - mb + 56).attr('text-anchor', 'middle').attr('class', 'mut').style('font-size', '11.5px').text(w[3] === '–' ? 'outside the lifecycle' : 'stage ' + w[3]);
+  });
+  const xe = x(n - 1);
+  s.append('line').attr('x1', xe - gap).attr('x2', xe).attr('y1', y(b)).attr('y2', y(b)).style('stroke', 'var(--color-fg-muted)').attr('stroke-dasharray', '3 3');
+  s.append('rect').attr('x', xe).attr('y', y(b)).attr('width', bw).attr('height', y(0) - y(b)).attr('rx', 3).style('fill', 'var(--kpi)');
+  s.append('text').attr('x', xe + bw / 2).attr('y', y(b) - 8).attr('text-anchor', 'middle').style('font-size', '17px').style('font-weight', 600).text('₹' + inr(b));
+  lab(n - 1, ['At Gujarat\'s', 'share of GSDP'], true);
+  s.append('text').attr('x', (x(1) + x(n - 2) + bw) / 2).attr('y', 16).attr('text-anchor', 'middle').style('font-size', '13.5px').attr('class', 'mut').text('₹' + inr(b - a) + ' Cr a year to explain');
+  $('#wfTable').innerHTML = '<tr><th>Step</th><th>What it is</th><th>How to size it</th></tr>' + WF.map((w) => `<tr><td><b>${w[0]}</b></td><td>${w[1]}</td><td>${w[2]}</td></tr>`).join('');
+})();
+
+/* ---------- funnel + flagged ---------- */
+(function () {
+  const rows = [['Assigned', T.a], ['Allotted to an officer', T.a - T.na], ['Feedback given', T.a - T.nf], ['Closed', T.c]];
+  let h = rows.map(([n, v]) => `<div class="row"><span>${n}</span><div><div class="bar" style="width:${v / T.a * 100}%">${inr(v)}</div></div></div>`).join('');
+  h += `<div class="row" style="margin-top:12px"><span>Realised</span><div style="font:400 24px/1 var(--font-anthropic-serif)">₹${inr(cr(T.rev))} Cr <span style="font:400 13px var(--font-anthropic-sans);color:var(--color-fg-muted)">or ₹${inr(lakh(T.rev / T.a), 2)} lakh a task</span></div></div>`;
+  h += `<div class="row itc"><span>by credit reversal</span><div><div class="bar" style="width:${T.itc / T.rev * 100}%">₹${inr(cr(T.itc))} Cr</div></div></div>`;
+  h += `<div class="row cash"><span>in cash</span><div><div class="bar" style="width:${T.cash / T.rev * 100}%">₹${inr(cr(T.cash))} Cr</div></div></div>`;
+  $('#funnel').innerHTML = h;
+  $('#flagged').innerHTML = [
+    ['Top 100 fake-invoice leads', 'Lead list, 10 Nov 2026. 71 already cancelled suo-moto, so recovery lies with buyers', '₹732 Cr'],
+    ['Excess CGST set-off by IGST credit (SR-2)', 'Tableau, 2025-26. Lawful, so the remedy is persuasion', '₹707 Cr'],
+    ['NGTP top 100', 'Liability not covered by credit or cash. 61 under Central jurisdiction', '₹139 Cr'],
+    ['GSTR-1 filed, GSTR-3B never filed', '373 GSTINs, 152 still active', '₹116 Cr'],
+    ['TDS value above 3B outward supply (SR-4)', 'Value of supply, not tax. 17,958 records', '₹3,408 Cr'],
+    ['Realised through MyTask, seven months', 'For scale', '₹' + inr(cr(T.rev)) + ' Cr']
+  ].map(([a, b, c]) => `<tr><td>${a}<small>${b}</small></td><td>${c}</td></tr>`).join('');
+})();
+
+/* ---------- good-case tests ---------- */
+$('#tests').innerHTML = [
+  ['Material', 'Tax at stake clears a floor, counted as the State\'s share.', 'IGST issues return only half to the State.'],
+  ['Provable from records', 'The gap shows in documents a third party filed.', 'GSTR-2B, GSTR-7, e-way bill, e-invoice.'],
+  ['Low discretion', 'Arithmetic, not opinion. Two officers would reach the same number.', 'Mismatch yes; valuation and classification no.'],
+  ['Recoverable', 'Someone solvent is on the hook.', 'Active firm, credit balance to block, known bank account.'],
+  ['In time', 'Enough months left to issue notice and pass a reasoned order.', 'A countdown on every lead.'],
+  ['Spreads', 'One action corrects many taxpayers or deters a sector.', 'A fake supplier with 40 buyers.']
+].map(([h, p, e]) => `<div><h4>${h}</h4><p>${p}<span class="ex">${e}</span></p></div>`).join('');
+
+/* ---------- category scatter ---------- */
+const CATN = {
+  'ABRUPT GROWTH IN BUSINESS': 'Abrupt growth in business', 'Suspected Fraud RTP in respect of Registration/E-Waybill/Business activity': 'Suspected fraud registrations',
+  'High Balance in Electronic Credit Ledger': 'High credit-ledger balance', 'RMC-SR4-GSTR 3B vs TDS/TCS mismatch': 'SR-4 TDS/TCS mismatch',
+  'MISMATCH: GSTR 3B VS. TDS/TCS': '3B vs TDS/TCS (generic)', 'Scrutiny of Returns : 2021-22': 'Scrutiny 2021-22', 'Mismatch for 2018-19': 'Mismatch 2018-19',
+  'Special Drive for Cancellation': 'Cancellation drive', 'AB-INITIO CANCELLED/RACKETEER/FAKE RTPs AND THEIR BENEFICIARIES': 'Fake firms and their buyers',
+  'INSPECTION/SEARCH/SEIZURE': 'Inspection and search', 'MISMATCH: GSTR 3B VS. EWAYBILL': '3B vs e-way bill',
+  'Reverse Charge liability accrued in GSTR2B but not shown / less shown in GSTR3B': 'Reverse charge in 2B, not in 3B', 'Non Reversal / Low Reversal of ITC': 'ITC not reversed',
+  'PHYSICAL/SPOT/STOCK VERIFICATION': 'Physical verification', 'Special Drive on Sectors': 'Sector drives', 'SGST LOSS': 'SGST loss'
+};
+(function () {
+  const data = M.cat.filter((d) => d.a >= 20).map((d) => ({...d, x: d.c / d.a * 100, y: lakh(d.rev / d.a)}));
+  const s = d3.select('#catChart'), W = 780, H = 560, m = {t: 16, r: 20, b: 46, l: 58}, floor = 0.008;
+  const x = d3.scaleLinear().domain([0, 72]).range([m.l, W - m.r]), y = d3.scaleLog().domain([floor, 150]).range([H - m.b, m.t]).clamp(true);
+  const r = d3.scaleSqrt().domain([0, 2700]).range([3, 30]);
+  const ax = T.c / T.a * 100, ay = lakh(T.rev / T.a);
+  const quad = (x0, x1, y0, y1, fill) => s.append('rect').attr('x', x(x0)).attr('width', x(x1) - x(x0)).attr('y', y(y1)).attr('height', y(y0) - y(y1)).style('fill', fill).attr('opacity', .55);
+  quad(ax, 72, ay, 150, 'var(--kpi-soft)'); quad(0, ax, ay, 150, 'var(--leak-soft)'); quad(ax, 72, floor, ay, 'var(--tech-soft)'); quad(0, ax, floor, ay, 'var(--now-soft)');
+  const ql = (tx, ty, anchor, t, c) => s.append('text').attr('x', tx).attr('y', ty).attr('text-anchor', anchor).style('font', '400 17px var(--font-anthropic-serif)').style('fill', c).text(t);
+  ql(W - m.r - 8, m.t + 22, 'end', 'Scale up', 'var(--kpi)'); ql(m.l + 8, m.t + 22, 'start', 'Unblock: pays, but slow to close', 'var(--leak)');
+  ql(W - m.r - 8, H - m.b - 34, 'end', 'Automate: closes, pays little', 'var(--tech)'); ql(x(ax) - 10, H - m.b - 34, 'end', 'Stop or redesign', 'var(--now)');
+  s.append('g').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(7).tickFormat((v) => v + '%').tickSize(4)).call((g) => g.select('.domain').remove()).selectAll('text').style('font-size', '12px').attr('class', 'mut');
+  s.append('g').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).tickValues([0.01, 0.1, 1, 10, 100]).tickFormat((v) => '₹' + v + 'L').tickSize(4)).call((g) => g.select('.domain').remove()).selectAll('text').style('font-size', '12px').attr('class', 'mut');
+  s.append('text').attr('x', (m.l + W - m.r) / 2).attr('y', H - 8).attr('text-anchor', 'middle').attr('class', 'mut').style('font-size', '12.5px').text('Share of tasks closed');
+  s.append('text').attr('transform', `translate(14,${(m.t + H - m.b) / 2}) rotate(-90)`).attr('text-anchor', 'middle').attr('class', 'mut').style('font-size', '12.5px').text('Revenue per task, ₹ lakh (log scale)');
+  s.append('text').attr('x', W - m.r - 8).attr('y', y(floor) - 6).attr('text-anchor', 'end').attr('class', 'mut').style('font-size', '11px').text('hollow circle on the floor: no revenue recorded');
+  s.append('g').selectAll('circle').data(data.sort((a, b) => b.a - a.a)).join('circle')
+    .attr('cx', (d) => x(d.x)).attr('cy', (d) => y(Math.max(floor, d.y))).attr('r', (d) => r(d.a))
+    .style('fill', (d) => d.rev ? 'var(--ink)' : 'none').attr('fill-opacity', .22).style('stroke', 'var(--ink)').attr('stroke-width', 1.4)
+    .on('mousemove', (e, d) => showTip(e, `<b>${d.n}</b>${inr(d.a)} tasks, ${Math.round(d.x)}% closed<br>₹${inr(cr(d.rev), 1)} Cr realised, ₹${inr(d.y, 2)} lakh a task`)).on('mouseleave', hideTip);
+  const off = {'Scrutiny 2021-22': [0, -36, 'middle'], 'Mismatch 2018-19': [20, -14, 'start'], 'Cancellation drive': [0, 44, 'middle'], '3B vs TDS/TCS (generic)': [26, -16, 'start'], 'Fake firms and their buyers': [26, 12, 'start'],
+    'Reverse charge in 2B, not in 3B': [12, 16, 'start'], '3B vs e-way bill': [10, -10, 'start'], 'Suspected fraud registrations': [-12, -12, 'end'], 'High credit-ledger balance': [-18, 18, 'end'], 'Physical verification': [-14, 18, 'end'], 'SR-4 TDS/TCS mismatch': [16, -12, 'start'], 'Inspection and search': [12, -10, 'start']};
+  const skip = new Set(['Sector drives', 'SGST loss', 'ITC not reversed']);
+  data.filter((d) => CATN[d.n] && !skip.has(CATN[d.n])).forEach((d) => {
+    const nm = CATN[d.n], o = off[nm] || [r(d.a) + 5, 4, 'start'];
+    s.append('text').attr('x', x(d.x) + o[0]).attr('y', y(Math.max(floor, d.y)) + o[1]).attr('text-anchor', o[2]).style('font-size', '12px').style('paint-order', 'stroke').style('stroke', 'var(--color-panel)').attr('stroke-width', 3).text(nm);
+  });
+  const top = [...M.cat].sort((a, b) => b.rev - a.rev).slice(0, 8), old = M.cat.filter((d) => /^(Mismatch for 20|Scrutiny of Returns : 201)/.test(d.n) && !/2020-21|2021-22/.test(d.n));
+  const sum = (a, k) => a.reduce((t, d) => t + d[k], 0), g = (n) => M.cat.find((d) => d.n === n);
+  const sr4 = g('RMC-SR4-GSTR 3B vs TDS/TCS mismatch'), gen = g('MISMATCH: GSTR 3B VS. TDS/TCS'), ab = g('ABRUPT GROWTH IN BUSINESS'), rc = g('Reverse Charge liability accrued in GSTR2B but not shown / less shown in GSTR3B');
+  $('#catReads').innerHTML = [
+    `Eight categories brought ${Math.round(sum(top, 'rev') / T.rev * 100)}% of revenue from ${Math.round(sum(top, 'a') / T.a * 100)}% of tasks.`,
+    `Mismatch and scrutiny lists for 2017-18 to 2019-20 hold ${inr(sum(old, 'a'))} tasks and returned ₹${inr(cr(sum(old, 'rev')), 1)} Cr. Most are past the ordinary time limit.`,
+    `The same TDS mismatch pays ₹${inr(lakh(sr4.rev / sr4.a), 1)} lakh a task when RMC picks it (SR-4) and ₹${inr(lakh(gen.rev / gen.a), 1)} lakh from the generic list: selection, not the rule, makes the difference.`,
+    `"Abrupt growth" returned ₹${inr(lakh(ab.rev / ab.a), 0)} lakh a task on only ${ab.a} tasks. Reverse charge seen in 2B returned ₹${inr(cr(rc.rev), 2)} Cr on ${rc.a}: a nudge, not a task.`
+  ].map((t) => `<li>${t}</li>`).join('');
+  $('#avgTask').textContent = '₹' + inr(ay, 2) + ' lakh';
+})();
+
+/* ---------- calculator ---------- */
+(function () {
+  const P = [0.15, 0.35, 0.55, 0.75, 0.9];
+  const E = ['Suspicion only', 'Pattern in own returns', 'Own returns disagree', 'Third-party record', 'Third-party record, admitted'];
+  const R = ['Cancelled, no assets', 'Cancelled, buyers traceable', 'Dormant', 'Active', 'Active with credit or bank balance'];
+  const D = ['None: arithmetic', 'Low', 'Some', 'High', 'Wide: valuation or intent'];
+  const ids = ['A', 'S', 'E', 'R', 'D', 'T'];
+  function calc() {
+    const A = Math.round(Math.pow(10, +$('#cA').value / 100 * 4)) / 1; // ₹ lakh, 1 to 10,000
+    const S = [0.5, 0.75, 1][+$('#cS').value / 50], e = +$('#cE').value, r = +$('#cR').value, dd = +$('#cD').value, t = Math.max(0.1, +$('#cT').value);
+    $('#oA').textContent = A >= 100 ? '₹' + inr(A / 100, 1) + ' Cr' : '₹' + inr(A) + ' lakh';
+    $('#oS').textContent = ['50% (IGST)', '75% (mixed)', '100% (SGST)'][+$('#cS').value / 50];
+    $('#oE').textContent = E[e - 1]; $('#oR').textContent = R[r - 1]; $('#oD').textContent = D[dd - 1];
+    $('#oT').textContent = +$('#cT').value === 0 ? 'none (automated)' : t + ' days';
+    const ev = A * S * P[e - 1] * P[r - 1], per = ev / t, avg = lakh(T.rev / T.a);
+    let v, why, c;
+    if (e >= 4 && ev < avg) { v = 'Nudge automatically'; why = 'Certain, but below what an average task returns. A message costs almost nothing.'; c = 'var(--kpi)'; }
+    else if (e >= 4 && dd <= 2) { v = 'Fast-track desk notice'; why = 'Documentary and arithmetic. Send to a central desk, randomly assigned, with a fixed clock.'; c = 'var(--tech)'; }
+    else if (e <= 2 && ev >= 25) { v = 'Investigate'; why = 'Large, but the data only points. BoI or DRIE, with a digital-evidence plan before any search.'; c = 'var(--leak)'; }
+    else if (ev < avg) { v = 'Watch and learn'; why = 'Small and unsure. No officer time; include in the random sample.'; c = 'var(--now)'; }
+    else { v = 'Charge scrutiny'; why = 'Worth an officer, needs judgement. Supervisor reviews the order if the amount is large.'; c = 'var(--pol)'; }
+    const vd = $('#verdict'); vd.style.setProperty('--vc', c);
+    vd.innerHTML = `<b>${v}</b><span>${why}</span><div class="nums"><span>Expected yield ₹${inr(ev, 1)} lakh</span><span>₹${inr(per, 1)} lakh per officer-day</span></div>`;
+  }
+  ids.forEach((i) => $('#c' + i).addEventListener('input', calc)); calc();
+})();
+
+/* ---------- treatment 2x2 ---------- */
+const QS = {
+  qA: ['Large TDS or TCS mismatch against 3B (SR-4)', 'Credit taken from a cancelled supplier, visible in 2B', 'Permanent reversal shown as temporary (SR-3)', 'GSTR-1 filed, 3B never filed', 'High credit-ledger balance with no matching purchases'],
+  qB: ['Sales suppression in hotels, restaurants, real estate, sand', 'Circular trading and fake-invoice networks', 'The person controlling many GSTINs', 'Valuation and classification disputes', 'Transfer of development rights in real estate'],
+  qC: ['3B not filed or filed late', '3B credit above 2B, small amounts', 'GSTR-1 liability above 3B, small amounts', 'Interest due on late payment', 'Reverse charge shown in 2B but not paid', 'GSTR-10 not filed after cancellation'],
+  qD: ['Small e-way bill anomalies', 'Nil filers with faint outside footprints', 'Old-period mismatches under the floor', 'Single-month spikes that reverse']
+};
+for (const k in QS) $('#' + k).innerHTML = QS[k].map((t) => `<li>${t}</li>`).join('');
+
+/* ---------- charge scatter ---------- */
+(function () {
+  const short = (n) => n.replace(' CHARGE', '').replace(/ OFFICE$/, '').replace(/ ZONE UNDER BUREAU OF INVESTIGATION ?\((NORTH|SOUTH) BENGAL\)/, ' zone (BoI)').replace(/BUREAU OF INVESTIGATION \((NORTH|SOUTH) BENGAL\)/, (m, a) => 'BoI ' + a[0] + a.slice(1).toLowerCase()).replace('LARGE TAXPAYER UNIT', 'LTU').split(' ').map((w) => /^(DRIE|LTU|BoI|\(BoI\)|N\.D\.|N\.S\.)/.test(w) ? w : w[0] + w.slice(1).toLowerCase()).join(' ');
+  const data = M.ch.filter((d) => !/CIRCLE/.test(d.n) && d.a >= 10).map((d) => ({...d, s: short(d.n), y: lakh(d.rev / d.a), nfp: d.nf / d.a}));
+  const s = d3.select('#chChart'), W = 780, H = 560, m = {t: 16, r: 24, b: 46, l: 58}, floor = 0.008;
+  const x = d3.scaleLog().domain([12, 1700]).range([m.l, W - m.r]).clamp(true), y = d3.scaleLog().domain([floor, 60]).range([H - m.b, m.t]).clamp(true);
+  const mx = d3.median(data, (d) => d.a), my = d3.median(data, (d) => d.y);
+  s.append('line').attr('x1', x(mx)).attr('x2', x(mx)).attr('y1', m.t).attr('y2', H - m.b).style('stroke', 'var(--color-fg-muted)').attr('stroke-dasharray', '4 4');
+  s.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(my)).attr('y2', y(my)).style('stroke', 'var(--color-fg-muted)').attr('stroke-dasharray', '4 4');
+  const ql = (tx, ty, anchor, t) => s.append('text').attr('x', tx).attr('y', ty).attr('text-anchor', anchor).style('font', '400 17px var(--font-anthropic-serif)').attr('class', 'mut').text(t);
+  ql(m.l + 8, m.t + 20, 'start', 'Send more'); ql(W - m.r - 8, m.t + 20, 'end', 'Engines'); ql(W - m.r - 8, y(my) + 24, 'end', 'Overloaded: thin the list'); ql(m.l + 8, y(my) + 24, 'start', 'Review');
+  s.append('g').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).tickValues([20, 50, 100, 200, 500, 1000]).tickFormat((v) => inr(v)).tickSize(4)).call((g) => g.select('.domain').remove()).selectAll('text').style('font-size', '12px').attr('class', 'mut');
+  s.append('g').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).tickValues([0.01, 0.1, 1, 10]).tickFormat((v) => '₹' + v + 'L').tickSize(4)).call((g) => g.select('.domain').remove()).selectAll('text').style('font-size', '12px').attr('class', 'mut');
+  s.append('text').attr('x', (m.l + W - m.r) / 2).attr('y', H - 8).attr('text-anchor', 'middle').attr('class', 'mut').style('font-size', '12.5px').text('Tasks assigned (log scale)');
+  s.append('text').attr('transform', `translate(14,${(m.t + H - m.b) / 2}) rotate(-90)`).attr('text-anchor', 'middle').attr('class', 'mut').style('font-size', '12.5px').text('Revenue per task, ₹ lakh (log scale)');
+  const col = (d) => d.nfp > .25 ? 'var(--leak)' : d.nfp >= .1 ? 'var(--color-warn)' : 'var(--kpi)';
+  s.append('g').selectAll('circle').data(data).join('circle').attr('cx', (d) => x(d.a)).attr('cy', (d) => y(Math.max(floor, d.y))).attr('r', 6.5).style('fill', col).style('stroke', 'var(--color-panel)').attr('stroke-width', 1.5)
+    .on('mousemove', (e, d) => showTip(e, `<b>${d.s}</b>${inr(d.a)} tasks, ${inr(d.c)} closed, ${inr(d.nf)} without feedback<br>₹${inr(cr(d.rev), 2)} Cr realised, ₹${inr(d.y, 2)} lakh a task`)).on('mouseleave', hideTip);
+  const pick = {'Drie': [10, 4, 'start'], 'Barasat': [10, -6, 'start'], 'Midnapore': [-10, -6, 'end'], 'Salt Lake': [-10, -8, 'end'], 'Howrah': [-10, 14, 'end'], 'Cooch Behar': [10, 14, 'start'], 'BoI South': [0, -12, 'middle'], 'LTU': [10, 4, 'start'], 'Salkia': [10, -8, 'start'], 'Bowbazar': [10, 4, 'start'], 'Behala': [10, 14, 'start'], 'Taltala': [-10, -6, 'end'], 'Kadamtala': [10, 4, 'start']};
+  data.forEach((d) => { const k = d.s === 'DRIE' ? 'Drie' : d.s; if (!pick[k]) return; const o = pick[k];
+    s.append('text').attr('x', x(d.a) + o[0]).attr('y', y(Math.max(floor, d.y)) + o[1]).attr('text-anchor', o[2]).style('font-size', '12px').style('paint-order', 'stroke').style('stroke', 'var(--color-panel)').attr('stroke-width', 3).text(d.s); });
+  const top5 = [...data].sort((a, b) => b.rev - a.rev).slice(0, 5), f = (n) => data.find((d) => d.s === n);
+  const sl = f('Salt Lake'), hw = f('Howrah'), dr = f('DRIE'), zero = data.filter((d) => d.rev === 0);
+  $('#chReads').innerHTML = [
+    `Five offices (${top5.map((d) => d.s).join(', ')}) realised ${Math.round(top5.reduce((t, d) => t + d.rev, 0) / T.rev * 100)}% of revenue on ${Math.round(top5.reduce((t, d) => t + d.a, 0) / T.a * 100)}% of tasks.`,
+    `Salt Lake holds ${inr(sl.a)} tasks; ${inr(sl.nf)} have no feedback at all.`,
+    `Howrah has ${inr(hw.a)} tasks for ₹${inr(cr(hw.rev), 2)} Cr. DRIE has ${dr.a} for ₹${inr(cr(dr.rev), 1)} Cr.`,
+    `${zero.length} charges recorded no revenue on ${inr(zero.reduce((t, d) => t + d.a, 0))} tasks between them.`
+  ].map((t) => `<li>${t}</li>`).join('');
+})();
+$('#rules').innerHTML = [
+  ['Route by kind of work first, geography second', 'Desk-provable cases go to a central cell, randomly assigned. Field checks go to the charge. Networks that cross charges go to BoI or DRIE.'],
+  ['Cap work in progress', 'An officer pulls a new case when one closes. No office should carry hundreds of tasks nobody has opened.'],
+  ['Give the next case to the best marginal return', 'An assignment model: maximise expected yield per officer-day, within each office\'s capacity and skills. It needs one number we lack: officers posted per charge.'],
+  ['Fix the mix', 'For example 70% top-scored cases, 20% sector and deterrence drives, 10% random. The random share keeps the model honest and checks on officers.'],
+  ['Triage the backlog by rule', '13,942 tasks are open, 6,038 of them created in 2022 or 2023. Close, merge or convert to nudges in bulk, under a written rule.'],
+  ['No feedback in 30 days, the task moves', '2,663 tasks have no feedback. Escalate automatically, then reassign.'],
+  ['Judge charges on return and quality, not counts', 'Revenue per officer, cash share, orders that survive appeal, days to close.']
+].map(([b, s]) => `<li><b>${b}</b><span>${s}</span></li>`).join('');
+
+/* ---------- tools ---------- */
+(function () {
+  const hb = (v) => { const a = v / 4 * 2 * Math.PI, r = 9, lx = 11 + r * Math.sin(a), ly = 11 - r * Math.cos(a);
+    const p = v === 0 ? '' : v === 4 ? `<circle cx="11" cy="11" r="9" style="fill:var(--ink)"/>` : `<path d="M11,11 L11,2 A9,9 0 ${v > 2 ? 1 : 0} 1 ${lx.toFixed(2)},${ly.toFixed(2)} Z"/>`;
+    return `<svg class="hb" width="22" height="22" viewBox="0 0 22 22" role="img" aria-label="${v} of 4"><circle cx="11" cy="11" r="9"/>${p}</svg>`; };
+  const cols = ['Detect', 'Rank by value', 'Link entities', 'Allocate', 'Act', 'Track outcome', 'Learn'];
+  const rows = [
+    ['Tableau GST Analytics', 'Risk views SR-1 to SR-5, revenue MIS', [3, 1, 1, 0, 0, 0, 0]],
+    ['TMS and scrutiny module', '16 discrepancies, draft notices', [3, 1, 0, 2, 3, 2, 0]],
+    ['DCT MIS', 'Payments, returns, interest', [1, 0, 0, 0, 0, 1, 0]],
+    ['NGTP (in build)', '21 weighted parameters', [3, 2, 2, 2, 1, 1, 0]],
+    ['MyTask', 'Task assignment and feedback', [0, 0, 0, 2, 1, 3, 0]],
+    ['Lead lists, Nov 2026', 'Fraud leads, networks, watchlist', [3, 3, 2, 0, 0, 0, 0]]
+  ];
+  $('#harvey').innerHTML = '<tr><th>Tool</th>' + cols.map((c) => `<th>${c}</th>`).join('') + '</tr>' +
+    rows.map(([n, d, v]) => `<tr><td>${n}<small>${d}</small></td>` + v.map((k) => `<td>${hb(k)}</td>`).join('') + '</tr>').join('') +
+    '<tr class="goal"><td>The tool to build</td>' + cols.map(() => `<td>${hb(4)}</td>`).join('') + '</tr>';
+  $('#gapsList').innerHTML = [
+    ['No loop from outcome back to selection', '9,086 tasks came from ISD reports and 22% are closed. Nothing tells the report which of its rules paid.'],
+    ['Thresholds, not rankings', 'Lists say "above ₹1 Cr" or "difference over 80%". None orders leads by expected return.'],
+    ['No single view of a taxpayer', '792 GSTINs carry three or more separate tasks from different lists.'],
+    ['Data-quality traps inside the dashboards', 'Blank mobiles treated as one shared number; return rows counted as GSTINs; part-months shown as a 94% fall; one ₹3.44 lakh Cr entry.'],
+    ['The data stops at GSTN', 'No property, RERA, VAHAN, mining, power or bank data. On the integration ladder this is Level 1 to 2 of 4.'],
+    ['Links are thin', 'Phone, PAN and email only. No address, bank account, device, or consultant.'],
+    ['Nothing acts on its own', 'No automatic messages, no drafted notices, no subscriptions that send a charge its weekly worklist.'],
+    ['Case types overlap', '58 MyTask categories, several naming the same thing. Comparing yield needs one clean list.'],
+    ['Central-jurisdiction leads fall out', '61 of the NGTP top 100 belong to the Centre. There is no register of what happened to a referral.'],
+    ['Forensics is down', 'The only mobile and cloud extraction tool has not worked since July 2026; the workstation is six years old.']
+  ].map(([b, s]) => `<li><b>${b}</b><span>${s}</span></li>`).join('');
+  const L = [
+    ['Outcome ledger', 'var(--kpi)', 'Records what each lead produced: cash, credit reversed, sustained on appeal, days taken. Feeds the scores below.', '<b>Partly.</b> MyTask holds revenue and feedback, but not tied to the rule that raised the lead.'],
+    ['Action channels', 'var(--tech)', 'Message gateway for nudges, drafted notices and orders, field app with geo-tagged visits, Rule 86A workflow.', '<b>Missing.</b> Notices are drafted in the scrutiny module only.'],
+    ['Case engine', 'var(--tech)', 'One case per GSTIN. Expected-yield score, limitation clock, routing by kind of work, allocation within capacity.', '<b>Missing.</b> MyTask assigns by jurisdiction; no score, no cap.'],
+    ['Risk engine', 'var(--leak)', 'A versioned library of rules, fitted models and network detection, each back-tested against outcomes.', '<b>Rules only.</b> Tableau and TMS thresholds; NGTP weights set by hand.'],
+    ['Identity and graph', 'var(--pol)', 'Resolves people, firms, addresses, phones and bank accounts into entities. Gives the taxpayer 360 view.', '<b>Thin.</b> Fraud links on phone, PAN and email.'],
+    ['Data', 'var(--now)', 'GSTN returns, e-invoice and e-way bill; State data (property, RERA, VAHAN, mines, excise, power); Central data (MCA, 26AS, Customs, UPI).', '<b>GSTN only.</b> Server space and storage are pending with WTL.']
+  ];
+  $('#stack').innerHTML = L.map(([n, c, a, b], i) => `<div class="layer" style="--c:${c}"><h4>${n}</h4><p>${a}</p><p class="td">Today: ${b}</p></div>` + (i === 0 ? '<div class="loop">↓ outcomes become training data for the risk and case engines ↓</div>' : '')).join('');
+})();
+
+/* ---------- roadmap ---------- */
+(function () {
+  const I = [
+    [1, 'Filing and mismatch nudge engine', 'SMS and WhatsApp with payment links, run as trials', 24, 74, 1],
+    [2, 'Expected-yield ranking of every list', 'Fitted on MyTask outcomes; simple score first', 20, 84, 1],
+    [3, 'Backlog triage and work-in-progress caps', 'Written rule; frees officers this quarter', 12, 60, 1],
+    [4, 'Fix the dashboard data traps', 'Blank mobiles, row counts, part-months, outliers', 10, 34, 1],
+    [5, 'SR-2 outreach to the top 200', 'Ask that IGST credit be used on SGST first', 17, 68, 1],
+    [6, 'Restore the forensic lab', 'Magnet AXIOM and the ₹1.28 Cr upgrade', 30, 52, 1],
+    [7, 'Buyers-of-cancelled list and Rule 86A workflow', 'Weekly, with the credit amount, to each charge', 36, 76, 1],
+    [8, 'One case per GSTIN, one list of case types', 'Merge duplicates; clean the 58 categories', 42, 50, 2],
+    [9, 'Risk score on every registration application', 'Before approval, not after', 50, 66, 2],
+    [10, 'Outcome ledger and feedback loop', 'Tie every rupee realised to the rule that found it', 56, 88, 2],
+    [11, 'Drafting assistant and litigation register', 'Notices, orders, appeal tracking', 64, 54, 2],
+    [12, 'Central desk cell, randomly assigned', 'For documentary cases; cuts discretion', 60, 72, 2],
+    [13, 'Data exchange with State departments', 'Property, RERA, VAHAN, mines, power, licences', 76, 90, 3],
+    [14, 'Entity graph and network detection', 'Find the controller, not the name-lender', 82, 80, 3],
+    [15, 'Fitted yield model and allocation optimiser', 'Level 3 on the detection ladder', 70, 82, 3],
+    [16, 'Proportionate IGST credit use, at the GST Council', 'Outside the State\'s control; large if won', 90, 70, 3]
+  ];
+  const col = {1: 'var(--kpi)', 2: 'var(--tech)', 3: 'var(--pol)'}, ie = $('#ie');
+  I.forEach(([n, t, d, x, y, h]) => { const p = el('span', {class: 'pt', style: `left:${x}%;top:${100 - y}%;--c:${col[h]}`, tabindex: 0, 'aria-label': t}, n);
+    p.onmousemove = (e) => showTip(e, `<b>${n}. ${t}</b>${d}`); p.onmouseleave = hideTip; ie.appendChild(p); });
+  const H = [['Now: first 90 days', '', 1], ['Next: 3 to 12 months', 'h2', 2], ['Later: 12 to 24 months', 'h3', 3]];
+  $('#horizons').innerHTML = H.map(([t, c, h]) => `<div class="hz ${c}"><h3>${t}</h3><ol>` + I.filter((i) => i[5] === h).map(([n, a, b]) => `<li><i>${n}</i><div><b>${a}</b><br><span>${b}</span></div></li>`).join('') + '</ol></div>').join('');
+})();
+</script>
+</body>
+</html>
