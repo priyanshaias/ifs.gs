@@ -34,7 +34,6 @@ li{margin:3px 0}
 <main class="wrap">
 <a class="back" href="../../">← GST · West Bengal</a>
 <h1>Unified Tax and Tasks</h1>
-<h2>Directorate of Commercial Taxes, West Bengal — plan for the technical team</h2>
 <p>Version 0.1 · 20 November 2026 · Draft for discussion</p>
 <hr>
 <h2>1. Purpose</h2>
@@ -51,10 +50,10 @@ Show every officer their own tasks and show supervisors, up to the Commissioner,
 <p>A working demo of the Commissioner (L0) dashboard is the Sample Dashboard. It runs on made-up data.</p>
 <hr>
 <h2>2. Users and levels</h2>
-<div class="tw"><table><thead><tr><th>Level</th><th>Designation</th><th>Office</th><th>Main use</th></tr></thead><tbody><tr><td>L0</td><td>Commissioner, Commercial Taxes</td><td>Directorate</td><td>Creates or uploads task lists, allots to any level, watches performance</td></tr><tr><td>L1</td><td>Special / Additional Commissioner</td><td>Directorate (zone or wing)</td><td>Allots to circles, reviews circle performance</td></tr><tr><td>L2</td><td>Senior Joint / Joint Commissioner</td><td>Circle</td><td>Allots to charges and officers in the circle, reviews officers</td></tr><tr><td>L3</td><td>Deputy / Assistant Commissioner</td><td>Charge</td><td>Allots to CTOs in the charge, also works cases</td></tr><tr><td>L4</td><td>Commercial Tax Officer / ACTO</td><td>Charge</td><td>Works the case and records each step</td></tr></tbody></table></div>
+<div class="tw"><table><thead><tr><th>Level</th><th>Office</th><th>Main use</th></tr></thead><tbody><tr><td>L0</td><td>Directorate (State)</td><td>Creates or uploads task lists, allots to any level, watches performance</td></tr><tr><td>L1</td><td>Circle</td><td>Allots to charges and officers in the circle, reviews officers</td></tr><tr><td>L2</td><td>Charge</td><td>Allots to officers in the charge, also works cases</td></tr><tr><td>L3</td><td>Officer</td><td>Works the case and records each step</td></tr></tbody></table></div>
 <p>Rules:</p>
 <ul><li>
-An officer can allot only to levels below their own and only within their jurisdiction (L2 within the circle, L3 within the charge). L0 and L1 can allot anywhere in the State.
+An officer can allot only to levels below their own and only within their jurisdiction (L1 within the circle, L2 within the charge). L0 can allot anywhere in the State.
 </li><li>
 Any officer can act on a task allotted to them. A supervisor can view (not edit) every task below them.
 </li><li>
@@ -63,17 +62,18 @@ Each officer belongs to one charge (or circle or Directorate) at a time. Transfe
 <hr>
 <h2>3. Task types</h2>
 <p>The list must be a master table so new types can be added without code changes.</p>
-<div class="tw"><table><thead><tr><th>Code</th><th>Task type</th><th>Usual source</th><th>First notice</th><th>SLA to first action</th></tr></thead><tbody><tr><td>SCR</td><td>Return scrutiny (sec. 61)</td><td>TMS scrutiny list / GSTN BO</td><td>ASMT-10</td><td>30 days</td></tr><tr><td>AUD</td><td>Departmental audit (sec. 65)</td><td>Audit selection list</td><td>ADT-01</td><td>30 days</td></tr><tr><td>R7</td><td>GSTR-7 (TDS) vs GSTR-3B mismatch</td><td>GSTR-7 credit vs 3B turnover</td><td>ASMT-10</td><td>30 days</td></tr><tr><td>UPI</td><td>UPI receipts vs declared turnover</td><td>Bank / UPI data</td><td>ASMT-10</td><td>30 days</td></tr><tr><td>IGR</td><td>IGST credit reversal</td><td>IGST settlement / 2B data</td><td>ASMT-10</td><td>30 days</td></tr><tr><td>INT</td><td>Interest on delayed GSTR-3B (sec. 50)</td><td>DCT interest report</td><td>DRC-01A</td><td>15 days</td></tr><tr><td>R13</td><td>GSTR-1 vs GSTR-3B liability gap</td><td>GSTN BO</td><td>ASMT-10</td><td>30 days</td></tr><tr><td>ITC</td><td>Excess ITC (GSTR-3B vs GSTR-2B)</td><td>GSTN BO</td><td>ASMT-10</td><td>30 days</td></tr></tbody></table></div>
-<p>Each task has: GSTIN, trade name, task type, tax period(s), amount involved (₹), source file or batch, priority (High / Normal), due date.</p>
+<div class="tw"><table><thead><tr><th>Code</th><th>Task type</th><th>First notice</th><th>SLA to first action</th><th>Own parameters (examples)</th></tr></thead><tbody><tr><td>SCR</td><td>Return scrutiny (sec. 61)</td><td>ASMT-10</td><td>30 days</td><td>Discrepancy type, tax gap, ITC gap</td></tr><tr><td>AUD</td><td>Departmental audit (sec. 65)</td><td>ADT-01</td><td>30 days</td><td>Audit period, turnover audited, audit observations</td></tr><tr><td>R7</td><td>GSTR-7 (TDS) vs GSTR-3B mismatch</td><td>ASMT-10</td><td>30 days</td><td>Deductor GSTIN, TDS credit in GSTR-7, turnover in GSTR-3B</td></tr><tr><td>UPI</td><td>UPI receipts vs declared turnover</td><td>ASMT-10</td><td>30 days</td><td>UPI receipts, declared turnover, bank</td></tr><tr><td>IGR</td><td>IGST credit reversal</td><td>ASMT-10</td><td>30 days</td><td>IGST credit availed, IGST credit eligible, place of supply</td></tr><tr><td>INT</td><td>Interest on delayed GSTR-3B (sec. 50)</td><td>DRC-01A</td><td>15 days</td><td>Return period, days of delay, tax paid late, interest due</td></tr><tr><td>R13</td><td>GSTR-1 vs GSTR-3B liability gap</td><td>ASMT-10</td><td>30 days</td><td>Liability in GSTR-1, liability in GSTR-3B, gap</td></tr><tr><td>ITC</td><td>Excess ITC (GSTR-3B vs GSTR-2B)</td><td>ASMT-10</td><td>30 days</td><td>ITC in GSTR-3B, ITC in GSTR-2B, excess</td></tr></tbody></table></div>
+<p>Each task has: GSTIN, trade name, task type, tax period(s), amount involved (₹), source file or batch, priority (High / Normal), due date and the parameters of its own type.</p>
+<p><strong>Own parameters for each task type.</strong> Each task type has its own set of parameters, defined in the task type master: name, kind (amount, number, date, text or a list of choices) and whether it is required. A new task type therefore brings its own fields without code changes. The parameters appear on the create form, as extra columns in that type's Excel template, on the task detail and as filters in the task list.</p>
 <hr>
 <h2>4. Creating tasks</h2>
 <h3>4.1 Manual entry</h3>
 <p>Form with the fields above. GSTIN is checked for format and looked up in the registration master to fill trade name, circle and charge.</p>
 <h3>4.2 Excel upload</h3>
 <ul><li>
-A downloadable template (one sheet, fixed column names). Mandatory columns: GSTIN, Task type, Tax period, Amount involved. Optional: Priority, Due date, Remarks, Assign to (officer ID).
+A downloadable template for each task type (one sheet, fixed column names): the common columns and that type's own parameters. Mandatory columns: GSTIN, Task type, Tax period, Amount involved and the required parameters. Optional: Priority, Due date, Remarks, Assign to (officer ID).
 </li><li>
-On upload the system shows a preview with three groups: <strong>Ready</strong>, <strong>Warnings</strong> (for example GSTIN not in jurisdiction master) and <strong>Errors</strong> (bad GSTIN, unknown task type, blank amount).
+On upload the system shows a preview with three groups: <strong>Ready</strong>, <strong>Warnings</strong> (for example GSTIN not in jurisdiction master) and <strong>Errors</strong> (bad GSTIN, unknown task type, blank amount, missing required parameter).
 </li><li>
 Duplicate check: same GSTIN + task type + tax period already open → flagged, not created twice.
 </li><li>
@@ -83,13 +83,13 @@ Each upload is saved as an <strong>upload batch</strong> with file name, uploade
 </li></ul>
 <hr>
 <h2>5. Allotting tasks</h2>
-<p>Every officer from L0 to L3 sees an <strong>Allot</strong> button on unallotted tasks (single or selected in bulk). Two methods:</p>
+<p>Every officer from L0 to L2 sees an <strong>Allot</strong> button on unallotted tasks (single or selected in bulk). Two methods:</p>
 <h3>5.1 Allot manually</h3>
 <p>Pick the officer by name (searchable, filtered to the allowed levels and jurisdiction). The list shows each officer's current open tasks so the allotter can see the load.</p>
 <h3>5.2 Allot by round robin</h3>
 <p>The allotter chooses:</p>
 <ol><li>
-<strong>Target level</strong> (for example L4 when L0 is allotting directly to CTOs, or L2 when allotting to circles).
+<strong>Target level</strong> (for example L3 when L0 is allotting directly to officers, or L1 when allotting to circles).
 </li><li>
 <strong>Scope</strong>: circle(s) and charge(s). By default tasks stay in the charge of the GSTIN; the allotter can switch this off for State-wide pools.
 </li><li>
@@ -100,7 +100,7 @@ Each upload is saved as an <strong>upload batch</strong> with file name, uploade
 <p>Method: the pool of eligible officers is shuffled once per batch (so the start is random), then tasks are dealt one by one in turn. With balancing on, the next task goes to the officer with the least open tasks, ties broken by the shuffled order. The result is shown as a preview (officer → number of tasks) before it is confirmed.</p>
 <h3>5.3 What is stored</h3>
 <p>For every allotment (including re-allotment) the system stores:</p>
-<div class="tw"><table><thead><tr><th>Field</th><th>Example</th></tr></thead><tbody><tr><td>Allotted to</td><td>CTO Sayan Mukherjee (L4), Barasat charge</td></tr><tr><td>Allotted by</td><td>Jt. Commissioner Rina Basu (L2), 24 Parganas circle</td></tr><tr><td>Method</td><td>Manual / Round robin</td></tr><tr><td>Round robin batch</td><td>RR-2026-11-0042 (with pool, scope and balancing used)</td></tr><tr><td>Date and time</td><td>12-11-2026 11:42</td></tr><tr><td>Reason (re-allotment only)</td><td>Officer transferred</td></tr></tbody></table></div>
+<div class="tw"><table><thead><tr><th>Field</th><th>Example</th></tr></thead><tbody><tr><td>Allotted to</td><td>Sayan Mukherjee (L3), Barasat charge</td></tr><tr><td>Allotted by</td><td>Rina Basu (L1), 24 Parganas circle</td></tr><tr><td>Method</td><td>Manual / Round robin</td></tr><tr><td>Round robin batch</td><td>RR-2026-11-0042 (with pool, scope and balancing used)</td></tr><tr><td>Date and time</td><td>12-11-2026 11:42</td></tr><tr><td>Reason (re-allotment only)</td><td>Officer transferred</td></tr></tbody></table></div>
 <p>The task list has columns <strong>Allotted by</strong> and <strong>Method</strong> so any user can see how each task reached the officer.</p>
 <hr>
 <h2>6. Task stages</h2>
@@ -132,7 +132,7 @@ Partial realisation keeps the task at stage 7 and adds the amount; full realisat
 </li><li>
 <strong>Create / upload / allot</strong>: as in sections 4 and 5.
 </li><li>
-<strong>Supervisor dashboard (L1, L2, L3)</strong>: the same as the Commissioner dashboard, limited to their jurisdiction.
+<strong>Supervisor dashboard (L1, L2)</strong>: the same as the Commissioner dashboard, limited to their jurisdiction.
 </li><li>
 <strong>Commissioner dashboard (L0)</strong>: see the Sample Dashboard. It has five tabs on one filter bar (task type, circle, charge, officer level, allotment method, period):
 <ul><li>
@@ -157,13 +157,13 @@ Officer × stage matrix: each officer's amount involved and open tasks by stage 
 </li><li>
 Circle-wise stage mix, ageing of open tasks, monthly trend, task-type performance, allotment method share.
 </li><li>
-<strong>Who allots and how</strong>: every officer from L0 to L3 who allotted tasks, with manual and round robin counts, round robin batches, median days taken to pass a task on and the result of the tasks they allotted (pending, overdue, disposal). Filter by level and by habit (mostly round robin, both, mostly manual).
+<strong>Who allots and how</strong>: every officer from L0 to L2 who allotted tasks, with manual and round robin counts, round robin batches, median days taken to pass a task on and the result of the tasks they allotted (pending, overdue, disposal). Filter by level and by habit (mostly round robin, both, mostly manual).
 </li><li>
 <strong>Officer profile</strong> opens as a popup in the centre of the screen, with back and a breadcrumb so the user can move from officer to task to allotter and return. Two tabs:
 <ul><li>
 <em>Tasks with this officer</em>: cards, tasks and amount involved by stage, the routes by which tasks reached the officer (each allotting officer clickable) and the full task list. Every card, stage, overdue count and route narrows the task list; every task opens its history.
 </li><li>
-<em>Allotments made</em> (L0 to L3, the allotter view): tasks allotted manually and by round robin, month-wise split, results by method, round robin batches (date, officers, tasks per officer, scope), the officers allotted to and the tasks allotted. Every row narrows the task list.
+<em>Allotments made</em> (L0 to L2, the allotter view): tasks allotted manually and by round robin, month-wise split, results by method, round robin batches (date, officers, tasks per officer, scope), the officers allotted to and the tasks allotted. Every row narrows the task list.
 </li></ul>
 </li><li>
 Task history with every officer in the allotment chain clickable.
@@ -184,9 +184,11 @@ Task register with <strong>Allotted by</strong> and <strong>Method</strong> colu
 </li><li>
 <code>task_type</code> (code, name, first_notice, sla_days)
 </li><li>
+<code>task_type_param</code> (task_type, name, kind, choices, required, order): the own parameters of each task type
+</li><li>
 <code>stage</code> (id, name, sla_days, is_closed)
 </li><li>
-<code>task</code> (id, gstin, trade_name, task_type, tax_period, amount_involved, priority, due_date, office_id, current_stage, current_officer_id, created_by, created_at, upload_batch_id)
+<code>task</code> (id, gstin, trade_name, task_type, tax_period, amount_involved, priority, due_date, office_id, current_stage, current_officer_id, created_by, created_at, upload_batch_id, params_json: values of the task type's own parameters)
 </li><li>
 <code>allotment</code> (id, task_id, from_officer_id, to_officer_id, method, rr_batch_id, reason, at)
 </li><li>
@@ -222,9 +224,11 @@ Hosting on the State Data Centre; daily backup.
 <hr>
 <h2>12. Points to decide</h2>
 <ol><li>
-Exact designation list and level mapping (L0 to L4) for the officer master.
+Which designations sit at each level (L0 to L3) in the officer master.
 </li><li>
-Whether L3 officers also hold cases or only allot.
+Whether L2 (charge) officers also hold cases or only allot.
+</li><li>
+The own parameters of each task type.
 </li><li>
 SLA days for each stage and task type.
 </li><li>

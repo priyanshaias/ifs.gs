@@ -1,6 +1,6 @@
 /* Access code gate for ifs.gs/t pages.
    Use: <script src="../gate.js" data-sec="ppt"></script> in <head>.
-   Sections: doc (report), ppt (presentation), res (research tools), utt (Unified Tax and Tasks).
+   Sections: doc (report), ppt (presentation), res (research tools), dash (Sample Dashboard), utt (Tech Plan).
    Codes are stored only as SHA-256 hashes of "ifsgs|" + code.
    lim > 0: the code opens the section that many times on one device (one opening = one browser session).
    lim = 0: no limit; the device is remembered. */
@@ -12,14 +12,17 @@
     { h: 'e85e8125fb27e13776c5a848fb90ac5caa0c5608e9dab8b7b34c91375eaf6a5b', s: ['*'], lim: 0 },
     { h: '98de6c7f1512a79d9e03c0823b3693afebdc1cd21a18515bef6c268cb1e12ce2', s: ['doc', 'ppt', 'res'], lim: 5 },
     { h: '50abd0b9042b45d3e486c50c88eb175c42f4091fac347264b415466118cf8475', s: ['doc', 'ppt', 'res'], lim: 0 },
-    { h: '087baf1c6635277b6bce7b130b45083c69e03f2a2377fdfdf706e776b8722878', s: ['utt'], lim: 5 },
-    { h: 'd54853b4ebdb8bd1a4dc5de60eeee1e4251028663b114baaa2f6f1c1e1371b0a', s: ['utt'], lim: 0 }
+    { h: '087baf1c6635277b6bce7b130b45083c69e03f2a2377fdfdf706e776b8722878', s: ['utt', 'dash'], lim: 5 },
+    { h: 'd54853b4ebdb8bd1a4dc5de60eeee1e4251028663b114baaa2f6f1c1e1371b0a', s: ['utt', 'dash'], lim: 0 },
+    { h: 'd4a1db6aca94ab249726712f034cbd03babe5176be7cffe4317060f799750d9a', s: ['dash'], lim: 0 }
   ];
-  var NAME = { doc: 'Detailed Report', ppt: 'Presentation', utt: 'Unified Tax and Tasks', res: 'Research' };
+  var NAME = { doc: 'Detailed Report', ppt: 'Presentation', utt: 'Unified Tax and Tasks', dash: 'Unified Tax and Tasks', res: 'Research' };
   function get(st, k) { try { return st.getItem(k); } catch (e) { return null; } }
   function put(st, k, v) { try { st.setItem(k, v); } catch (e) {} }
   var L = window.localStorage, S = window.sessionStorage;
-  function open() { return get(S, 'gate:' + SEC) || get(S, 'gate:*') || get(L, 'gate-always:' + SEC) || get(L, 'gate-always:*'); }
+  // a device already opened with a Tech Plan code may also open the dashboard
+  var KEYS = SEC === 'dash' ? ['dash', 'utt', '*'] : [SEC, '*'];
+  function open() { return KEYS.some(function (k) { return get(S, 'gate:' + k) || get(L, 'gate-always:' + k); }); }
   if (open()) return;
 
   var root = document.documentElement; root.classList.add('gate-lock');
@@ -47,7 +50,7 @@
     });
   }
   function build() {
-    var home = SEC === 'utt' && location.pathname.indexOf('/tech-plan') > -1 ? '../../' : '../';
+    var home = location.pathname.indexOf('/tech-plan') > -1 ? '../../' : '../';
     var g = document.createElement('div'); g.id = 'gate';
     g.innerHTML = '<form autocomplete="off"><p class="k">GST · West Bengal</p><h1>' + NAME[SEC] + '</h1>' +
       '<label for="gate-c">Access code</label><input id="gate-c" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" required>' +
@@ -61,13 +64,13 @@
       sha('ifsgs|' + inp.value.trim()).then(function (h) {
         var c = CODES.filter(function (x) { return x.h === h && (x.s[0] === '*' || x.s.indexOf(SEC) > -1); })[0];
         if (!c) { msg.textContent = 'This code is not valid for this page.'; inp.select(); return; }
-        var key = c.s[0] === '*' ? '*' : SEC;
+        var keys = c.s[0] === '*' ? ['*'] : c.s;
         if (c.lim) {
           var n = Number(get(L, 'gate-n:' + h) || 0);
           if (n >= c.lim) { msg.textContent = 'This code has already been used ' + c.lim + ' times on this device.'; inp.select(); return; }
           put(L, 'gate-n:' + h, String(n + 1));
-        } else put(L, 'gate-always:' + key, '1');
-        put(S, 'gate:' + key, '1');
+        } else keys.forEach(function (k) { put(L, 'gate-always:' + k, '1'); });
+        keys.forEach(function (k) { put(S, 'gate:' + k, '1'); });
         root.classList.remove('gate-lock'); g.remove();
         window.dispatchEvent(new Event('resize'));
       }).catch(function () { msg.textContent = 'Please open this page over https.'; });
