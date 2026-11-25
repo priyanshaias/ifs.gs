@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script>(function(){var q=location.search;if(/[?&]export\b/.test(q))document.documentElement.classList.add("export");if(/[?&]noannex\b/.test(q))document.documentElement.classList.add("noannex");})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
@@ -99,12 +100,38 @@ tr.wb .chip{background:var(--wb-bengal);color:#fff}
 .vw .ld{margin:0 0 8px;font-size:17px;line-height:1.35;color:var(--color-fg-muted)}
 .vw .how.out li{align-items:flex-start;font-size:17px} .vw .how.out li::before{margin-top:8px}
 .vw li .ow{margin-left:auto;flex:none;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:10px;background:var(--ink);color:var(--color-panel)}
+/* page 17 · codify, scale and refine */
+.c9{flex:1;min-height:0;display:flex;flex-direction:column;gap:22px}
+.c9-g{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px}
+.c9-c{display:flex;flex-direction:column;gap:12px;min-height:0}
+.c9-h{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;padding-bottom:14px;border-bottom:2px solid var(--ink);min-height:212px;align-content:start}
+.c9-h em{grid-row:span 2;font:400 46px/1 var(--font-anthropic-serif);font-style:normal;color:var(--wb-bengal)}
+.c9-h h3{margin:0 0 8px;font:400 26px/1.18 var(--font-anthropic-serif)}
+.c9-h p{margin:0;font-size:17px;line-height:1.4;color:var(--color-fg-muted)}
+.c9-fl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 10px}
+.c9-fl li{display:flex;align-items:center;gap:8px;font-size:16px;padding:4px 10px;border-radius:8px;background:color-mix(in srgb,var(--now) 8%,var(--color-panel))}
+.c9-fl em{font:700 13px/1 var(--font-anthropic-sans);color:var(--now);font-style:normal;min-width:14px}
+.c9-lk{display:flex;align-items:center;gap:12px;font-size:17px;line-height:1.35} .c9-lk .tg-ic{width:44px;height:44px} .c9-lk b{color:var(--wb-bengal)}
+.c9 .c6-cd pre{font-size:13.5px;line-height:1.45;padding:6px 0} .c9 .c6-cd pre > div{grid-template-columns:34px minmax(0,1fr) 0} .c9 .c6-cd .bar{font-size:14px;padding:8px 14px}
+.c9-sc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.c9-sc li{display:flex;gap:14px;align-items:center;padding:10px 16px;border-radius:12px;border-left:4px solid var(--kpi);background:color-mix(in srgb,var(--kpi) 6%,var(--color-panel))}
+.c9-sc .tg-ic{width:42px;height:42px}
+.c9-sc small{display:block;font-size:15px;color:var(--color-fg-muted)} .c9-sc b{display:block;font-size:18px;line-height:1.3;margin:2px 0} .c9-sc span{font-size:14px;color:var(--kpi);font-weight:700}
+.c9-rf{display:flex;align-items:center;gap:14px}
+.c9-rf ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.c9-rf li{display:flex;align-items:center;gap:10px} .c9-rf .tg-ic{width:36px;height:36px}
+.c9-rf b{display:block;font-size:17px;color:var(--c)} .c9-rf small{display:block;font-size:14.5px;color:var(--color-fg-muted)}
+.c9-ad{margin-top:auto;padding:12px 16px;border-radius:12px;background:color-mix(in srgb,#C62828 6%,var(--color-panel));font-size:17px;line-height:1.4}
 /* pages 3 to 6 · potential */
 .tri{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px}
-.ph{display:flex;align-items:center;gap:12px;font-size:25px;font-weight:700;margin:0 0 4px}
-.ph .bd{flex:none;width:32px;height:32px;border-radius:50%;background:var(--ink);color:var(--color-panel);display:grid;place-items:center;font-weight:800;font-size:17px}
-.ph .tag{margin-left:auto;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:10px}
-.ph .tag.k{background:var(--wb-peer);color:#fff} .ph .tag.o{border:1.5px solid var(--color-fg-muted);color:var(--color-fg-muted)}
+/* measure header: serif numeral + name, with a gauge of West Bengal's ₹ per ₹100 of total collection */
+.mh{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;column-gap:14px;margin:0 0 6px}
+.mh .mn{font:400 46px/1 var(--font-anthropic-serif);color:var(--wb-bengal);padding-right:14px;border-right:1px solid var(--color-border-line)}
+.mh .mt{font-size:24px;font-weight:700;line-height:1.1} .mh .mt small{display:block;margin-top:3px;font-size:14px;font-weight:400;color:var(--color-fg-muted)}
+.mh .mg{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.mh .mg span{font-size:13px;color:var(--color-fg-muted);font-variant-numeric:tabular-nums} .mh .mg span b{font:400 21px var(--font-anthropic-serif);color:var(--wb-bengal);margin-right:3px}
+.mh .mg i{display:block;width:130px;height:8px;border-radius:4px;background:color-mix(in srgb,var(--wb-bengal) 13%,transparent);position:relative;overflow:hidden}
+.mh .mg i::after{content:'';position:absolute;inset:0 auto 0 0;width:var(--f);border-radius:4px;background:color-mix(in srgb,var(--wb-bengal) var(--o),transparent)}
 .psub{font-size:18px;color:var(--color-fg-muted);margin:0 0 12px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
 .chips span{font-size:15px;font-weight:700;padding:3px 10px;border-radius:12px;background:color-mix(in srgb,var(--c) 13%,transparent);color:var(--c);font-variant-numeric:tabular-nums}
@@ -280,6 +307,22 @@ tr.wb .chip{background:var(--wb-bengal);color:#fff}
 .it-h span{font:400 34px/1.1 var(--font-anthropic-serif);position:relative;z-index:1}
 .it-h .rg-map{right:20px;top:-30px;bottom:auto;width:200px;height:120px} .it-h .rg-map path{fill:rgba(255,255,255,.18);stroke:rgba(255,255,255,.5)}
 .it-svg{display:block;width:100%;flex:1;min-height:0;margin-top:6px}
+/* scrutiny in numbers: one light strip between the process and the cards */
+.it .sc{margin:6px 28px 0;display:grid;grid-template-columns:auto auto auto auto auto minmax(0,1fr);align-items:center;column-gap:24px;padding:14px 26px;border-radius:14px;background:var(--color-panel);border:1.5px solid color-mix(in srgb,var(--pol) 22%,transparent)}
+.it .sc h4{margin:0;padding-right:24px;border-right:1px solid var(--color-border-line);font:400 30px/1 var(--font-anthropic-serif);color:var(--pol)}
+.it .sc small{display:block;margin-top:5px;font:400 15px/1.2 var(--font-anthropic-sans);color:var(--color-fg-muted)}
+.it .sc-k b{font:400 46px/1 var(--font-anthropic-serif);color:var(--pol)}
+.it .sc-ar{font-size:26px;color:var(--color-fg-muted)}
+.it .sc-crowd{display:flex;align-items:center;gap:12px} .it .sc-crowd > i{font-style:normal;font-size:24px;color:var(--color-fg-muted)}
+.it .sc-crowd .g{display:flex;align-items:center;gap:8px} .it .sc-crowd span{display:flex;flex-wrap:wrap} .it .sc-crowd span svg{display:block}
+.it .sc-crowd b{font:400 26px/1 var(--font-anthropic-serif);color:var(--pol);white-space:nowrap}
+.it .sc-amt .bar{position:relative;height:26px}
+.it .sc-amt .bar i{position:absolute;top:0;bottom:0}
+.it .sc-amt .lo{left:0;border-radius:6px 0 0 6px;background:color-mix(in srgb,var(--pol) 18%,transparent)}
+.it .sc-amt .hi{border-radius:0 6px 6px 0;background:repeating-linear-gradient(45deg,color-mix(in srgb,var(--pol) 18%,transparent) 0 5px,transparent 5px 10px)}
+.it .sc-amt .cash{left:0;border-radius:6px 0 0 6px;background:var(--pol)}
+.it .sc-amt .lab{display:flex;justify-content:space-between;align-items:flex-start;margin-top:8px}
+.it .sc-amt .lab span{font:400 26px/1 var(--font-anthropic-serif)} .it .sc-amt .c{color:var(--pol)} .it .sc-amt .a{color:var(--color-fg);text-align:right}
 .it-c{list-style:none;margin:8px 0 0;padding:0 28px 22px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}
 .it-c li{display:flex;gap:16px;align-items:flex-start;background:var(--color-panel);border-radius:14px;padding:16px 18px;border-top:5px solid var(--wb-gujarat);box-shadow:0 4px 16px color-mix(in srgb,var(--wb-gujarat) 12%,transparent)}
 .it-c .ic{flex:none;position:relative;width:52px;height:52px;border-radius:50%;background:var(--wb-gujarat);color:#fff;display:grid;place-items:center} .it-c .ic svg{width:28px;height:28px}
@@ -402,12 +445,12 @@ tr.wb .chip{background:var(--wb-bengal);color:#fff}
 /* page 13 as in the GST PPT: light rails, full width */
 .rm2 .rm-map,.rm2 .rm-acts{position:relative;padding-left:56px}
 .rm2 .rail{position:absolute;left:0;top:0;bottom:0;width:40px;border-radius:10px;background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--ink);display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;transform:rotate(180deg);font-size:15px;font-weight:800;letter-spacing:.22em;text-transform:uppercase}
-.rm2 .rm-map .bd{left:316px}
-.rm2 .rm-r{grid-template-columns:260px minmax(0,1fr);min-height:46px}
+.rm2 .rm-map .bd{left:316px} .rm2 .rm-map{min-height:0}
+.rm2 .rm-r{grid-template-columns:260px minmax(0,1fr);min-height:38px}
 .rm2 .rm-acts{grid-template-columns:260px minmax(0,1fr)}
 .rm2 .rm-acts > div{gap:8px}
-.rm2 .rm-a{padding:12px 14px!important;display:flex;flex-direction:column;gap:6px}
-.rm2 .rm-a h4{font:400 24px/1.15 var(--font-anthropic-serif)!important;color:var(--color-fg)!important;margin:0!important}
+.rm2 .rm-a{padding:10px 14px!important;display:flex;flex-direction:column;gap:5px}
+.rm2 .rm-a h4{font:400 22px/1.12 var(--font-anthropic-serif)!important;color:var(--color-fg)!important;margin:0!important}
 .rm2 .rm-a .no{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:700 14px/1 var(--font-anthropic-sans);background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--c)}
 .rm2 .rm-a p{font-size:15.5px!important;line-height:1.35}
 .rm2 .rm-a .ins{font-size:13.5px!important;color:var(--color-fg-muted)}
@@ -448,6 +491,40 @@ tr.wb .chip{background:var(--wb-bengal);color:#fff}
 .st-h li.empty{flex:1;background:none;border:2px dashed color-mix(in srgb,var(--c) 40%,transparent);border-left-width:2px}
 /* section 5 · steps pages */
 .sp{display:flex;flex-direction:column;gap:22px;height:100%}
+/* section 5 · plan pages with small visuals */
+.pl-vi{margin-left:auto;font:italic 400 30px/1 var(--font-anthropic-serif);color:var(--color-fg-muted)}
+.pl-g{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;margin-top:22px}
+.pl-c{display:flex;flex-direction:column;gap:14px;border-top:5px solid var(--c);padding-top:14px;min-height:0}
+.pl-tag{margin:-4px 0 0;font-size:20px;line-height:1.35;color:var(--c);font-weight:600}
+.pl-k{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:16px 20px;border-radius:14px;background:color-mix(in srgb,var(--c) 6%,var(--color-panel))}
+.pl-kh{display:flex;gap:12px;align-items:flex-start} .pl-kh b{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 15%,transparent);color:var(--c);font:400 20px/1 var(--font-anthropic-serif)} .pl-kh b:empty{display:none}
+.pl-kh span{font-size:21px;line-height:1.3;font-weight:700}
+.pl-mods{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pl-mod{position:relative;display:flex;flex-direction:column;justify-content:center;gap:12px;padding:20px;border-radius:14px;background:color-mix(in srgb,var(--c) 7%,var(--color-panel));border:2px solid color-mix(in srgb,var(--c) 30%,transparent)}
+.pl-mod .mi{width:56px;height:56px;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--c)} .pl-mod .mi svg{width:32px;height:32px}
+.pl-mod b{font-size:21px;line-height:1.3}
+.pl-mod i{position:absolute;bottom:-16px;width:12px;height:14px;border-radius:0 0 3px 3px;background:color-mix(in srgb,var(--c) 45%,transparent)} .pl-mod i:nth-of-type(1){left:30%} .pl-mod i:nth-of-type(2){right:30%}
+.pl-base{margin-top:4px;padding:12px;border-radius:12px;text-align:center;font-size:17px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent)}
+.pl-fun{display:flex;flex-direction:column;align-items:center;gap:6px}
+.pl-fun > div{width:var(--w);display:flex;align-items:center;justify-content:center;gap:10px;padding:12px 14px;border-radius:10px;background:color-mix(in srgb,var(--c) calc(30% - var(--w) / 5),var(--color-panel));border:1.5px solid color-mix(in srgb,var(--c) 35%,transparent);font-size:19px}
+.pl-fun span{display:flex;gap:4px;color:var(--c)} .pl-fun span svg{width:24px;height:24px} .pl-fun em{font:400 26px/1 var(--font-anthropic-serif);font-style:normal;color:var(--c)}
+.pl-reg{display:flex;flex-direction:column;gap:6px}
+.pl-reg div{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;background:var(--color-panel);font-size:18px;border-left:4px solid var(--c)}
+.pl-reg i{color:var(--c);display:flex} .pl-reg svg{width:22px;height:22px}
+.pl-upi{display:flex;align-items:flex-start;justify-content:space-between}
+.pl-upi > div{display:flex;flex-direction:column;align-items:center;gap:5px;width:78px;text-align:center}
+.pl-upi span{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:var(--color-panel);border:1.5px solid color-mix(in srgb,var(--c) 35%,transparent);color:var(--c)} .pl-upi span svg{width:26px;height:26px}
+.pl-upi small{font-size:14px;line-height:1.2;font-weight:600} .pl-upi > i{font-style:normal;color:var(--color-fg-muted);font-size:20px;margin-top:10px}
+.pl-chips{display:flex;flex-wrap:wrap;align-items:center;gap:8px} .pl-chips span{font-size:15px;color:var(--color-fg-muted)}
+.pl-chips em{font-style:normal;font-size:15px;font-weight:700;padding:4px 12px;border-radius:14px;background:color-mix(in srgb,var(--c) 13%,transparent);color:var(--c)}
+.pl-gap{display:flex;flex-direction:column;gap:8px}
+.pl-gap > div{position:relative;display:grid;grid-template-columns:86px minmax(0,1fr);align-items:center;height:30px}
+.pl-gap small{font-size:16px;font-weight:700} .pl-gap .bw{position:relative;height:24px} .pl-gap i{display:block;height:24px;border-radius:5px;background:color-mix(in srgb,var(--c) 55%,transparent)}
+.pl-gap s{position:absolute;top:0;height:24px;box-sizing:border-box;border:2px dashed #C62828;border-radius:5px;text-decoration:none;color:#C62828;font-size:14px;font-weight:800;display:grid;place-items:center}
+.pl-eq{display:flex;align-items:center;gap:14px;color:var(--c)} .pl-eq svg{width:40px;height:40px;flex:none}
+.pl-eq span{font-size:16px;color:var(--color-fg-muted)} .pl-eq b{font:400 34px/1 var(--font-anthropic-serif);color:var(--c)}
+.pl-sv{flex:1;min-height:0;width:100%}
+#p23 .pl-kh span{font:400 28px/1.25 var(--font-anthropic-serif)}
 .sp-tl{display:flex;align-items:center;gap:0}
 .sp-tl > div{display:flex;align-items:baseline;gap:12px;padding:10px 22px;border-radius:30px;border:2px solid var(--color-border-line);color:var(--color-fg-muted)}
 .sp-tl > div b{font:400 26px/1 var(--font-anthropic-serif)} .sp-tl > div span{font-size:16px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
@@ -498,6 +575,159 @@ tr.wb .chip{background:var(--wb-bengal);color:#fff}
 .x4r{display:flex;flex-direction:column;gap:14px;min-height:0} .x4r .bf.reg{flex:1} .x4r .bf.reg img{height:100%}
 .x4b{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;align-items:center}
 .tp{margin:0;padding-left:22px;font-size:19px;line-height:1.4;font-weight:600} .tp li{margin-bottom:6px} .tp li::marker{color:var(--kpi)}
+/* page 29 · Tableau inside a TMS window; access as nested scopes */
+.x3n{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;height:100%}
+.x3w{display:flex;flex-direction:column;min-height:0;border-radius:16px;overflow:hidden;border:1.5px solid var(--color-border-line);background:var(--color-panel);box-shadow:0 10px 30px rgba(20,33,61,.12)}
+.tw-bar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:color-mix(in srgb,var(--tech) 8%,var(--color-panel));border-bottom:1px solid var(--color-border-line)}
+.tw-bar i{width:11px;height:11px;border-radius:50%;background:color-mix(in srgb,var(--color-fg) 18%,transparent)} .tw-bar b{margin-left:10px;font-size:19px;color:var(--tech)}
+.tw-bar span{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:var(--color-fg-muted)}
+.tw-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px 14px;border-bottom:1px solid var(--color-border-line)}
+.tw-tabs div{display:flex;align-items:center;gap:10px;padding:6px;border-radius:10px;border:1.5px solid var(--color-border-line);color:var(--color-fg-muted)}
+.tw-tabs div.on{border-color:var(--tech);background:color-mix(in srgb,var(--tech) 7%,var(--color-panel));color:var(--tech)}
+.tw-tabs img{width:84px;height:48px;object-fit:cover;object-position:top left;border-radius:6px;border:1px solid var(--color-border-line)} .tw-tabs b{font-size:17px}
+.tw-main{flex:1;min-height:0;padding:10px} .tw-main img{display:block;width:100%;height:100%;object-fit:contain;object-position:top center}
+.x3a{display:flex;flex-direction:column;min-height:0}
+.x3a h3{display:flex;align-items:center;gap:12px;margin:0 0 6px;font:400 34px/1.1 var(--font-anthropic-serif);color:var(--pol)} .x3a .q{margin:0 0 16px;font-size:21px;font-weight:600}
+.nest{flex:1;display:flex;min-height:0} .nest > .nz{flex:1}
+.nz{display:flex;flex-direction:column;gap:10px;padding:14px 18px 18px;border-radius:16px;border:2px solid color-mix(in srgb,var(--pol) calc(25% + var(--k) * 15%),transparent);background:color-mix(in srgb,var(--pol) calc(4% + var(--k) * 4%),var(--color-panel))}
+.nz .nz{flex:1;margin-left:28px}
+.nh{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap} .nh b{font:400 26px/1 var(--font-anthropic-serif);color:var(--pol)} .nh span{font-size:21px;font-weight:700} .nh em{font-style:normal;font-size:17px;color:var(--color-fg-muted)}
+/* page 31 · revenue mobilization actions */
+.x5a h3 .n1,.x5k .kh b{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font:400 22px/1 var(--font-anthropic-serif)}
+.x5a h3 .n1{background:color-mix(in srgb,var(--wb-bengal) 15%,transparent);color:var(--wb-bengal)}
+.x5n{flex:1;min-height:0;display:grid;grid-template-columns:1.3fr 1fr;gap:26px}
+.x5k{display:flex;flex-direction:column;gap:18px;border-radius:18px;padding:20px 26px;background:color-mix(in srgb,var(--pol) 5%,var(--color-panel));border:1.5px solid color-mix(in srgb,var(--pol) 25%,transparent)}
+.x5k .kh{display:flex;align-items:center;gap:12px} .x5k .kh b{background:color-mix(in srgb,var(--pol) 15%,transparent);color:var(--pol)} .x5k h3{margin:0;font:400 30px/1.15 var(--font-anthropic-serif)}
+.x5c{display:flex;flex-direction:column;justify-content:center;gap:18px;flex:1}
+.x5r{display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px;align-items:center}
+.gi{width:56px;height:56px;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--pol) 12%,transparent);color:var(--pol)}
+.x5r > div{position:relative} .x5r small{display:block;font-size:18px;font-weight:600;margin-bottom:6px}
+.x5r i{display:block;height:30px;border-radius:6px;background:color-mix(in srgb,var(--pol) 50%,transparent)}
+.x5r s{position:absolute;bottom:0;height:30px;box-sizing:border-box;border:2px dashed #C62828;border-radius:6px;text-decoration:none;color:#C62828;font-size:16px;font-weight:800;display:grid;place-items:center}
+.ck{margin-top:auto;display:flex;flex-wrap:wrap;gap:10px} .ck span{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:20px;background:var(--color-panel);border:1.5px solid color-mix(in srgb,var(--pol) 30%,transparent);font-size:18px;font-weight:700;color:var(--pol)}
+.eqb{flex:1;display:flex;align-items:center;gap:24px}
+.eqb .sh{width:90px;height:90px;border-radius:22px;display:grid;place-items:center;background:color-mix(in srgb,var(--pol) 12%,transparent);color:var(--pol);flex:none}
+.eqb small{display:block;font-size:18px;color:var(--color-fg-muted);margin-bottom:10px}
+.fx{display:flex;align-items:center;gap:12px} .fx span{padding:10px 18px;border-radius:12px;background:var(--color-panel);border:1.5px solid color-mix(in srgb,var(--pol) 30%,transparent);font:400 44px/1 var(--font-anthropic-serif);color:var(--pol)} .fx i{font-style:normal;font-size:34px;color:var(--color-fg-muted)}
+/* annex A9 and A10 · notes and sources */
+.nt{width:100%;border-collapse:collapse}
+.nt th{text-align:left;font-size:14px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--color-fg-muted);padding:0 14px 8px 0;border-bottom:2px solid var(--ink)}
+.nt td{padding:7px 14px 7px 0;border-bottom:1px solid var(--color-border-line);vertical-align:top;font-size:16.5px;line-height:1.38}
+.nt td.pn{width:64px} .nt td.pn b{font:400 24px/1 var(--font-anthropic-serif);color:var(--wb-bengal)}
+.nt td small{display:block;font-size:14px;font-weight:700;color:var(--color-fg-muted);margin-bottom:2px}
+.nt td div{display:inline}
+/* page 19 · three levels of comparison, from visible to invisible */
+.lv2{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px}
+.lv2-d{display:flex;align-items:center;gap:14px;font-size:15px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.lv2-d span:first-child{color:var(--color-fg-muted)} .lv2-d span:last-child{color:var(--wb-gujarat)}
+.lv2-d i{flex:1;height:6px;border-radius:3px;background:linear-gradient(90deg,color-mix(in srgb,var(--wb-gujarat) 12%,transparent),var(--wb-gujarat))}
+.lv2-g{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1.12fr .9fr;gap:22px}
+.lv2-c{display:flex;flex-direction:column;gap:12px;min-height:0;border-radius:16px;padding:18px 22px;border:1.5px solid var(--color-border-line);background:var(--color-panel)}
+.lv2-c.lvb{background:color-mix(in srgb,var(--wb-gujarat) 4%,var(--color-panel));border-color:color-mix(in srgb,var(--wb-gujarat) 25%,transparent)}
+.lv2-c.lvc{background:color-mix(in srgb,var(--wb-gujarat) 9%,var(--color-panel));border-color:color-mix(in srgb,var(--wb-gujarat) 45%,transparent)}
+.lv2-c .tag{font-size:14px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--color-fg-muted)} .lv2-c.lvb .tag,.lv2-c.lvc .tag{color:var(--wb-gujarat)}
+.lv2-c h4{margin:0;font:400 25px/1.16 var(--font-anthropic-serif)} .lv2-c h4 b{font-weight:400;color:var(--wb-gujarat)} .lv2-c.lva h4 b{color:var(--color-fg)}
+.lv-venn{flex:1;min-height:0;width:100%}
+.lv2-c .lvnt{margin:0;font-size:15px;line-height:1.4;color:var(--color-fg-muted)} .lv2-c .lvnt b{color:var(--wb-gujarat)}
+.lv2 .lvrt{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch} .lv2 .lvrt > i{align-self:center;font-style:normal;font-size:28px;color:var(--wb-gujarat)}
+.lv2 .lvrt .lvbx{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border-radius:12px;background:var(--color-panel);border:1.5px solid var(--color-border-line);font-size:16px;line-height:1.35}
+.lv2 .lvrt .lvbx small{font:400 22px/1 var(--font-anthropic-serif);color:var(--color-fg)} .lv2 .lvrt .lvbx em{margin-top:auto;font-style:normal;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--color-fg-muted)}
+.lv2 .lvrt .gjb{border-color:var(--wb-gujarat)} .lv2 .lvrt .gjb small,.lv2 .lvrt .gjb em{color:var(--wb-gujarat)}
+.lv2 .lvac{display:flex;flex-wrap:wrap;align-items:center;gap:8px} .lv2 .lvac span{padding:5px 12px;border-radius:14px;font-size:15px;font-weight:700;background:color-mix(in srgb,var(--wb-gujarat) 12%,transparent);color:var(--wb-gujarat)} .lv2 .lvac b{font-size:15px;color:var(--color-fg-muted)}
+.lv2 ul{list-style:none;margin:auto 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.lv2 li{display:flex;gap:12px;align-items:center;font-size:17px;line-height:1.35} .lv2 li svg{flex:none;color:var(--wb-gujarat)} .lv2 li b{color:var(--color-fg)}
+.lv2 .lvkf{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.lv2 .lvkf span{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 14px;border-radius:14px;background:var(--color-panel);color:var(--color-fg-muted);width:100%;box-sizing:border-box;text-align:center}
+.lv2 .lvkf span.al{color:var(--wb-gujarat);border:2px solid var(--wb-gujarat)} .lv2 .lvkf small{font-size:17px;font-weight:700;color:var(--color-fg)}
+.lv2 .lvkf svg{width:30px;height:30px} .lv2 .lvkf > i{font-style:normal;font-size:24px;line-height:1;color:var(--wb-gujarat)}
+.lv2-c.lvc p{margin:0;font-size:16.5px;line-height:1.4;color:var(--color-fg-muted)}
+.lv2-k{flex:none;display:grid;grid-template-columns:330px minmax(0,1fr);gap:20px;align-items:center;padding:12px 20px;border-radius:14px;background:color-mix(in srgb,var(--ink) 5%,var(--color-panel));border:1.5px solid color-mix(in srgb,var(--ink) 18%,transparent)}
+.lv2-k p{margin:0;font-size:18px;line-height:1.35} .lv2-k p b{color:var(--ink)}
+.lv2-k ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.lv2-k a{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:var(--color-panel);border:1.5px solid var(--color-border-line);height:100%;box-sizing:border-box}
+.lv2-k a:hover,.lv2-k a:focus-visible{border-color:var(--ink)}
+.lv2-k em{font:400 28px/1 var(--font-anthropic-serif);font-style:normal;color:var(--wb-bengal)}
+.lv2-k span{font-size:16px;font-weight:700;line-height:1.25} .lv2-k small{display:block;font-size:13px;font-weight:600;color:var(--color-fg-muted);margin-top:2px}
+/* page 22 · knowledge into algorithms; rules refreshed as evaders adapt */
+.b0{flex:1;min-height:0;display:grid;grid-template-columns:.75fr 1.25fr;gap:28px}
+.b0-c{display:flex;flex-direction:column;gap:14px;min-height:0;border-radius:16px;padding:20px 24px;border:1.5px solid var(--color-border-line);background:var(--color-panel)}
+.b0-c .tag{font-size:14px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--color-fg-muted)}
+.b0-r{background:color-mix(in srgb,var(--wb-gujarat) 4%,var(--color-panel));border-color:color-mix(in srgb,var(--wb-gujarat) 25%,transparent)} .b0-r .tag{color:var(--wb-gujarat)}
+.b0-r h4{margin:0;font:400 26px/1.25 var(--font-anthropic-serif)} .b0-r h4 b{font-weight:400;color:var(--wb-gujarat)}
+.b0-f{flex:1;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.b0-f span{display:grid;grid-template-columns:50px minmax(0,1fr);grid-template-rows:auto auto;column-gap:14px;align-items:center;padding:14px 18px;border-radius:14px;background:color-mix(in srgb,var(--color-fg) 4%,var(--color-panel));color:var(--color-fg-muted)}
+.b0-f span svg{grid-row:span 2} .b0-f b{font:400 24px/1.15 var(--font-anthropic-serif);color:var(--color-fg)} .b0-f small{font-size:16px}
+.b0-f span.al{background:color-mix(in srgb,var(--wb-gujarat) 8%,var(--color-panel));border:2px solid var(--wb-gujarat);color:var(--wb-gujarat)} .b0-f span.al b{color:var(--wb-gujarat)}
+.b0-f > i{font-style:normal;text-align:center;font-size:24px;line-height:1;color:var(--color-fg-muted)}
+.b0-ch{flex:1;min-height:0;width:100%}
+.b0-cy{display:flex;align-items:center;justify-content:center;gap:14px} .b0-cy span{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:20px;background:var(--color-panel);border:1.5px solid color-mix(in srgb,var(--wb-gujarat) 35%,transparent);font-size:18px;font-weight:700;color:var(--wb-gujarat)} .b0-cy i{font-style:normal;font-size:22px;color:var(--color-fg-muted)}
+.lgx .bl-rr{gap:12px} .bl-rr .b0-c{flex:1;padding:14px 18px;gap:8px} .bl-rr .b0-r h4{font-size:21px;line-height:1.25} .bl-rr .b0-cy span{font-size:16px;padding:6px 12px} .bl-rr #bl-r{display:flex;flex-direction:column;gap:8px}
+.bl-rr .b0-ch{max-height:180px} .lgx .bl-kf{height:100%} .lgx .bl-kf .b0-c{flex:1}
+#slide-tk .s-title{margin-bottom:10px} #slide-tk .s-take{margin-bottom:12px} #slide-tk .di-r{gap:6px}
+/* page 32 · five medium-term initiatives */
+#p23 .s-take{font-size:19px;line-height:1.45;margin-bottom:6px}
+.md-g{flex:1;min-height:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;margin-top:14px}
+.md-c{grid-column:span 2;display:flex;flex-direction:column;gap:8px;padding:14px 18px;border-radius:14px;background:color-mix(in srgb,var(--c) 6%,var(--color-panel));border-top:5px solid var(--c)}
+.md-c:nth-child(n+4){grid-column:span 3}
+.md-h{display:flex;align-items:center;gap:10px} .md-h b{font:400 34px/1 var(--font-anthropic-serif);color:var(--c)}
+.md-h .mi{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--c)} .md-h .mi svg{width:24px;height:24px}
+.md-h .tg{margin-left:auto;font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.md-c h4{margin:0;font:400 25px/1.2 var(--font-anthropic-serif)} .md-c p{margin:0;font-size:19px;line-height:1.42;color:var(--color-fg-muted)}
+.md-ch{margin-top:auto;display:flex;flex-wrap:wrap;align-items:center;gap:8px} .md-ch em{font-style:normal;font-size:15px;font-weight:700;padding:4px 12px;border-radius:14px;background:var(--color-panel);border:1.5px solid color-mix(in srgb,var(--c) 35%,transparent);color:var(--c)} .md-ch i{font-style:normal;color:var(--color-fg-muted)}
+.md-nx{all:unset;cursor:pointer;margin-top:auto;font-size:15px;font-weight:700;color:var(--c)} .md-nx:hover{text-decoration:underline}
+/* page 33 · machine learning and LLMs */
+.m2{display:grid;grid-template-columns:1fr 1fr;gap:28px;height:100%}
+.m2-c{display:flex;flex-direction:column;gap:12px;min-height:0;padding:18px 24px;border-radius:16px;background:color-mix(in srgb,var(--tech) 5%,var(--color-panel));border:1.5px solid color-mix(in srgb,var(--tech) 25%,transparent)}
+.m2-l{background:color-mix(in srgb,var(--pol) 5%,var(--color-panel));border-color:color-mix(in srgb,var(--pol) 25%,transparent)}
+.m2-c .tag{font-size:14px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--tech)} .m2-l .tag{color:var(--pol)}
+.m2-c h4{margin:0;font:400 24px/1.3 var(--font-anthropic-serif)} .m2-c h4 b{font-weight:400;color:var(--tech)} .m2-l h4 b{color:#C62828}
+.m2-c p{margin:0;font-size:17px;line-height:1.42;color:var(--color-fg-muted)} .m2-c p b{color:var(--color-fg)}
+.m2-f{display:grid;grid-template-columns:1fr auto 1.3fr auto 1fr;align-items:stretch;gap:10px}
+.m2-f > i{align-self:center;font-style:normal;font-size:26px;color:var(--tech)}
+.m2-f .bx{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:12px;border-radius:12px;background:var(--color-panel);border:1.5px solid var(--color-border-line);text-align:center;color:var(--tech)}
+.m2-f .bx b{font:400 40px/1 var(--font-anthropic-serif)} .m2-f .bx small{font-size:15px;font-weight:700;color:var(--color-fg)}
+.m2-f .al{border-color:var(--tech)} .m2-f .al span{font-size:18px;font-weight:700;color:var(--tech)}
+.m2-op{display:grid;grid-template-columns:1.2fr 1fr;gap:10px}
+.m2-op div{padding:10px 14px;border-radius:12px;background:var(--color-panel)} .m2-op small{display:block;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--color-fg-muted)} .m2-op b{font-size:18px}
+.m2-op .pr{border:2px solid var(--tech)} .m2-op .pr b{color:var(--tech)} .m2-op .sc{border:1.5px dashed var(--color-fg-muted)}
+.m2-dp{display:grid;grid-template-columns:1fr auto 1.25fr;gap:10px;align-items:stretch} .m2-dp > i{align-self:center;font-style:normal;font-size:26px;color:var(--pol)}
+.m2-dp > div{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border-radius:12px;background:var(--color-panel)} .m2-dp b{font-size:18px} .m2-dp small{font-size:15px;line-height:1.35;color:var(--color-fg-muted)}
+.m2-dp .now{border:2px dashed #C62828;color:#C62828} .m2-dp .to{border:2px solid var(--kpi);color:var(--kpi)} .m2-dp .to b{color:var(--kpi)} .m2-dp .now b{color:#C62828}
+.m2-md{margin-top:auto;display:grid;grid-template-columns:1fr 1.3fr;gap:10px}
+.m2-md div{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:12px;background:var(--color-panel)} .m2-md small{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--color-fg-muted)}
+.m2-md b{font:400 26px/1.1 var(--font-anthropic-serif)} .m2-md span{font-size:15px;color:var(--color-fg-muted)}
+.m2-md .q{border:1.5px solid color-mix(in srgb,#C62828 45%,transparent)} .m2-md .q b{color:#C62828} .m2-md .ok{border:2px solid var(--kpi)} .m2-md .ok b{color:var(--kpi)}
+#ml2 .m2-c{gap:18px;justify-content:space-between} #ml2 .m2-c h4{font-size:29px} #ml2 .m2-c p{font-size:20px}
+#ml2 .m2-f .bx{padding:20px 14px} #ml2 .m2-f .bx b{font-size:56px} #ml2 .m2-f .bx small,#ml2 .m2-f .al span{font-size:19px}
+#ml2 .m2-op div,#ml2 .m2-dp > div,#ml2 .m2-md div{padding:16px 18px} #ml2 .m2-op b,#ml2 .m2-dp b{font-size:21px} #ml2 .m2-dp small{font-size:17px} #ml2 .m2-md b{font-size:32px} #ml2 .m2-md span{font-size:17px}
+#ml2 .m2-md{margin-top:0}
+/* thank you */
+.slide.ty{justify-content:center;align-items:center;overflow:hidden;background:radial-gradient(120% 90% at 85% 100%,color-mix(in srgb,var(--wb-bengal) 9%,var(--color-panel)) 0%,var(--color-panel) 60%)}
+.ty-c{display:flex;flex-direction:column;align-items:center;gap:28px} .ty-c i{width:90px;height:8px;border-radius:4px;background:var(--wb-bengal)}
+.ty-c h1{margin:0;font:400 150px/1 var(--font-anthropic-serif);letter-spacing:-.01em;color:var(--color-fg)}
+/* page 33 · progress so far */
+.pg{display:flex;flex-direction:column;gap:18px;height:100%}
+.pg-tw{position:relative;flex:none;height:150px;margin:0 30px;border-radius:14px}
+.pg-mo{position:absolute;left:0;top:30px;font-size:15px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--color-fg-muted)}
+.pg-ev{position:absolute;left:var(--x);top:6px;bottom:46px;display:flex;flex-direction:column;align-items:flex-start}
+.pg-ev.l{transform:translateX(-100%);align-items:flex-end} .pg-ev.l .cd{margin-right:10px} .pg-ev.r .cd{margin-left:10px}
+.pg-ev .cd{display:flex;align-items:center;gap:14px;padding:14px 22px;border-radius:14px;background:color-mix(in srgb,var(--s) 10%,var(--color-panel));border:2px solid color-mix(in srgb,var(--s) 45%,transparent);color:var(--s);white-space:nowrap}
+.pg-ev .cd b{display:block;font-size:22px;color:var(--color-fg)} .pg-ev .cd small{display:block;font-size:15px;color:var(--color-fg-muted);margin-top:2px}
+.pg-ev i{flex:1;width:3px;background:var(--s);margin:0}
+.pg-ev.l i{margin-right:-1.5px} .pg-ev.r i{margin-left:-1.5px}
+.pg-ax{position:absolute;left:0;right:0;bottom:30px;height:4px;border-radius:2px;background:var(--color-border-line)}
+.pg-ax .rg{position:absolute;top:-6px;height:16px;border-radius:8px;background:color-mix(in srgb,var(--wb-bengal) 30%,transparent)}
+.pg-ax .tk{position:absolute;top:-5px;width:2px;height:14px;margin-left:-1px;background:var(--color-border-line)}
+.pg-ax .tk.on{width:12px;height:12px;top:-4px;margin-left:-6px;border-radius:50%;background:var(--color-fg)}
+.pg-ax .tk em{position:absolute;top:20px;left:50%;transform:translateX(-50%);font-style:normal;font-size:15px;color:var(--color-fg-muted)} .pg-ax .tk.on em{font-weight:800;color:var(--color-fg)}
+
+.pg-l{flex:1;min-height:0;list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.pg-l li{flex:1;display:grid;grid-template-columns:46px 120px minmax(0,1fr) 420px;gap:20px;align-items:center;padding:10px 22px;border-radius:14px;background:color-mix(in srgb,var(--c) 5%,var(--color-panel));border-left:5px solid var(--c)}
+.pg-n{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--c);font:400 24px/1 var(--font-anthropic-serif)}
+.pg-t{justify-self:start;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--c)}
+.pg-m h4{margin:0 0 4px;font:400 27px/1.15 var(--font-anthropic-serif)} .pg-m p{margin:0;font-size:19px;line-height:1.35;color:var(--color-fg-muted)}
+.pg-s{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}
+.pg-st{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:20px;font-size:17px;font-weight:700;color:var(--s);background:color-mix(in srgb,var(--s) 11%,var(--color-panel));border:1.5px solid color-mix(in srgb,var(--s) 40%,transparent)}
 .x5{display:flex;flex-direction:column;gap:26px;height:100%}
 .x5a{border-radius:18px;padding:20px 26px;background:color-mix(in srgb,var(--wb-bengal) 5%,var(--color-panel));border:1.5px solid color-mix(in srgb,var(--wb-bengal) 25%,transparent)}
 .x5a h3{margin:0 0 16px;display:flex;align-items:center;gap:12px;font:400 32px/1.1 var(--font-anthropic-serif)}
@@ -511,8 +741,9 @@ tr.wb .chip{background:var(--wb-bengal);color:#fff}
 .x5b .tl{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;border-radius:18px;padding:18px;background:color-mix(in srgb,var(--pol) 6%,var(--color-panel));border-top:5px solid var(--pol);text-align:center}
 .x5b .tl span{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--pol) 13%,transparent);color:var(--pol)} .x5b .tl b{font-size:23px;line-height:1.3}
 .x3r{display:flex;flex-direction:column} .x3r .rl{flex:1} .x3r .rl li{flex:1} .x3r .rl h4{font-size:22px} .x3r .rl p{font-size:18px}
-.x1b{display:grid;grid-template-columns:680fr 1000fr;gap:24px;height:100%;align-items:start}
-.x1b .c1{display:flex;flex-direction:column;gap:16px}
+.x1b{display:grid;grid-template-columns:.94fr 1.06fr;gap:28px;height:100%;align-items:stretch}
+.x1b .c1,.x1b .c2{display:flex;flex-direction:column;gap:20px;min-height:0}
+.x1b .bf{flex:1;min-height:0} .x1b .bf img{flex:1;min-height:0;height:100%;object-fit:cover;object-position:top left} .x1b .c2 .bf img{object-fit:contain;object-position:top center}
 .x1b .bf .bar{font-size:19px;color:var(--color-fg);gap:8px;padding:9px 14px} .x1b .bf .bar span{margin-left:6px;display:flex;align-items:center;gap:10px}
 .x1b .cn{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:color-mix(in srgb,var(--tech) 14%,transparent);color:var(--tech);font:400 17px/1 var(--font-anthropic-serif)}
 /* network analysis page */
@@ -540,6 +771,181 @@ tr.wb .chip{background:var(--wb-bengal);color:#fff}
 .controls #ret{border-color:var(--wb-bengal);color:var(--wb-bengal);font-weight:600}
 .controls #ret[hidden]{display:none}
 .hint{color:var(--color-fg-muted);font-size:12px}
+/* section 3 · understanding technology in GST (pages 13 to 17 and 20 to 22, annex A6) */
+.tg-lab{font-size:14px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--color-fg-muted)}
+.tg-h{display:flex;align-items:baseline;gap:14px;margin:0 0 12px;padding-bottom:8px;border-bottom:2px solid var(--ink)}
+.tg-h b{font:400 28px/1.1 var(--font-anthropic-serif)} .tg-h span{font-size:17px;color:var(--color-fg-muted)}
+.tg-h em{font-style:normal;font:700 15px/1 var(--font-anthropic-sans);color:var(--wb-bengal);letter-spacing:.06em;text-transform:uppercase}
+.tg-ic{display:grid;place-items:center;flex:none;border-radius:50%;background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--c)}
+.tg-ic svg{width:60%;height:60%}
+/* page 13 · four-stage cycle */
+.c1{flex:1;min-height:0;display:flex;flex-direction:column;gap:22px}
+.c1-g{flex:1;display:grid;grid-template-columns:300px repeat(4,minmax(0,1fr));grid-template-rows:auto 1fr 1fr;column-gap:16px}
+.c1-st{display:flex;align-items:center;gap:12px;padding:0 0 12px;border-bottom:2px solid var(--ink);position:relative}
+.c1-st .n{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:2.5px solid var(--ink);font:400 24px/1 var(--font-anthropic-serif);flex:none}
+.c1-st b{display:block;font-size:21px;line-height:1.2} .c1-st small{display:block;font-size:15px;color:var(--color-fg-muted);margin-top:2px}
+.c1-st:not(.h)::after{content:"";position:absolute;right:-14px;top:14px;border:8px solid transparent;border-left:11px solid var(--color-fg-muted)}
+.c1-st:nth-child(5)::after{display:none}
+.c1-st.h{border-bottom-color:transparent}
+.c1-rl{padding:20px 14px 20px 0;border-bottom:1px solid var(--color-border-line);display:flex;gap:14px;align-items:flex-start}
+.c1-rl .tg-ic{width:52px;height:52px}
+.c1-rl b{display:block;font:400 28px/1.15 var(--font-anthropic-serif)} .c1-rl small{display:block;font-size:16px;line-height:1.35;color:var(--color-fg-muted);margin-top:4px}
+.c1-c{padding:20px 4px;border-bottom:1px solid var(--color-border-line);display:flex;flex-direction:column;gap:10px;justify-content:center}
+.c1-c .bar{height:26px;border-radius:4px;background:color-mix(in srgb,var(--c) 75%,transparent);width:var(--w)}
+.c1-c .bar.lt{background:color-mix(in srgb,var(--c) 28%,transparent)}
+.c1-c p{margin:0;font-size:18px;line-height:1.35} .c1-c p b{color:var(--c)}
+.c1-c.hi{background:color-mix(in srgb,var(--wb-bengal) 8%,transparent);border-radius:12px;border:2px solid var(--wb-bengal);padding:18px 16px;margin:6px 0}
+.c1-c .done{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:700;color:var(--kpi)}
+.c1-c .done .tg-ic{width:34px;height:34px}
+.c1-ch{display:flex;flex-wrap:wrap;gap:6px}
+.c1-ch span{font-size:14px;line-height:1.25;padding:4px 9px;border-radius:8px;background:color-mix(in srgb,var(--kpi) 9%,transparent);color:var(--color-fg)} .c1-ch span b{color:var(--kpi)}
+.c1-tr{margin-top:auto;display:grid;grid-template-columns:300px minmax(0,1fr) 70px minmax(0,1fr);gap:16px;align-items:stretch}
+.c1-tr .lb{display:flex;flex-direction:column;justify-content:center}
+.c1-tr .lb b{font:400 30px/1.15 var(--font-anthropic-serif);color:#C62828} .c1-tr .lb small{font-size:16px;color:var(--color-fg-muted);margin-top:4px;line-height:1.35}
+.c1-tr .cd{border-radius:14px;padding:16px 20px;display:flex;gap:16px;align-items:center;border:1.5px solid color-mix(in srgb,var(--c) 35%,transparent);background:color-mix(in srgb,var(--c) 5%,var(--color-panel))}
+.c1-tr .cd .tg-ic{width:56px;height:56px}
+.c1-tr .cd h4{margin:0 0 4px;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--c)} .c1-tr .cd p{margin:0;font-size:20px;line-height:1.38}
+.c1-tr .ne{display:grid;place-items:center;font:400 64px/1 var(--font-anthropic-serif);color:#C62828}
+/* page 14 · three witnesses */
+.c2{flex:1;min-height:0;display:grid;grid-template-columns:540px minmax(0,1fr);gap:48px}
+.c2-l{display:flex;flex-direction:column;gap:18px;padding-right:40px;border-right:1px solid var(--color-border-line)}
+.c2-l svg{display:block;overflow:visible}
+.c2-l .q{margin:0;font:400 27px/1.3 var(--font-anthropic-serif)} .c2-l .q b{color:var(--wb-bengal);font-weight:400}
+.c2-fl{margin-top:auto;display:flex;flex-direction:column;gap:0}
+.c2-fl div{display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:12px;background:color-mix(in srgb,var(--c) 7%,var(--color-panel));border-left:5px solid var(--c)}
+.c2-fl div .tg-ic{width:44px;height:44px} .c2-fl b{display:block;font-size:19px} .c2-fl small{display:block;font-size:15px;color:var(--color-fg-muted)}
+.c2-fl i{align-self:center;font-style:normal;font-size:22px;line-height:1;color:var(--color-fg-muted);padding:4px 0}
+.c2-r{display:flex;flex-direction:column;min-height:0}
+.c2-ef{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;align-items:end;margin-bottom:12px}
+.c2-ef div{border-radius:8px 8px 0 0;background:color-mix(in srgb,var(--c) 12%,transparent);border-top:4px solid var(--c);height:var(--h);display:flex;align-items:flex-start;padding:8px 14px;font-size:15px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--c)}
+.c2-w{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.c2-w > div{display:flex;flex-direction:column;gap:10px;padding:0}
+.c2-w .hd{display:flex;align-items:center;gap:14px} .c2-w .hd .tg-ic{width:62px;height:62px}
+.c2-w .hd em{display:block;font-style:normal;font-size:14px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--c)} .c2-w .hd b{display:block;font:400 30px/1.12 var(--font-anthropic-serif)}
+.c2-w p{margin:0;font-size:19.5px;line-height:1.4}
+.c2-w .fp{border-radius:12px;padding:10px 16px;border:1.5px dashed color-mix(in srgb,var(--c) 50%,transparent);font-size:18px;line-height:1.38}
+.c2-w .fp b{display:block;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--c);margin-bottom:4px}
+.c2-w .hw{margin-top:auto;border-top:2px solid var(--c);padding-top:10px}
+.c2-w .hw > b{display:block;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--color-fg-muted);margin-bottom:8px}
+.c2-w .hw span{display:inline-block;font-size:16px;font-weight:600;padding:4px 10px;border-radius:8px;margin:0 6px 6px 0;background:color-mix(in srgb,var(--c) 10%,transparent);color:var(--c)}
+/* page 15 · visible and invisible */
+.c3{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:56px}
+.c3 svg{display:block;overflow:visible;width:100%;flex:1;min-height:0}
+.c3 svg text{font-family:var(--font-anthropic-sans)}
+.c3-p{display:flex;flex-direction:column;min-height:0}
+/* page 16 · precision */
+.c4{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 520px;gap:50px}
+.c4-l{display:flex;flex-direction:column;gap:18px}
+.c4-w{display:grid;grid-template-columns:150px 750px minmax(0,1fr);gap:24px;align-items:start}
+.c4-w .pr b{display:block;font:400 56px/1 var(--font-anthropic-serif);color:var(--c)} .c4-w .pr small{display:block;font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--color-fg-muted);margin-top:6px}
+.c4-w svg{display:block;overflow:visible}
+.c4-w .ct{display:flex;flex-direction:column;gap:10px}
+.c4-w .ct div{font-size:16px;line-height:1.3;color:var(--color-fg-muted)} .c4-w .ct b{display:block;font:400 36px/1 var(--font-anthropic-serif);color:var(--color-fg)}
+.c4-w .ct .r b{color:var(--wb-bengal)} .c4-w .ct .h b{color:#C62828}
+.c4-k{display:flex;gap:26px;font-size:17px;color:var(--color-fg-muted)} .c4-k span{display:inline-flex;align-items:center;gap:8px} .c4-k i{width:16px;height:16px;border-radius:3px;display:inline-block}
+.c4-q{margin-top:auto;border-left:6px solid var(--ink);padding:10px 22px;font:400 30px/1.3 var(--font-anthropic-serif)} .c4-q b{font-weight:400;color:var(--wb-bengal)}
+.c4-r{border-left:1px solid var(--color-border-line);padding-left:36px;display:flex;flex-direction:column}
+.c4-r ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;justify-content:space-between;flex:1;gap:10px}
+.c4-r li{display:grid;grid-template-columns:54px minmax(0,1fr);gap:16px;align-items:center;padding:8px 0;border-bottom:1px solid var(--color-border-line)} .c4-r li:last-child{border-bottom:0}
+.c4-r li .tg-ic{width:54px;height:54px;--c:#C62828}
+.c4-r b{display:block;font-size:21px;margin-bottom:2px} .c4-r p{margin:0;font-size:16.5px;line-height:1.36;color:var(--color-fg)}
+/* page 17 · officer time and the pooled queue */
+.c5{flex:1;min-height:0;display:flex;flex-direction:column;gap:14px}
+.c5-eq{display:flex;align-items:center;gap:18px;padding:0 0 12px;border-bottom:1px solid var(--color-border-line)}
+.c5-eq .lhs{font:400 38px/1 var(--font-anthropic-serif);white-space:nowrap}
+.c5-eq > i{font:400 46px/1 var(--font-anthropic-serif);font-style:normal;color:var(--color-fg-muted)}
+.c5-eq .fr{display:inline-flex;flex-direction:column;align-items:center}
+.c5-eq .fr hr{width:100%;border:0;border-top:2.5px solid var(--color-fg);margin:6px 0}
+.c5-eq .t{display:flex;flex-direction:column;align-items:center;text-align:center;font:400 30px/1.1 var(--font-anthropic-serif);color:var(--c);white-space:nowrap}
+.c5-eq .t small{font:400 14.5px/1.3 var(--font-anthropic-sans);color:var(--color-fg-muted);margin-top:4px;max-width:330px}
+.c5-eq .nt{margin-left:auto;max-width:560px;font-size:16px;line-height:1.4;color:var(--color-fg-muted);border-left:1px solid var(--color-border-line);padding-left:20px}
+.c5-g{flex:1;min-height:0;display:grid;grid-template-columns:560px minmax(0,1fr);gap:48px}
+.c5-q{display:grid;grid-template-columns:34px minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(0,1fr) 28px;gap:8px;min-height:0}
+.c5-q .ya{grid-row:1 / span 2;writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;font-size:14px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--color-fg-muted);border-right:2px solid var(--color-fg-muted)}
+.c5-q .xa{grid-column:2 / span 2;text-align:center;font-size:14px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--color-fg-muted);border-top:2px solid var(--color-fg-muted);padding-top:6px}
+.c5-q .qd{border-radius:12px;padding:10px 14px;background:color-mix(in srgb,var(--c) 8%,var(--color-panel));border:1.5px solid color-mix(in srgb,var(--c) 30%,transparent);display:flex;flex-direction:column;gap:6px}
+.c5-q .qd em{font-style:normal;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--color-fg-muted)}
+.c5-q .qd b{font:400 24px/1.1 var(--font-anthropic-serif);color:var(--c)} .c5-q .qd p{margin:0;font-size:14.5px;line-height:1.34}
+.c5-q .qd.top{border-width:2.5px;border-color:var(--c)}
+.c5-r{display:flex;flex-direction:column;min-height:0}
+.c5-r svg{display:block;overflow:visible}
+.c5-r svg text{font-family:var(--font-anthropic-sans)}
+.c5-s{margin-top:auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0}
+.c5-s div{position:relative;padding:10px 26px 10px 18px;background:color-mix(in srgb,var(--wb-bengal) calc(5% + var(--k) * 2%),var(--color-panel));clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%,16px 50%)}
+.c5-s div:first-child{clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%)}
+.c5-s b{display:flex;align-items:center;gap:8px;font-size:18px;color:var(--wb-bengal)} .c5-s b i{font-style:normal;font:400 20px/1 var(--font-anthropic-serif)}
+.c5-s p{margin:3px 0 0 10px;font-size:14px;line-height:1.32}
+/* page 20 · flowchart and rule */
+.c6{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,.95fr) 140px minmax(0,1.2fr);gap:20px}
+.c6-f{display:flex;flex-direction:column;min-height:0}
+.c6-f ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;flex:1;justify-content:space-between}
+.c6-f li{display:grid;grid-template-columns:300px minmax(0,1fr);gap:14px;align-items:center;position:relative}
+.c6-f .bx{display:flex;align-items:center;gap:12px;padding:8px 14px;border-radius:10px;border:1.5px solid var(--color-border-line);background:color-mix(in srgb,var(--color-fg) 3%,var(--color-panel));font-size:18px;position:relative}
+.c6-f .bx svg{width:22px;height:22px;flex:none;color:var(--color-fg-muted)}
+.c6-f .bx em{font-style:normal;font:400 18px/1 var(--font-anthropic-serif);color:var(--color-fg-muted);min-width:14px}
+.c6-f li:not(:last-child) .bx::after{content:"";position:absolute;left:36px;bottom:-15px;height:12px;border-left:2px solid var(--color-fg-muted)}
+.c6-f .qt{display:flex;align-items:center;gap:10px;font-size:15.5px;line-height:1.3;color:#C62828}
+.c6-f .qt b{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:700 14px/1 var(--font-anthropic-sans);border:2px solid #C62828}
+.c6-f .qt::before{content:"";width:22px;border-top:2px dashed color-mix(in srgb,#C62828 60%,transparent);flex:none}
+.c6-m{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
+.c6-m .tg-ic{width:84px;height:84px}
+.c6-m b{font-size:19px;color:var(--wb-bengal)} .c6-m small{font-size:14.5px;line-height:1.35;color:var(--color-fg-muted)}
+.c6-m .ar{width:100%;height:30px;position:relative} .c6-m .ar::before{content:"";position:absolute;left:0;right:14px;top:13px;border-top:4px solid var(--wb-bengal)} .c6-m .ar::after{content:"";position:absolute;right:0;top:3px;border:12px solid transparent;border-left:16px solid var(--wb-bengal);border-right:0}
+.c6-r{display:flex;flex-direction:column;min-height:0;gap:14px}
+.c6-cd{border-radius:14px;border:1.5px solid color-mix(in srgb,var(--kpi) 40%,transparent);background:color-mix(in srgb,var(--kpi) 4%,var(--color-panel));overflow:hidden}
+.c6-cd .bar{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid color-mix(in srgb,var(--kpi) 25%,transparent);font-size:16px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--kpi)}
+.c6-cd .bar span{font-weight:600;letter-spacing:0;text-transform:none;color:var(--color-fg-muted)}
+.c6-cd pre{margin:0;padding:12px 0;font:500 16.5px/1.62 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;counter-reset:ln}
+.c6-cd pre > div{display:grid;grid-template-columns:44px minmax(0,1fr) 40px;align-items:center;white-space:pre;counter-increment:ln}
+.c6-cd pre > div::before{content:counter(ln);text-align:right;padding-right:14px;color:color-mix(in srgb,var(--color-fg) 35%,transparent);font-size:13px}
+.c6-cd pre > div.on{background:color-mix(in srgb,var(--kpi) 9%,transparent)}
+.c6-cd pre b{justify-self:center;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:700 13px/1 var(--font-anthropic-sans);background:color-mix(in srgb,var(--kpi) 16%,transparent);color:var(--kpi)}
+.c6-cd .k{color:var(--tech);font-weight:700} .c6-cd .c{color:var(--color-fg-muted);font-style:italic} .c6-cd .p{color:var(--pol)} .c6-cd .s{color:var(--kpi)}
+.c6-an{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.c6-an div{display:flex;gap:8px;align-items:flex-start;font-size:14px;line-height:1.3}
+.c6-an b{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:700 13px/1 var(--font-anthropic-sans);background:color-mix(in srgb,var(--kpi) 16%,transparent);color:var(--kpi)}
+.c6-bt{margin-top:auto;display:flex;align-items:center;gap:16px;padding:12px 18px;border-radius:12px;background:color-mix(in srgb,var(--wb-bengal) 7%,var(--color-panel));font-size:18px;line-height:1.4}
+/* page 21 · detections to rules */
+.c7{flex:1;min-height:0;display:flex;flex-direction:column;gap:20px}
+.c7-lc{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;position:relative;padding-top:30px}
+.c7-lc .br{position:absolute;top:0;height:20px;border:2px solid var(--c);border-bottom:0;border-radius:8px 8px 0 0;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--c);text-align:center}
+.c7-lc .br span{position:relative;top:-11px;background:var(--color-panel);padding:0 10px}
+.c7-lc > div:not(.br){display:flex;align-items:center;gap:12px;padding:12px 30px 12px 26px;background:color-mix(in srgb,var(--c) 9%,var(--color-panel));clip-path:polygon(0 0,calc(100% - 20px) 0,100% 50%,calc(100% - 20px) 100%,0 100%,20px 50%)}
+.c7-lc > div:nth-child(3){clip-path:polygon(0 0,calc(100% - 20px) 0,100% 50%,calc(100% - 20px) 100%,0 100%)}
+.c7-lc .tg-ic{width:44px;height:44px} .c7-lc b{display:block;font-size:21px;color:var(--c)} .c7-lc small{display:block;font-size:14.5px;line-height:1.3}
+.c7-t{flex:1;min-height:0;display:grid;grid-template-columns:300px minmax(0,1fr) minmax(0,1fr) 50px minmax(0,1.25fr);grid-auto-rows:auto;align-content:space-between}
+.c7-t .th{font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--color-fg-muted);padding:0 14px 8px;border-bottom:2px solid var(--ink)}
+.c7-t .th.ru{color:var(--kpi)}
+.c7-t .td{padding:14px;font-size:17px;line-height:1.38;border-bottom:1px solid var(--color-border-line);display:flex;align-items:center}
+.c7-t .td.nm{gap:14px;font:400 23px/1.2 var(--font-anthropic-serif)} .c7-t .td.nm .tg-ic{width:46px;height:46px;--c:var(--ink)}
+.c7-t .td.ar{justify-content:center;color:var(--kpi);font-size:30px;padding:0}
+.c7-t .td.ru{background:color-mix(in srgb,var(--kpi) 7%,transparent);font-weight:600}
+.c7-t .td.sg{color:var(--color-fg)}
+/* page 22 · flywheel */
+.c8{flex:1;min-height:0;display:grid;grid-template-columns:700px minmax(0,1fr);gap:48px}
+.c8 svg{display:block;overflow:visible}
+.c8 svg text{font-family:var(--font-anthropic-sans)}
+.c8-r{display:flex;flex-direction:column;gap:12px;min-height:0}
+.c8-r ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;flex:1;justify-content:space-between}
+.c8-r li{display:grid;grid-template-columns:52px minmax(0,1fr);gap:16px;align-items:center;padding:8px 16px;border-radius:12px;background:color-mix(in srgb,var(--c) 6%,var(--color-panel));border-left:5px solid var(--c)}
+.c8-r li .tg-ic{width:52px;height:52px}
+.c8-r b{display:flex;align-items:baseline;gap:10px;font-size:21px;color:var(--c)} .c8-r b small{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--color-fg-muted)}
+.c8-r p{margin:2px 0 0;font-size:16px;line-height:1.34}
+.c8-r p em{font-style:normal;font-weight:700;color:var(--wb-bengal)}
+.c8-ad{display:flex;gap:14px;align-items:center;padding:8px 16px;border-radius:12px;border:1.5px dashed color-mix(in srgb,#C62828 50%,transparent);font-size:17px;line-height:1.4}
+.c8-ad b{color:#C62828}
+/* annex A6 */
+.a6{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:56px}
+.a6 ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.a6 ol li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;align-items:start;padding:14px 18px;border-radius:12px;background:color-mix(in srgb,var(--wb-bengal) 6%,var(--color-panel))}
+.a6 ol li > b{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--wb-bengal) 15%,transparent);color:var(--wb-bengal);font:400 24px/1 var(--font-anthropic-serif)}
+.a6 h4{margin:0 0 3px;font-size:21px} .a6 ol p{margin:0;font-size:17px;line-height:1.4}
+.a6 table.t td{white-space:normal;text-align:left;font-size:19px;line-height:1.38;padding:12px} .a6 table.t th{text-align:left}
+.a6 table.t td:first-child{font-weight:700;width:42%}
+/* export modes: ?export shows one slide at full size without the viewer bar (for PNGs); ?noannex leaves the annexes out of print */
+html.export .app-bar,html.export .controls,html.export .app-notice,html.export .tip,html.export .back,html.export #ret{display:none!important}
+html.export body{overflow:hidden} html.export .stage{position:fixed;inset:0;background:var(--color-panel)} html.export .deck{transform:translate(-50%,-50%) scale(1)!important}
+@media print{html.noannex .slide.annex{display:none!important}}
 @media print{
   @page{size:1920px 1080px;margin:0}
   body{height:auto;overflow:visible;display:block}
@@ -650,7 +1056,8 @@ tr.wb .chip{background:var(--wb-bengal);color:#fff}
     <p class="s-kicker">Assessing West Bengal’s GST potential · 3 of 4</p>
     <h1 class="s-title">At benchmark growth: West Bengal against the benchmark pace</h1>
     <p class="s-take" id="p5-take"></p>
-    <div class="legend" id="p5-leg"></div>
+    <div class="tri" style="gap:24px;flex:none" id="p5-hd"></div>
+    <div class="legend" id="p5-leg" style="margin:4px 0 2px"></div>
     <div class="s-body tri" style="gap:24px" id="p5-body"></div>
     <div class="s-foot">
       <div class="src">₹ Cr; the value axis does not start at zero. Each benchmark line starts at West Bengal’s 2018-19 value and grows at the benchmark’s rate. Figures are on the next page and in Annex A5. The fastest top-five State is chosen for each measure, other than Gujarat. All India = all States and UTs.
@@ -697,30 +1104,55 @@ tr.wb .chip{background:var(--wb-bengal);color:#fff}
   </section>
 
   <!-- section 3 cover -->
-  <section class="slide sec" id="s3" data-label="Section 3" aria-label="Section 3: Mapping the right case to the right action">
+  <section class="slide sec" id="s3" data-label="Section 3" aria-label="Section 3: Understanding technology in GST">
     <div class="sec-n">03</div>
     <div class="sec-t">
       <p class="sec-k">Section 3</p>
-      <h1>Mapping the right case to <em>the right action</em></h1>
-      <ol class="sec-l" data-sec="p13 p14"></ol>
+      <h1>Understanding <em>technology in GST</em></h1>
+      <ol class="sec-l" data-sec="u1 u2 u3 p13 p14"></ol>
     </div>
   </section>
 
-  <!-- page 13 · the equation and what it means -->
-  <section class="slide" id="p13" data-label="Page 13" aria-label="Right case, right action">
+  <!-- section 3 · digital from the source; bodies drawn by the section 3 script -->
+  <section class="slide" id="u1" data-label="Page 13" aria-label="GST administration is digital from the source">
+    <p class="s-kicker">Understanding technology in GST</p>
+    <h1 class="s-title">GST administration has an inherent edge in being digital from the source</h1>
+    <p class="s-take">Unlike physical-world government departments where operations occur on physical ground (such as roads constructed on site or physical scene investigations in criminal justice), GST transactions originate natively in digital, structured datasets. <b class="wb">However, this shifts value generation to algorithms.</b></p>
+    <div class="c1" id="u1-body"></div>
+    <div class="s-foot"><div class="src">Bar lengths show where effort concentrates; indicative, not measured. Source: note “The Invisible Engine: Putting Technology at the Core of GST Administration”, 22 November 2026.</div><span class="s-num">13</span></div>
+  </section>
+
+  <section class="slide" id="u2" data-label="Page 14" aria-label="Evasion is a gap caught by three witnesses">
+    <p class="s-kicker">Understanding technology in GST</p>
+    <h1 class="s-title">Every evasion is a data problem first, field work then confirms and recovers</h1>
+    <p class="s-take">Every evasion leaves a gap three witnesses can see. An evader controls only their own return. The counterparty, the physical and money trail and normal behaviour all record what really happened.</p>
+    <div class="c2" id="u2-body"></div>
+    <div class="s-foot"><div class="src">Every return must agree with three independent witnesses. Each needs a different level of analytical effort to check.</div><span class="s-num">14</span></div>
+  </section>
+
+  <section class="slide" id="u3" data-label="Page 15" aria-label="Visible and invisible technology">
+    <p class="s-kicker">Understanding technology in GST</p>
+    <h1 class="s-title">Visible tech delivers quick wins; long-term value lives in the invisibles</h1>
+    <p class="s-take">Visible tools and targeted actions are low-hanging fruit and should be pursued first. Sustained value comes from the invisible layer underneath: the continuous process that builds, tests and refreshes rules as evaders adapt.</p>
+    <div class="c3" id="u3-body"></div>
+    <div class="s-foot"><div class="src">Right panel is illustrative: it shows the shape of the two paths, not measured values.</div><span class="s-num">15</span></div>
+  </section>
+
+  <!-- page 16 · the equation and what it means -->
+  <section class="slide" id="p13" data-label="Page 16" aria-label="Right case, right action">
     <p class="s-kicker">Mapping the right case to the right action</p>
     <h1 class="s-title">Right case, right action</h1>
     <p class="s-take">Using first principles to maximise the return on time invested and understanding the technology required.</p>
     <div class="s-body" style="display:flex;flex-direction:column;gap:12px" id="p13-body"></div>
-    <div class="s-foot"><div class="src">Each fact moves a case towards a lighter or a heavier action. The actions are explained on the next page.</div><span class="s-num">13</span></div>
+    <div class="s-foot"><div class="src" style="display:flex;align-items:center;gap:28px;flex-wrap:wrap">Each fact moves a case towards a lighter or a heavier action. The actions are explained on the next page.<div class="annex-notes" data-notes="A7 A8" style="margin-top:0"></div></div><span class="s-num">16</span></div>
   </section>
 
-  <!-- page 14 · actions by amount, frequency and effort -->
-  <section class="slide" id="p14" data-label="Page 14" aria-label="Actions by amount involved, frequency and effort">
+  <!-- page 17 · actions by amount, frequency and effort -->
+  <section class="slide" id="p14" data-label="Page 17" aria-label="Actions by amount involved, frequency and effort">
     <p class="s-kicker">Mapping the right case to the right action</p>
     <h1 class="s-title">Where each action fits</h1>
     <div class="s-body" style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:30px"><div id="p14-body"></div><div id="p14-cap" style="display:flex;flex-direction:column;min-height:0"></div></div>
-    <div class="s-foot"><div class="src">Indicative positions, not to scale. Circle size shows the effort an action needs from the Department.</div><span class="s-num">14</span></div>
+    <div class="s-foot"><div class="src">Indicative positions, not to scale. Circle size shows the effort an action needs from the Department.<div class="annex-notes" data-notes="A6"></div></div><span class="s-num">17</span></div>
   </section>
 
   <!-- section 4 cover -->
@@ -729,73 +1161,122 @@ tr.wb .chip{background:var(--wb-bengal);color:#fff}
     <div class="sec-t">
       <p class="sec-k">Section 4</p>
       <h1>Technology <em>compared with Gujarat</em></h1>
-      <ol class="sec-l" data-sec="slide-di slide-bl slide-ml slide-ai slide-tk slide-aj slide-sc2"></ol>
+      <ol class="sec-l" data-sec="lv slide-di slide-tk slide-bl slide-ml slide-ai slide-aj slide-sc2"></ol>
     </div>
   </section>
 
+  <!-- page 19 · three levels of comparison -->
+  <section data-label="Page 18" id="lv" class="slide lgx" aria-label="Comparative analysis of technology at three levels"><p class="s-kicker s-kicker-hi">Three levels of comparison</p>
+    <h1 class="s-title">Comparative analysis of technology can be done at multiple levels</h1>
+    <p class="s-take"><b class="gj">Invisible processes, algorithms and frameworks</b> contributed more to Gujarat’s success than the visible ones.</p>
+    <div class="lv2">
+      <div class="lv2-d"><span>Visible</span><i></i><span>Invisible</span></div>
+      <div class="lv2-g">
+        <div class="lv2-c lva"><div class="tag">Level 1 · Apps and portals</div><h4>On the face of it, the apps and portals can be <b>simply studied</b></h4>
+          <svg class="lv-venn" viewBox="0 0 560 300" role="img" aria-label="Apps of Gujarat and West Bengal, with the two common to both in the overlap">
+  <circle cx="190" cy="150" r="140" style="fill:color-mix(in srgb,var(--wb-gujarat) 9%,transparent);stroke:var(--wb-gujarat)" stroke-width="2.5"/>
+  <circle cx="370" cy="150" r="140" style="fill:color-mix(in srgb,var(--wb-bengal) 9%,transparent);stroke:var(--wb-bengal)" stroke-width="2.5"/>
+  <text x="120" y="38" text-anchor="middle" font-size="15" font-weight="800" letter-spacing="1.5" style="fill:var(--wb-gujarat)">GUJARAT</text>
+  <text x="440" y="38" text-anchor="middle" font-size="15" font-weight="800" letter-spacing="1.5" style="fill:var(--wb-bengal)">WEST BENGAL</text>
+  <text x="280" y="24" text-anchor="middle" font-size="13" font-weight="800" letter-spacing="1.2" style="fill:var(--color-fg-muted)">COMMON</text>
+  <text x="118" y="92" text-anchor="middle" font-size="22" font-weight="700" style="fill:var(--color-fg)">NETRA</text><text x="118" y="138" text-anchor="middle" font-size="22" font-weight="700" style="fill:var(--color-fg)">OIC</text><text x="118" y="184" text-anchor="middle" font-size="22" font-weight="700" style="fill:var(--color-fg)">STEMM</text><text x="118" y="230" text-anchor="middle" font-size="22" font-weight="700" style="fill:var(--color-fg)">NCLT module</text>
+  <text x="442" y="92" text-anchor="middle" font-size="22" font-weight="700" style="fill:var(--color-fg)">TMS</text><text x="442" y="138" text-anchor="middle" font-size="22" font-weight="700" style="fill:var(--color-fg)">Tableau</text><text x="442" y="184" text-anchor="middle" font-size="22" font-weight="700" style="fill:var(--color-fg)">MyTask</text><text x="442" y="230" text-anchor="middle" font-size="22" font-weight="700" style="fill:var(--color-fg)">Refund Portal</text>
+  <text x="280" y="138" text-anchor="middle" font-size="19" font-weight="700" style="fill:var(--color-fg)">BIFA/GAIN</text>
+  <text x="280" y="176" text-anchor="middle" font-size="19" font-weight="700" style="fill:var(--color-fg)">Back office</text></svg>
+          <p class="lvnt"><b>NETRA</b> field verification app for non-existent taxpayers · <b>OIC</b> Officer-in-Charge app for allocating tasks, such as following up with defaulters · <b>STEMM</b> modules such as assessment, interest and MIS reports</p></div>
+        <div class="lv2-c lvb"><div class="tag">Level 2 · Functional differences</div><h4>Deeper analysis revealed <b>real differences</b> in how they work</h4>
+          <div class="lvrt"><div class="lvbx"><small>Report</small>GSTINs filtered on a business logic that indicates potential evasion<em>Common to both</em></div><i>→</i><div class="lvbx gjb"><small>Task</small>GSTINs allotted to officers for action<em>Gujarat</em></div></div>
+          <div class="lvac"><span>ASMT-10</span><span>DRC-01A/01</span><span>Field visit</span><span>Phone call</span><b>→ monitored centrally</b></div>
+          <ul>
+            <li><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg><div><b>Allocation by algorithm</b> to reduce manual intervention</div></li>
+            <li><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="2.6"/><path d="M5 6v4.5c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V6M5 10.5V15c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6v-4.5"/></svg><div><b>An amount on every task</b> to assess potential outcomes and fix accountability on the officer</div></li>
+            <li><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg><div><b>Need-to-know access</b> to prevent misuse of data</div></li>
+          </ul></div>
+        <div class="lv2-c lvc"><div class="tag">Level 3 · Knowledge into algorithms</div><h4>More importantly, Gujarat <b>captured officers’ knowledge</b> in algorithms</h4>
+          <div class="lvkf"><span><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="3.5"/><path d="M5 20c.6-4 3.2-6.2 7-6.2s6.4 2.2 7 6.2"/></svg><small>Officers’ knowledge and experience</small></span><i>↓</i><span class="al"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7.5L3.5 12 8 16.5M16 7.5l4.5 4.5-4.5 4.5M14 4.5l-4 15"/></svg><small>Algorithmic decision-making</small></span></div>
+          <p>Gujarat managed to capture and transfer officers’ knowledge and experience into algorithmic decision-making more effectively.</p></div>
+      </div>
+      <div class="lv2-k"><p>To identify the differences, the <b>five capabilities</b> already defined are used</p><ol><li><a href="#slide-di" data-annex="slide-di"><em>1</em><span>Data integration</span></a></li><li><a href="#slide-tk" data-annex="slide-tk"><em>2</em><span>Task allocation and tracking</span></a></li><li><a href="#slide-bl" data-annex="slide-bl"><em>3</em><span>Business logic codification and networks</span></a></li><li><a href="#slide-ml" data-annex="slide-ml"><em>4</em><span>Model training</span></a></li><li><a href="#slide-aj" data-annex="slide-aj"><em>5</em><span>Adjudication preparedness</span></a></li></ol></div>
+    </div>
+    <div class="s-foot"><span></span><span class="s-num">18</span></div>
+  </section>
+
   <!-- pages 15 to 21: slides 6 to 12 copied from the GST PPT; edit here (styles in legacy.css) -->
-  <section data-label="Page 15" id="slide-di" class="slide lgx" aria-label="Enabler: data integration"><p class="s-kicker s-kicker-hi">Capability 1 of 5 · Data integration</p>
+  <section data-label="Page 19" id="slide-di" class="slide lgx" aria-label="Enabler: data integration"><p class="s-kicker s-kicker-hi">Capability 1 of 5 · Data integration</p>
     <h1 class="s-title">The foundational capability that enables the others</h1>
     <p class="s-take">Each additional layer of data integration has a multiplier effect on the outcomes of the other capabilities and helps the Government detect anomalies beyond the obvious.</p>
     <div class="s-body" style="grid-template-columns:minmax(0,1fr) 640px;gap:44px">
       <div class="di-l"><div class="di-hd">Data integration · five levels, each a spectrum</div><div class="di-in"><div id="di-rings"></div><div id="di-spec"></div></div></div>
       <div class="di-r" id="di-r"></div>
     </div>
-    <div class="s-foot"><span></span><span class="s-num">15</span></div></section>
+    <div class="s-foot"><span></span><span class="s-num">19</span></div></section>
 
-  <section data-label="Page 16" class="slide lgx" id="slide-bl" aria-label="Capability: business logic and networks"><p class="s-kicker s-kicker-hi">Capability 2 of 5 · Business logic codification and networks</p>
-    <h1 class="s-title">Before algorithms can be applied, domain knowledge should be codified to tackle the cold-start problem</h1>
-    <p class="s-take">Turning intuition into algorithms shifts the work from being people-oriented to process-oriented. This reduces discretion and brings standardisation.</p>
-    <div class="s-body" style="grid-template-columns:minmax(0,1fr) 610px;gap:40px">
-      <div class="di-l"><div class="di-hd">Business logic · five levels, each a spectrum</div><div class="di-in bl-in"><div class="bl-vis"><div id="bl-waf"></div><div id="bl-net"></div></div><div id="bl-spec"></div></div></div>
-      <div class="di-r" id="bl-r"></div>
+  <section data-label="Page 20" class="slide lgx" id="slide-tk" aria-label="Capability: task allocation and tracking"><p class="s-kicker s-kicker-hi">Capability 2 of 5 · Task allocation and tracking</p>
+    <h1 class="s-title">Various actions require tracking, allocation, feedback review and revenue realisation linked with the ledger</h1>
+    <p class="s-take"><b class="gj">A list of GSTINs without a mechanism to allocate and track it loses most of its significance.</b> An integrated platform will avoid duplication, allow smart allocation and feed outcome data back into the core engine for improved future predictions.</p>
+    <div class="s-body" style="grid-template-columns:minmax(0,1fr) 560px;gap:36px">
+      <div class="di-l tk-l"><div class="di-hd">Two systems allot work to the same field officers</div><div id="tk-flow"></div><div id="tk-lv"></div></div>
+      <div class="di-r" id="tk-r"></div>
     </div>
-    <div class="s-foot"><span>Leak types: taxonomy prepared for this study (Annex 1). Network: NGTP seller drill-downs linked for this study. Progress is our reading, to be confirmed.</span><span class="s-num">16</span></div></section>
+    <div class="s-foot"><span>MyTask, 1 Apr to 31 Oct 2026. TMS charge-wise scrutiny status, 5 Nov 2026; all tax heads, as recorded. Progress is our reading.</span><span class="s-num">20</span></div></section>
 
-  <section data-label="Page 17" class="slide lgx" id="slide-ml" aria-label="Capability: model training"><p class="s-kicker s-kicker-hi">Capability 3 of 5 · Model training</p>
+  <section data-label="Page 21" class="slide lgx" id="slide-bl" aria-label="Capability: business logic and networks"><p class="s-kicker s-kicker-hi">Capability 3 of 5 · Business logic codification and networks</p>
+    <h1 class="s-title">Capturing the Directorate’s knowledge and experience in algorithms that machines can understand</h1>
+    <p class="s-take">It was felt that Gujarat managed to capture and transfer officers’ knowledge and experience into algorithmic decision-making more effectively. <b class="gj">Invisible processes, algorithms and frameworks</b> contributed more to its success than the visible ones.</p>
+    <div class="s-body" style="grid-template-columns:minmax(0,1fr) 610px;gap:40px">
+      <div class="di-l"><div class="di-hd">Business logic · five levels, each a spectrum</div><div class="di-in bl-in"><div class="bl-vis bl-kf"><div class="b0-c"><div class="tag">From knowledge to algorithm</div>
+        <div class="b0-f">
+          <span><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="3.5"/><path d="M5 20c.6-4 3.2-6.2 7-6.2s6.4 2.2 7 6.2"/></svg><b>Knowledge and experience</b><small>of the Directorate’s officers</small></span><i>↓</i>
+          <span><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h9l4 4v13H6z"/><path d="M15 3.5v4h4M9 12h7M9 16h5"/></svg><b>Written rule</b><small>inputs, logic, thresholds and exclusions</small></span><i>↓</i>
+          <span class="al"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7.5L3.5 12 8 16.5M16 7.5l4.5 4.5-4.5 4.5M14 4.5l-4 15"/></svg><b>Algorithm</b><small>that machines can understand</small></span>
+        </div></div></div><div id="bl-spec"></div></div></div>
+      <div class="di-r bl-rr">
+        <div class="b0-c b0-r"><div class="tag">Evaders adapt as the Directorate evolves</div>
+        <h4>A rule that is relevant today will not be tomorrow. So, rules must be <b>discovered, discarded and rediscovered</b> to keep the efficiency high.</h4>
+        <svg class="b0-ch" viewBox="0 0 820 340" role="img" aria-label="Illustrative: each rule loses efficiency as evaders adapt; new rules keep efficiency high"><line x1="40" x2="800" y1="290" y2="290" style="stroke:var(--cds-chart-axis)" stroke-width="2"/><path d="M40.0 290.0 L46.3 242.1 L52.7 194.2 L59.0 146.2 L65.3 98.3 L71.7 113.8 L78.0 123.0 L84.3 131.7 L90.7 139.9 L97.0 147.7 L103.3 155.1 L109.7 162.1 L116.0 168.7 L122.3 175.0 L128.7 181.0 L135.0 186.7 L141.3 192.0 L147.7 197.1 L154.0 201.9 L160.3 206.5 L166.7 210.8 L173.0 215.0 L179.3 218.9 L185.7 222.5 L192.0 226.1 L198.3 229.4 L204.7 232.5 L211.0 235.5 L217.3 238.3 L223.7 241.0 L230.0 243.6 L236.3 246.0 L242.7 248.3 L249.0 250.4 L255.3 252.5 L261.7 254.4 L268.0 256.3 L274.3 258.0 L280.7 259.7 L287.0 261.3 L293.3 262.8 L299.7 264.2 L306.0 265.5 L312.3 266.8 L318.7 268.0 L325.0 269.1 L331.3 270.2 L337.7 271.2 L344.0 272.2 L350.3 273.1 L356.7 274.0 L363.0 274.8 L369.3 275.6 L375.7 276.4 L382.0 277.1 L388.3 277.8 L394.7 278.4 L401.0 279.0 L407.3 279.6 L413.7 280.1 L420.0 280.6" fill="none" style="stroke:var(--tech)" stroke-width="3.5" stroke-linecap="round"/><text x="74" y="46" text-anchor="middle" font-size="16" font-weight="700" style="fill:var(--tech)">Rule 1</text><path d="M207.2 290.0 L213.5 242.1 L219.9 194.2 L226.2 146.3 L232.5 98.3 L238.9 113.8 L245.2 123.0 L251.5 131.7 L257.9 139.9 L264.2 147.7 L270.5 155.1 L276.9 162.1 L283.2 168.7 L289.5 175.0 L295.9 181.0 L302.2 186.7 L308.5 192.0 L314.9 197.1 L321.2 201.9 L327.5 206.5 L333.9 210.8 L340.2 215.0 L346.5 218.9 L352.9 222.5 L359.2 226.1 L365.5 229.4 L371.9 232.5 L378.2 235.5 L384.5 238.3 L390.9 241.0 L397.2 243.6 L403.5 246.0 L409.9 248.3 L416.2 250.4 L422.5 252.5 L428.9 254.4 L435.2 256.3 L441.5 258.0 L447.9 259.7 L454.2 261.3 L460.5 262.8 L466.9 264.2 L473.2 265.5 L479.5 266.8 L485.9 268.0 L492.2 269.1 L498.5 270.2 L504.9 271.2 L511.2 272.2 L517.5 273.1 L523.9 274.0 L530.2 274.8 L536.5 275.6 L542.9 276.4 L549.2 277.1 L555.5 277.8 L561.9 278.4 L568.2 279.0 L574.5 279.6 L580.9 280.1 L587.2 280.6" fill="none" style="stroke:var(--pol)" stroke-width="3.5" stroke-linecap="round"/><text x="241" y="46" text-anchor="middle" font-size="16" font-weight="700" style="fill:var(--pol)">Rule 2</text><path d="M374.4 290.0 L380.7 242.1 L387.1 194.2 L393.4 146.2 L399.7 98.3 L406.1 113.8 L412.4 123.0 L418.7 131.7 L425.1 139.9 L431.4 147.7 L437.7 155.1 L444.1 162.1 L450.4 168.7 L456.7 175.0 L463.1 181.0 L469.4 186.7 L475.7 192.0 L482.1 197.1 L488.4 201.9 L494.7 206.5 L501.1 210.8 L507.4 215.0 L513.7 218.9 L520.1 222.5 L526.4 226.1 L532.7 229.4 L539.1 232.5 L545.4 235.5 L551.7 238.3 L558.1 241.0 L564.4 243.6 L570.7 246.0 L577.1 248.3 L583.4 250.4 L589.7 252.5 L596.1 254.4 L602.4 256.3 L608.7 258.0 L615.1 259.7 L621.4 261.3 L627.7 262.8 L634.1 264.2 L640.4 265.5 L646.7 266.8 L653.1 268.0 L659.4 269.1 L665.7 270.2 L672.1 271.2 L678.4 272.2 L684.7 273.1 L691.1 274.0 L697.4 274.8 L703.7 275.6 L710.1 276.4 L716.4 277.1 L722.7 277.8 L729.1 278.4 L735.4 279.0 L741.7 279.6 L748.1 280.1 L754.4 280.6" fill="none" style="stroke:var(--kpi)" stroke-width="3.5" stroke-linecap="round"/><text x="409" y="46" text-anchor="middle" font-size="16" font-weight="700" style="fill:var(--kpi)">Rule 3</text><path d="M541.6 290.0 L547.9 242.1 L554.3 194.2 L560.6 146.2 L566.9 98.3 L573.3 113.8 L579.6 123.0 L585.9 131.7 L592.3 139.9 L598.6 147.7 L604.9 155.1 L611.3 162.1 L617.6 168.7 L623.9 175.0 L630.3 181.0 L636.6 186.7 L642.9 192.0 L649.3 197.1 L655.6 201.9 L661.9 206.5 L668.3 210.8 L674.6 215.0 L680.9 218.9 L687.3 222.5 L693.6 226.1 L699.9 229.4 L706.3 232.5 L712.6 235.5 L718.9 238.3 L725.3 241.0 L731.6 243.6 L737.9 246.0 L744.3 248.3 L750.6 250.4 L756.9 252.5 L763.3 254.4 L769.6 256.3 L775.9 258.0 L782.3 259.7 L788.6 261.3 L794.9 262.8" fill="none" style="stroke:var(--wb-bengal)" stroke-width="3.5" stroke-linecap="round"/><text x="576" y="46" text-anchor="middle" font-size="16" font-weight="700" style="fill:var(--wb-bengal)">Rule 4</text><path d="M63 75 H785" fill="none" style="stroke:var(--ink)" stroke-width="2.5" stroke-dasharray="8 7"/><text x="785" y="65" text-anchor="end" font-size="17" font-weight="800" style="fill:var(--ink)">Efficiency kept high</text><text x="222" y="228" font-size="15" font-weight="700" style="fill:#C62828">evaders adapt ↘</text><text x="40" y="318" font-size="15" font-weight="700" style="fill:var(--color-fg-muted)">Today</text><text x="800" y="318" text-anchor="end" font-size="15" font-weight="700" style="fill:var(--color-fg-muted)">Tomorrow →</text></svg>
+        <div class="b0-cy"><span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/></svg>Discover</span><i>→</i><span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>Discard</span><i>→</i><span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.5-4.5M4 13a8 8 0 0 0 14.5 4.5"/><path d="M5 3v4h4M19 21v-4h-4"/></svg>Rediscover</span></div>
+      </div>
+        <div id="bl-r"></div>
+      </div>
+    </div>
+    <div class="s-foot"><span>Progress is our reading, to be confirmed. The rules chart is illustrative: each line is one rule losing efficiency as evaders adapt.</span><span class="s-num">21</span></div></section>
+
+  <section data-label="Page 22" class="slide lgx" id="slide-ml" aria-label="Capability: model training"><p class="s-kicker s-kicker-hi">Capability 4 of 5 · Model training</p>
     <h1 class="s-title">The core engine that operates on data through business logic and learns by itself</h1>
     <p class="s-take">Codification allows scalability across all taxpayers. Manual intervention through specialised cells such as RMC is more effective per case but is resource-intensive and lacks scalability.</p>
     <div class="s-body" style="grid-template-columns:minmax(0,1fr) 600px;gap:40px">
       <div class="di-l"><div class="di-hd">Model training · six levels, each a spectrum</div><div id="ml-st"></div><div id="ml-ah"></div></div>
       <div class="di-r" id="ml-r"></div>
     </div>
-    <div class="s-foot"><span>Progress is our reading of NGTP and RMC, to be confirmed. RMC tasks and revenue realised: MyTask, October 2024 to September 2026.</span><span class="s-num">17</span></div></section>
+    <div class="s-foot"><span>Progress is our reading of NGTP and RMC, to be confirmed. RMC tasks and revenue realised: MyTask, October 2024 to September 2026.</span><span class="s-num">22</span></div></section>
 
-  <section data-label="Page 18" class="slide lgx" id="slide-ai" aria-label="Capability: conversational AI stack"><p class="s-kicker s-kicker-hi">Capability 3 of 5 · Model training: conversational AI</p>
+  <section data-label="Page 23" class="slide lgx" id="slide-ai" aria-label="Capability: conversational AI stack"><p class="s-kicker s-kicker-hi">Capability 4 of 5 · Model training: conversational AI</p>
     <h1 class="s-title">Conversational AI is built as a stack of layers</h1>
     <p class="s-take">Each layer makes the one below it safe to use on taxpayer data. Most use cases need the upper layers.</p>
     <div class="s-body" style="grid-template-columns:minmax(0,1fr) 600px;gap:40px">
       <div class="di-l"><div class="di-hd">Eight layers, built from the bottom up</div><div id="ai-st"></div></div>
       <div class="di-r" id="ai-r"></div>
     </div>
-    <div class="s-foot"><span>West Bengal's progress is our reading, to be confirmed. Layer chips on each use case show which layers it needs.</span><span class="s-num">18</span></div></section>
+    <div class="s-foot"><span>West Bengal's progress is our reading, to be confirmed. Layer chips on each use case show which layers it needs.</span><span class="s-num">23</span></div></section>
 
-  <section data-label="Page 19" class="slide lgx" id="slide-tk" aria-label="Capability: task allocation and tracking"><p class="s-kicker s-kicker-hi">Capability 4 of 5 · Task allocation and tracking</p>
-    <h1 class="s-title">Various actions require tracking, allocation, feedback review and revenue realisation linked with the ledger</h1>
-    <p class="s-take">An integrated platform will avoid duplication, allow smart allocation and feed outcome data back into the core engine for improved future predictions.</p>
-    <div class="s-body" style="grid-template-columns:minmax(0,1fr) 560px;gap:36px">
-      <div class="di-l tk-l"><div class="di-hd">Two systems allot work to the same field officers</div><div id="tk-flow"></div><div id="tk-lv"></div></div>
-      <div class="di-r" id="tk-r"></div>
-    </div>
-    <div class="s-foot"><span>MyTask, 1 Apr to 31 Oct 2026. TMS charge-wise scrutiny status, 5 Nov 2026; all tax heads, as recorded. Progress is our reading.</span><span class="s-num">19</span></div></section>
 
-  <section data-label="Page 20" class="slide lgx" id="slide-aj" aria-label="Capability: adjudication preparedness"><p class="s-kicker s-kicker-hi">Capability 5 of 5 · Adjudication preparedness</p>
+  <section data-label="Page 24" class="slide lgx" id="slide-aj" aria-label="Capability: adjudication preparedness"><p class="s-kicker s-kicker-hi">Capability 5 of 5 · Adjudication preparedness</p>
     <h1 class="s-title">AI prepares drafts at each stage of adjudication while officers retain all statutory powers</h1>
     <p class="s-take">Retrieval-augmented generation (RAG), trained on documents and specific cases, helps officers prepare notices and drafts. Every draft requires strict review by the officer. AI never exercises statutory power.</p>
     <div class="s-body" style="display:flex;flex-direction:column;gap:16px;justify-content:space-between">
       <div class="di-hd" style="margin:0">One case, from risk alert to recovery · AI drafts, the officer decides</div><div id="aj-flow"></div>
       <div class="aj-bot"><div id="aj-lv"></div><div id="aj-r"></div></div>
     </div>
-    <div class="s-foot"><span>Approach from the note "AI-Enabled Revenue &amp; Economic Intelligence System for WB", sections XVI to XX. West Bengal figures: TMS scrutiny status, 5 Nov 2026, all tax heads. Progress is our reading.</span><span class="s-num">20</span></div></section>
+    <div class="s-foot"><span>Approach from the note "AI-Enabled Revenue &amp; Economic Intelligence System for WB", sections XVI to XX. West Bengal figures: TMS scrutiny status, 5 Nov 2026, all tax heads. Progress is our reading.</span><span class="s-num">24</span></div></section>
 
-  <section data-label="Page 21" class="slide lgx" id="slide-sc2" aria-label="Capability scorecard"><p class="s-kicker">Scorecard · five capabilities</p>
+  <section data-label="Page 25" class="slide lgx" id="slide-sc2" aria-label="Capability scorecard"><p class="s-kicker">Scorecard · five capabilities</p>
     <h1 class="s-title">Gujarat is further up the ladder on all five capabilities</h1>
     <p class="s-take">West Bengal scores 42% to 47% on the five capabilities against 53% to 65% for Gujarat. The next step in each builds on data and systems the Directorate already holds.</p>
     <div class="s-body" style="grid-template-columns:540px minmax(0,1fr);gap:32px">
       <div class="di-l"><div class="di-hd">How far up each ladder West Bengal is</div><div id="sc-radar"></div></div>
       <div class="di-l"><div class="di-hd">Level by level · orange shows West Bengal's progress</div><div id="sc-mx"></div></div>
     </div>
-    <div class="s-foot"><span>Levels and progress as on the capability slides; progress is our reading, to be confirmed. Score: average of the levels on each ladder. The pink line in each cell marks Gujarat.</span><span class="s-num">21</span></div></section>
+    <div class="s-foot"><span>Levels and progress as on the capability slides; progress is our reading, to be confirmed. Score: average of the levels on each ladder. The pink line in each cell marks Gujarat.</span><span class="s-num">25</span></div></section>
 
   <!-- section 5 cover -->
   <section class="slide sec" id="s5" data-label="Section 5" aria-label="Section 5: Implementation and pilot tests">
@@ -803,58 +1284,94 @@ tr.wb .chip{background:var(--wb-bengal);color:#fff}
     <div class="sec-t">
       <p class="sec-k">Section 5</p>
       <h1>Implementation and <em>pilot tests</em></h1>
-      <ol class="sec-l" data-sec="p22 t1 t2 t3 t4 t5 p23"></ol>
+      <ol class="sec-l" data-sec="p22 t1 t2 t3 t4 t5 p23 ml2 p24"></ol>
     </div>
   </section>
 
   <!-- pages 22 and 23 · steps to be taken, short and medium term -->
-  <section class="slide" id="p22" data-label="Page 22" aria-label="Steps to be taken: short term">
+  <section class="slide" id="p22" data-label="Page 26" aria-label="Steps to be taken: short term">
     <p class="s-kicker">Implementation and pilot tests · 1 of 2</p>
     <h1 class="s-title">Steps to be taken: short term</h1>
     <div class="s-body" style="display:block" id="p22-body"></div>
-    <div class="s-foot"><div class="src"></div><span class="s-num">22</span></div>
+    <div class="s-foot"><div class="src">The funnel and the GSTR-7 against GSTR-3B bars are illustrative, not to scale.</div><span class="s-num">26</span></div>
   </section>
 
-  <section class="slide" id="t1" data-label="Page 23" aria-label="Task allocation and active tracking">
+  <section class="slide" id="t1" data-label="Page 27" aria-label="Task allocation and active tracking">
     <p class="s-kicker">Short term · Tech · 1 of 3</p>
     <h1 class="s-title">Task allocation and active tracking</h1>
     <div class="s-body" style="display:block" id="t1-body"></div>
-    <div class="s-foot"><div class="src" id="t1-src"></div><span class="s-num">23</span></div>
+    <div class="s-foot"><div class="src" id="t1-src"></div><span class="s-num">27</span></div>
   </section>
 
-  <section class="slide" id="t2" data-label="Page 24" aria-label="Network analysis tool for detection of ITC frauds">
+  <section class="slide" id="t2" data-label="Page 28" aria-label="Network analysis tool for detection of ITC frauds">
     <p class="s-kicker">Short term · Tech · 2 of 3 · Network analysis tool for detection of ITC frauds</p>
     <h1 class="s-title">Today’s checks see one GSTIN at a time; graph modelling joins the dots</h1>
     <div class="s-body" style="display:block" id="t2-body"></div>
-    <div class="s-foot"><div class="src" id="t2-src"></div><span class="s-num">24</span></div>
+    <div class="s-foot"><div class="src" id="t2-src"></div><span class="s-num">28</span></div>
   </section>
 
-  <section class="slide" id="t3" data-label="Page 25" aria-label="Integration of Tableau into TMS and access control">
+  <section class="slide" id="t3" data-label="Page 29" aria-label="Integration of Tableau into TMS and access control">
     <p class="s-kicker">Short term · Tech · 3 of 3</p>
     <h1 class="s-title">Integration of Tableau into TMS and access control</h1>
     <div class="s-body" style="display:block" id="t3-body"></div>
-    <div class="s-foot"><div class="src" id="t3-src"></div><span class="s-num">25</span></div>
+    <div class="s-foot"><div class="src" id="t3-src"></div><span class="s-num">29</span></div>
   </section>
 
-  <section class="slide" id="t4" data-label="Page 26" aria-label="SMS and email nudge and tracking task allocation">
+  <section class="slide" id="t4" data-label="Page 30" aria-label="SMS and email nudge and tracking task allocation">
     <p class="s-kicker">Short term · Process</p>
     <h1 class="s-title">SMS and email nudge and tracking task allocation</h1>
     <div class="s-body" style="display:block" id="t4-body"></div>
-    <div class="s-foot"><div class="src" id="t4-src"></div><span class="s-num">26</span></div>
+    <div class="s-foot"><div class="src" id="t4-src"></div><span class="s-num">30</span></div>
   </section>
 
-  <section class="slide" id="t5" data-label="Page 27" aria-label="Revenue mobilization actions">
+  <section class="slide" id="t5" data-label="Page 31" aria-label="Revenue mobilization actions">
     <p class="s-kicker">Short term · Revenue mobilization actions</p>
     <h1 class="s-title">Revenue mobilization actions</h1>
     <div class="s-body" style="display:block" id="t5-body"></div>
-    <div class="s-foot"><div class="src" id="t5-src"></div><span class="s-num">27</span></div>
+    <div class="s-foot"><div class="src" id="t5-src"></div><span class="s-num">31</span></div>
   </section>
 
-  <section class="slide" id="p23" data-label="Page 28" aria-label="Steps to be taken: medium term">
+  <section class="slide" id="p23" data-label="Page 32" aria-label="Steps to be taken: medium term">
     <p class="s-kicker">Implementation and pilot tests · 2 of 2</p>
     <h1 class="s-title">Steps to be taken: medium term</h1>
+    <p class="s-take">Long-term efforts should be targeted at realising West Bengal’s true GST potential and should be equally focussed on visible technological changes and invisible technology-based changes. Modernising GST administration requires shifting focus from incremental, manual enforcement to building scalable technological systems. Relying on ad-hoc investigative hits leaves revenue collection vulnerable to systemic evasion.</p>
     <div class="s-body" style="display:block" id="p23-body"></div>
-    <div class="s-foot"><div class="src"></div><span class="s-num">28</span></div>
+    <div class="s-foot"><div class="src"></div><span class="s-num">32</span></div>
+  </section>
+
+  <!-- page 33 · machine learning and LLMs -->
+  <section class="slide" id="ml2" data-label="Page 33" aria-label="Machine learning training and safe use of LLMs">
+    <p class="s-kicker">Implementation and pilot tests · Medium term · Machine learning</p>
+    <h1 class="s-title">Machine learning training</h1>
+    <div class="s-body" style="display:block">
+      <div class="m2">
+        <div class="m2-c"><div class="tag">Deterministic machine learning · Gujarat</div>
+          <h4>In Gujarat, IITH is already trying to train data to predict evasion using <b>deterministic machine learning algorithms</b> that do not possess the risk of hallucinations.</h4>
+          <div class="m2-f"><div class="bx"><b>102</b><small>features</small></div><i>→</i><div class="bx al"><span>Gradient Boosting</span><span>XGBoost</span></div><i>→</i><div class="bx"><b><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 8v5M12 16v.5"/></svg></b><small>prediction of evasion</small></div></div>
+          <p>Current training is based on 102 features using Gradient Boosting and XGBoost.</p>
+          <div class="m2-op"><div class="pr"><small>Primary result</small><b>Deterministic machine learning</b></div><div class="sc"><small>Second opinion</small><b>LLM-based statistical models</b></div></div>
+          <p>Models once trained can be made <b>self-learning</b> through reinforcement learning algorithms.</p></div>
+        <div class="m2-c m2-l"><div class="tag">Large language models · deployed safely</div>
+          <h4>Currently, Directorate officials use publicly hosted LLMs, which risks exposing <b>sensitive data to non-Indian entities</b>.</h4>
+          <div class="m2-dp"><div class="now"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18h10a4 4 0 0 0 .5-8 6 6 0 0 0-11.5 1.5A3.5 3.5 0 0 0 7 18z"/></svg><b>Publicly hosted LLM</b><small>sensitive data leaves the Directorate</small></div><i>→</i><div class="to"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="7" rx="1.5"/><rect x="4" y="14" width="16" height="7" rx="1.5"/><path d="M8 6.5h.01M8 17.5h.01"/></svg><b>Open-source model on the State SDC</b><small>deployed locally and integrated with Directorate documents using RAG</small></div></div>
+          <p class="m2-pv">An open-source model, preferably of Indian or other non-Chinese origin, should be used. IITH plans to use Qwen, developed by Alibaba (China). This raises questions about model provenance, embedded bias and compliance with government policy.</p>
+          <div class="m2-md"><div class="q"><small>Planned by IITH</small><b>Qwen</b><span>Alibaba, China</span></div><div class="ok"><small>Alternatives for West Bengal</small><b>Sarvam · BharatGen</b><span>developed under the IndiaAI Mission</span></div></div></div>
+      </div>
+    </div>
+    <div class="s-foot"><div class="src">SDC: State Data Centre. RAG: retrieval-augmented generation.</div><span class="s-num">33</span></div>
+  </section>
+
+  <!-- page 33 · progress so far -->
+  <section class="slide" id="p24" data-label="Page 34" aria-label="Progress so far">
+    <p class="s-kicker">Implementation and pilot tests</p>
+    <h1 class="s-title">Progress so far</h1>
+    <div class="s-body" style="display:block" id="p24-body"></div>
+    <div class="s-foot"><div class="src">Status as on 23 November 2026. ISD: Information Systems Division.</div><span class="s-num">34</span></div>
+  </section>
+
+  <!-- thank you -->
+  <section class="slide ty" id="ty" data-label="Thank you" aria-label="Thank you">
+    <div class="ty-c"><i></i><h1>Thank you</h1></div>
   </section>
 
   <!-- A1 · all States and UTs, taxpayers -->
@@ -919,6 +1436,80 @@ tr.wb .chip{background:var(--wb-bengal);color:#fff}
     <div class="s-body tri" style="gap:36px" id="a5"></div>
     <div class="s-foot"><div class="src">₹ Cr. Gap = West Bengal at this pace − West Bengal’s actual 2025-26 value. Source: GSTN state-wise collection and settlement of IGST to States, 2018-19 and 2025-26.<div class="annex-notes" data-refs style="margin-top:8px"></div></div><span class="s-num">A5</span></div>
   </section>
+
+  <section class="slide annex" id="A6" data-short="First steps and measures" data-label="Annex A6" data-title="Five immediate steps and measuring the invisibles" aria-label="Annex A6: five immediate steps and measuring the invisibles">
+    <a class="back" href="#p14" hidden>← Back</a>
+    <p class="s-kicker">Annex A6</p>
+    <h1 class="s-title">Five immediate steps and measuring the invisibles</h1>
+    <p class="s-take">None of this needs a large new IT procurement. The invisibles can be set up at once, alongside quick visible wins.</p>
+    <div class="a6">
+      <div class="s-panel">
+        <div class="tg-h"><b>Five immediate steps</b></div>
+        <ol>
+          <li><b>1</b><div><h4>Launch a rule library</h4><p>Encode the core mismatch rules and the first three EIU and RMC cases with formal written specifications.</p></div></li>
+          <li><b>2</b><div><h4>Name Link Officers</h4><p>Identify a small group of officers with strong field instinct and analytical clarity to serve as domain-to-code translators.</p></div></li>
+          <li><b>3</b><div><h4>Activate one pooled queue</h4><p>Merge flags at the GSTIN level, score them together and allocate within each charge’s real capacity.</p></div></li>
+          <li><b>4</b><div><h4>Mandate structured closure outcomes</h4><p>Record proved demand, cash recovered and the reason for closure in standard fields on every disposal.</p></div></li>
+          <li><b>5</b><div><h4>Hold a monthly Rule Council</h4><p>Turn field intelligence into a steady monthly pipeline of live one-click rules.</p></div></li>
+        </ol>
+      </div>
+      <div class="s-panel">
+        <div class="tg-h"><b>Measuring the invisibles</b><span>beyond the count of cases disposed</span></div>
+        <table class="t">
+          <thead><tr><th>Measure</th><th>What it tells leadership</th></tr></thead>
+          <tbody>
+            <tr><td>Revenue realised per officer-hour</td><td>Whether scarce officer capacity is reaching the highest-yield cases</td></tr>
+            <tr><td>Precision of each live rule</td><td>Whether flags are real evasion and honest taxpayers are left undisturbed</td></tr>
+            <tr><td>Share of notices dropped without demand</td><td>The compliance burden falling on honest businesses (a check on Ease of Doing Business)</td></tr>
+            <tr><td>Time from field insight to live rule</td><td>How fast the institution learns and counters evaders as they adapt</td></tr>
+            <tr><td>Live rules in production and their combined yield</td><td>Whether institutional knowledge is compounding cycle after cycle</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="s-foot"><div class="src"><div class="annex-notes" data-refs style="margin:0"></div></div><span class="s-num">A6</span></div>
+  </section>
+
+  <section class="slide annex" id="A7" data-short="Precision" data-label="Annex A7" data-title="Precision arithmetic" aria-label="Precision arithmetic">
+    <a class="back" href="#p13" hidden>← Back</a>
+    <p class="s-kicker">Annex A7</p>
+    <h1 class="s-title">The dashboard sets the speed; the algorithm sets the direction</h1>
+    <p class="s-take">Precision is the share of flagged cases that prove to be real evasion. To catch the same <b>100</b> evaders a 50% rule sends officers <b>200</b> cases; a 10% rule sends <b>1,000</b> and <b>900</b> of them land on honest businesses.</p>
+    <div class="c4" id="u4-body"></div>
+    <div class="s-foot"><div class="src">Computed: cases sent = 100 ÷ precision. Each square is one case sent to an officer.<div class="annex-notes" data-refs style="margin-top:8px"></div></div><span class="s-num">A7</span></div>
+  </section>
+
+  <section class="slide annex" id="A8" data-short="Officer time" data-label="Annex A8" data-title="Officer time is the real budget" aria-label="Officer time is the real budget">
+    <a class="back" href="#p13" hidden>← Back</a>
+    <p class="s-kicker">Annex A8</p>
+    <h1 class="s-title">Officer time is the real budget: one pooled queue gets <span id="u5-x">1.9</span> times the value from the same capacity</h1>
+    <p class="s-take">With officer time as the binding budget, “is there evasion here?” is too weak a filter. Decide which rules to encode first, then rank every case from all algorithms in a single queue.</p>
+    <div class="c5" id="u5-body"></div>
+    <div class="s-foot"><div class="src">The mandate: raise GST collection without hurting Ease of Doing Business, within fixed limits on people, money and time. Queue values are illustrative (₹ lakh per case); capacity is 30 cases in both rows.<div class="annex-notes" data-refs style="margin-top:8px"></div></div><span class="s-num">A8</span></div>
+  </section>
+
+  <section class="slide annex" id="A9" data-short="Notes and sources" data-label="Annex A9" data-title="Notes and sources, 1 of 3" aria-label="Annex A9: notes and sources, 1 of 3">
+    <p class="s-kicker">Annex A9</p>
+    <h1 class="s-title">Notes and sources, 1 of 3</h1>
+    <div class="s-body" style="display:block"><table class="nt" id="a9-nt"></table></div>
+    <div class="s-foot"><div class="src"></div><span class="s-num">A9</span></div>
+  </section>
+
+  <section class="slide annex" id="A10" data-short="Notes and sources" data-label="Annex A10" data-title="Notes and sources, 2 of 3" aria-label="Annex A10: notes and sources, 2 of 3">
+    <p class="s-kicker">Annex A10</p>
+    <h1 class="s-title">Notes and sources, 2 of 3</h1>
+    <div class="s-body" style="display:block"><table class="nt" id="a10-nt"></table></div>
+    <div class="s-foot"><div class="src"></div><span class="s-num">A10</span></div>
+  </section>
+
+  <section class="slide annex" id="A11" data-short="Notes and sources" data-label="Annex A11" data-title="Notes and sources, 3 of 3" aria-label="Annex A11: notes and sources, 3 of 3">
+    <p class="s-kicker">Annex A11</p>
+    <h1 class="s-title">Notes and sources, 3 of 3</h1>
+    <div class="s-body" style="display:block"><table class="nt" id="a11-nt"></table></div>
+    <div class="s-foot"><div class="src"></div><span class="s-num">A11</span></div>
+  </section>
+
+
 </div>
 </div>
 
@@ -1083,15 +1674,14 @@ const keep = (s) => (s.post / s.gross * 100).toFixed(0);
   });
   document.getElementById('p2-vw').innerHTML = `<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><pattern id="vw-hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" style="fill:color-mix(in srgb,var(--color-fg) 7%,transparent)"/><line x1="0" y1="0" x2="0" y2="10" style="stroke:color-mix(in srgb,var(--color-fg) 22%,transparent)" stroke-width="3"/></pattern></defs></svg>` + h;
   document.getElementById('p2-take').innerHTML =
-    `<b class="wb">Own SGST</b> and <b class="wb">total collection</b> measure what the State’s administration produces and are the indicators to target. <b>SGST after settlement</b>, ₹${keep(wb)} for every ₹100 of total collection, is the outcome for the budget.`;
+    `Different measures help us measure and compare different aspects of tax collection. West Bengal gives ${per(wb.igst)} of IGST for every ₹100 collected but receives ₹${Math.round((wb.post - wb.sgst) / wb.gross * 100) - Math.round(wb.igst / wb.gross * 100)} more in the form of settlement.`;
 })();
 
 
 /* ---------- pages 3 to 6 · GST potential on three measures ---------- */
 const SER = D.series, GS = D.gsdp_2025_26, Y0 = '2018-19', Y1 = '2025-26';
 const YRS = Object.keys(SER['West Bengal']).sort();
-const MS = [['collection', 'Total collection', 1, 'k'], ['sgst', 'Own SGST', 2, 'k'], ['post', 'SGST after settlement', 3, 'o']];
-const TAG = {k: '<span class="tag k">Target</span>', o: '<span class="tag o">Outcome</span>'};
+const MS = [['collection', 'Total collection', 1, 'CGST + SGST + IGST'], ['sgst', 'Own SGST', 2, 'before settlement'], ['post', 'SGST after settlement', 3, 'own SGST + IGST settlement']];
 const val = (st, fy, k) => { const r = (SER[st] || {})[fy]; if (!r) return null; return k === 'post' ? (r.sgst == null || r.settle == null ? null : r.sgst + r.settle) : r[k]; };
 const allv = (fy, k) => Object.keys(SER).reduce((t, st) => t + (val(st, fy, k) || 0), 0);
 const TOP5 = ['Maharashtra', 'Karnataka', 'Tamil Nadu', 'Gujarat', 'Haryana'], GMAJ = [...TOP5, 'West Bengal'];
@@ -1101,7 +1691,10 @@ const shareAll = (k) => topv(Y1, k) / TOP5.reduce((t, st) => t + GS[st], 0) * 10
 const shareIndia = (k) => allv(Y1, k) / GS['India'] * 100;
 const bestOf = (k) => GMAJ.filter((m) => m !== 'West Bengal').sort((a, b) => share(b, k) - share(a, k))[0];
 const pct = (v, d = 2) => v.toFixed(d) + '%';
-const head = (m) => `<p class="ph"><span class="bd">${m[2]}</span>${m[1]}${TAG[m[3]]}</p>`;
+const head = (m) => {
+  const f = val('West Bengal', Y1, m[0]) / val('West Bengal', Y1, 'collection') * 100;
+  return `<div class="mh"><span class="mn">${m[2]}</span><div class="mt">${m[1]}<small>${m[3]}</small></div><div class="mg" title="West Bengal, ${Y1}: ₹ per ₹100 of total collection"><span><b>₹${f.toFixed(0)}</b>per ₹100</span><i style="--f:${f.toFixed(1)}%;--o:${m[2] === 2 ? 50 : 100}%"></i></div></div>`;
+};
 const roleCol = (st, best) => st === 'West Bengal' ? 'var(--wb-bengal)' : st === 'Gujarat' ? 'var(--wb-gujarat)' : st === best ? 'var(--wb-peer)' : 'var(--neu)';
 
 /* page 3 · ranked bars, one panel per measure */
@@ -1168,7 +1761,7 @@ const pace = (b, fy, k) => val('West Bengal', Y0, k) * bval(b, fy, k) / bval(b, 
 const gr = (b, k) => (bval(b, Y1, k) / bval(b, Y0, k) - 1) * 100;
 (function () {
   /* three panels, one per measure: actual path, benchmark paces and headroom; each line ends with its growth since 2018-19 */
-  let html = '';
+  let html = '', hd = '';
   MS.forEach((m) => {
     const k = m[0], W = 560, H = 470, ml = 60, mr = 74, mt = 18, mb = 32, n = YRS.length - 1;
     const act = YRS.map((fy) => val('West Bengal', fy, k));
@@ -1191,9 +1784,11 @@ const gr = (b, k) => (bval(b, Y1, k) / bval(b, Y0, k) - 1) * 100;
       .map((l) => ({...l, ly: y(l.v) + 6})).sort((p, q) => p.ly - q.ly);
     for (let i = 1; i < L.length; i++) if (L[i].ly - L[i - 1].ly < 22) L[i].ly = L[i - 1].ly + 22;
     L.forEach((l) => { g += T(x(n) + 14, l.ly, `+${l.g.toFixed(0)}%`, `font-size:${l.wb ? 20 : 17}px;font-weight:${l.wb ? 800 : 700};fill:${l.c};paint-order:stroke;stroke:var(--color-panel);stroke-width:4px`); });
-    html += `<div class="s-panel">${head(m)}<p class="psub">₹ Cr · % = growth since 2018-19</p><svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${m[1]}: West Bengal actual against benchmark paces">${g}</svg></div>`;
+    hd += `<div>${head(m)}<p class="psub" style="margin-bottom:0">₹ Cr · % = growth since 2018-19</p></div>`;
+    html += `<div class="s-panel"><svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${m[1]}: West Bengal actual against benchmark paces">${g}</svg></div>`;
   });
   document.getElementById('p5-body').innerHTML = html;
+  document.getElementById('p5-hd').innerHTML = hd;
   const sw = (c, da) => `<i style="background:${da ? `repeating-linear-gradient(90deg,${c} 0 ${da === '2 5' ? 3 : 6}px,transparent ${da === '2 5' ? 3 : 6}px 10px)` : c}"></i>`;
   document.getElementById('p5-leg').innerHTML = `<span><i style="background:var(--wb-bengal);height:8px"></i>West Bengal, actual</span>` + BENX.map(([, nn, c, da]) => `<span>${sw(c, da)}${nn}</span>`).join('') + `<span><i style="background:color-mix(in srgb,var(--wb-peer) 25%,transparent);height:14px"></i>Headroom</span>`;
   const wg = (k) => ((val('West Bengal', Y1, k) / val('West Bengal', Y0, k) - 1) * 100).toFixed(0);
@@ -1301,9 +1896,9 @@ const rcIco = (d, sz = 26) => `<svg width="${sz}" height="${sz}" viewBox="0 0 24
   const tasks = `<div class="rc-t"><span class="lab">Actions, lightest to heaviest</span><ol>${RCA.map(([n, d, c, ic], i) => `<li style="--c:${c}"><span class="ic">${rcIco(ic)}</span><div><b>${n}</b><p>${d}</p></div></li>`).join('')}</ol></div>`;
   /* five capabilities that power the choice, as in the GST PPT */
   const CAP = [['Data integration', 'Does it see patterns that siloed data hides?', ['T', 'F', 'R'], '<ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/>', 'var(--tech)'],
+    ['Action tracking', 'Does it fix accountability and feed the next model?', ['H', 'F'], '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12l7-7M16 5h3v3"/>', '#D9480F'],
     ['Business logic codification', 'Does it codify intuition and domain knowledge and understand complex networks?', ['P', 'D'], '<circle cx="5.5" cy="6" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="12" cy="17.5" r="2.2"/><path d="M7.7 6h8.1M6.6 8l4.3 7.6M17 8l-3.9 7.6"/>', 'var(--kpi)'],
     ['Model training', 'Does the algorithm learn and improve itself?', ['P', 'R'], '<path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/><circle cx="12" cy="12" r="3.6"/>', 'var(--pol)'],
-    ['Action tracking', 'Does it fix accountability and feed the next model?', ['H', 'F'], '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12l7-7M16 5h3v3"/>', '#D9480F'],
     ['Adjudication', 'Does it raise demand realisation?', ['D', 'R'], '<path d="M14 4l6 6M11 7l6 6M12.5 5.5l-5 5M18.5 11.5l-5 5"/><path d="M10 13l-7 7"/><path d="M13 21h8"/>', '#8A6100']];
   const FC = Object.fromEntries(RCF.map((f) => [f[0], f[5]]));
   /* capabilities as a matrix: one row per capability, one column per fact it feeds */
@@ -1407,7 +2002,7 @@ const GAPS = [
      ['wheel', 'Leads allocated by round robin at the unit level'],
      ['shield', 'Strict SOPs for scrutiny, audit and EIU tasks'],
      ['dash', 'Officers and lead status monitored on a centralised dashboard']],
-   scr: {cases: '24k', officers: ['900', '1800'], amt: [8000, 10000], cash: 600},
+   scr: {cases: '24k', officers: [[900, 'Group B Gazetted (STO) and above'], [2700, 'Inspectors']], amt: [8000, 10000], cash: 600},
    src: 'Commercial Tax Department, Gujarat.'},
   {id: 'g5', custom: 'rss', n: 'Enforcement', ic: 'enf', cat: ['H'], cat2: [],
    take: 'Three principles followed by Gujarat in selecting and taking up enforcement cases.',
@@ -1644,14 +2239,15 @@ const itcScr = (S) => {
   const person = (c) => `<svg viewBox="0 0 12 16" width="17" height="22" aria-hidden="true"><circle cx="6" cy="4" r="3.2" style="fill:${c}"/><path d="M0.5 16c.4-4.6 2.6-6.8 5.5-6.8s5.1 2.2 5.5 6.8z" style="fill:${c}"/></svg>`;
   const crowd = (n, c) => Array.from({length: n}, () => person(c)).join('');
   /* one person for every 100 officers */
-  const off = `<div class="sc-crowd"><div><span>${crowd(9, P)}</span><b>~${S.officers[0]}</b></div><i>+</i><div><span>${crowd(18, 'color-mix(in srgb,var(--pol) 55%,transparent)')}</span><b>~${Number(S.officers[1]).toLocaleString('en-IN')}</b></div></div>`;
+  const grp = ([v, t], c) => { const n = Math.round(v / 100); return `<div><div class="g"><span style="width:${Math.min(n, 14) * 17}px">${crowd(n, c)}</span><b>~${v.toLocaleString('en-IN')}</b></div><small>${t}</small></div>`; };
+  const off = `<div class="sc-crowd">${grp(S.officers[0], P)}<i>+</i>${grp(S.officers[1], 'color-mix(in srgb,var(--pol) 55%,transparent)')}</div>`;
   /* amount as a long bar, cash recovered as the part paid in cash */
   const mx = S.amt[1], w = (v) => v / mx * 100;
   const amt = `<div class="sc-amt"><div class="bar"><i class="lo" style="width:${w(S.amt[0])}%"></i><i class="hi" style="left:${w(S.amt[0])}%;width:${w(S.amt[1] - S.amt[0])}%"></i><i class="cash" style="width:${w(S.cash)}%"></i></div>
     <div class="lab"><span class="c">₹${S.cash} Cr<small>Recovered in cash</small></span><span class="a">~₹${S.amt[0].toLocaleString('en-IN')}–${S.amt[1].toLocaleString('en-IN')} Cr<small>Amount involved</small></span></div></div>`;
   return `<div class="sc"><h4>Scrutiny</h4>
     <div class="sc-k"><b>~${S.cases}</b><small>Cases</small></div>
-    <span class="sc-ar">→</span><div class="sc-o">${off}<small>Officers</small></div>
+    <span class="sc-ar">→</span><div class="sc-o">${off}</div>
     <span class="sc-ar">→</span>${amt}</div>`;
 };
 const SEC = {};
@@ -1920,9 +2516,7 @@ document.querySelectorAll('[data-sec]').forEach((ol) => {
       pts.forEach(([x, y]) => { h += `<circle cx="${x}" cy="${y}" r="6" style="fill:#C62828"/>`; });
       return h + `<text x="66" y="62" text-anchor="middle" style="fill:#C62828;font-size:10px">RING</text></svg>`; })();
     $('#bl-r').innerHTML = `<div class="hd">Best practice · what good looks like</div>
-      <div class="di-c"><div class="vis">${tree}</div><div><div class="tag" style="color:var(--kpi)">Tax administrations · HMRC, ATO</div><h4><b>Taxonomy</b> of revenue losses</h4><p>A scientific classification of revenue losses gives self-learning algorithms their starting point. The 127-type taxonomy prepared for this study is a first step for West Bengal.</p></div></div>
-      <div class="di-c"><div class="vis">${idg}</div><div><div class="tag" style="color:var(--tech)">Fintech and online gaming</div><h4><b>Identity linking</b> across accounts</h4><p>Linking PAN, e-mail, IP address and device identifies one person behind several accounts. The same method can be applied to GSTINs.</p></div></div>
-      <div class="di-c"><div class="vis">${ring}</div><div><div class="tag" style="color:#C62828">Banks · anti-money-laundering</div><h4><b>Network analysis</b> of transactions</h4><p>Network analysis allows visual inspection of business relationships and detection of unusual transactions. Circular trading and fake-invoice chains can then be examined as one case.</p></div></div>`;
+      <div class="di-c"><div class="vis">${idg}</div><div><div class="tag" style="color:var(--tech)">Fintech and online gaming</div><h4><b>Identity linking</b> across accounts</h4><p>Linking PAN, e-mail, IP address and device identifies one person behind several accounts. The same method can be applied to GSTINs.</p></div></div>`;
   })(); } catch (e) { /* slide not in this deck */ }
 
   /* ---------- slide 10 · task allocation and tracking ---------- */
@@ -1964,7 +2558,7 @@ document.querySelectorAll('[data-sec]').forEach((ol) => {
     $('#tk-r').innerHTML = `<div class="hd">Best practice · what good looks like</div>
       <div class="di-c nd"><div class="vis"><div class="sms"><div class="sb"><i></i>WB GST</div><div class="bub">Dear Taxpayer (GSTIN 19ABCDE…), your GSTR-3B for Aug 2026 claims <b>₹3.5 crore more ITC</b> than your GSTR-2B shows. Please review and correct it through DRC-03 within 15 days. Incorrect returns attract interest, penalty and legal action. Ignore if already corrected.</div><div class="tm">Today 10:02</div></div></div><div><div class="tag" style="color:var(--kpi)">Nudge · automated SMS</div><h4>A message <b>the day a discrepancy is found</b></h4><p>In TMS, <b>₹131 Cr</b> came in at the ASMT-10 stage alone, before any demand notice. An automatic SMS can reach every taxpayer with a gap, at no officer time.</p></div></div>
       <div class="di-c"><div class="vis">${rk}</div><div><div class="tag" style="color:var(--tech)">Performance management</div><h4>Officer <b>ranking</b></h4><p>Tracks officer work and case completion to calculate a ranking that aligns incentives with actions.</p></div></div>
-      <div class="di-c"><div class="vis">${fl}</div><div><div class="tag" style="color:var(--kpi)">Income Tax · faceless assessment</div><h4>Cases <b>allotted by the system</b>, not by jurisdiction</h4><p>A central unit assigns each case and logs every step online. For GST: large cases go to the desks that convert them.</p></div></div>
+      <div class="di-c"><div class="vis">${fl}</div><div><div class="tag" style="color:var(--kpi)">Income Tax · faceless assessment</div><h4>Cases <b>allotted by the system</b> using algorithms</h4><p>A central unit assigns each case and logs every step online. For GST: large cases go to the desks that convert them.</p></div></div>
 `;
   })(); } catch (e) { /* slide not in this deck */ }
 
@@ -2138,15 +2732,15 @@ document.querySelectorAll('[data-sec]').forEach((ol) => {
     const ic = (d) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
     const LC = ['var(--now)', 'var(--tech)', 'var(--pol)', 'var(--kpi)', 'var(--wb-gujarat)', '#B0179B'];
     const CAP = [
-      ['Data integration', 15, '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
-        [['Standalone', 100, 100], ['GSTN data', 80, 90], ['State actions', 20, 80], ['State records', 10, 30], ['Central data', 0, 20]], 'Join MyTask, TMS and enforcement records on GSTIN'],
-      ['Business logic and networks', 16, '<circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="5" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M7.5 12h4l5-6M11.5 12l5 6"/>',
-        [['Intuition', 100, 100], ['Written', 40, 90], ['Coded', 40, 80], ['Taxonomy', 10, 30], ['Graph', 20, 20]], 'Adopt the 127-type taxonomy as the rulebook'],
-      ['Model training', 17, '<path d="M3 20h18M6 16v-4M10 16V8M14 16v-6M18 16V5"/>',
-        [['Manual', 100, 100], ['Simple rules', 70, 100], ['Weighted rules', 60, 30], ['Machine learning', 0, 40], ['Self-learning', 0, 30], ['Chat AI', 20, 20]], 'Learn lead weights from past MyTask outcomes'],
-      ['Task allocation and tracking', 19, '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8l1.5 1.5L12 7M8 13l1.5 1.5L12 12M14 8h3M14 13h3"/>',
-        [['Registers', 100, 100], ['Allotted', 40, 70], ['Stage-tracked', 40, 70], ['Ledger-matched', 50, 70], ['Smart allocation', 20, 50], ['Closed loop', 0, 0]], 'Match task outcomes to the cash and credit ledgers'],
-      ['Adjudication preparedness', 20, '<path d="M14 4l6 6M11 7l6 6M12.5 5.5l-5 5M18.5 11.5l-5 5"/><path d="M10 13l-7 7"/><path d="M13 21h8"/>',
+      ['Data integration', 19, '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
+        [['Standalone', 100, 100], ['GSTN data', 80, 90], ['State actions', 20, 80], ['State records', 10, 30], ['Central data', 0, 20]], 'Tableau integration, data from UPI TPAP'],
+      ['Task allocation and tracking', 20, '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8l1.5 1.5L12 7M8 13l1.5 1.5L12 12M14 8h3M14 13h3"/>',
+        [['Registers', 100, 100], ['Allotted', 40, 70], ['Stage-tracked', 40, 70], ['Ledger-matched', 50, 70], ['Smart allocation', 20, 50], ['Closed loop', 0, 0]], 'Convert reports into tasks: Unified tax and tasks'],
+      ['Business logic and networks', 21, '<circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="5" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M7.5 12h4l5-6M11.5 12l5 6"/>',
+        [['Intuition', 100, 100], ['Written', 40, 90], ['Coded', 40, 80], ['Taxonomy', 10, 30], ['Graph', 20, 20]], 'Institutional mechanisms to harness officers’ knowledge and experience'],
+      ['Model training', 22, '<path d="M3 20h18M6 16v-4M10 16V8M14 16v-6M18 16V5"/>',
+        [['Manual', 100, 100], ['Simple rules', 70, 100], ['Weighted rules', 60, 30], ['Machine learning', 0, 40], ['Self-learning', 0, 30], ['Chat AI', 20, 20]], 'Train on past data on GJ model with 102 features'],
+      ['Adjudication preparedness', 24, '<path d="M14 4l6 6M11 7l6 6M12.5 5.5l-5 5M18.5 11.5l-5 5"/><path d="M10 13l-7 7"/><path d="M13 21h8"/>',
         [['Ad hoc', 100, 100], ['Templates', 80, 90], ['Legal repository', 70, 90], ['AI drafts', 10, 50], ['Appeal support', 10, 50], ['Learning loop', 10, 10]], 'Build a legal repository; pilot AI-drafted notices']];
     /* score = average of the level percentages; levels hold [name, West Bengal %, Gujarat %] */
     const score = (lv, k = 1) => Math.round(lv.reduce((a, x) => a + x[k], 0) / lv.length);
@@ -2164,7 +2758,7 @@ document.querySelectorAll('[data-sec]').forEach((ol) => {
     g += `<polygon points="${wp.map((p) => p.join(',')).join(' ')}" style="fill:color-mix(in srgb,var(--wb-bengal) 28%,transparent);stroke:var(--wb-bengal)" stroke-width="3.5" stroke-linejoin="round"/>`;
     wp.forEach(([x, y], i) => { g += `<circle cx="${x}" cy="${y}" r="7" style="fill:var(--wb-bengal);stroke:var(--color-panel)" stroke-width="2.5"/>`; });
     const LP = [[300, 40, 'middle'], [506, 200, 'start'], [450, 540, 'middle'], [150, 540, 'middle'], [94, 200, 'end']];
-    const NM = [['Data', 'integration'], ['Business logic', 'and networks'], ['Model', 'training'], ['Allocation', 'and tracking'], ['Adjudication', 'preparedness']];
+    const NM = [['Data', 'integration'], ['Allocation', 'and tracking'], ['Business logic', 'and networks'], ['Model', 'training'], ['Adjudication', 'preparedness']];
     CAP.forEach(([, sl, svg], i) => { const [x, y, a] = LP[i];
       g += `<text x="${x}" y="${y}" text-anchor="${a}" style="fill:var(--color-fg);font:700 20px var(--font-anthropic-sans)">${NM[i][0]}</text><text x="${x}" y="${y + 22}" text-anchor="${a}" style="fill:var(--color-fg);font:700 20px var(--font-anthropic-sans)">${NM[i][1]}</text>`;
       g += `<text x="${x}" y="${y + 54}" text-anchor="${a}"><tspan style="fill:var(--wb-bengal);font:800 30px var(--font-anthropic-sans)">${SCR[i]}%</tspan><tspan dx="10" style="fill:var(--wb-gujarat);font:800 22px var(--font-anthropic-sans)">${GSC[i]}%</tspan></text>`; });
@@ -2358,18 +2952,65 @@ document.querySelectorAll('[data-sec]').forEach((ol) => {
   const I = {tech: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>', proc: '<path d="M4 6h10M4 12h16M4 18h7"/><circle cx="18" cy="6" r="2"/><circle cx="15" cy="18" r="2"/>',
     intel: '<circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5M8.5 11h5M11 8.5v5"/>', rev: '<ellipse cx="12" cy="6" rx="7" ry="2.6"/><path d="M5 6v4.5c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V6M5 10.5V15c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6v-4.5"/>'};
   const HZ = [['Short term', '0 to 60 days'], ['Medium term', '2 months to 1 year']];
-  const PG = [
-    [['Tech', 'tech', 'var(--tech)', ['Software: Task Allocation and active tracking capability and improved dashboard for revenue tracking', 'Access control to prevent unauthorized access and misuse', 'Integration of Tableau into TMS', 'Network analysis tool for detection of ITC frauds']],
-     ['Process related', 'proc', 'var(--kpi)', ['SMS+Email Nudge and DRC 01A', 'Tracking task allocation']],
-     ['Revenue mobilization actions', 'intel', 'var(--pol)', ['UPI based analysis: User → TPAP (app) → PSP bank → NPCI (UPI switch) → beneficiary bank. Similar analysis for Finance and Insurance', 'GSTR 7 vs 3B Mismatch, Reporting Audit, Manpower check, 243(G) and 243(W)']]],
-    [['Tech', 'tech', 'var(--tech)', ['Codification of RMC and EIU rules. Research to production.', 'Advanced Network analysis']],
-     ['Process', 'proc', 'var(--kpi)', ['Study use cases shared by GJ and see application', 'SOPs and Process re-engineering']],
-     ['Revenue mobilization', 'rev', 'var(--wb-bengal)', ['IGST settlement', 'HSN based tax prediction']]]];
-  PG.forEach((G, h) => {
-    const tl = `<div class="sp-tl">${HZ.map(([n, t], k) => `<div class="${k === h ? 'on' : ''}"><b>${n}</b><span>${t}</span></div>`).join('<i></i>')}</div>`;
-    const cols = G.map(([n, k, c, L]) => `<div class="sp-c" style="--c:${c}"><div class="sp-h"><span class="ic">${ic(I[k])}</span><h3>${n}</h3></div><ol>${L.map((t, i) => `<li><b>${i + 1}</b><p>${t}</p></li>`).join('')}</ol></div>`).join('');
-    document.getElementById(`p${22 + h}-body`).innerHTML = `<div class="sp">${tl}<div class="sp-g">${cols}</div></div>`;
-  });
+  const X = {lock: '<rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/>', net: '<circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><circle cx="12" cy="10" r="2.2"/><path d="M7 7l3.2 2M17 7l-3.2 2M12 12.2v3.6"/>',
+    task: '<rect x="4" y="3.5" width="16" height="17" rx="2"/><path d="M8 9l1.6 1.6L12.5 7.5M8 15l1.6 1.6 2.9-3.1M14.5 9.5H17M14.5 15.5H17"/>', chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+    phone: '<rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2"/>', mail: '<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 6.5L12 13l8.5-6.5"/>', reg: '<path d="M6 3.5h9l4 4v13H6z"/><path d="M15 3.5v4h4M9 12h7M9 16h7"/>',
+    gov: '<path d="M3 20h18M5 20v-8M9.5 20v-8M14.5 20v-8M19 20v-8M2.5 10L12 4l9.5 6z"/>', shop: '<path d="M4 9.5L5.5 4h13L20 9.5M4 9.5h16v10.5H4zM9 20v-5h6v5"/>'};
+  const tl = (h) => `<div class="sp-tl">${HZ.map(([n, t], k) => `<div class="${k === h ? 'on' : ''}"><b>${n}</b><span>${t}</span></div>`).join('<i></i>')}<em class="pl-vi">${h ? 'Invisibles' : 'Visibles'}</em></div>`;
+  const col = (n, k, c, tag, body) => `<div class="pl-c" style="--c:${c}"><div class="sp-h"><span class="ic">${ic(I[k])}</span><h3>${n}</h3></div>${tag ? `<p class="pl-tag">${tag}</p>` : ''}${body}</div>`;
+  const card = (n, t, v) => `<div class="pl-k"><div class="pl-kh"><b>${n}</b><span>${t}</span></div>${v}</div>`;
+  /* ---- 0 to 60 days ---- */
+  const MOD = [['task', 'Unified tax and task'], ['net', 'Fake detection and network analysis'], ['lock', 'Access control'], ['chart', 'Integration of Tableau into TMS']];
+  const tech = `<div class="pl-mods">${MOD.map(([i, t]) => `<div class="pl-mod"><span class="mi">${ic(X[i])}</span><b>${t}</b><i></i><i></i></div>`).join('')}</div><div class="pl-base">Ready-to-use modules</div>`;
+  const funnel = `<div class="pl-fun"><div style="--w:100%"><span>${ic(X.phone)}${ic(X.mail)}</span><b>SMS + Email nudge</b><em>1 lakh+</em></div><div style="--w:74%"><b>ASMT-10</b></div><div style="--w:48%"><b>DRC-01</b></div></div>`;
+  const regi = `<div class="pl-reg">${['Allotted by', 'Mode of allotment', 'Officer and date'].map((t) => `<div><i>${ic('<path d="M5 12.5l4.5 4.5L19 7.5"/>')}</i>${t}</div>`).join('')}</div>`;
+  const proc = card(1, 'SMS+Email Nudge to scale ASMT-10 to 1 lakh+ followed by DRC-01', funnel) + card(2, 'Recording task allocations to enforce accountability', regi);
+  const UPI = [['User', 'phone'], ['TPAP', 'task'], ['PSP bank', 'gov'], ['NPCI', 'net'], ['Beneficiary bank', 'gov']];
+  const upi = `<div class="pl-upi">${UPI.map(([t, i]) => `<div><span>${ic(X[i])}</span><small>${t}</small></div>`).join('<i>→</i>')}</div><div class="pl-chips"><span>Similar analysis for</span><em>Finance</em><em>Insurance</em></div>`;
+  const gov = `<div class="pl-gap"><div><small>GSTR-7</small><div class="bw"><i style="width:100%"></i></div></div><div><small>GSTR-3B</small><div class="bw"><i style="width:62%"></i><s style="left:62%;width:38%">gap</s></div></div></div><div class="pl-chips"><em>Reporting Audit</em><em>Misuse of 243(G) and 243(W)</em></div>`;
+  const comp = `<div class="pl-eq">${ic(X.shop)}<span>Estimated</span><b>1,000 × 2 × 15%</b></div>`;
+  const rev = card(1, 'UPI based analysis', upi) + card(2, 'Government contracting analysis and gap assessment', gov) + card(3, 'Composition Scheme turnover analysis', comp);
+  document.getElementById('p22-body').innerHTML = `<div class="sp">${tl(0)}<div class="pl-g">
+    ${col('Tech', 'tech', 'var(--tech)', 'Focus on visibles and ready-to-use modules from other states and industry', tech)}
+    ${col('Process', 'proc', 'var(--kpi)', '', proc)}
+    ${col('Revenue', 'intel', 'var(--pol)', '', rev)}</div></div>`;
+  /* ---- 2 months to 1 year: five initiatives, then machine learning on its own page ---- */
+  const TG = {Tech: 'var(--tech)', Process: 'var(--kpi)', Revenue: 'var(--pol)'};
+  const M = [
+    ['Process', 'council', 'An institutional mechanism to capture officers’ knowledge', 'An institutional mechanism that captures officers’ knowledge and experience should be prioritised.', ''],
+    ['Revenue', 'rule', 'Revenue mobilization exercises encoded as rules', 'Specific revenue mobilization exercises must be encoded into repeatable analytical rules. Once a novel evasion pattern is unravelled by the RMC, its logic is integrated into the primary analytical engine and deployed across the entire taxpayer database.', ''],
+    ['Process', 'loop', 'Rules discovered, discarded and rediscovered', 'Evaders adapt as the Directorate evolves. A rule that is relevant today will not be tomorrow. So, rules must be discovered, discarded and rediscovered to keep the efficiency high.', '<div class="md-ch"><em>Discover</em><i>→</i><em>Discard</em><i>→</i><em>Rediscover</em></div>'],
+    ['Tech', 'layers', 'Stronger data integration layers', 'Data integration layers must be strengthened through integration of new layers. At places like banks, UPI and mining, where data integration cannot be automated, a process must be defined to streamline periodical revenue mobilization exercises, e.g. keeping the template letter and forms ready to seek data from UPI TPAPs.', '<div class="md-ch"><em>Banks</em><em>UPI</em><em>Mining</em></div>'],
+    ['Tech', 'model', 'Machine learning: deterministic models first', 'Models once trained on the data can be made self-learning through reinforcement learning algorithms. LLM-based statistical models should act as a second opinion to the extent possible, with primary results originating from deterministic machine learning models only.', '<a class="md-nx" href="#ml2" data-annex="ml2">Machine learning and LLMs on the next page →</a>']];
+  const MI = {council: '<circle cx="12" cy="6.5" r="2.6"/><circle cx="5" cy="10" r="2.2"/><circle cx="19" cy="10" r="2.2"/><path d="M7 20c.5-3 2.5-5 5-5s4.5 2 5 5M1.5 17c.4-2 1.7-3.3 3.5-3.3M22.5 17c-.4-2-1.7-3.3-3.5-3.3"/>',
+    rule: '<path d="M6 3.5h9l4 4v13H6z"/><path d="M15 3.5v4h4M9 12h7M9 16h5"/>', loop: '<path d="M20 11a8 8 0 0 0-14.5-4.5M4 13a8 8 0 0 0 14.5 4.5"/><path d="M5 3v4h4M19 21v-4h-4"/>',
+    layers: '<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12.5l9 5 9-5M3 17l9 5 9-5"/>', model: '<path d="M8 7.5L3.5 12 8 16.5M16 7.5l4.5 4.5-4.5 4.5M14 4.5l-4 15"/>'};
+  document.getElementById('p23-body').innerHTML = `<div class="sp">${tl(1)}<div class="md-g">${M.map(([t, k, h, d, v], n) => `<div class="md-c" style="--c:${TG[t]}"><div class="md-h"><b>${n + 1}</b><span class="mi">${ic(MI[k])}</span><span class="tg">${t}</span></div><h4>${h}</h4><p>${d}</p>${v}</div>`).join('')}</div></div>`;
+})();
+</script>
+
+<script>
+/* ---------- page 33 · progress so far ---------- */
+(function () {
+  const ic = (d, w = 26) => `<svg width="${w}" height="${w}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+  const TR = {Tech: 'var(--tech)', Process: 'var(--kpi)', Revenue: 'var(--pol)'};
+  const ST = {done: ['var(--kpi)', '<path d="M5 12.5l4.5 4.5L19 7.5"/>'], next: ['var(--wb-bengal)', '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>'], talk: ['var(--tech)', '<path d="M4 5h16v10H9l-5 4z"/>'], stop: ['#C62828', '<path d="M12 3.5l9 16H3z"/><path d="M12 10v4M12 17v.5"/>'], way: ['var(--color-fg-muted)', '<path d="M4 12h12M12 6l6 6-6 6"/>']};
+  const chip = ([k, t]) => `<span class="pg-st" style="--s:${ST[k][0]}">${ic(ST[k][1], 20)}${t}</span>`;
+  const P = [
+    ['Tech', 'Unified tax and tasks', 'Meeting done with IITH on Nov 20. 2 days physical meeting and task defining exercise scheduled for Nov 25, 2026.', [['done', 'Meeting · 20 Nov'], ['next', 'Scheduled · 25 Nov']]],
+    ['Tech', 'Access control and integration of Tableau into TMS', 'Conveyed to IITH, with help extended for formulation of the tech plan if needed.', [['talk', 'Conveyed to IITH'], ['done', 'ISD meeting · 20 Nov']]],
+    ['Process', 'SMS + Email Nudge', 'Discussed with CCT, followed by discussion of the implementation plan with Information Systems Division.', [['done', 'Discussed with CCT'], ['done', 'ISD meeting · 20 Nov']]],
+    ['Revenue', 'UPI based analysis', 'Hurdle identified: a few TPAPs refusing to share the associated PAN.', [['done', 'ISD meeting · 20 Nov'], ['stop', 'Hurdle']]],
+    ['Revenue', 'Identification of revenue gaps', 'Charge-wise tax liability vs taxable supplies as per 3B.', [['way', 'Approach']]]];
+  /* November 2026 strip: one card per dated event, each pinned to its day */
+  const d0 = 17, d1 = 28, pc = (d) => ((d - d0) / (d1 - d0) * 100).toFixed(2) + '%';
+  const EV = [[20, 'done', 'IITH meeting', 'Unified tax and tasks', 0], [20, 'done', 'ISD meeting', 'SMS, UPI, Tableau', 1], [25, 'next', '2-day task defining exercise', 'Physical meeting with IITH · 25–26 Nov', 1]];
+  const days = Array.from({length: d1 - d0 + 1}, (_, k) => d0 + k);
+  const strip = `<div class="pg-tw"><span class="pg-mo">November 2026</span>
+      ${EV.map(([d, k, t, sub, side]) => `<div class="pg-ev ${k}${side ? ' r' : ' l'}" style="--x:${pc(d)};--s:${ST[k][0]}"><div class="cd">${ic(ST[k][1], 22)}<div><b>${t}</b><small>${sub}</small></div></div><i></i></div>`).join('')}
+      <div class="pg-ax"><span class="rg" style="left:${pc(25)};width:calc(${pc(26)} - ${pc(25)})"></span>${days.map((d) => `<span class="tk${d === 20 || d === 25 || d === 26 ? ' on' : ''}" style="left:${pc(d)}"><em>${d}</em></span>`).join('')}</div></div>`;
+  const rows = P.map(([t, n, d, s], k) => `<li style="--c:${TR[t]}"><b class="pg-n">${k + 1}</b><span class="pg-t">${t}</span><div class="pg-m"><h4>${n}</h4><p>${d}</p></div><div class="pg-s">${s.map(chip).join('')}</div></li>`).join('');
+  document.getElementById('p24-body').innerHTML = `<div class="pg">${strip}<ol class="pg-l">${rows}</ol></div>`;
 })();
 </script>
 
@@ -2427,10 +3068,14 @@ document.querySelectorAll('[data-sec]').forEach((ol) => {
     'Illustrative ring of six firms. The same six firms appear in every panel; only the links change what can be seen.');
   /* 3 · Tableau into TMS and access control */
   const RL = [['L0', 'Commissioner', 'Whole State'], ['L2', 'Joint Commissioner', 'Own circle'], ['L3', 'Deputy / Assistant Commissioner', 'Own charge'], ['L4', 'CTO / ACTO', 'Own tasks only']];
-  set('t3', `<div class="x3"><div class="x3l"><div class="stk">${bf('tb-1.jpg', 'Tableau · Registration')}${bf('tb-2.jpg', 'Tableau · GSTR-3B')}${bf('tb-3.jpg', 'Tableau · Reconciliation')}</div>
-      <div class="flow"><span>${ic('<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M7 12l3-3 3 2 4-4"/>')}Tableau dashboards</span><i>→</i><span>${ic('<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8l1.5 1.5L12 7M8 13l1.5 1.5L12 12M14 8h3M14 13h3"/>')}Inside TMS</span></div></div>
-    <div class="x3r"><h3>${ic('<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3M12 15v2"/>', 34)}Access control</h3><p class="q">Access control to prevent unauthorized access and misuse</p>
-      <ol class="rl">${RL.map(([l, n, w], i) => `<li style="--w:${100 - i * 18}%"><b>${l}</b><div><h4>${n}</h4><p>${w}</p></div></li>`).join('')}</ol></div></div>`,
+  const TB = [['tb-1.jpg', 'Registration'], ['tb-2.jpg', 'GSTR-3B'], ['tb-3.jpg', 'Reconciliation']];
+  const nest = (k) => k >= RL.length ? '' : `<div class="nz" style="--k:${k}"><div class="nh"><b>${RL[k][0]}</b><span>${RL[k][1]}</span><em>${RL[k][2]}</em></div>${nest(k + 1)}</div>`;
+  set('t3', `<div class="x3n"><div class="x3w">
+      <div class="tw-bar"><i></i><i></i><i></i><b>TMS 2.0</b><span>${ic('<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M7 12l3-3 3 2 4-4"/>', 20)}Tableau dashboards inside TMS</span></div>
+      <div class="tw-tabs">${TB.map(([f, n], k) => `<div class="${k === 2 ? 'on' : ''}"><img src="img/${f}" alt=""><b>${n}</b></div>`).join('')}</div>
+      <div class="tw-main"><img src="img/tb-3.jpg" alt="Tableau reconciliation dashboard shown inside TMS"></div></div>
+    <div class="x3a"><h3>${ic('<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3M12 15v2"/>', 34)}Access control</h3><p class="q">Access control to prevent unauthorized access and misuse</p>
+      <div class="nest">${nest(0)}</div></div></div>`,
     'Tableau screens from the DCT dashboard. Access by level as in TMS 2.0.');
   /* 4 · SMS and email nudge, tracking task allocation */
   set('t4', `<div class="x4"><div class="x4l"><h3>SMS+Email Nudge and DRC 01A</h3><div class="ph"><div class="sc"><div class="sms"><b>CT-WBGST</b><p>GSTIN 19XXXXX1234X1Z5: GSTR-3B for Aug 2026 shows ₹3.2 lakh less tax than GSTR-1. Pay or explain within 15 days. DRC-01A follows if no reply.</p><span>Today 10:42</span></div></div></div>
@@ -2444,10 +3089,325 @@ document.querySelectorAll('[data-sec]').forEach((ol) => {
     ['PSP bank', 'payer’s bank', '<path d="M3 10l9-6 9 6M5 10v9h14v-9M9 19v-5h6v5"/>'], ['NPCI', 'UPI switch', '<circle cx="12" cy="12" r="3"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/>'], ['Beneficiary bank', 'business account', '<path d="M3 10l9-6 9 6M5 10v9h14v-9M8 13h8"/>']];
   const IT = [['GSTR 7 vs 3B Mismatch', '<path d="M4 4h7v16H4zM13 4h7v16h-7z"/><path d="M6 8h3M15 8h3M6 12h3M15 12h3"/>'], ['Reporting Audit', '<path d="M4 5.5C6 4.5 9 4.5 12 6c3-1.5 6-1.5 8-.5v13c-2-1-5-1-8 .5-3-1.5-6-1.5-8-.5z"/><path d="M12 6v13.5"/>'],
     ['Manpower check', '<circle cx="8" cy="8" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M2.5 19c.6-3 2.8-4.8 5.5-4.8s4.9 1.8 5.5 4.8M14 14.6c.8-.4 1.6-.6 2.5-.6 2.3 0 4.2 1.6 4.7 4.5"/>'], ['243(G) and 243(W)', '<path d="M3 21h18M5 21v-8l4-3 4 3v8M13 21V9l4-3 4 3v12M7 21v-3h2v3"/>']];
-  set('t5', `<div class="x5"><div class="x5a"><h3><span class="upi">UPI</span> based analysis</h3><div class="ch">${CH.map(([n, d, svg], i) => `${i ? '<i class="ar">→</i>' : ''}<div class="nd${n === 'NPCI' ? ' hub' : ''}"><span>${ic(svg, 40)}</span><b>${n}</b><small>${d}</small></div>`).join('')}</div>
+  set('t5', `<div class="x5"><div class="x5a"><h3><b class="n1">1</b><span class="upi">UPI</span> based analysis</h3><div class="ch">${CH.map(([n, d, svg], i) => `${i ? '<i class="ar">→</i>' : ''}<div class="nd${n === 'NPCI' ? ' hub' : ''}"><span>${ic(svg, 40)}</span><b>${n}</b><small>${d}</small></div>`).join('')}</div>
       <div class="sim">Similar analysis for <span>${ic('<path d="M3 21h18M5 21V10M10 21V10M14 21V10M19 21V10M3 10l9-6 9 6z"/>', 22)}Finance</span> and <span>${ic('<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>', 22)}Insurance</span></div></div>
-    <div class="x5b">${IT.map(([n, svg], i) => `<div class="tl"><span>${ic(svg, 40)}</span><b>${n}</b></div>`).join('')}</div></div>`, '');
+    <div class="x5n">
+      <div class="x5k"><div class="kh"><b>2</b><h3>Government contracting analysis and gap assessment</h3></div>
+        <div class="x5c"><div class="x5r"><span class="gi">${ic('<path d="M3 20h18M5 20v-8M9.5 20v-8M14.5 20v-8M19 20v-8M2.5 10L12 4l9.5 6z"/>', 30)}</span><div><small>GSTR-7 · Govt. buyer reports supply</small><i style="width:100%"></i></div></div>
+          <div class="x5r"><span class="gi">${ic('<path d="M3 20h18M6 20V9l6-4 6 4v11M10 20v-5h4v5"/>', 30)}</span><div><small>GSTR-3B · Supplier declares</small><i style="width:64%"></i><s style="left:64%;width:36%">gap</s></div></div></div>
+        <div class="ck">${['GSTR-7 vs 3B', 'Reporting Audit', 'Misuse of 243(G) and 243(W)'].map((t) => `<span>${ic('<path d="M5 12.5l4.5 4.5L19 7.5"/>', 20)}${t}</span>`).join('')}</div></div>
+      <div class="x5k"><div class="kh"><b>3</b><h3>Composition Scheme turnover analysis</h3></div>
+        <div class="eqb"><span class="sh">${ic('<path d="M4 9.5L5.5 4h13L20 9.5M4 9.5h16v10.5H4zM9 20v-5h6v5"/>', 44)}</span><div><small>Estimated</small><div class="fx"><span>1,000</span><i>×</i><span>2</span><i>×</i><span>15%</span></div></div></div></div>
+    </div></div>`, 'GSTR-7 and GSTR-3B bars are illustrative, not to scale.');
 })();
+</script>
+
+<script>
+/* Section 3 · Understanding technology in GST: pages 13 to 17 and 20 to 22, from the note "The Invisible Engine" */
+(function () {
+  const $ = (id) => document.getElementById(id) || document.createElement('div');
+  const IC = {
+    road: '<path d="M8 3L4 21M16 3l4 18M12 5v2M12 11v2M12 17v2"/>',
+    data: '<ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/>',
+    check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+    screen: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/><path d="M7 12V9M11 12V7M15 12v-2"/>',
+    gear: '<circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/>',
+    pair: '<circle cx="7.5" cy="8" r="3"/><circle cx="16.5" cy="8" r="3"/><path d="M2.5 20c0-3 2.2-5 5-5s5 2 5 5M11.5 20c0-3 2.2-5 5-5s5 2 5 5"/>',
+    truck: '<path d="M2.5 6.5h11v9.5h-11zM13.5 10h4.2l3 3.2V16h-7.2"/><circle cx="6.5" cy="17.5" r="1.9"/><circle cx="17" cy="17.5" r="1.9"/>',
+    trend: '<path d="M4 20V4M4 20h16"/><path d="M7 15.5l4-4 3 3 5.5-6.5"/><path d="M16 8h3.5v3.5"/>',
+    search: '<circle cx="10.5" cy="10.5" r="6"/><path d="M20 20l-5-5"/>',
+    shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
+    coin: '<circle cx="12" cy="12" r="8.5"/><path d="M9 8.5h6M9 11.5h6M12.5 8.5c2 0 2 3 0 3H9l4.5 4.5"/>',
+    clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.2l3.2 2"/>',
+    store: '<path d="M3.5 10h17M5 10l1.3-5h11.4L19 10M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/>',
+    eye: '<path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/><circle cx="12" cy="12" r="2.6"/><path d="M4 4l16 16"/>',
+    target: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8"/>',
+    loop: '<path d="M20 11a8 8 0 0 0-14.6-4.4L4 8.5M4 4v4.5h4.5"/><path d="M4 13a8 8 0 0 0 14.6 4.4l1.4-1.9M20 20v-4.5h-4.5"/>',
+    mouse: '<rect x="7" y="3" width="10" height="18" rx="5"/><path d="M12 7v3.5"/>',
+    sheet: '<rect x="4" y="3.5" width="16" height="17" rx="2"/><path d="M4 9h16M4 14.5h16M10 3.5v17"/>',
+    letter: '<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/>',
+    send: '<path d="M21 3L10 14M21 3l-7 18-4-7-7-4z"/>',
+    list: '<path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/>',
+    mark: '<path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 7l3 3"/>',
+    link: '<path d="M10 14a4 4 0 0 0 5.7 0l3.3-3.3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0L5 13.3A4 4 0 0 0 10.7 19l1-1"/>',
+    code: '<path d="M8 7.5L3.5 12 8 16.5M16 7.5l4.5 4.5-4.5 4.5M14 4.5l-4 15"/>',
+    council: '<circle cx="12" cy="6.5" r="2.6"/><circle cx="5" cy="10" r="2.2"/><circle cx="19" cy="10" r="2.2"/><path d="M7.5 20c0-2.8 2-4.8 4.5-4.8s4.5 2 4.5 4.8M1.8 18c0-2 1.4-3.6 3.2-3.6M22.2 18c0-2-1.4-3.6-3.2-3.6"/>',
+    card: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',
+    gavel: '<path d="M14 4l6 6M11 7l6 6M12.5 5.5l-5 5M18.5 11.5l-5 5"/><path d="M10 13l-7 7"/>',
+    layers: '<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12.5l9 5 9-5M3 17l9 5 9-5"/>',
+    tune: '<path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/>',
+    steel: '<path d="M3 17h18M5 17V9l7-4 7 4v8"/><path d="M9 17v-5h6v5"/>',
+    phone: '<rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2"/>',
+    ticket: '<path d="M3.5 8.5V6h17v2.5a2.5 2.5 0 0 0 0 5V16h-17v-2.5a2.5 2.5 0 0 0 0-5z"/><path d="M9.5 9h5M9.5 12.5h5"/>',
+    grid: '<rect x="3.5" y="3.5" width="7" height="7" rx="1"/><rect x="13.5" y="3.5" width="7" height="7" rx="1"/><rect x="3.5" y="13.5" width="7" height="7" rx="1"/><path d="M14 17h6M17 14v6"/>'
+  };
+  const ic = (k) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]}</svg>`;
+  const ico = (k, c, cls = '') => `<span class="tg-ic ${cls}" style="--c:${c}">${ic(k)}</span>`;
+
+  /* ---------- page 13 · four-stage value-capture cycle ---------- */
+  const ST = [['Digitisation', 'Machine-readable data'], ['Algorithms, logic and KPIs', 'What to detect and measure'], ['Monitoring', 'Tracking work and results'], ['Refining', 'Learning from outcomes']];
+  const FLD = [[94, 'Bulk of time, budget and political capital goes into <b>digitising field reality</b>'], [24, 'Starts only once clean records exist'], [16, ''], [9, '']];
+  const SRC = [['GSTR-1', 'sales invoices'], ['GSTR-3B', 'self-declared tax paid'], ['GSTR-2B', 'auto-drafted credit'], ['E-way bill', 'logistics movement'], ['E-invoice', 'mandatory e-invoicing']];
+  $('u1-body').innerHTML = `<div class="c1-g">
+      <div class="c1-st h"><span class="tg-lab">Four-stage cycle</span></div>
+      ${ST.map(([n, s], k) => `<div class="c1-st"><span class="n">${k + 1}</span><div><b>${n}</b><small>${s}</small></div></div>`).join('')}
+      <div class="c1-rl">${ico('road', 'var(--now)')}<div><b>Physical-world departments</b><small>Operations occur on physical ground: roads constructed on site, physical scene investigations in criminal justice</small></div></div>
+      ${FLD.map(([w, t]) => `<div class="c1-c" style="--c:var(--now)"><div class="bar${w < 50 ? ' lt' : ''}" style="--w:${w}%"></div>${t ? `<p>${t}</p>` : ''}</div>`).join('')}
+      <div class="c1-rl">${ico('data', 'var(--wb-bengal)')}<div><b>GST administration</b><small>Transactions originate natively in digital, structured datasets</small></div></div>
+      <div class="c1-c" style="--c:var(--kpi)"><div class="done">${ico('check', 'var(--kpi)')}Digital from the source</div><div class="c1-ch">${SRC.map(([a, b]) => `<span><b>${a}</b> ${b}</span>`).join('')}</div></div>
+      <div class="c1-c hi" style="--c:var(--wb-bengal)"><div class="bar" style="--w:94%"></div><p><b>Value generation shifts here:</b> sharp algorithms, unambiguous business logic and meaningful KPIs</p></div>
+      <div class="c1-c" style="--c:var(--wb-bengal)"><div class="bar lt" style="--w:42%"></div></div>
+      <div class="c1-c" style="--c:var(--wb-bengal)"><div class="bar lt" style="--w:38%"></div></div>
+    </div>`;
+
+  /* ---------- page 14 · three witnesses ---------- */
+  const W = [['Witness 1', 'The counterparty', 'pair', 'var(--tech)', 'A buyer’s input tax credit depends on what the supplier reports. When the supplier’s GSTR-1 and the buyer’s GSTR-3B claim disagree, the gap shows directly in GSTR-2B against GSTR-3B.', 'Credit claimed in GSTR-3B well above what suppliers reported in GSTR-2B', 'Simple return mismatch', ['Return matching'], '34%'],
+    ['Witness 2', 'The physical and financial trail', 'truck', 'var(--kpi)', 'Goods move on e-way bills, funds move through banks, imports pass customs and returns are filed from traceable IP addresses and devices.', 'Large turnover with little goods movement or ten firms filing from one computer', 'Joining internal and external data', ['E-way bills', 'Bank', 'Customs', 'IP and device'], '62%'],
+    ['Witness 3', 'Normal behaviour', 'trend', 'var(--pol)', 'Every firm has a history and a peer group in its sector. Departures from either stand out statistically.', 'Credit that jumps tenfold overnight or margins far below every peer in the same trade', 'Algorithms', ['Network clustering', 'Peer benchmarking', 'Anomaly scoring'], '100%']];
+  $('u2-body').innerHTML = `<div class="c2-l">
+      <svg width="500" height="252" viewBox="0 0 460 232" role="img" aria-label="Reported figure shorter than the actual figure; the difference is the gap">
+        <text x="0" y="18" font-size="15" font-weight="800" letter-spacing="1.4" fill="var(--color-fg-muted)">WHAT THE TAXPAYER REPORTS</text>
+        <rect x="0" y="30" width="250" height="46" rx="5" fill="color-mix(in srgb,var(--ink) 22%,transparent)"/>
+        <text x="14" y="60" font-size="19" font-weight="700" fill="var(--color-fg)">Own return</text>
+        <text x="0" y="118" font-size="15" font-weight="800" letter-spacing="1.4" fill="var(--color-fg-muted)">WHAT ACTUALLY HAPPENED</text>
+        <rect x="0" y="130" width="440" height="46" rx="5" fill="color-mix(in srgb,var(--ink) 22%,transparent)"/>
+        <text x="14" y="160" font-size="19" font-weight="700" fill="var(--color-fg)">Real transactions</text>
+        <rect x="252" y="30" width="188" height="46" rx="5" fill="color-mix(in srgb,#C62828 8%,transparent)" stroke="#C62828" stroke-width="2" stroke-dasharray="6 5"/>
+        <text x="346" y="60" text-anchor="middle" font-size="20" font-weight="800" fill="#C62828">The gap</text>
+        <path d="M250 84V122M440 84V122" stroke="#C62828" stroke-width="1.5" stroke-dasharray="3 4"/>
+        <text x="0" y="214" font-size="18" fill="var(--color-fg-muted)">To evade, a business must report something</text>
+        <text x="0" y="234" font-size="18" fill="var(--color-fg-muted)">different from what actually happened.</text>
+      </svg>
+      <p class="q">Is reality recorded anywhere outside the taxpayer’s control? Under GST, <b>almost always.</b></p>
+      <div class="c2-fl">
+        <div style="--c:var(--wb-bengal)">${ico('search', 'var(--wb-bengal)')}<span><b>Detection is a data problem first</b><small>The three witnesses below</small></span></div>
+        <i>↓</i>
+        <div style="--c:var(--now)">${ico('shield', 'var(--now)')}<span><b>Fieldwork follows</b><small>To confirm and to recover</small></span></div>
+      </div>
+    </div>
+    <div class="c2-r">
+      <div class="c2-ef">${W.map((w) => `<div style="--c:${w[3]};--h:${[40, 66, 92][W.indexOf(w)]}px">${w[6]}</div>`).join('')}</div>
+      <div class="tg-lab" style="margin:-4px 0 14px">Analytical effort to check, rising left to right</div>
+      <div class="c2-w">${W.map(([k, n, i, c, d, fp, , m]) => `<div style="--c:${c}">
+        <div class="hd">${ico(i, c)}<div><em>${k}</em><b>${n}</b></div></div>
+        <p>${d}</p>
+        <div class="fp"><b>Footprint it leaves</b>${fp}</div>
+        <div class="hw"><b>Check needed</b>${m.map((x) => `<span>${x}</span>`).join('')}</div></div>`).join('')}</div>
+    </div>`;
+
+  /* ---------- page 15 · iceberg and value over time ---------- */
+  const VIS = ['Descriptive dashboards', 'Case trackers', 'Flag lists'];
+  const INV = [['Detection algorithms', 'gear'], ['Business rules', 'card'], ['Clean joined data pipelines', 'data'], ['Outcome feedback loops', 'loop'], ['Processes that build and refine them', 'council']];
+  const iw = 800, wl = 190;
+  const ice = `<svg viewBox="0 0 ${iw} 640" role="img" aria-label="Iceberg: a small visible layer above the waterline and a large invisible layer below">
+      <rect x="0" y="${wl}" width="${iw}" height="${640 - wl}" fill="color-mix(in srgb,var(--tech) 6%,transparent)"/>
+      <path d="M0 ${wl}H${iw}" stroke="var(--tech)" stroke-width="2.5" stroke-dasharray="10 7"/>
+      <path d="M300 ${wl} L360 70 L392 96 L430 40 L470 104 L520 ${wl} Z" fill="color-mix(in srgb,var(--ink) 10%,var(--color-panel))" stroke="var(--ink)" stroke-width="2"/>
+      <path d="M300 ${wl} L520 ${wl} L640 300 L610 470 L520 600 L330 620 L190 520 L160 340 Z" fill="color-mix(in srgb,var(--tech) 12%,var(--color-panel))" stroke="var(--tech)" stroke-width="2"/>
+      <text x="0" y="28" font-size="15" font-weight="800" letter-spacing="1.5" fill="var(--ink)">VISIBLE LAYER</text>
+      <text x="0" y="52" font-size="16" fill="var(--color-fg-muted)">Monitors how work moves across</text>
+      <text x="0" y="72" font-size="16" fill="var(--color-fg-muted)">charges, circles and officers</text>
+      ${VIS.map((t, k) => `<g transform="translate(560,${62 + k * 40})"><circle r="5" fill="var(--ink)"/><text x="16" y="6" font-size="20" font-weight="600" fill="var(--color-fg)">${t}</text></g>`).join('')}
+      <text x="${iw}" y="${wl + 26}" text-anchor="end" font-size="14" font-weight="700" fill="var(--tech)">WATERLINE: what a screen shows</text>
+      <text x="0" y="${wl + 40}" font-size="15" font-weight="800" letter-spacing="1.5" fill="var(--tech)">INVISIBLE LAYER</text>
+      <text x="0" y="${wl + 64}" font-size="16" fill="var(--color-fg-muted)">Decides which taxpayers</text>
+      <text x="0" y="${wl + 84}" font-size="16" fill="var(--color-fg-muted)">to look at in the first place</text>
+      ${INV.map(([t, i], k) => `<g transform="translate(250,${wl + 100 + k * 64})"><rect x="0" y="-24" width="350" height="48" rx="10" fill="var(--color-panel)" stroke="color-mix(in srgb,var(--tech) 35%,transparent)"/><g transform="translate(12,-12)" color="var(--tech)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${IC[i]}</svg></g><text x="48" y="7" font-size="19" font-weight="600" fill="var(--color-fg)">${t}</text></g>`).join('')}
+    </svg>`;
+  const cw = 900, ch = 520, L = 70, B = 450, T = 30, R = 860;
+  const xs = (t) => L + (t / 3) * (R - L), ys = (v) => B - v * (B - T);
+  const vis = (t) => 0.3 * (1 - Math.exp(-t / 0.09)), inv = (t) => 0.05 * (Math.exp(t) - 1);
+  const path = (f) => Array.from({ length: 121 }, (_, k) => { const t = k / 40; return `${k ? 'L' : 'M'}${xs(t).toFixed(1)} ${ys(Math.min(f(t), 1.08)).toFixed(1)}`; }).join('');
+  let tx = 0; for (let t = 0; t < 3; t += .005) if (inv(t) >= vis(t) && t > .2) { tx = t; break; }
+  const curve = `<svg viewBox="0 0 ${cw} ${ch}" role="img" aria-label="Value over time: visible tools rise in weeks and level off; the invisible backend starts slowly and compounds">
+      ${[0, 1, 2, 3].map((y) => `<path d="M${xs(y)} ${T}V${B}" stroke="var(--color-border-line)"/>`).join('')}
+      <path d="M${L} ${B}H${R}M${L} ${B}V${T - 10}" stroke="var(--cds-chart-axis,var(--color-fg-muted))" stroke-width="2"/>
+      ${[['Day one', 0], ['Year 1', 1], ['Year 2', 2], ['Year 3', 3]].map(([s, y]) => `<text x="${xs(y)}" y="${B + 30}" text-anchor="middle" font-size="17" fill="var(--color-fg-muted)">${s}</text>`).join('')}
+      <text transform="translate(${L - 24},${(T + B) / 2}) rotate(-90)" text-anchor="middle" font-size="16" fill="var(--color-fg-muted)">Value delivered</text>
+      <path d="${path(vis)}" fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/>
+      <path d="${path(inv)}" fill="none" stroke="var(--tech)" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="${xs(tx)}" cy="${ys(inv(tx))}" r="8" fill="var(--color-panel)" stroke="var(--tech)" stroke-width="3"/>
+      <text x="${xs(tx) + 14}" y="${ys(inv(tx)) + 28}" font-size="15" fill="var(--color-fg-muted)">Invisible layer overtakes</text>
+      <g transform="translate(${xs(0.28)},${ys(0.3) - 64})"><text font-size="19" font-weight="700" fill="var(--ink)">Visible tools: quick wins in weeks</text><text y="24" font-size="16" fill="var(--color-fg-muted)">Scrutiny stages on a dashboard; a basic 2B/3B list</text><text y="44" font-size="16" fill="var(--color-fg-muted)">Value levels off once the screens are built</text></g>
+      <g transform="translate(${xs(0.95)},${ys(0.86)})"><text font-size="19" font-weight="700" fill="var(--tech)">Invisible backend: compounds over years</text><text y="24" font-size="16" fill="var(--color-fg-muted)">Rules built, tested and refreshed as evaders adapt</text></g>
+      
+      <defs><marker id="u3a" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--color-fg-muted)"/></marker></defs>
+    </svg>`;
+  $('u3-body').innerHTML = `<div class="c3-p"><div class="tg-h"><b>Two layers of a tax technology stack</b></div>${ice}</div>
+    <div class="c3-p"><div class="tg-h"><b>Value over time</b><span>illustrative</span></div>
+      <div class="legend"><span><i style="background:var(--ink)"></i>Visible layer</span><span><i style="background:var(--tech)"></i>Invisible layer</span></div>${curve}<p style="margin:10px 0 0;padding-left:16px;border-left:4px solid var(--wb-bengal);font:400 24px/1.3 var(--font-anthropic-serif)">On day one a weak programme and a world-class one look identical on screen.</p></div>`;
+
+  /* ---------- page 16 · precision waffles ---------- */
+  const waffle = (n, real, honestCol) => { const cols = 50, s = 12, g = 3, rows = Math.ceil(n / cols);
+    return `<svg width="${cols * (s + g)}" height="${rows * (s + g)}" viewBox="0 0 ${cols * (s + g)} ${rows * (s + g)}" role="img" aria-label="${n} cases, ${real} real evaders">${Array.from({ length: n }, (_, k) => `<rect x="${(k % cols) * (s + g)}" y="${Math.floor(k / cols) * (s + g)}" width="${s}" height="${s}" rx="3" fill="${k < real ? 'var(--wb-bengal)' : honestCol}"/>`).join('')}</svg>`; };
+  const DMG = [['clock', 'Wasted capacity', 'Every officer-hour spent on a false lead is taken from a major evasion case.'],
+    ['store', 'Harm to Ease of Doing Business', 'Each false positive brings notices, replies, hearings, litigation and lost trust among compliant firms.'],
+    ['eye', 'False comfort', 'Tiles turn green as 95% of cases close on time, hiding large leakages no algorithm flagged.'],
+    ['target', 'Distorted incentives', 'Disposal-speed targets reward closing easy weak cases quickly and avoiding complex high-value ones.'],
+    ['loop', 'Corrupted learning', 'Rushed closures leave noisy outcome records that degrade the next generation of rules.']];
+  $('u4-body').innerHTML = `<div class="c4-l">
+      <div class="c4-k"><span><i style="background:var(--wb-bengal)"></i>Real evader</span><span><i style="background:color-mix(in srgb,var(--ink) 18%,transparent)"></i>Honest business, flagged</span><span><i style="background:color-mix(in srgb,#C62828 38%,transparent)"></i>Honest business, flagged, at low precision</span></div>
+      <div class="c4-w" style="--c:var(--kpi)"><div class="pr"><b>50%</b><small>Precision</small></div>${waffle(200, 100, 'color-mix(in srgb,var(--ink) 18%,transparent)')}
+        <div class="ct"><div><b>200</b>cases sent</div></div></div>
+      <div class="c4-w" style="--c:#C62828"><div class="pr"><b>10%</b><small>Precision</small></div>${waffle(1000, 100, 'color-mix(in srgb,#C62828 38%,transparent)')}
+        <div class="ct"><div><b>1,000</b>cases sent</div><div class="r"><b>100</b>real evaders, as before</div><div class="h"><b>900</b>honest businesses disturbed</div></div></div>
+      <div class="c4-q">The dashboard tracks all 1,000 with equal urgency. <b>A weak rule on a fast dashboard multiplies the error.</b></div>
+    </div>
+    <div class="c4-r"><div class="tg-h"><b style="white-space:nowrap">Five damages</b><span>weak rules behind a strong dashboard</span></div>
+      <ol>${DMG.map(([i, h, p]) => `<li>${ico(i, '#C62828')}<div><b>${h}</b><p>${p}</p></div></li>`).join('')}</ol></div>`;
+
+  /* ---------- page 17 · priority, which rules first, local and global best ---------- */
+  const QD = [['High value, rare', 'Specialist investigation', 'var(--pol)', 'Complex one-off structuring handled by senior teams with full evidence in hand.'],
+    ['High value, high frequency', 'Encode first', 'var(--wb-bengal)', 'Fake ITC clusters, large 2B/3B gaps and repeatable sector leakages: one rule recovers again and again at near-zero cost.', 1],
+    ['Low value, rare', 'Leave alone', 'var(--now)', 'Minor one-off errors where enforcement costs more than it recovers and burdens compliant firms.'],
+    ['Low value, high frequency', 'Automate the nudge', 'var(--tech)', 'Small return mismatches met by automated intimations that prompt self-correction with no officer hours.']];
+  const LS = [['A', '2B/3B mismatches', 'var(--tech)', (k) => 100 * 0.975 ** k], ['B', 'E-way bill gaps', 'var(--pol)', (k) => 1000 * 0.5 ** k], ['C', 'Special drive', 'var(--kpi)', (k) => 150 * 0.85 ** k]];
+  const N = 30, CAP = 30;
+  const lists = LS.map(([id, n, c, f]) => ({ id, n, c, v: Array.from({ length: N }, (_, k) => f(k)) }));
+  const pool = lists.flatMap((l) => l.v.map((v) => ({ v, l }))).sort((a, b) => b.v - a.v);
+  const local = lists[0].v.slice(0, CAP).reduce((a, b) => a + b, 0), global = pool.slice(0, CAP).reduce((a, b) => a + b.v, 0);
+  const ratio = (global / local).toFixed(1); $('u5-x').textContent = ratio;
+  const SW = 1060, H = 118, vmax = 1000, bw = SW / (N * 3 + 8);
+  const hv = (v) => Math.max(2, v / vmax * H);
+  const bar = (x, v, c, on) => `<rect x="${x.toFixed(1)}" y="${(H - hv(v)).toFixed(1)}" width="${(bw * .78).toFixed(1)}" height="${hv(v).toFixed(1)}" rx="1.5" fill="${on ? c : 'none'}" stroke="${on ? 'none' : `color-mix(in srgb,${c} 55%,transparent)`}" stroke-width="1.2"/>`;
+  const gx = (g) => g * (N + 4) * bw;
+  const fmt = (v) => Math.round(v).toLocaleString('en-IN');
+  const row1 = lists.map((l, g) => `${l.v.map((v, k) => bar(gx(g) + k * bw, v, l.c, g === 0)).join('')}<text x="${gx(g)}" y="${H + 22}" font-size="15" font-weight="700" fill="${l.c}">List ${l.id} · ${l.n}</text><text x="${gx(g)}" y="${H + 40}" font-size="13.5" fill="var(--color-fg-muted)">${g === 0 ? 'all 30 cases worked, down to the weakest' : 'never reaches an officer this quarter'}</text>`).join('');
+  const row2 = pool.map((p, k) => bar(k * (SW / pool.length), p.v, p.l.c, k < CAP)).join('');
+  const cnt = (id) => pool.slice(0, CAP).filter((p) => p.l.id === id).length;
+  $('u5-body').innerHTML = `<div class="c5-eq">
+      <span class="lhs">Case priority</span><i>=</i>
+      <span class="fr"><span class="t" style="--c:var(--kpi)">Expected recoverable amount</span><hr><span class="t" style="--c:var(--tech)">Officer hours</span></span>
+      <i>+</i><span class="t" style="--c:var(--pol)">Deterrence value</span>
+      <i>−</i><span class="t" style="--c:#C62828">Taxpayer burden</span>
+      <span class="nt">Expected amount weighs demand by the chance of proving it with numbers and recovering cash from a solvent business; a vanished shell firm scores near zero. Burden is the cost of disturbing honest firms.</span>
+    </div>
+    <div class="c5-g">
+      <div style="display:flex;flex-direction:column;min-height:0"><div class="tg-h"><em>Discipline 1</em><b>Which rules to encode first</b></div>
+        <div class="c5-q" style="flex:1"><div class="ya">Realisable value per case →</div>
+          ${QD.map(([e, b, c, p, top]) => `<div class="qd${top ? ' top' : ''}" style="--c:${c}"><em>${e}</em><b>${b}</b><p>${p}</p></div>`).join('')}
+          <div class="xa">Frequency across taxpayers →</div></div></div>
+      <div class="c5-r"><div class="tg-h"><em>Discipline 2</em><b>Rank all algorithms together</b><span>same capacity of ${CAP} cases in both rows</span></div>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:20px;align-items:center">
+          <div><div class="tg-lab" style="margin-bottom:6px">Local best · one list at a time</div><svg width="${SW}" height="${H + 44}" viewBox="0 0 ${SW} ${H + 44}" style="max-width:100%;height:auto">${row1}</svg></div>
+          <div><b style="display:block;font:400 44px/1 var(--font-anthropic-serif);color:var(--now)">${fmt(local)}</b><span style="font-size:15px;color:var(--color-fg-muted)">value captured</span></div>
+          <div><div class="tg-lab" style="margin:10px 0 6px">Global best · one pooled queue, top ${CAP} taken: ${cnt('A')} from A, ${cnt('B')} from B, ${cnt('C')} from C</div><svg width="${SW}" height="${H + 8}" viewBox="0 0 ${SW} ${H + 8}" style="max-width:100%;height:auto">${row2}<path d="M${CAP * SW / pool.length - 2} -4V${H + 4}" stroke="var(--wb-bengal)" stroke-width="2" stroke-dasharray="4 4"/><text x="${CAP * SW / pool.length + 8}" y="12" font-size="14" font-weight="700" fill="var(--wb-bengal)">capacity reached</text></svg></div>
+          <div><b style="display:block;font:400 44px/1 var(--font-anthropic-serif);color:var(--wb-bengal)">${fmt(global)}</b><span style="font-size:15px;color:var(--color-fg-muted)">value captured, <b style="color:var(--wb-bengal)">${ratio}×</b></span></div>
+        </div>
+        <div class="c5-s">${[['Run', 'every rule and algorithm on the same cycle'], ['Merge', 'flags by GSTIN (or PAN): one case, one notice instead of three'], ['Score', 'expected revenue per officer-hour, deterrence and burden'], ['Allocate', 'from the top of one list within each charge’s capacity'], ['Capture', 'structured closure outcomes so scores sharpen each cycle']].map(([b, p], k) => `<div style="--k:${k}"><b><i>${k + 1}</i>${b}</b><p>${p}</p></div>`).join('')}</div>
+      </div>
+    </div>`;
+
+  /* ---------- page 20 · flowchart against rule ---------- */
+  const FS = [['Download GSTR-2B', 'mouse', [1, 'Per GSTIN or per PAN? Which period?']], ['Download GSTR-3B', 'mouse'], ['Open both in Excel', 'sheet'], ['Compare the columns', 'sheet', [3, 'Which lawful sources to exclude?']], ['Mark large differences', 'mark', [2, 'How large: an amount, a ratio or both?']], ['Prepare a list', 'list', [4, 'Which case goes first?']], ['Send to the range officer', 'send'], ['Issue a letter', 'letter', [5, 'Will the next officer repeat it the same way?']]];
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const hl = (s) => { s = esc(s); const cm = s.indexOf('--'); let c = ''; if (cm >= 0) { c = `<span class="c">${s.slice(cm)}</span>`; s = s.slice(0, cm); }
+    return s.replace(/('[^']*')/g, '<span class="s">$1</span>').replace(/(:[a-z_]+)/g, '<span class="p">$1</span>').replace(/\b(SELECT|SUM|AS|NULLIF|FROM|WHERE|BETWEEN|AND|NOT|IN|GROUP|BY|HAVING|ORDER|DESC)\b/g, '<span class="k">$1</span>') + c; };
+  const CODE = [['-- Rule R-001: Excess ITC claimed over GSTR-2B', 5], ['SELECT gstin,', 1], ['       SUM(itc_claimed_3b) - SUM(itc_available_2b)   AS excess_itc,'], ['       (SUM(itc_claimed_3b) - SUM(itc_available_2b))'], ['         / NULLIF(SUM(itc_available_2b), 0)          AS excess_ratio'], ['FROM   itc_by_period'], ['WHERE  period BETWEEN :fy_start AND :fy_end  -- full year', 1], ["  AND  itc_type NOT IN ('RCM', 'IMPORT', 'ISD')  -- lawful", 3], ['GROUP  BY gstin', 1], ['HAVING SUM(itc_claimed_3b) - SUM(itc_available_2b) > :min_amount', 2], ['   AND excess_ratio > :min_ratio', 2], ['ORDER  BY excess_itc DESC;', 4]];
+  const ANS = ['Unit and period: GSTIN, full year', 'Threshold: amount and ratio', 'Exclusions named: RCM, imports, ISD', 'Ranked by excess credit', 'Saved rule, run again in one click'];
+  $('u6-body').innerHTML = `<div class="c6-f"><div class="tg-h"><b>Today: a manual flowchart</b><span>every box is a mouse-click</span></div>
+      <ol>${FS.map(([t, i, q], k) => `<li><div class="bx"><em>${k + 1}</em>${ic(i)}${t}</div>${q ? `<div class="qt"><b>${q[0]}</b>${q[1]}</div>` : '<div></div>'}</li>`).join('')}</ol></div>
+    <div class="c6-m">${ico('link', 'var(--wb-bengal)')}<b>Link Officer</b><div class="ar"></div><small>Translates tax judgement into a precise specification</small></div>
+    <div class="c6-r"><div class="tg-h"><b>Needed: a rule specification</b><span>ten lines a non-programmer can read</span></div>
+      <div class="c6-cd"><div class="bar">Rule R-001 <span>excess ITC claimed over GSTR-2B</span></div><pre>${CODE.map(([l, m]) => `<div class="${m ? 'on' : ''}"><span>${hl(l)}</span>${m ? `<b>${m}</b>` : '<i></i>'}</div>`).join('')}</pre></div>
+      <div class="c6-an">${ANS.map((a, k) => `<div><b>${k + 1}</b>${a}</div>`).join('')}</div>
+      <div class="c6-bt">${ico('pair', 'var(--wb-bengal)')}<span>Officers speak tax law; engineers speak code. Without a Link Officer fluent in both, hard-won methods stay manual and leave with the officer on transfer.</span></div>
+    </div>`;
+
+  /* ---------- page 21 · detections to statewide rules ---------- */
+  const LC = [['Detect', 'search', 'By hand, in the field'], ['Resolve', 'gavel', 'Prove and recover'], ['Codify', 'code', 'Write the specification; back-test on past data'], ['Scale', 'layers', 'Deploy into the pooled queue'], ['Refine', 'tune', 'Tighten thresholds or retire once evasion dries up']];
+  const CS = [['steel', 'Fake ITC in iron and steel', 'Syndicates of firms passing fake credit from one hub', 'Many GSTINs filing from shared IP addresses; high credit passed on; little goods movement', 'Cluster GSTINs by shared IP, device, mobile, email and bank account; flag clusters where credit passed far exceeds e-way bill movement, in every sector'],
+    ['ticket', 'Telecom voucher credit outflows', 'Credit leaking out of the chain through voucher distributors', 'Outward credit along distributor chains out of line with the value supplied', 'Trace credit along each distribution chain; flag nodes where outward credit exceeds supported inward value, in every voucher-based sector'],
+    ['coin', 'Systemic misuse of credits', 'Credit availed beyond legal or supplier-filed limits', 'ITC above GSTR-2B; blocked credits claimed; rapid use of credit soon after registration', 'A family of credit-eligibility rules scored together in the pooled queue'],
+    ['grid', 'Grey areas and sector scrutiny lists', 'Recurring sector-specific evasion types flagged in RMC and EIU drives', 'Sector margin outliers; HSN mismatches; unusual cash-to-ITC ratios', 'Turn each grey-area row into a versioned rule specification that runs every cycle']];
+  const lcw = 100 / 5;
+  $('u7-body').innerHTML = `<div class="c7-lc">
+      <div class="br" style="--c:var(--now);left:0;width:calc(${lcw * 2}% - 8px)"><span>One-off today</span></div>
+      <div class="br" style="--c:var(--kpi);left:${lcw * 2}%;width:${lcw * 3}%"><span>The bridge to build</span></div>
+      ${LC.map(([b, i, s], k) => `<div style="--c:${k < 2 ? 'var(--now)' : 'var(--kpi)'}">${ico(i, k < 2 ? 'var(--now)' : 'var(--kpi)')}<span><b>${b}</b><small>${s}</small></span></div>`).join('')}
+    </div>
+    <div class="c7-t">
+      <div class="th">EIU or RMC case</div><div class="th">What field inquiry found</div><div class="th">Signal in the data</div><div class="th"></div><div class="th ru">Automated monthly statewide rule</div>
+      ${CS.map(([i, n, f, s, r]) => `<div class="td nm">${ico(i, 'var(--ink)')}${n}</div><div class="td">${f}</div><div class="td sg">${s}</div><div class="td ar">→</div><div class="td ru">${r}</div>`).join('')}
+    </div>`;
+
+  /* ---------- page 22 · flywheel ---------- */
+  const FW = [['Rank new patterns', 'Rule Council', 'var(--pol)', 'council'], ['Write the spec', 'Link Officer', 'var(--wb-bengal)', 'link'], ['Code and test', 'Technical team', 'var(--tech)', 'code'], ['Rank and pack evidence', 'Pooled queue', 'var(--ink)', 'list'], ['Act and record', 'Field officers', 'var(--kpi)', 'shield'], ['Score each rule', 'Scorecard review', '#C62828', 'card']];
+  const cx = 390, cy = 340, r = 205, nr = 48;
+  const pt = (k, rr = r) => { const a = -Math.PI / 2 + k * Math.PI / 3; return [cx + rr * Math.cos(a), cy + rr * Math.sin(a)]; };
+  const arc = (k) => { const a0 = -Math.PI / 2 + k * Math.PI / 3 + 0.27, a1 = -Math.PI / 2 + (k + 1) * Math.PI / 3 - 0.27;
+    return `<path d="M${cx + r * Math.cos(a0)} ${cy + r * Math.sin(a0)} A${r} ${r} 0 0 1 ${cx + r * Math.cos(a1)} ${cy + r * Math.sin(a1)}" fill="none" stroke="color-mix(in srgb,var(--wb-bengal) 70%,transparent)" stroke-width="5" marker-end="url(#u8a)"/>`; };
+  const lab = (k) => { const [x, y] = pt(k, r + nr + 12), [px] = pt(k); const anc = Math.abs(px - cx) < 5 ? 'middle' : px > cx ? 'start' : 'end'; const dy = Math.abs(px - cx) < 5 ? (y < cy ? -26 : 14) : -4;
+    return `<text x="${x}" y="${y + dy}" text-anchor="${anc}" font-size="20" font-weight="700" fill="var(--color-fg)">${FW[k][0]}</text><text x="${x}" y="${y + dy + 22}" text-anchor="${anc}" font-size="15" font-weight="700" letter-spacing=".6" fill="${FW[k][2]}">${FW[k][1].toUpperCase()}</text>`; };
+  const fly = `<svg width="700" height="610" viewBox="0 0 780 680" role="img" aria-label="Flywheel of six reinforcing steps">
+      <defs><marker id="u8a" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--wb-bengal)"/></marker></defs>
+      <circle cx="${cx}" cy="${cy}" r="${r - 70}" fill="color-mix(in srgb,var(--wb-bengal) 6%,transparent)"/>
+      ${FW.map((_, k) => arc(k)).join('')}
+      ${FW.map(([, , c, i], k) => { const [x, y] = pt(k); return `<g transform="translate(${x},${y})"><circle r="${nr}" fill="var(--color-panel)" stroke="${c}" stroke-width="3"/><circle r="${nr - 6}" fill="color-mix(in srgb,${c} 10%,transparent)"/><g transform="translate(-17,-24)" color="${c}"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${IC[i]}</svg></g><text y="30" text-anchor="middle" font-size="17" font-weight="800" fill="${c}">${k + 1}</text></g>`; }).join('')}
+      ${FW.map((_, k) => lab(k)).join('')}
+      <text x="${cx}" y="${cy - 30}" text-anchor="middle" font-family="var(--font-anthropic-serif)" font-size="28" fill="var(--color-fg)">Every closed case</text>
+      <text x="${cx}" y="${cy + 4}" text-anchor="middle" font-family="var(--font-anthropic-serif)" font-size="28" fill="var(--color-fg)">sharpens the next rule</text>
+      <text x="${cx}" y="${cy + 40}" text-anchor="middle" font-size="15" fill="var(--color-fg-muted)">Each turn takes less effort</text>
+      <text x="${cx}" y="${cy + 60}" text-anchor="middle" font-size="15" fill="var(--color-fg-muted)">than the one before</text>
+    </svg>`;
+  const RL = [['Rule Council', 'council', 'var(--pol)', 'Senior field officers, EIU and RMC leaders meet monthly to rank new patterns to encode and decide which KPIs dashboards should track.'],
+    ['Link Officer', 'link', 'var(--wb-bengal)', 'Writes rule and dashboard specifications: inputs, logic, thresholds, lawful exclusions and evidence. <em>Credit Link Officers and originating officers for the statewide yield of their rules.</em>'],
+    ['Technical team', 'code', 'var(--tech)', 'Codes each specification, back-tests precision on past data before release; maintains data pipelines, the pooled queue and dashboards.'],
+    ['Field officers', 'shield', 'var(--kpi)', 'Act on ranked, evidence-packed cases and record amount proved, amount recovered and closure reason in structured fields.'],
+    ['Rule scorecard review', 'card', '#C62828', 'Audits every live rule monthly on precision, revenue per officer-hour and burden on honest taxpayers; fixes or retires weak rules.']];
+  $('u8-body').innerHTML = `<div>${fly}</div>
+    <div class="c8-r"><div class="tg-h"><b>Five named roles</b><span>keep the wheel turning every month by design</span></div>
+      <ol>${RL.map(([n, i, c, p]) => `<li style="--c:${c}">${ico(i, c)}<div><b>${n}</b><p>${p}</p></div></li>`).join('')}</ol>
+      <div class="c8-ad">${ico('loop', '#C62828')}<span><b>Why it must be internal:</b> once a rule bites, evaders switch sectors, invoicing routes or devices. A static vendor-built tool decays within quarters; a self-refreshing internal workflow compounds.</span></div>
+    </div>`;
+
+  /* ---------- page 17 · codify, scale and refine on one page ---------- */
+  const SH = [['Cluster GSTINs by shared IP, device, mobile and bank account', 'steel', 'Fake ITC in iron and steel'], ['Trace credit along each distribution chain', 'ticket', 'Telecom voucher credit outflows'], ['Credit-eligibility rules scored together', 'coin', 'Systemic misuse of credits'], ['Each grey-area row as a versioned rule', 'grid', 'Grey areas and sector scrutiny lists']];
+  const R9 = [['Rule Council', 'ranks new patterns every month', 'var(--pol)', 'council'], ['Link Officer', 'writes the specification', 'var(--wb-bengal)', 'link'], ['Technical team', 'codes and back-tests', 'var(--tech)', 'code'], ['Field officers', 'act and record outcomes', 'var(--kpi)', 'shield'], ['Scorecard review', 'audits precision and burden', '#C62828', 'card']];
+  const CODE9 = [['-- Rule R-001: excess ITC over GSTR-2B'], ['SELECT gstin, SUM(itc_3b) - SUM(itc_2b) AS excess'], ['FROM   itc_by_period'], ['WHERE  period BETWEEN :fy_start AND :fy_end'], ["  AND  itc_type NOT IN ('RCM', 'IMPORT', 'ISD')"], ['HAVING excess > :min_amount'], ['ORDER  BY excess DESC;']];
+  const wc = 120, wr = 86, wn = 26, wpt = (k) => { const a = -Math.PI / 2 + k * Math.PI / 3; return [wc + wr * Math.cos(a), wc + wr * Math.sin(a)]; };
+  const wheel = `<svg width="240" height="240" viewBox="0 0 240 240" aria-hidden="true">
+      <circle cx="${wc}" cy="${wc}" r="${wr}" fill="none" stroke="color-mix(in srgb,var(--wb-bengal) 45%,transparent)" stroke-width="3" stroke-dasharray="2 7" stroke-linecap="round"/>
+      <circle cx="${wc}" cy="${wc}" r="${wr - 40}" fill="color-mix(in srgb,var(--wb-bengal) 7%,transparent)"/>
+      <text x="${wc}" y="${wc - 4}" text-anchor="middle" font-family="var(--font-anthropic-serif)" font-size="19" fill="var(--color-fg)">Every</text>
+      <text x="${wc}" y="${wc + 18}" text-anchor="middle" font-family="var(--font-anthropic-serif)" font-size="19" fill="var(--color-fg)">month</text>
+      ${FW.map(([, , c, i], k) => { const [x, y] = wpt(k); return `<g transform="translate(${x},${y})"><circle r="${wn}" fill="var(--color-panel)" stroke="${c}" stroke-width="2.5"/><g transform="translate(-12,-12)" style="color:${c}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${IC[i]}</svg></g></g>`; }).join('')}
+    </svg>`;
+  $('u9-body').innerHTML = `
+    <div class="c9-g">
+      <div class="c9-c"><div class="c9-h"><em>1</em><h3>Codifying officer knowledge is the missing bridge: the same 2B/3B check as eight clicks or as one rule</h3><p>Experienced officers know how evasion works. Their expertise was built around manual file-by-file work. No formal bridge turns it into a specification a machine can run.</p></div>
+        <ol class="c9-fl">${FS.map(([t, i], k) => `<li><em>${k + 1}</em>${t}</li>`).join('')}</ol>
+        <div class="c9-lk">${ico('link', 'var(--wb-bengal)')}<span><b>Link Officer</b> translates tax judgement into a precise specification</span></div>
+        <div class="c6-cd"><div class="bar">Rule R-001 <span>run again in one click</span></div><pre>${CODE9.map(([l]) => `<div><span>${hl(l)}</span><i></i></div>`).join('')}</pre></div>
+      </div>
+      <div class="c9-c"><div class="c9-h"><em>2</em><h3>Every EIU and RMC detection should become a one-click statewide rule</h3><p>Once an evasion pattern is detected and proved, running the same check across every taxpayer in the State should be one click away. Many high-impact detections begin as one-off investigations; each hides a reusable rule.</p></div>
+        <ul class="c9-sc">${SH.map(([r, i, n]) => `<li>${ico(i, 'var(--ink)')}<div><small>${n}</small><b>${r}</b></div></li>`).join('')}</ul>
+      </div>
+      <div class="c9-c"><div class="c9-h"><em>3</em><h3>A learning institution: every closed case sharpens the next rule</h3><p>Evaders change tactics once a rule bites. A fixed monthly workflow with five named roles turns field knowledge into new rules by design rather than by chance.</p></div>
+        <div class="c9-rf">${wheel}<ul>${R9.map(([n, t, c, i]) => `<li style="--c:${c}">${ico(i, c)}<div><b>${n}</b><small>${t}</small></div></li>`).join('')}</ul></div>
+      </div>
+    </div>`;
+})();
+</script>
+
+<script>
+/* ---------- footnotes: moved off the pages into Annex A9 to A11 ---------- */
+document.addEventListener('DOMContentLoaded', () => {
+  const rows = [];
+  document.querySelectorAll('.slide:not(.annex)').forEach((sl) => {
+    const f = sl.querySelector('.s-foot'), c = f && f.firstElementChild;
+    if (!c || c.classList.contains('s-num')) return;
+    const cl = c.cloneNode(true); cl.querySelectorAll('.annex-notes').forEach((n) => n.remove());
+    const html = cl.innerHTML.trim(); if (!cl.textContent.trim()) return;
+    rows.push([sl.dataset.label.replace('Page ', ''), sl.querySelector('.s-title')?.textContent.trim() || '', html]);
+    [...c.childNodes].forEach((n) => { if (!(n.nodeType === 1 && n.classList.contains('annex-notes'))) n.remove(); });
+  });
+  const per = Math.ceil(rows.length / 3);
+  ['a9-nt', 'a10-nt', 'a11-nt'].map((id, k) => [id, rows.slice(k * per, (k + 1) * per)]).forEach(([id, R]) => {
+    const t = document.getElementById(id); if (!t) return;
+    t.innerHTML = `<thead><tr><th>Page</th><th>Note</th></tr></thead><tbody>${R.map(([n, ti, h]) => `<tr><td class="pn"><b>${n}</b></td><td><small>${ti}</small><div>${h}</div></td></tr>`).join('')}</tbody>`;
+  });
+});
 </script>
 
 <script>
